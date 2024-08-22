@@ -1,7 +1,7 @@
 [tool.poetry]
-name = "src"
+name = "Matchmove_machine_site"
 version = "0.1.0"
-description = ""
+description = "Описание"
 authors = ["timofejkazakov <t.kazakov@agora.ru>"]
 
 [tool.poetry.dependencies]
@@ -14,6 +14,7 @@ loguru = "^0.7.2"
 python-dotenv = "^1.0.1"
 django-filter = "^23.5"
 django-cors-headers = "^4.3.1"
+pillow = "^10.4.0"
 
 
 [build-system]
