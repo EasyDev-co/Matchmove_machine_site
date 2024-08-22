@@ -1,7 +1,8 @@
+from django.contrib.auth.models import AbstractUser, Group, Permission
 from django.db import models
 from django.core.validators import URLValidator
-from django.contrib.auth.models import AbstractUser, Group, Permission
 from apps.utils.models_mixins.models_mixins import UUIDMixin
+from .managers import CustomUserManager
 
 
 class User(UUIDMixin, AbstractUser):
@@ -27,6 +28,8 @@ class User(UUIDMixin, AbstractUser):
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['name']
+
+    objects = CustomUserManager()
 
     class Meta:
         verbose_name = 'Пользователь'
