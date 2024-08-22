@@ -23,7 +23,7 @@ class UserAdmin(BaseUserAdmin):
                     "website",
                     "portfolio",
                 )
-            }
+            },
         ),
         (
             _("Social Media"),
@@ -35,7 +35,7 @@ class UserAdmin(BaseUserAdmin):
                     "facebook",
                     "vimeo",
                 )
-            }
+            },
         ),
         (
             _("Permissions"),
@@ -55,7 +55,7 @@ class UserAdmin(BaseUserAdmin):
                     "last_login",
                     "date_joined",
                 )
-            }
+            },
         ),
     )
     add_fieldsets = (
@@ -82,17 +82,17 @@ class UserAdmin(BaseUserAdmin):
         ),
     )
     list_display = (
-        'id',
-        'email',
-        'name',
-        'linkedin',
-        'instagram',
+        "id",
+        "email",
+        "name",
+        "linkedin",
+        "instagram",
     )
     search_fields = (
-        'email',
-        'name',
-        'linkedin',
+        "email",
+        "name",
+        "linkedin",
     )
-    list_filter = ('is_staff', 'is_superuser')
-    ordering = ('email', 'name')
-    readonly_fields = ('last_login', 'date_joined')
+    list_filter = ("is_staff", "is_superuser")
+    ordering = ("email", "name")
+    readonly_fields = ("last_login", "date_joined")
