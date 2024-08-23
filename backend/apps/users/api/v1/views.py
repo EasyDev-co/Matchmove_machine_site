@@ -1,14 +1,13 @@
-from rest_framework import status
-from rest_framework.response import Response
-from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
-
-from apps.users.models import User
-from apps.users.api.v1.serializers import UserGetSerializer, UserUpdateSerializer
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from .serializers import UserGetSerializer, UserUpdateSerializer
 
 
 class UserAPIView(APIView):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [
+        IsAuthenticated
+    ]  # Ограничиваем доступ только для авторизованных пользователей
 
     def get(self, request, *args, **kwargs):
         """Получение детальной информации о пользователе."""
