@@ -1,7 +1,7 @@
 from django.contrib.auth.models import AbstractUser, Group, Permission
 from django.db import models
 from apps.utils.models_mixins.models_mixins import UUIDMixin, TimeStampedMixin
-from .managers import CustomUserManager
+from apps.users.managers import CustomUserManager
 from django.utils.translation import gettext_lazy as _
 
 
