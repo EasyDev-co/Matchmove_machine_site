@@ -20,3 +20,19 @@ class UserGetSerializer(serializers.ModelSerializer):
         ]
 
 
+class UserUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = [
+            "username",
+            "email",
+            "website",
+            "portfolio",
+            "about_me",
+            "linkedin",
+            "instagram",
+            "youtube",
+            "facebook",
+            "vimeo",
+            "profile_picture",
+        ]
