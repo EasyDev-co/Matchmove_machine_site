@@ -5,7 +5,10 @@ from rest_framework.views import APIView
 from django.contrib.auth import get_user_model
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.views import TokenObtainPairView
-from apps.users.serializers import UserRegistrationSerializer
+from apps.users.api.v1.serializers import (
+    UserRegistrationSerializer,
+    UserTokenObtainPairSerializer
+)
 
 
 User = get_user_model()
@@ -37,7 +40,9 @@ class UserRegisterView(APIView):
 
 
 class UserLoginView(TokenObtainPairView):
-    pass
+    """Вьюсет логина."""
+
+    serializer_class = UserTokenObtainPairSerializer
 
 
 class UserLogoutView(APIView):

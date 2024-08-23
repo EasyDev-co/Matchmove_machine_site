@@ -4,11 +4,10 @@ from rest_framework import serializers
 
 def validate_custom_password(value):
     """"
-    Дополнительная валидация пароля,
-    остальные валидации уже есть в базовом модуле Джанго.
+    Дополнительная валидация пароля.
     """
-    if not re.search(r"[0-9]", value):
+    if not re.match(r'^(?=.*[A-Za-z])(?=.*[0-9]).{8,}$', value):
         raise serializers.ValidationError(
-            "Password must contain at least one digit."
+            "Password must be at least 8 characters long and contain both letters and digits."
         )
     return value
