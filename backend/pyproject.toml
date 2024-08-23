@@ -15,6 +15,7 @@ python-dotenv = "^1.0.1"
 django-filter = "^23.5"
 django-cors-headers = "^4.3.1"
 pillow = "^10.4.0"
+djangorestframework-simplejwt = "^5.3.1"
 
 
 [build-system]
