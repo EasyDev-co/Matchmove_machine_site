@@ -17,7 +17,7 @@ class UserAdmin(BaseUserAdmin):
             _("Personal info"),
             {
                 "fields": (
-                    "name",
+                    "username",
                     "profile_picture",
                     "about_me",
                     "website",
@@ -67,7 +67,7 @@ class UserAdmin(BaseUserAdmin):
                     "email",
                     "password1",
                     "password2",
-                    "name",
+                    "username",
                     "profile_picture",
                     "about_me",
                     "website",
@@ -84,15 +84,15 @@ class UserAdmin(BaseUserAdmin):
     list_display = (
         "id",
         "email",
-        "name",
+        "username",
         "linkedin",
         "instagram",
     )
     search_fields = (
         "email",
-        "name",
+        "username",
         "linkedin",
     )
     list_filter = ("is_staff", "is_superuser")
-    ordering = ("email", "name")
+    ordering = ("email", "username")
     readonly_fields = ("last_login", "date_joined")

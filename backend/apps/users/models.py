@@ -1,8 +1,8 @@
 from django.contrib.auth.models import AbstractUser, Group, Permission
 from django.db import models
-from django.core.validators import URLValidator
 from apps.utils.models_mixins.models_mixins import UUIDMixin, TimeStampedMixin
 from .managers import CustomUserManager
+from django.utils.translation import gettext_lazy as _
 
 
 class User(UUIDMixin, TimeStampedMixin, AbstractUser):
@@ -10,36 +10,23 @@ class User(UUIDMixin, TimeStampedMixin, AbstractUser):
     Модель пользователя.
     """
 
-    username = None
-    email = models.EmailField(unique=True, verbose_name="Email")
-    name = models.CharField(max_length=100, verbose_name="Имя пользователя")
-    website = models.URLField(
-        validators=[URLValidator()], blank=True, null=True, verbose_name="Сайт"
+    username = models.CharField(
+        max_length=150, unique=True, verbose_name=_("Имя пользователя")
     )
-    portfolio = models.URLField(
-        validators=[URLValidator()], blank=True, null=True, verbose_name="Портфолио"
-    )
-    about_me = models.TextField(blank=True, null=True, verbose_name="О себе")
-    linkedin = models.URLField(
-        validators=[URLValidator()], blank=True, null=True, verbose_name="LinkedIn"
-    )
-    instagram = models.URLField(
-        validators=[URLValidator()], blank=True, null=True, verbose_name="Instagram"
-    )
-    youtube = models.URLField(
-        validators=[URLValidator()], blank=True, null=True, verbose_name="YouTube"
-    )
-    facebook = models.URLField(
-        validators=[URLValidator()], blank=True, null=True, verbose_name="Facebook"
-    )
-    vimeo = models.URLField(
-        validators=[URLValidator()], blank=True, null=True, verbose_name="Vimeo"
-    )
+    email = models.EmailField(unique=True, verbose_name=_("Email"))
+    website = models.URLField(blank=True, null=True, verbose_name=_("Сайт"))
+    portfolio = models.URLField(blank=True, null=True, verbose_name=_("Портфолио"))
+    about_me = models.TextField(blank=True, null=True, verbose_name=_("О себе"))
+    linkedin = models.URLField(blank=True, null=True, verbose_name=_("LinkedIn"))
+    instagram = models.URLField(blank=True, null=True, verbose_name=_("Instagram"))
+    youtube = models.URLField(blank=True, null=True, verbose_name=_("YouTube"))
+    facebook = models.URLField(blank=True, null=True, verbose_name=_("Facebook"))
+    vimeo = models.URLField(blank=True, null=True, verbose_name=_("Vimeo"))
     profile_picture = models.ImageField(
         upload_to="profile_pictures/",
         blank=True,
         null=True,
-        verbose_name="Фото пользователя",
+        verbose_name=_("Фото пользователя"),
     )
 
     groups = models.ManyToManyField(Group, related_name="custom_user_groups")
@@ -48,14 +35,14 @@ class User(UUIDMixin, TimeStampedMixin, AbstractUser):
     )
 
     USERNAME_FIELD = "email"
-    REQUIRED_FIELDS = ["name"]
+    REQUIRED_FIELDS = ["username"]
 
     objects = CustomUserManager()
 
     class Meta:
-        verbose_name = "Пользователь"
-        verbose_name_plural = "Пользователи"
+        verbose_name = _("Пользователь")
+        verbose_name_plural = _("Пользователи")
         ordering = ["email"]
 
     def __str__(self):
-        return self.name
+        return self.username
