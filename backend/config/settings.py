@@ -23,6 +23,7 @@ INSTALLED_APPS = [
 
     # Библиотеки
     'rest_framework',
+    'rest_framework_simplejwt.token_blacklist',
     'django_filters',
     'corsheaders',
 
@@ -104,6 +105,12 @@ LOGGING = {
         "gunicorn.error": {"handlers": ["console"], "level": "INFO"},
         "gunicorn.access": {"handlers": ["console"], "level": "INFO"},
     },
+}
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    )
 }
 
 LANGUAGE_CODE = 'en-us'
