@@ -1,11 +1,11 @@
 from django.contrib.auth.models import AbstractUser, Group, Permission
 from django.db import models
 from django.core.validators import URLValidator
-from apps.utils.models_mixins.models_mixins import UUIDMixin
+from apps.utils.models_mixins.models_mixins import UUIDMixin, TimeStampedMixin
 from .managers import CustomUserManager
 
 
-class User(UUIDMixin, AbstractUser):
+class User(UUIDMixin, TimeStampedMixin, AbstractUser):
     """
     Модель пользователя.
     """
@@ -55,6 +55,7 @@ class User(UUIDMixin, AbstractUser):
     class Meta:
         verbose_name = "Пользователь"
         verbose_name_plural = "Пользователи"
+        ordering = ["email"]
 
     def __str__(self):
         return self.name
