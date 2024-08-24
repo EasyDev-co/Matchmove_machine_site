@@ -7,7 +7,7 @@ from .serializers import UserGetSerializer, UserUpdateSerializer
 class UserAPIView(APIView):
     permission_classes = [
         IsAuthenticated
-    ]  # Ограничиваем доступ только для авторизованных пользователей
+    ]
 
     def get(self, request, *args, **kwargs):
         """Получение детальной информации о пользователе."""
