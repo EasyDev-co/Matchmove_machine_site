@@ -3,4 +3,5 @@ from .views import UserAPIView
 
 urlpatterns = [
     path("user/", UserAPIView.as_view(), name="user"),
+    path("parent/", include("apps.users.api.v1.parent.urls")),
 ]
