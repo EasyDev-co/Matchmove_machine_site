@@ -24,12 +24,12 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = (
-            'username',
-            'email',
-            'password',
+            "username",
+            "email",
+            "password",
         )
         extra_kwargs = {
-            'password': {'write_only': True}
+            "password": {"write_only": True}
         }
 
 
@@ -38,15 +38,32 @@ class UserTokenObtainPairSerializer(TokenObtainPairSerializer):
 
     def validate(self, attrs):
         authenticate_kwargs = {
-            'username': attrs['username'],
-            'password': attrs['password'],
+            "username": attrs["username"],
+            "password": attrs["password"],
         }
         user = authenticate(**authenticate_kwargs)
         if user is None or not user.is_active:
-            raise ValidationError('Нет такого пользователя.')
+            raise ValidationError("No such user.")
         refresh = RefreshToken.for_user(user)
-        refresh['username'] = user.username
+        refresh["username"] = user.username
         return {
-            'refresh': str(refresh),
-            'access': str(refresh.access_token),
+            "refresh": str(refresh),
+            "access": str(refresh.access_token),
         }
+
+
+
+class EmailSerializer(serializers.Serializer):
+    """Сериализатор для проверки email."""
+    email = serializers.EmailField()
+
+    def validate_email(self, value):
+        user = User.objects.filter(email=value).first()
+        if not user:
+            raise ValidationError("No such user.")
+        return value
+
+
+class EmailAndCodeSerializer(EmailSerializer):
+    """Сериализатор для проверки кода."""
+    code = serializers.CharField()
