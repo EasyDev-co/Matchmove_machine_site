@@ -10,8 +10,7 @@ from apps.users.api.v1.serializers import (
     UserRegistrationSerializer,
     UserTokenObtainPairSerializer
 )
-# from apps.users.tasks import send_confirm_code
-from apps.users.tasks import SendConfirmCode
+from apps.users.tasks import send_confirm_code
 from apps.exeptions.api_exeptions import InvalidCode
 
 from apps.users.models.code import CodePurpose, ConfirmCode
@@ -20,35 +19,8 @@ from apps.users.models.code import CodePurpose, ConfirmCode
 User = get_user_model()
 
 
-# class UserRegisterView(APIView):
-#     """Вьюсет регистрации."""
-#     serializer_class = UserRegistrationSerializer
-
-#     def post(self, request):
-#         serializer = self.serializer_class(data=request.data)
-#         if serializer.is_valid():
-#             validate_data = serializer.validated_data
-#             password = validate_data.pop("password")
-#             with transaction.atomic():
-#                 user = User.objects.create_user(
-#                     password=password,
-#                     **validate_data,
-#                 )
-#                 user.save()
-#             send_confirm_code.delay(
-#                 user_id=user.pk,
-#                 code_purpose=CodePurpose.CONFIRM_EMAIL
-#             )
-#             return Response(
-#                 {"message": "User registered successfully!"},
-#                 status=status.HTTP_201_CREATED
-#             )
-#         return Response(
-#             serializer.errors,
-#             status=status.HTTP_400_BAD_REQUEST
-#         )
 class UserRegisterView(APIView):
-    """User registration view."""
+    """Вьюсет регистрации."""
     serializer_class = UserRegistrationSerializer
 
     def post(self, request):
@@ -62,15 +34,10 @@ class UserRegisterView(APIView):
                     **validate_data,
                 )
                 user.save()
-
-            try:
-                SendConfirmCode.process(user, CodePurpose.CONFIRM_EMAIL)
-            except Exception as e:
-                return Response(
-                    {"error": "Failed to send confirmation code."},
-                    status=status.HTTP_500_INTERNAL_SERVER_ERROR
-                )
-
+            send_confirm_code.delay(
+                user_id=user.pk,
+                code_purpose=CodePurpose.CONFIRM_EMAIL
+            )
             return Response(
                 {"message": "User registered successfully!"},
                 status=status.HTTP_201_CREATED

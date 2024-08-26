@@ -25,6 +25,7 @@ INSTALLED_APPS = [
     # Библиотеки
     "rest_framework",
     "rest_framework_simplejwt.token_blacklist",
+    "django_celery_beat",
     "django_filters",
     "corsheaders",
     # Приложения

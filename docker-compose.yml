@@ -74,33 +74,33 @@ services:
     networks:
       - nginx_network
 
-  # celery:
-  #   <<: *base_web
-  #   build:
-  #     context: ./backend
-  #     dockerfile: celery.dockerfile
-  #   container_name: ${PROJECT_SLUG}_celery
-  #   volumes:
-  #     - ./backend/:/opt/backend/:rw
-  #     - static_dir:/opt/backend/static/
-  #     - media_dir:/opt/backend/media/
+  celery:
+    <<: *base_web
+    build:
+      context: ./backend
+      dockerfile: celery.dockerfile
+    container_name: ${PROJECT_SLUG}_celery
+    volumes:
+      - ./backend/:/opt/backend/:rw
+      - static_dir:/opt/backend/static/
+      - media_dir:/opt/backend/media/
     
-  # redis:
-  #   image: redis:latest
-  #   container_name: ${PROJECT_SLUG}_redis
-  #   volumes:
-  #     - redis_data:/data
-  #   ports:
-  #     - "${REDIS_PORT}:${REDIS_PORT}"
-  #   networks:
-  #     - nginx_network
+  redis:
+    image: redis:latest
+    container_name: ${PROJECT_SLUG}_redis
+    volumes:
+      - redis_data:/data
+    ports:
+      - "${REDIS_PORT}:${REDIS_PORT}"
+    networks:
+      - nginx_network
 
 
 volumes:
   static_dir:
   media_dir:
   pgdata:
-  # redis_data:
+  redis_data:
 
 networks:
   nginx_network:
