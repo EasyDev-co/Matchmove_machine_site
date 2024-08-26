@@ -4,7 +4,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from apps.users.models import User
-from .serializers import UserGetSerializer, UserUpdateSerializer
+from .serializers import UserDetailSerializer, UserUpdateSerializer
 
 
 class UserAPIView(APIView):
@@ -14,7 +14,7 @@ class UserAPIView(APIView):
         """Получение детальной информации о пользователе."""
         instance = request.user
         user_data = User.objects.get(pk=instance.pk)
-        user_serializer = UserGetSerializer(user_data)
+        user_serializer = UserDetailSerializer(user_data)
         return Response(user_serializer.data)
 
     def patch(self, request, *args, **kwargs):
