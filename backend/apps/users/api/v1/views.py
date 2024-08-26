@@ -28,12 +28,11 @@ class UserRegisterView(APIView):
         if serializer.is_valid():
             validate_data = serializer.validated_data
             password = validate_data.pop("password")
-            with transaction.atomic():
-                user = User.objects.create_user(
-                    password=password,
-                    **validate_data,
-                )
-                user.save()
+            user = User.objects.create_user(
+                password=password,
+                **validate_data,
+            )
+            user.save()
             send_confirm_code.delay(
                 user_id=user.pk,
                 code_purpose=CodePurpose.CONFIRM_EMAIL

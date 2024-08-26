@@ -31,18 +31,17 @@ class SendConfirmCodeTask(BaseTask):
         else:
             raise ValueError("Unknown code_purpose.")
 
-        with transaction.atomic():
-            ConfirmCode.objects.filter(
-                user=user,
-                purpose=code_purpose,
-                is_used=False
-            ).update(is_used=True)
+        ConfirmCode.objects.filter(
+            user=user,
+            purpose=code_purpose,
+            is_used=False
+        ).update(is_used=True)
 
-            confirm_code = ConfirmCode.objects.create(
-                user=user,
-                code=code,
-                purpose=code_purpose,
-            )
+        confirm_code = ConfirmCode.objects.create(
+            user=user,
+            code=code,
+            purpose=code_purpose,
+        )
 
         try:
             send_mail(
