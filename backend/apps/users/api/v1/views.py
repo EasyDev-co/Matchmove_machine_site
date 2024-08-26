@@ -1,14 +1,17 @@
 from django.db import transaction
-from rest_framework import status
+from rest_framework import status, serializers
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from django.contrib.auth import get_user_model
+from django.contrib.auth.hashers import make_password
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.views import TokenObtainPairView
 from apps.users.api.v1.serializers import (
     EmailAndCodeSerializer,
+    EmailSerializer,
+    PasswordChangeSerializer,
     UserRegistrationSerializer,
-    UserTokenObtainPairSerializer
+    UserTokenObtainPairSerializer,
 )
 from apps.users.tasks import send_confirm_code
 from apps.exeptions.api_exeptions import InvalidCode
@@ -94,6 +97,61 @@ class EmailVerificationCodeAPIView(ConfirmCodeMixin, APIView):
                 'refresh': str(refresh_token),
                 'access': str(refresh_token.access_token)
             }, status=status.HTTP_201_CREATED
+        )
+
+
+class ResetPasswordAPIView(APIView):
+    """Представление для восстановления пароля."""
+    email_serializer = EmailSerializer
+
+    def post(self, request, *args, **kwargs):
+        serializer = self.email_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        email = serializer.validated_data["email"]
+
+        user = User.objects.get(email=email)
+
+        send_confirm_code.delay(
+            user_id=user.pk,
+            code_purpose=CodePurpose.RESET_PASSWORD,
+        )
+
+        return Response(
+            data={'message': 'A code for password reset has been sent to the specified email.'},
+            status=status.HTTP_200_OK
+        )
+
+
+class PasswordChangeAPIView(ConfirmCodeMixin, APIView):
+    """Представление для смены пароля пользователя."""
+    password_change_serializer = PasswordChangeSerializer
+
+    def post(self, request, *args, **kwargs):
+        serializer = self.password_change_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        email = serializer.validated_data["email"]
+        new_password = serializer.validated_data["new_password"]
+        confirm_password = serializer.validated_data["confirm_password"]
+        code = request.data.get("code")
+        # добавлено двойное подтверждение пароля
+        if new_password != confirm_password:
+            return Response(
+                {"message": "The passwords do not match."},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        user = User.objects.get(email=email)
+        self.validate_code(
+            user=user,
+            code=code,
+            purpose=CodePurpose.RESET_PASSWORD,
+        )
+        with transaction.atomic():
+            user.password = make_password(new_password)
+            user.save()
+            ConfirmCode.objects.filter(code=code).update(is_used=True)
+        return Response(
+            {"message": "Password changed successfully."},
+            status=status.HTTP_200_OK
         )
 
 

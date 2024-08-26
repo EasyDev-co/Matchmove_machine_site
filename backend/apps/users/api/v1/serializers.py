@@ -52,7 +52,6 @@ class UserTokenObtainPairSerializer(TokenObtainPairSerializer):
         }
 
 
-
 class EmailSerializer(serializers.Serializer):
     """Сериализатор для проверки email."""
     email = serializers.EmailField()
@@ -67,3 +66,23 @@ class EmailSerializer(serializers.Serializer):
 class EmailAndCodeSerializer(EmailSerializer):
     """Сериализатор для проверки кода."""
     code = serializers.CharField()
+
+
+class PasswordChangeSerializer(EmailAndCodeSerializer):
+    """Сериализатор для смены пароля."""
+    new_password = serializers.CharField(
+        write_only=True,
+        required=True,
+        validators=[
+            validate_custom_password,
+            validate_password,
+        ]
+    )
+    confirm_password = serializers.CharField(
+        write_only=True,
+        required=True,
+        validators=[
+            validate_custom_password,
+            validate_password,
+        ]
+    )
