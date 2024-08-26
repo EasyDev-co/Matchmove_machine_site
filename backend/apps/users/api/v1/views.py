@@ -7,6 +7,7 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.views import TokenObtainPairView
 from apps.users.api.v1.serializers import (
     EmailAndCodeSerializer,
+    EmailSerializer,
     UserRegistrationSerializer,
     UserTokenObtainPairSerializer
 )
@@ -95,6 +96,28 @@ class EmailVerificationCodeAPIView(ConfirmCodeMixin, APIView):
                 'refresh': str(refresh_token),
                 'access': str(refresh_token.access_token)
             }, status=status.HTTP_201_CREATED
+        )
+
+
+class ResetPasswordAPIView(APIView):
+    """Представление для восстановления пароля."""
+    email_serializer = EmailSerializer
+
+    def post(self, request, *args, **kwargs):
+        serializer = self.email_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        email = serializer.validated_data["email"]
+
+        user = User.objects.get(email=email)
+
+        send_confirm_code.delay(
+            user_id=user.pk,
+            code_purpose=CodePurpose.RESET_PASSWORD,
+        )
+
+        return Response(
+            data={'message': 'A code for password reset has been sent to the specified email.'},
+            status=status.HTTP_200_OK
         )
 
 
