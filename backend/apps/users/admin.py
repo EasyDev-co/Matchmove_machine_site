@@ -87,6 +87,7 @@ class UserAdmin(BaseUserAdmin):
         "username",
         # "linkedin",
         # "instagram",
+
     )
     search_fields = (
         "email",
