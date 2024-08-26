@@ -1,24 +1,25 @@
+from rest_framework import viewsets, status
 from rest_framework.permissions import IsAuthenticated
-from rest_framework.views import APIView
 from rest_framework.response import Response
-from .serializers import UserGetSerializer, UserUpdateSerializer
+from .serializers import UserSerializer
+from .permissions import IsOwner
 
 
-class UserAPIView(APIView):
-    permission_classes = [
-        IsAuthenticated
-    ]  # Ограничиваем доступ только для авторизованных пользователей
+class UserViewSet(viewsets.GenericViewSet):
+    serializer_class = UserSerializer
+    permission_classes = [IsAuthenticated, IsOwner]
 
-    def get(self, request, *args, **kwargs):
-        """Получение детальной информации о пользователе."""
-        user = request.user
-        serializer = UserGetSerializer(user)
+    def get_object(self):
+        return self.request.user
+
+    def retrieve(self, request, *args, **kwargs):
+        user = self.get_object()
+        serializer = self.get_serializer(user)
         return Response(serializer.data)
 
-    def patch(self, request, *args, **kwargs):
-        """Обновление информации о пользователе."""
-        user = request.user
-        serializer = UserUpdateSerializer(user, data=request.data, partial=True)
+    def partial_update(self, request, *args, **kwargs):
+        user = self.get_object()
+        serializer = self.get_serializer(user, data=request.data, partial=True)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)

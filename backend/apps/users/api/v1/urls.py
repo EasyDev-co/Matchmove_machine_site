@@ -1,6 +1,6 @@
-from django.urls import path, include
-from .views import UserAPIView
+from django.urls import path
+from .views import UserViewSet
 
 urlpatterns = [
-    path("user/", UserAPIView.as_view(), name="user"),
+    path("user/", UserViewSet.as_view({'get': 'retrieve', 'patch': 'partial_update'}), name="user"),
 ]
