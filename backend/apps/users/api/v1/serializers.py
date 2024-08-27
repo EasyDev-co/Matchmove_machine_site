@@ -1,5 +1,37 @@
 from rest_framework import serializers
 from apps.users.models import User
+from rest_framework.exceptions import ValidationError
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+from rest_framework_simplejwt.tokens import RefreshToken
+from django.contrib.auth import get_user_model, authenticate
+from django.contrib.auth.password_validation import validate_password
+from apps.users.validators import validate_custom_password
+
+User = get_user_model()
+
+
+class UserRegistrationSerializer(serializers.ModelSerializer):
+    """"Сериалайзер пользователя."""
+
+    password = serializers.CharField(
+        write_only=True,
+        required=True,
+        validators=[
+            validate_custom_password,
+            validate_password
+        ]
+    )
+
+    class Meta:
+        model = User
+        fields = (
+            "username",
+            "email",
+            "password",
+        )
+        extra_kwargs = {
+            "password": {"write_only": True}
+        }
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -17,4 +49,63 @@ class UserSerializer(serializers.ModelSerializer):
             "facebook",
             "vimeo",
             "profile_picture",
+            "password",
         ]
+        extra_kwargs = {
+            "password": {"write_only": True}
+        }
+
+
+class UserTokenObtainPairSerializer(TokenObtainPairSerializer):
+    """Сериализатор для авторизации пользователя."""
+
+    def validate(self, attrs):
+        authenticate_kwargs = {
+            "username": attrs["username"],
+            "password": attrs["password"],
+        }
+        user = authenticate(**authenticate_kwargs)
+        if user is None or not user.is_active:
+            raise ValidationError("No such user.")
+        refresh = RefreshToken.for_user(user)
+        refresh["username"] = user.username
+        return {
+            "refresh": str(refresh),
+            "access": str(refresh.access_token),
+        }
+
+
+class EmailSerializer(serializers.Serializer):
+    """Сериализатор для проверки email."""
+    email = serializers.EmailField()
+
+    def validate_email(self, value):
+        user = User.objects.filter(email=value).first()
+        if not user:
+            raise ValidationError("No such user.")
+        return value
+
+
+class EmailAndCodeSerializer(EmailSerializer):
+    """Сериализатор для проверки кода."""
+    code = serializers.CharField()
+
+
+class PasswordChangeSerializer(EmailAndCodeSerializer):
+    """Сериализатор для смены пароля."""
+    new_password = serializers.CharField(
+        write_only=True,
+        required=True,
+        validators=[
+            validate_custom_password,
+            validate_password,
+        ]
+    )
+    confirm_password = serializers.CharField(
+        write_only=True,
+        required=True,
+        validators=[
+            validate_custom_password,
+            validate_password,
+        ]
+    )

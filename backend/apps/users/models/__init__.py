@@ -1,1 +1,2 @@
-from .models import User
+from .users import User
+from .code import ConfirmCode
