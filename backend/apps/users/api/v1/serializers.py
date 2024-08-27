@@ -56,19 +56,64 @@ class UserSerializer(serializers.ModelSerializer):
         }
 
 
+class UserGetSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = [
+            "username",
+            "email",
+            "website",
+            "portfolio",
+            "about_me",
+            "linkedin",
+            "instagram",
+            "youtube",
+            "facebook",
+            "vimeo",
+            "profile_picture",
+        ]
+
+
+class UserUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = [
+            "username",
+            "email",
+            "website",
+            "portfolio",
+            "about_me",
+            "linkedin",
+            "instagram",
+            "youtube",
+            "facebook",
+            "vimeo",
+            "profile_picture",
+        ]
+
+
 class UserTokenObtainPairSerializer(TokenObtainPairSerializer):
     """Сериализатор для авторизации пользователя."""
 
     def validate(self, attrs):
         authenticate_kwargs = {
-            "username": attrs["username"],
+            # Используем email вместо username для аутентификации
+            "email": attrs.get("email"),
+            "username": attrs.get("username"),
             "password": attrs["password"],
         }
         user = authenticate(**authenticate_kwargs)
+
         if user is None or not user.is_active:
-            raise ValidationError("No such user.")
+            raise ValidationError("Нет такого пользователя.")
+        if not user.is_verified:
+            raise ValidationError("Email не подтвержден.")
+
         refresh = RefreshToken.for_user(user)
+        refresh["email"] = user.email
         refresh["username"] = user.username
+        refresh["role"] = user.role
+
         return {
             "refresh": str(refresh),
             "access": str(refresh.access_token),

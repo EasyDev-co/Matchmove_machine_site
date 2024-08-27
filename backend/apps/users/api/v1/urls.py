@@ -1,3 +1,6 @@
+from django.urls import path, include
+from .views import UserAPIView
+
 from django.urls import path
 from .views import UserViewSet
 from apps.users.api.v1.views import (
@@ -11,6 +14,8 @@ from apps.users.api.v1.views import (
 
 
 urlpatterns = [
+    path("user/", UserAPIView.as_view(), name="user"),
+    path("parent/", include("apps.users.api.v1.parent.urls")),
     path("user/", UserViewSet.as_view({'get': 'retrieve', 'patch': 'partial_update'}), name="user"),
     path("register/", UserRegisterView.as_view(), name="register"),
     path("login/", UserLoginView.as_view(), name="login"),

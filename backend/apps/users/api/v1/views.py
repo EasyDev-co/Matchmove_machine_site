@@ -1,10 +1,9 @@
 from rest_framework import viewsets, status
 from rest_framework.permissions import IsAuthenticated
-from django.db import transaction
-from rest_framework import status, serializers
+from django.db import transaction, IntegrityError
 from rest_framework.response import Response
-from .serializers import UserSerializer
 from rest_framework.views import APIView
+from .serializers import UserSerializer
 from django.contrib.auth import get_user_model
 from django.contrib.auth.hashers import make_password
 from rest_framework_simplejwt.tokens import RefreshToken
@@ -15,10 +14,11 @@ from apps.users.api.v1.serializers import (
     PasswordChangeSerializer,
     UserRegistrationSerializer,
     UserTokenObtainPairSerializer,
+    UserGetSerializer,
+    UserUpdateSerializer,
 )
 from apps.users.tasks import send_confirm_code
 from apps.exeptions.api_exeptions import InvalidCode
-
 from apps.users.models.code import CodePurpose, ConfirmCode
 
 User = get_user_model()
@@ -38,6 +38,53 @@ class UserViewSet(viewsets.GenericViewSet):
 
     def partial_update(self, request, *args, **kwargs):
         user = self.get_object()
+        serializer = UserUpdateSerializer(instance=user, data=request.data, partial=True)
+        if serializer.is_valid():
+            try:
+                serializer.save()
+                return Response(data=serializer.data, status=status.HTTP_200_OK)
+            except IntegrityError as e:
+                error_message = str(e).lower()
+                if "email" in error_message:
+                    error_data = {"email": ["Адрес электронной почты недоступен"]}
+                elif "phone_number" in error_message:
+                    error_data = {"phone_number": ["Номер телефона недоступен"]}
+                else:
+                    error_data = {"message": "Произошла ошибка при сохранении"}
+                return Response(data=error_data, status=status.HTTP_400_BAD_REQUEST)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class UserAPIView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, *args, **kwargs):
+        """Получение детальной информации о пользователе."""
+        instance = request.user
+        user_data = User.objects.get(pk=instance.pk)
+        user_serializer = UserGetSerializer(user_data)
+        return Response(user_serializer.data)
+
+    def patch(self, request, *args, **kwargs):
+        """Изменение информации о пользователе."""
+        instance = request.user
+        serializer = UserUpdateSerializer(
+            instance=instance, data=request.data, partial=True
+        )
+        if serializer.is_valid():
+            try:
+                serializer.save()
+                return Response(data=serializer.data, status=status.HTTP_200_OK)
+            except IntegrityError as e:
+                error_message = str(e).lower()
+                if "email" in error_message:
+                    error_data = {"email": ["Адрес электронной почты недоступен"]}
+                elif "phone_number" in error_message:
+                    error_data = {"phone_number": ["Номер телефона недоступен"]}
+                else:
+                    error_data = {"message": "Произошла ошибка при сохранении"}
+                return Response(data=error_data, status=status.HTTP_400_BAD_REQUEST)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class UserRegisterView(APIView):
@@ -175,7 +222,6 @@ class PasswordChangeAPIView(ConfirmCodeMixin, APIView):
 
 class UserLoginView(TokenObtainPairView):
     """Вьюсет логина."""
-
     serializer_class = UserTokenObtainPairSerializer
 
 
