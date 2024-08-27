@@ -33,6 +33,10 @@ class User(UUIDMixin, TimeStampedMixin, AbstractUser):
     user_permissions = models.ManyToManyField(
         Permission, related_name="custom_user_permissions"
     )
+    is_verified = models.BooleanField(
+        default=False,
+        verbose_name="Подтверждение email",
+    )
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = ["username"]

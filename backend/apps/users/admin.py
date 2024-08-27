@@ -26,6 +26,7 @@ class UserAdmin(BaseUserAdmin):
                     "about_me",
                     "website",
                     "portfolio",
+                    "is_verified",
                 )
             },
         ),
@@ -81,6 +82,7 @@ class UserAdmin(BaseUserAdmin):
                     "youtube",
                     "facebook",
                     "vimeo",
+                    "is_verified",
                 ),
             },
         ),
@@ -89,9 +91,9 @@ class UserAdmin(BaseUserAdmin):
         "id",
         "email",
         "username",
-        # "linkedin",
-        # "instagram",
-
+        "linkedin",
+        "instagram",
+        "is_verified",
     )
     search_fields = (
         "email",
