@@ -15,14 +15,12 @@ RUN mkdir -p /opt/src/static/ && \
     pip install --upgrade pip && \
     pip install 'poetry>=1.4.2' && \
     poetry config virtualenvs.create false && \
-    poetry install --no-root --no-dev
+    poetry install --no-root --only main
 
 COPY . .
 
-EXPOSE 8000
+COPY celery_start.sh /celery_start.sh
 
-COPY ./entrypoint.sh /opt/backend/entrypoint.sh
+RUN chmod +x /celery_start.sh
 
-RUN chmod +x /opt/backend/entrypoint.sh
-
-ENTRYPOINT ["/opt/backend/entrypoint.sh"]
+ENTRYPOINT ["/celery_start.sh"]

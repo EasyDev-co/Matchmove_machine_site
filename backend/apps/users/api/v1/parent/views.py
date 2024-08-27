@@ -3,13 +3,12 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
 from .serializers import PasswordChangeSerializer
-from apps.users.api.v1.permissions import IsOwner
 
 
 class PasswordChangeView(APIView):
     """Представление для смены пароля пользователя."""
 
-    permission_classes = [IsAuthenticated, IsOwner]
+    permission_classes = [IsAuthenticated]
 
     def patch(self, request, *args, **kwargs):
         serializer = PasswordChangeSerializer(
