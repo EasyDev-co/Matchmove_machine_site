@@ -1,4 +1,5 @@
 from django.urls import path
+from .views import UserViewSet
 from apps.users.api.v1.views import (
     UserRegisterView,
     UserLoginView,
@@ -10,6 +11,7 @@ from apps.users.api.v1.views import (
 
 
 urlpatterns = [
+    path("user/", UserViewSet.as_view({'get': 'retrieve', 'patch': 'partial_update'}), name="user"),
     path("register/", UserRegisterView.as_view(), name="register"),
     path("login/", UserLoginView.as_view(), name="login"),
     path("logout/", UserLogoutView.as_view(), name="logout"),

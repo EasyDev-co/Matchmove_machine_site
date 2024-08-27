@@ -1,6 +1,9 @@
+from rest_framework import viewsets, status
+from rest_framework.permissions import IsAuthenticated
 from django.db import transaction
 from rest_framework import status, serializers
 from rest_framework.response import Response
+from .serializers import UserSerializer
 from rest_framework.views import APIView
 from django.contrib.auth import get_user_model
 from django.contrib.auth.hashers import make_password
@@ -18,8 +21,23 @@ from apps.exeptions.api_exeptions import InvalidCode
 
 from apps.users.models.code import CodePurpose, ConfirmCode
 
-
 User = get_user_model()
+
+
+class UserViewSet(viewsets.GenericViewSet):
+    serializer_class = UserSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_object(self):
+        return self.request.user
+
+    def retrieve(self, request, *args, **kwargs):
+        user = self.get_object()
+        serializer = self.get_serializer(user)
+        return Response(serializer.data)
+
+    def partial_update(self, request, *args, **kwargs):
+        user = self.get_object()
 
 
 class UserRegisterView(APIView):
@@ -163,6 +181,7 @@ class UserLoginView(TokenObtainPairView):
 
 class UserLogoutView(APIView):
     """Вьюсет для логаута."""
+
     def post(self, request):
         try:
             logout_token = request.data["refresh"]

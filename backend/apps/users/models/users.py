@@ -49,5 +49,4 @@ class User(UUIDMixin, TimeStampedMixin, AbstractUser):
         ordering = ["email"]
 
     def __str__(self):
-
         return self.username

@@ -1,4 +1,5 @@
 from rest_framework import serializers
+from apps.users.models import User
 from rest_framework.exceptions import ValidationError
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.tokens import RefreshToken
@@ -28,6 +29,28 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
             "email",
             "password",
         )
+        extra_kwargs = {
+            "password": {"write_only": True}
+        }
+
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = [
+            "username",
+            "email",
+            "website",
+            "portfolio",
+            "about_me",
+            "linkedin",
+            "instagram",
+            "youtube",
+            "facebook",
+            "vimeo",
+            "profile_picture",
+            "password",
+        ]
         extra_kwargs = {
             "password": {"write_only": True}
         }
