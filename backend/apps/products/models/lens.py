@@ -1,16 +1,11 @@
-from enum import Enum
 from django.db import models
 from django.utils.translation import gettext_lazy as _
-from apps.utils.models_mixins.models_mixins import UUIDMixin
+from apps.utils.models_mixins.models_mixins import EnumMixin, UUIDMixin
 
 
-class LensType(Enum):
+class LensType(EnumMixin):
     FIXED = "fixed"
     ZOOM = "zoom"
-
-    @classmethod
-    def choices(cls):
-        return [(tag.value, tag.name.capitalize()) for tag in cls]
 
 
 class Lens(UUIDMixin):

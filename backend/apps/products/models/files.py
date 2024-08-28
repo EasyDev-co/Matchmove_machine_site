@@ -4,14 +4,14 @@ from apps.utils.models_mixins.models_mixins import UUIDMixin
 
 
 class File(UUIDMixin):
-    """"Модель файла."""
-    file = models.ImageField(
-        upload_to="files/",
-        verbose_name=_("Файл")
+    """Модель файла для синхронизации с сервером."""
+    file = models.CharField(
+        max_length=255,
+        verbose_name=_("Идентификатор Файла")
     )
 
     def __str__(self):
-        return f"File {self.id}"
+        return f"File {self.file}"
 
     class Meta:
         verbose_name = _("Файл")

@@ -1,4 +1,3 @@
-from enum import Enum
 from django.db import models
 from django.utils import timezone
 from datetime import timedelta
@@ -9,27 +8,20 @@ from apps.products.models.lens import Lens
 from apps.products.models.file_formats import Format
 from apps.users.models.users import User
 from apps.products.models.files import File
+from apps.utils.models_mixins.models_mixins import EnumMixin
 
 
-class AccessType(Enum):
+class AccessType(EnumMixin):
     FREE = "free"
     PAID = "paid"
     SUBSCRIPTION = "subscription"
 
-    @classmethod
-    def choices(cls):
-        return [(tag.value, tag.name.capitalize()) for tag in cls]
 
-
-class AssetCategory(Enum):
+class AssetCategory(EnumMixin):
     DISTORTION_GRIDS = "distortion_grids"
     PRESETS = "presets"
     ST_MAP = "st_map"
     FULL_ARCHIVES = "full_archives"
-
-    @classmethod
-    def choices(cls):
-        return [(tag.value, tag.name.replace("_", " ").capitalize()) for tag in cls]
 
 
 class Product(UUIDMixin, TimeStampedMixin):
