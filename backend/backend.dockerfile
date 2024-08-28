@@ -21,8 +21,8 @@ COPY . .
 
 EXPOSE 8000
 
-COPY ./entrypoint.sh /opt/backend/entrypoint.sh
+COPY ./entrypoint.sh /entrypoint.sh
 
-RUN chmod +x /opt/backend/entrypoint.sh
+RUN chmod +x /entrypoint.sh
 
-ENTRYPOINT ["/opt/backend/entrypoint.sh"]
+ENTRYPOINT ["/entrypoint.sh"]

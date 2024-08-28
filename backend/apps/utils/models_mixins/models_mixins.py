@@ -1,5 +1,6 @@
 import uuid
 import logging
+from enum import Enum
 
 from django.db import models
 from django.utils.translation import gettext_lazy as _
@@ -45,3 +46,17 @@ class SingletonModelMixin(models.Model):
     def load(cls):
         obj, created = cls.objects.get_or_create(pk=1)
         return obj
+
+
+class DjangoAdaptedEnumMixin(Enum):
+    """Миксин для Enum классов."""
+
+    @classmethod
+    def choices(cls):
+        return [(tag.value, cls.format_name(tag.name)) for tag in cls]
+
+    @classmethod
+    def format_name(cls, name):
+        if "_" in name:
+            return name.replace("_", " ").capitalize()
+        return name.capitalize()

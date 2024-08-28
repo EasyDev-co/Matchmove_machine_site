@@ -30,6 +30,7 @@ INSTALLED_APPS = [
     "corsheaders",
     # Приложения
     "apps.users",
+    "apps.products",
 ]
 
 MIDDLEWARE = [
