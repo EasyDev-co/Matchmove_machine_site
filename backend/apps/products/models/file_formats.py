@@ -25,3 +25,7 @@ class Format(UUIDMixin):
 
     def __str__(self):
         return self.format_type.capitalize()
+
+    class Meta:
+        verbose_name = _("Формат файла")
+        verbose_name_plural = _("Формат файлов")

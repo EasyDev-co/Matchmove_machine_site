@@ -1,5 +1,5 @@
-from .cameras import Camera
-from .file_formats import FileFormat
-from .files import File
-from .lens import Lens
-from .products import Product
+from .cameras import Camera #noqa
+from .file_formats import FileFormat #noqa
+from .files import File #noqa
+from .lens import Lens #noqa
+from .products import Product #noqa

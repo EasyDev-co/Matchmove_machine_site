@@ -1,6 +1,16 @@
+from enum import Enum
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from apps.utils.models_mixins.models_mixins import UUIDMixin
+
+
+class LensType(Enum):
+    FIXED = "fixed"
+    ZOOM = "zoom"
+
+    @classmethod
+    def choices(cls):
+        return [(tag.value, tag.name.capitalize()) for tag in cls]
 
 
 class Lens(UUIDMixin):
@@ -14,9 +24,14 @@ class Lens(UUIDMixin):
         verbose_name=_("Фокусное расстояние")
     )
     lens_type = models.CharField(
-        max_length=20,
+        max_length=10,
+        choices=LensType.choices(),
         verbose_name=_("Тип объектива")
     )
+
+    class Meta:
+        verbose_name = _("Объектив")
+        verbose_name_plural = _("Объективы")
 
     def __str__(self):
         return f"{self.brand} {self.focal_length} ({self.lens_type})"

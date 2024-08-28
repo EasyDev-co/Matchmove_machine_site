@@ -12,3 +12,7 @@ class File(UUIDMixin):
 
     def __str__(self):
         return f"File {self.id}"
+
+    class Meta:
+        verbose_name = _("Файл")
+        verbose_name_plural = _("Файлы")

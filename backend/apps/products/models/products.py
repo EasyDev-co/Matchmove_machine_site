@@ -112,3 +112,8 @@ class Product(UUIDMixin, TimeStampedMixin):
     def added_last_year(cls):
         last_year = timezone.now() - timedelta(days=365)
         return cls.objects.filter(date_added__gte=last_year)
+
+    class Meta:
+        verbose_name = _("Продукт")
+        verbose_name_plural = _("Продукты")
+        ordering = ["price"]

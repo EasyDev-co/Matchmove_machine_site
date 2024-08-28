@@ -16,3 +16,7 @@ class Camera(UUIDMixin):
 
     def __str__(self):
         return f"{self.brand} {self.model_name}"
+
+    class Meta:
+        verbose_name = _("Камера")
+        verbose_name_plural = _("Камеры")

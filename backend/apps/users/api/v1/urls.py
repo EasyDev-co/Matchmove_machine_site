@@ -1,6 +1,5 @@
 from django.urls import path, include
 from .views import UserAPIView
-
 from django.urls import path
 from .views import UserViewSet
 from apps.users.api.v1.views import (
