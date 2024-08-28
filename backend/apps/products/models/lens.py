@@ -1,9 +1,9 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
-from apps.utils.models_mixins.models_mixins import EnumMixin, UUIDMixin
+from apps.utils.models_mixins.models_mixins import DjangoAdaptedEnumMixin, UUIDMixin
 
 
-class LensType(EnumMixin):
+class LensType(DjangoAdaptedEnumMixin):
     FIXED = "fixed"
     ZOOM = "zoom"
 

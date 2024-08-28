@@ -8,16 +8,16 @@ from apps.products.models.lens import Lens
 from apps.products.models.file_formats import Format
 from apps.users.models.users import User
 from apps.products.models.files import File
-from apps.utils.models_mixins.models_mixins import EnumMixin
+from apps.utils.models_mixins.models_mixins import DjangoAdaptedEnumMixin
 
 
-class AccessType(EnumMixin):
+class AccessType(DjangoAdaptedEnumMixin):
     FREE = "free"
     PAID = "paid"
     SUBSCRIPTION = "subscription"
 
 
-class AssetCategory(EnumMixin):
+class AssetCategory(DjangoAdaptedEnumMixin):
     DISTORTION_GRIDS = "distortion_grids"
     PRESETS = "presets"
     ST_MAP = "st_map"

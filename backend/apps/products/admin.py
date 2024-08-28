@@ -53,15 +53,6 @@ class ProductAdmin(admin.ModelAdmin):
     ordering = ("price",)
     readonly_fields = ("date_added",)
 
-    def has_add_permission(self, request):
-        return True
-
-    def has_delete_permission(self, request, obj=None):
-        return True
-
-    def has_change_permission(self, request, obj=None):
-        return True
-
 
 @admin.register(Lens)
 class LensAdmin(admin.ModelAdmin):

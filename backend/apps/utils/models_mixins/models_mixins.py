@@ -48,7 +48,7 @@ class SingletonModelMixin(models.Model):
         return obj
 
 
-class EnumMixin(Enum):
+class DjangoAdaptedEnumMixin(Enum):
     """Миксин для Enum классов."""
 
     @classmethod
