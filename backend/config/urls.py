@@ -5,9 +5,9 @@ from config import settings
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("api/", include("apps.users.api.urls")),
+    path("api/users/", include("apps.users.api.urls")),
+    path("api/products/", include("apps.products.api.urls")),
 ]
-
 
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
