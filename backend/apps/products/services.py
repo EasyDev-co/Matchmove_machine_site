@@ -38,7 +38,6 @@ class FTPDownloadUploadService:
         self.password = password
         self.port = port
 
-
     def upload_file(self, file_path: str, file_id: str) -> None:
         """Загрузка файла на FTP с именем по ID."""
         remote_file_path = f"{file_id}"
@@ -47,7 +46,6 @@ class FTPDownloadUploadService:
             with open(file_path, "rb") as local_file:
                 ftp.storbinary(f"STOR {remote_file_path}", local_file)
 
-
     def download_file(self, file_id: str, destination_path: str) -> None:
         """Скачивание файла с FTP по его ID."""
         remote_file_path = f"{file_id}"
@@ -55,9 +53,3 @@ class FTPDownloadUploadService:
         with self.ftp_manager.connect_and_login(self.host, self.username, self.password, self.port) as ftp:
             with open(destination_path, "wb") as local_file:
                 ftp.retrbinary(f"RETR {remote_file_path}", local_file.write)
-
-
-    def get_file_by_id(self, file_id: str) -> File:
-        """Получение файла по его ID."""
-        print(f"Fetching file with ID: {file_id}")
-        return File.objects.get(id=file_id)
