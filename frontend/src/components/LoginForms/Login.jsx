@@ -1,19 +1,24 @@
 import { useState } from "react";
-import { eyesvg, warningsvg, closesvg } from "../../assets/svg/svgimages";
+import {closesvg, googleIconsvg, facebooksvg, applesvg, microsoftsvg } from "../../assets/svg/svgimages";
 import Button from "../Button";
+import Password from "../Forms/Password";
+import Email from "../Forms/Email";
+import { useNavigate } from "react-router-dom";
 
 
-const Login = ({ onClose }) => {
- const [formData, setFormData] = useState({
-    username: '',
+const Login = ({ onModalClose }) => {
+  const [formData, setFormData] = useState({
+    email: '',
     password: '',
     rememberMe: false,
   });
 
   const [errors, setErrors] = useState({
-    username: '',
+    email: '',
     password: '',
   });
+
+  const navigate = useNavigate()
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -22,7 +27,6 @@ const Login = ({ onClose }) => {
       [name]: type === 'checkbox' ? checked : value,
     });
 
-    // Clear the error message for the field when the user starts typing
     setErrors({
       ...errors,
       [name]: '',
@@ -42,7 +46,7 @@ const Login = ({ onClose }) => {
     if (!formData.username) {
       newErrors.username = 'Email is required';
       valid = false;
-    } else if (!validateEmail(formData.username)) {
+    } else if (!validateEmail(formData.email)) {
       newErrors.username = 'Invalid email format';
       valid = false;
     }
@@ -55,53 +59,36 @@ const Login = ({ onClose }) => {
     setErrors(newErrors);
 
     if (valid) {
-      // Handle form submission logic here
       console.log('Form data submitted:', formData);
     }
   };
 
+  const handleGoRegistration =()=>{
+    navigate("/registration")
+  }
+
   return (
-    <div className="authorization-popup">
+
       <div className="popup-content">
-      <button className="closebtn">{closesvg}</button>
+        <button className="closebtn" onClick={onModalClose}>{closesvg}</button>
         <div className="login-form inputsbg">
           <div className="login-wrap">
             <h2 className="h2-medium">Log in to your account</h2>
             <form onSubmit={handleSubmit}>
               <div className="form-group">
-                <input
-                  type="text"
-                  id="username"
-                  name="username"
-                  placeholder="E-mail or login"
-                  value={formData.username}
-                  onChange={handleChange}
-                  className={errors.username ? "error" : ""}
+
+              <Email
+                  formData={formData}
+                  handleChange={handleChange}
+                  errors={errors}
+                  validateEmail={validateEmail}
                 />
-                {errors.username && (
-                  <div className="error-message">
-                    {warningsvg} {errors.username}
-                  </div>
-                )}
-                <div className="pass">
-                  <div className={`inputSvg ${errors.password ? "error" : ""}`}>
-                    {eyesvg}
-                  </div>
-                  <input
-                    type="password"
-                    id="password"
-                    name="password"
-                    placeholder="Password"
-                    value={formData.password}
-                    onChange={handleChange}
-                    className={errors.password ? "error" : ""}
-                  />
-                </div>
-                {errors.password && (
-                  <div className="error-message">
-                    {warningsvg} {errors.password}
-                  </div>
-                )}
+                <Password
+                  formData={formData}
+                  setFormData={setFormData}
+                  errors={errors}
+                  setErrors={setErrors}
+                />
                 <div className="checkbox-group">
                   <input
                     type="checkbox"
@@ -123,6 +110,7 @@ const Login = ({ onClose }) => {
                     iconType="arrowRight"
                     variant="outline-grey"
                     type="button"
+                    onClick={handleGoRegistration}
                   />
                 </div>
               </div>
@@ -131,21 +119,19 @@ const Login = ({ onClose }) => {
         </div>
         <div className="login-form auth">
           <div className="login-wrap">
-          <h2 className="h2-medium">Sign in with</h2>
-          <div className="auth-buttons">
-            <button className="auth-button google">Login with Google</button>
-            <button className="auth-button facebook">
-              Login with Facebook
-            </button>
-            <button className="auth-button git">Login with GitHub</button>
-            <button className="auth-button git">Login with GitHub</button>
-          </div>
+            <h2 className="h2-medium">Sign in with</h2>
+            <div className="auth-buttons">
+              <button className="auth-button">{googleIconsvg} Sign in with Google</button>
+              <button className="auth-button">
+              {facebooksvg} Sign in with Facebook
+              </button>
+              <button className="auth-button">{applesvg} Sign in with Apple</button>
+              <button className="auth-button">{microsoftsvg}Sign in with Microsoft</button>
+            </div>
           </div>
         </div>
       </div>
-    </div>
   );
 };
-
 
 export default Login;
