@@ -41,7 +41,7 @@ class FTPDownloadUploadService:
 
     def upload_file(self, file_path: str, file_id: str) -> None:
         """Загрузка файла на FTP с именем по ID."""
-        remote_file_path = f"{file_id}"  # Используем ID в качестве имени файла
+        remote_file_path = f"{file_id}"
 
         with self.ftp_manager.connect_and_login(self.host, self.username, self.password, self.port) as ftp:
             with open(file_path, "rb") as local_file:
@@ -50,7 +50,7 @@ class FTPDownloadUploadService:
 
     def download_file(self, file_id: str, destination_path: str) -> None:
         """Скачивание файла с FTP по его ID."""
-        remote_file_path = f"{file_id}"  # Имя файла - это просто ID
+        remote_file_path = f"{file_id}"
 
         with self.ftp_manager.connect_and_login(self.host, self.username, self.password, self.port) as ftp:
             with open(destination_path, "wb") as local_file:

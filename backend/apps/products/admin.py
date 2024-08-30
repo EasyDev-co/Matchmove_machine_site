@@ -84,21 +84,34 @@ class FileAdmin(admin.ModelAdmin):
     list_display = ("id", "file")
     search_fields = ("file",)
     ordering = ("id",)
+    fields = ('file',)
+    actions = ('upload_to_ftp',)
 
-    def save_model(self, request, obj, form, change):
-        """Автоматически загружает файл на FTP при сохранении объекта."""
-        super().save_model(request, obj, form, change)
-        if not change:  # Проверяем, является ли это новой записью
+    def get_ftp_service(self):
+        """Создает и возвращает экземпляр FTPDownloadUploadService."""
+        return FTPDownloadUploadService(
+            ftp_manager=FTPManager(),
+            host=os.getenv('FTP_HOST'),
+            username=os.getenv('FTP_USERNAME'),
+            password=os.getenv('FTP_PASSWORD'),
+        )
+
+    def upload_to_ftp(self, request, queryset):
+        """Загружает выделенные файлы на FTP."""
+        ftp_service = self.get_ftp_service()
+
+        for file in queryset:
             try:
-                ftp_service = FTPDownloadUploadService(
-                    ftp_manager=FTPManager(),
-                    host=os.getenv('FTP_HOST'),
-                    username=os.getenv('FTP_USERNAME'),
-                    password=os.getenv('FTP_PASSWORD'),
+                # Получаем локальный файл по его относительному пути
+                local_file_path = os.path.join(settings.MEDIA_ROOT, str(file.id))
+                # Загружаем файл на FTP с именем, соответствующим id
+                ftp_service.upload_file(local_file_path, str(file.id))
+                self.message_user(
+                    request, f"Файл ID {file.id} успешно загружен на FTP."
                 )
-                # Получаем локальный файл
-                local_file_path = os.path.join(settings.MEDIA_ROOT, str(obj.file))  # Приведение к строке
-                ftp_service.upload_file(local_file_path)
-                self.message_user(request, "Файл успешно загружен на FTP.")
             except Exception as e:
-                self.message_user(request, f"Ошибка при загрузке: {str(e)}", level='error')
+                self.message_user(
+                    request, f"Ошибка при загрузке файла ID {file.id}: {str(e)}", level='error'
+                )
+
+    upload_to_ftp.short_description = "Загрузить выделенные файлы на FTP"
