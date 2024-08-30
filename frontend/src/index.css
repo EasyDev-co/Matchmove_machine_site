@@ -20,8 +20,7 @@ input, select, textarea {
   border: none;
   resize: none;
 }
-
-textarea{
+textarea {
   height: 320px;
   width: 100% !important;
 }
@@ -33,7 +32,7 @@ textarea{
 }
 
 .content {
-  flex: 1; 
+  flex: 1;
 }
 
 .h2-bold {
@@ -42,12 +41,22 @@ textarea{
   text-align: left;
 }
 
-.h2-medium{
-font-weight: 500;
-font-size: 48px;
-
+.h2-medium {
+  font-weight: 500;
+  font-size: 48px;
 }
 
+.h3-medium {
+  font-weight: 500;
+  font-size: 25px;
+  line-height: 42px;
+}
+
+.form-group .h3-medium {
+  color: #B3B3B3;
+  text-align: center;
+  margin-bottom: 40px;
+}
 .custom-button {
   display: flex;
   flex-direction: row;
@@ -198,6 +207,16 @@ font-size: 48px;
   cursor: pointer;
 }
 
+.arrowclosebtn {
+  position: absolute;
+  top: 7%;
+  left: 5%;
+  z-index: 1001;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
 .popup-content {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -272,6 +291,7 @@ font-size: 48px;
 
 .login-wrap.register{
   max-width: 380px;
+  min-height: fit-content;
 }
 
 .form-group{
@@ -299,6 +319,27 @@ font-size: 48px;
 .form-group textarea:hover,
 .form-group select:hover  {
   box-shadow: 0 0 0 1px #537EEF;
+}
+
+.reseted {
+  place-self: center;
+}
+
+.underform {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.forgot-password-btn{
+  background: transparent;
+  border: none;
+  font-size: 14px;
+  cursor: pointer;
+  font-weight: 200;
+  font-size: 17px;
+  color: #B3B3B3;
+  font-family: 'Montserrat', sans-serif;
 }
 
 .pass {
@@ -353,7 +394,6 @@ select.error {
 .checkbox-group {
   display: flex;
   align-items: center;
-  margin-top: 10px;
 }
 
 .checkbox-group input[type="checkbox"] {
@@ -469,17 +509,23 @@ select.error {
 }
 @media screen and (max-width: 500px) {
   .h2-bold {
-    font-size: 32px;
-    font-weight: 700;
-    line-height: 32px;
+      font-size: 32px;
+      font-weight: 700;
+      line-height: 32px;
+    }
+  
+    .h2-medium {
+      font-weight: 400;
+      font-size: 24px;
+    }
+  
+    .login-wrap {
+      padding: 40px 0;
+    }
+  
+    .h3-medium {
+      font-weight: 400;
+      font-size: 24px;
+      line-height: 31px;
+    }
   }
-
-  .h2-medium {
-    font-weight: 400;
-    font-size: 24px;
-  }
-
-  .login-wrap {
-    padding: 40px 0;
-  }
-}

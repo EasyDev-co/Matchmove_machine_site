@@ -18,7 +18,7 @@ const Login = ({ onModalClose }) => {
     password: '',
   });
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -26,7 +26,6 @@ const Login = ({ onModalClose }) => {
       ...formData,
       [name]: type === 'checkbox' ? checked : value,
     });
-
     setErrors({
       ...errors,
       [name]: '',
@@ -43,11 +42,11 @@ const Login = ({ onModalClose }) => {
     let valid = true;
     let newErrors = {};
 
-    if (!formData.username) {
-      newErrors.username = 'Email is required';
+    if (!formData.email) {
+      newErrors.email = 'Email is required';
       valid = false;
     } else if (!validateEmail(formData.email)) {
-      newErrors.username = 'Invalid email format';
+      newErrors.email = 'Invalid email format';
       valid = false;
     }
 
@@ -63,32 +62,38 @@ const Login = ({ onModalClose }) => {
     }
   };
 
-  const handleGoRegistration =()=>{
-    navigate("/registration")
-  }
+  const handleGoRegistration = () => {
+    navigate("/registration");
+  };
+
+  const handleForgotPassword = () => {
+    navigate("/reset-password");
+  };
+
 
   return (
-
-      <div className="popup-content">
-        <button className="closebtn" onClick={onModalClose}>{closesvg}</button>
-        <div className="login-form inputsbg">
-          <div className="login-wrap">
-            <h2 className="h2-medium">Log in to your account</h2>
-            <form onSubmit={handleSubmit}>
-              <div className="form-group">
-
+    <div className="popup-content">
+      <button className="closebtn" onClick={onModalClose}>
+        {closesvg}
+      </button>
+      <div className="login-form inputsbg">
+        <div className="login-wrap">
+          <h2 className="h2-medium">Log in to your account</h2>
+          <form onSubmit={handleSubmit}>
+            <div className="form-group">
               <Email
-                  formData={formData}
-                  handleChange={handleChange}
-                  errors={errors}
-                  validateEmail={validateEmail}
-                />
-                <Password
-                  formData={formData}
-                  setFormData={setFormData}
-                  errors={errors}
-                  setErrors={setErrors}
-                />
+                formData={formData}
+                handleChange={handleChange}
+                errors={errors}
+                validateEmail={validateEmail}
+              />
+              <Password
+                formData={formData}
+                setFormData={setFormData}
+                errors={errors}
+                setErrors={setErrors}
+              />
+              <div className="underform">
                 <div className="checkbox-group">
                   <input
                     type="checkbox"
@@ -99,38 +104,42 @@ const Login = ({ onModalClose }) => {
                   />
                   <label htmlFor="rememberMe">Remember me</label>
                 </div>
-                <div className="form-button-cont">
-                  <Button
-                    label="Sign In"
-                    iconType="arrowRight"
-                    variant="blue"
-                  />
-                  <Button
-                    label="Register"
-                    iconType="arrowRight"
-                    variant="outline-grey"
-                    type="button"
-                    onClick={handleGoRegistration}
-                  />
-                </div>
+                <button className="forgot-password-btn" type="button" onClick={handleForgotPassword}>Forgot password</button>
               </div>
-            </form>
-          </div>
-        </div>
-        <div className="login-form auth">
-          <div className="login-wrap">
-            <h2 className="h2-medium">Sign in with</h2>
-            <div className="auth-buttons">
-              <button className="auth-button">{googleIconsvg} Sign in with Google</button>
-              <button className="auth-button">
-              {facebooksvg} Sign in with Facebook
-              </button>
-              <button className="auth-button">{applesvg} Sign in with Apple</button>
-              <button className="auth-button">{microsoftsvg}Sign in with Microsoft</button>
+              <div className="form-button-cont">
+                <Button label="Sign In" iconType="arrowRight" variant="blue" />
+                <Button
+                  label="Register"
+                  iconType="arrowRight"
+                  variant="outline-grey"
+                  type="button"
+                  onClick={handleGoRegistration}
+                />
+              </div>
             </div>
+          </form>
+        </div>
+      </div>
+      <div className="login-form auth">
+        <div className="login-wrap">
+          <h2 className="h2-medium">Sign in with</h2>
+          <div className="auth-buttons">
+            <button className="auth-button">
+              {googleIconsvg} Sign in with Google
+            </button>
+            <button className="auth-button">
+              {facebooksvg} Sign in with Facebook
+            </button>
+            <button className="auth-button">
+              {applesvg} Sign in with Apple
+            </button>
+            <button className="auth-button">
+              {microsoftsvg}Sign in with Microsoft
+            </button>
           </div>
         </div>
       </div>
+    </div>
   );
 };
 

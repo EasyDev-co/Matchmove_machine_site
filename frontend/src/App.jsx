@@ -20,6 +20,7 @@ function App() {
           <Route path="library/product/:productId" element={<Product />} />
           <Route path="authorization" element={<Authorization />} />
           <Route path="registration" element={<Authorization />} />
+          <Route path="reset-password" element={<Authorization />} />
           <Route path="profile" element={
             <ProtectedRoute>
               <Profile />

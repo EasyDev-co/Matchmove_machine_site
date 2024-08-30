@@ -64,6 +64,16 @@ const ICONS = {
       />
     </svg>
   ),
+  crossbtn: (
+    <svg width="27" height="36" viewBox="0 0 27 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <mask id="mask0_3719_35129" mask-type="alpha" maskUnits="userSpaceOnUse" x="1" y="5" width="26" height="26">
+      <path d="M14 5C6.811 5 1 10.811 1 18C1 25.189 6.811 31 14 31C21.189 31 27 25.189 27 18C27 10.811 21.189 5 14 5ZM14 28.4C8.267 28.4 3.6 23.733 3.6 18C3.6 12.267 8.267 7.6 14 7.6C19.733 7.6 24.4 12.267 24.4 18C24.4 23.733 19.733 28.4 14 28.4ZM18.667 11.5L14 16.167L9.333 11.5L7.5 13.333L12.167 18L7.5 22.667L9.333 24.5L14 19.833L18.667 24.5L20.5 22.667L15.833 18L20.5 13.333L18.667 11.5Z" fill="#BF3636"/>
+    </mask>
+    <g mask="url(#mask0_3719_35129)">
+      <rect x="-3.11523" y="-6.92383" width="33.2308" height="49.8462" fill="white"/>
+    </g>
+  </svg>
+  ),
   checkMark: (
     <svg
       width="27"
@@ -75,7 +85,7 @@ const ICONS = {
       <g clipPath="url(#clip0_3719_7174)">
         <mask
           id="mask0_3719_7174"
-          style={{ maskType: 'alpha' }}
+          style={{ maskType: "alpha" }}
           maskUnits="userSpaceOnUse"
           x="0"
           y="6"
@@ -127,7 +137,7 @@ const Button = ({ iconType = null, label, labelPosition = 'left', onClick = () =
 };
 
 Button.propTypes = {
-    iconType: PropTypes.oneOf(['arrowRight', 'person', 'arrowLeft', 'checkMark']),
+    iconType: PropTypes.oneOf(['arrowRight', 'person', 'arrowLeft', 'checkMark', 'crossbtn']),
     label: PropTypes.string,
     labelPosition: PropTypes.oneOf(['left', 'right', 'none']),
     onClick: PropTypes.func,

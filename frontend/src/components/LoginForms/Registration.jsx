@@ -23,7 +23,7 @@ const Registration = () => {
   return (
     <FormPopUpWrapper>
       <div className="login-form">
-        <button className="closebtn" onClick={handleGoBack}>{registerArrowLeftSvg}</button>
+        <button className="arrowclosebtn" onClick={handleGoBack}>{registerArrowLeftSvg}</button>
         <div className="login-wrap register">
           <h2 className="h2-medium white-text">Register form</h2>
           <div className="progress-bar">
