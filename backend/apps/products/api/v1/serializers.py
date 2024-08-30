@@ -7,6 +7,12 @@ from apps.users.models.users import User
 from apps.products.models.files import File
 
 
+class ProductSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Product
+        fields = '__all__'
+
+
 class CameraSerializer(serializers.ModelSerializer):
     class Meta:
         model = Camera
