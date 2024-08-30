@@ -14,7 +14,7 @@ from apps.users.api.v1.serializers import (
     PasswordChangeSerializer,
     UserRegistrationSerializer,
     UserTokenObtainPairSerializer,
-    UserGetSerializer,
+    UserDetailSerializer,
     UserUpdateSerializer,
 )
 from apps.users.tasks import send_confirm_code
@@ -62,7 +62,7 @@ class UserAPIView(APIView):
         """Получение детальной информации о пользователе."""
         instance = request.user
         user_data = User.objects.get(pk=instance.pk)
-        user_serializer = UserGetSerializer(user_data)
+        user_serializer = UserDetailSerializer(user_data)
         return Response(user_serializer.data)
 
     def patch(self, request, *args, **kwargs):
