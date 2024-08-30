@@ -1,9 +1,23 @@
-from rest_framework import generics, filters
+from rest_framework.generics import ListAPIView, generics, filters
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.pagination import PageNumberPagination
-from .serializers import ProductSerializer
-from apps.products.models.products import Product
+from apps.products.models import Camera, Format, Lens, Product
+from .serializers import CameraSerializer, FormatSerializer, LensSerializer, ProductSerializer
 
+
+class CameraListView(ListAPIView):
+    queryset = Camera.objects.all()
+    serializer_class = CameraSerializer
+
+
+class FormatListView(ListAPIView):
+    queryset = Format.objects.all()
+    serializer_class = FormatSerializer
+
+
+class LensListView(ListAPIView):
+    queryset = Lens.objects.all()
+    serializer_class = LensSerializer
 
 class ProductPagination(PageNumberPagination):
     page_size = 10
