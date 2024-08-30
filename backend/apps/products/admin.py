@@ -1,3 +1,5 @@
+import os
+from django.conf import settings
 from django.contrib import admin
 from django.utils.translation import gettext_lazy as _
 from apps.products.models.products import Product
@@ -5,6 +7,7 @@ from apps.products.models.cameras import Camera
 from apps.products.models.lens import Lens
 from apps.products.models.file_formats import Format
 from apps.products.models.files import File
+from apps.products.services import FTPDownloadUploadService, FTPManager
 
 
 @admin.register(Product)
@@ -81,3 +84,21 @@ class FileAdmin(admin.ModelAdmin):
     list_display = ("id", "file")
     search_fields = ("file",)
     ordering = ("id",)
+
+    def save_model(self, request, obj, form, change):
+        """Автоматически загружает файл на FTP при сохранении объекта."""
+        super().save_model(request, obj, form, change)
+        if not change:  # Проверяем, является ли это новой записью
+            try:
+                ftp_service = FTPDownloadUploadService(
+                    ftp_manager=FTPManager(),
+                    host=os.getenv('FTP_HOST'),
+                    username=os.getenv('FTP_USERNAME'),
+                    password=os.getenv('FTP_PASSWORD'),
+                )
+                # Получаем локальный файл
+                local_file_path = os.path.join(settings.MEDIA_ROOT, str(obj.file))  # Приведение к строке
+                ftp_service.upload_file(local_file_path)
+                self.message_user(request, "Файл успешно загружен на FTP.")
+            except Exception as e:
+                self.message_user(request, f"Ошибка при загрузке: {str(e)}", level='error')
