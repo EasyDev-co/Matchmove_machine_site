@@ -1,5 +1,11 @@
 from rest_framework import serializers
+from apps.products.models.products import Product
 from apps.products.models import Camera, Format, Lens
+
+
+class ProductSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Product
 
 
 class CameraSerializer(serializers.ModelSerializer):
