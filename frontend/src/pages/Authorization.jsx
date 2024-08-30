@@ -1,5 +1,13 @@
-const Authorization =()=>{
-    return <div>Authorization</div>
-}
+import Login from "../components/LoginForms/Login";
+import Registration from "../components/LoginForms/Registration";
 
-export default Authorization
+const Authorization = ({ onClose }) => {
+ return(
+  <div>
+    <Login/>
+  </div>
+ )
+};
+
+
+export default Authorization;

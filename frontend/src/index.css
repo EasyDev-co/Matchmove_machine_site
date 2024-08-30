@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap');
 
 body {
   font-family: 'Montserrat', sans-serif;
@@ -7,6 +7,17 @@ body {
 html, body {
   height: 100%;
   margin: 0;
+}
+
+h1,h2,h3,h4,p{
+  margin: 0;
+  padding: 0;
+}
+
+input {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 300;
+  border: none;
 }
 
 .layout {
@@ -18,3 +29,350 @@ html, body {
 .content {
   flex: 1; 
 }
+
+.h2-bold {
+  font-size: 48px;
+  font-weight: 700;
+  text-align: left;
+}
+
+.h2-medium{
+font-weight: 500;
+font-size: 48px;
+
+}
+
+.custom-button {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0px 20px;
+  width: 100%;
+  height: 60px;
+  background: #505050;
+  border-radius: 5px;
+  color: #FFFFFF;
+  cursor: pointer;
+  border: none;
+  transition: background-color 0.1s ease-in-out;
+  font-weight: 450;
+  font-size: 18px;
+
+  color: #FFFFFF;
+
+}
+
+.button-blue {
+  background: #2F57BF;
+}
+
+.button-blue:hover {
+  background-color: #537EEF;
+}
+
+.button-blue:active {
+  background-color: #083098;
+}
+
+
+
+.button-red {
+  background-color: #BF3636;
+}
+
+.button-red:hover {
+  background-color: #F36565;
+}
+
+.button-red:active {
+  background-color: #901F1F;
+}
+
+.button-outline-blue svg {
+  fill: #2F57BF;
+}
+.button-outline-blue {
+  color: #2F57BF;
+  background-color: transparent;
+  box-sizing: border-box;
+  border: 2px solid #2F57BF;
+  color: #2F57BF;
+  transition: background-color 0.1s ease-in-out;
+}
+.button-outline-blue:hover{
+  border-color: #537EEF;
+  color:  #537EEF;
+}
+.button-outline-blue:hover svg {
+  fill: #537EEF;
+}
+
+.button-outline-red {
+  color: #BF3636;
+  background-color: transparent;
+  box-sizing: border-box;
+  border: 2px solid #BF3636;
+  color: #BF3636;
+  transition: background-color 0.1s ease-in-out;
+}
+.button-outline-red svg{
+  fill: #BF3636;
+}
+.button-outline-red:hover {
+  border-color: #F36565;
+  color:#F36565;
+}
+.button-outline-red:hover svg{
+  fill: #F36565;
+}
+.button-outline-red:active {
+  border-color: #901F1F;
+  color:#901F1F;
+}
+.button-outline-red:active svg{
+  fill: #901F1F;
+}
+
+.button-outline-grey {
+  color: #B3B3B3;
+  background-color: transparent;
+  box-sizing: border-box;
+  border: 2px solid #B3B3B3;
+  color: #B3B3B3;
+  transition: background-color 0.1s ease-in-out;
+}
+.button-outline-grey svg{
+  fill: #B3B3B3;
+}
+.button-outline-grey:hover {
+  border-color: white;
+  color:white;
+}
+.button-outline-grey:hover svg{
+  fill: white;
+}
+.button-outline-grey:active {
+  border-color: white;
+  color: white;
+}
+.button-outline-grey:active svg{
+  fill: white;
+}
+
+
+.authorization-popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; 
+  overflow: auto;
+}
+
+.closebtn{
+  position: absolute;
+  top: 7%;
+  right: 5%;
+  z-index: 1;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.popup-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  position: relative; 
+  height: 96%;
+  width: 96%;
+  background-image: url('https://s3-alpha-sig.figma.com/img/ac90/3f96/cdc98f02f98e9d549eeb4c56f0bbc30d?Expires=1725840000&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=TPjJ7DTMZ5Qsz4kbZ3KljOc25i-wtUEwo-QPNctujLeMBGOB7K3F~TAaLbXCNoiHsCNhvsja4stN6lmkRRCCpC-MWhMNxfSmYhgw-fnXpakPR0Kkdoy4zq1GyTySb4AXGboqw0sJhYIa84bGZKKXhCU--fDpdUonvvtoMszuKZ1B72rVnMrJPn8cWlv8T1YD~APzrG~StfEHLGZu825cltw3RDzATy0~96GtqIfo4PZeVcapXs46wDB5-KvK03T5DDX20K5sz3wy3igpcW79zKt-zLSjLbjQrrWiFkv5V8F6t0ZaeYo6xvu8srFUdOaelnMvlwnyuoouFBcYQS00eA__');
+  background-size: auto 180%;
+  background-position: center; 
+  background-repeat: no-repeat;
+
+}
+
+.login-form {
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 30px;
+}
+
+.login-form.inputsbg{
+  background: linear-gradient(256.13deg, 
+    rgba(5, 37, 122, 0.1) 100%, 
+    rgba(0, 0, 0, 0.1) 100%
+  ), rgba(0, 0, 0, 0.85); /* 10% opacity solid color background */
+
+}
+
+.login-wrap{
+  max-width: 560px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.form-group{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-group input {
+  padding: 15px;
+  padding-right: 40px;
+  height: 60px;
+  gap: 10px;
+  background: #F8F8F8;
+  border-radius: 5px;
+  width: inherit;
+  box-sizing: border-box;
+  font-size: 18px;
+}
+
+.form-group input:hover {
+  box-shadow: 0 0 0 1px #537EEF;
+}
+
+.pass {
+  position: relative;
+  width: 100%;
+}
+
+.inputSvg{
+  position: absolute;
+  top: 16px;
+  right: 15px;
+}
+
+.inputSvg svg {
+  color: #505050;
+}
+
+.pass:hover .inputSvg svg {
+  color: #537EEF;
+}
+
+
+.pass:hover .inputSvg.error svg {
+  color: #BF3636
+}
+
+input:focus{
+  outline: none;
+}
+
+.error-message{
+font-weight: 400;
+font-size: 17px;
+color: #BF3636;
+display: flex;
+gap: 10px;
+align-items: center;
+}
+
+.form-group input.error {
+  box-shadow: 0 0 0 1px #BF3636;
+}
+
+.inputSvg.error svg {
+  color: #BF3636 !important
+}
+
+.checkbox-group {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.checkbox-group input[type="checkbox"] {
+  accent-color: #007bff;
+  margin-right: 10px;
+  width: 25px;
+  height: 25px;
+}
+
+.checkbox-group label {
+  font-size: 14px;
+  cursor: pointer;
+
+font-weight: 200;
+font-size: 17px;
+color: #B3B3B3;
+
+}
+
+.auth {
+  background: linear-gradient(313.62deg, 
+    rgba(49, 55, 68, 0.9) 100%, 
+    rgba(73, 87, 113, 0.9) 100%
+  );
+}
+
+.form-button-cont {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+}
+.auth-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.auth-button {
+padding: 0px 20px;
+width: 100%;
+height: 60px;
+background: #F2F2F2;
+border-radius: 5px;
+border: none;
+cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .popup-content {
+    grid-template-columns: 1fr;
+  }
+
+  .login-wrap{
+    padding: 70px 40px;
+  }
+
+  
+.closebtn{
+  top: 20px;
+  right: 20px;
+
+}
+}
+
+@media screen and (max-width: 500px) {
+  .h2-bold {
+      font-size: 32px;
+      font-weight: 700;
+      line-height: 32px;
+  }
+
+  .h2-medium{
+font-weight: 400;
+font-size: 24px;
+  }
+
+  .login-wrap{
+    padding: 40px 0;
+  }
+
+}
+
