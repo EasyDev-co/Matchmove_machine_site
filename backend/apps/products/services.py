@@ -1,8 +1,8 @@
 import logging
+import os
 from contextlib import contextmanager
 from ftplib import FTP
 
-from apps.products.models.files import File
 
 logger = logging.getLogger(__name__)
 
@@ -46,10 +46,20 @@ class FTPDownloadUploadService:
             with open(file_path, "rb") as local_file:
                 ftp.storbinary(f"STOR {remote_file_path}", local_file)
 
-    def download_file(self, file_id: str, destination_path: str) -> None:
+    def download_file(self, file_path: str, file_id: str) -> None:
         """Скачивание файла с FTP по его ID."""
         remote_file_path = f"{file_id}"
 
         with self.ftp_manager.connect_and_login(self.host, self.username, self.password, self.port) as ftp:
-            with open(destination_path, "wb") as local_file:
+            with open(file_path, "wb") as local_file:
                 ftp.retrbinary(f"RETR {remote_file_path}", local_file.write)
+
+
+def get_ftp_service():
+    """Создает и возвращает экземпляр FTPDownloadUploadService."""
+    return FTPDownloadUploadService(
+        ftp_manager=FTPManager(),
+        host=os.getenv("FTP_HOST"),
+        username=os.getenv("FTP_USERNAME"),
+        password=os.getenv("FTP_PASSWORD"),
+    )
