@@ -12,6 +12,7 @@ from apps.products.models.products import Product
 from apps.products.tasks import upload_file_to_ftp
 
 
+
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
     fieldsets = (
