@@ -65,21 +65,44 @@ const ICONS = {
     </svg>
   ),
   crossbtn: (
-    <svg width="27" height="36" viewBox="0 0 27 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <mask id="mask0_3719_35129" mask-type="alpha" maskUnits="userSpaceOnUse" x="1" y="5" width="26" height="26">
-      <path d="M14 5C6.811 5 1 10.811 1 18C1 25.189 6.811 31 14 31C21.189 31 27 25.189 27 18C27 10.811 21.189 5 14 5ZM14 28.4C8.267 28.4 3.6 23.733 3.6 18C3.6 12.267 8.267 7.6 14 7.6C19.733 7.6 24.4 12.267 24.4 18C24.4 23.733 19.733 28.4 14 28.4ZM18.667 11.5L14 16.167L9.333 11.5L7.5 13.333L12.167 18L7.5 22.667L9.333 24.5L14 19.833L18.667 24.5L20.5 22.667L15.833 18L20.5 13.333L18.667 11.5Z" fill="#BF3636"/>
-    </mask>
-    <g mask="url(#mask0_3719_35129)">
-      <rect x="-3.11523" y="-6.92383" width="33.2308" height="49.8462" fill="white"/>
-    </g>
-  </svg>
+    <svg
+      width="27"
+      height="36"
+      viewBox="0 0 27 36"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <mask
+        id="mask0_3719_35129"
+        mask-type="alpha"
+        maskUnits="userSpaceOnUse"
+        x="1"
+        y="5"
+        width="26"
+        height="26"
+      >
+        <path
+          d="M14 5C6.811 5 1 10.811 1 18C1 25.189 6.811 31 14 31C21.189 31 27 25.189 27 18C27 10.811 21.189 5 14 5ZM14 28.4C8.267 28.4 3.6 23.733 3.6 18C3.6 12.267 8.267 7.6 14 7.6C19.733 7.6 24.4 12.267 24.4 18C24.4 23.733 19.733 28.4 14 28.4ZM18.667 11.5L14 16.167L9.333 11.5L7.5 13.333L12.167 18L7.5 22.667L9.333 24.5L14 19.833L18.667 24.5L20.5 22.667L15.833 18L20.5 13.333L18.667 11.5Z"
+          fill="#BF3636"
+        />
+      </mask>
+      <g mask="url(#mask0_3719_35129)">
+        <rect
+          x="-3.11523"
+          y="-6.92383"
+          width="33.2308"
+          height="49.8462"
+          fill="white"
+        />
+      </g>
+    </svg>
   ),
   checkMark: (
     <svg
       width="27"
       height="37"
       viewBox="0 0 27 37"
-      fill="none"
+      fill="currentColor"
       xmlns="http://www.w3.org/2000/svg"
     >
       <g clipPath="url(#clip0_3719_7174)">
@@ -94,7 +117,7 @@ const ICONS = {
         >
           <path
             d="M8.86205 29.5L0 20.3089L4.03858 16.1203L8.86205 21.1377L22.9614 6.5L27 10.6885L8.86205 29.5Z"
-            fill="white"
+            fill="currentColor"
           />
         </mask>
         <g mask="url(#mask0_3719_7174)">
@@ -102,7 +125,7 @@ const ICONS = {
             width="27"
             height="36"
             transform="matrix(-1 0 0 1 27 0.5)"
-            fill="white"
+            fill="currentColor"
           />
         </g>
       </g>
@@ -111,37 +134,63 @@ const ICONS = {
           <rect
             width="27"
             height="36"
-            fill="white"
+            fill="currentColor"
             transform="translate(0 0.5)"
           />
         </clipPath>
       </defs>
     </svg>
   ),
+  settings: (
+<svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path 
+    d="M22.1214 5.45482C20.9498 4.28325 19.0503 4.28324 17.8787 5.45482L15.8787 7.45482C15.3161 8.01742 14.553 8.3335 13.7574 8.3335H11.3334C9.67652 8.3335 8.33337 9.67664 8.33337 11.3335V13.7575C8.33337 14.5532 8.0173 15.3162 7.45469 15.8788L5.4547 17.8788C4.28312 19.0504 4.28312 20.9499 5.45469 22.1215L7.45469 24.1215C8.0173 24.6841 8.33337 25.4472 8.33337 26.2428V28.6668C8.33337 30.3237 9.67652 31.6668 11.3334 31.6668H13.7574C14.5531 31.6668 15.3161 31.9829 15.8787 32.5455L17.8787 34.5455C19.0503 35.7171 20.9498 35.7171 22.1214 34.5455L24.1214 32.5455C24.684 31.9829 25.447 31.6668 26.2427 31.6668H28.6667C30.3236 31.6668 31.6667 30.3237 31.6667 28.6668V26.2428C31.6667 25.4472 31.9828 24.6841 32.5454 24.1215L34.5454 22.1215C35.717 20.9499 35.717 19.0504 34.5454 17.8788L32.5454 15.8788C31.9828 15.3162 31.6667 14.5532 31.6667 13.7575V11.3335C31.6667 9.67664 30.3236 8.3335 28.6667 8.3335H26.2427C25.447 8.3335 24.684 8.01743 24.1214 7.45482L22.1214 5.45482Z" 
+    stroke="currentColor" 
+    strokeWidth="2" 
+    strokeLinejoin="round"
+  />
+  <path 
+    d="M20 25C21.3261 25 22.5979 24.4732 23.5355 23.5355C24.4732 22.5979 25 21.3261 25 20C25 18.6739 24.4732 17.4021 23.5355 16.4645C22.5979 15.5268 21.3261 15 20 15C18.6739 15 17.4021 15.5268 16.4645 16.4645C15.5268 17.4021 15 18.6739 15 20C15 21.3261 15.5268 22.5979 16.4645 23.5355C17.4021 24.4732 18.6739 25 20 25Z" 
+    stroke="currentColor" 
+    strokeWidth="2" 
+    strokeLinejoin="round"
+  />
+</svg>
+  ),
+  logout: (
+<svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path 
+    d="M27.1416 14.9998H13.7883M22.5166 21.0598L28.3333 14.9998L22.5166 8.93984M17.425 6.6665V1.6665H1.66663V28.3332H17.425V23.3332" 
+    stroke="currentColor" 
+    strokeWidth="2" 
+    strokeLinecap="round" 
+    strokeLinejoin="round"
+  />
+</svg>
+  ),
 };
-
 const Button = ({ iconType = null, label, labelPosition = 'left', onClick = () => {}, variant = 'blue', ...props }) => {
-    const icon = ICONS[iconType] || null;
-    const buttonClass = `custom-button ${variant ? `button-${variant}` : ''}`;
-    
-    const renderLabel = label && labelPosition !== 'none';
-    const renderIcon = icon;
+  const icon = ICONS[iconType] || null;
+  const buttonClass = `custom-button ${variant ? `button-${variant}` : ''} ${labelPosition === 'none' ? 'no-label' : ''}`;
 
-    return (
-        <button className={buttonClass} onClick={onClick} {...props}>
-            {labelPosition === 'left' && renderLabel && <span className="button-label">{label}</span>}
-            {renderIcon && <span className="button-icon">{icon}</span>}
-            {labelPosition === 'right' && renderLabel && <span className="button-label">{label}</span>}
-        </button>
-    );
+  const renderLabel = label && labelPosition !== 'none';
+  const renderIcon = icon;
+
+  return (
+      <button className={buttonClass} onClick={onClick} {...props}>
+          {labelPosition === 'left' && renderLabel && <span className="button-label">{label}</span>}
+          {renderIcon && <span className="button-icon">{icon}</span>}
+          {labelPosition === 'right' && renderLabel && <span className="button-label">{label}</span>}
+      </button>
+  );
 };
 
 Button.propTypes = {
-    iconType: PropTypes.oneOf(['arrowRight', 'person', 'arrowLeft', 'checkMark', 'crossbtn']),
-    label: PropTypes.string,
-    labelPosition: PropTypes.oneOf(['left', 'right', 'none']),
-    onClick: PropTypes.func,
-    variant: PropTypes.oneOf(['blue', 'red', 'outline-blue', 'outline-red', 'outline-grey']),
+  iconType: PropTypes.oneOf(['arrowRight', 'person', 'arrowLeft', 'checkMark', 'crossbtn', 'settings', 'logout']),
+  label: PropTypes.string,
+  labelPosition: PropTypes.oneOf(['left', 'right', 'none']),
+  onClick: PropTypes.func,
+  variant: PropTypes.oneOf(['blue', 'red', "grey", 'outline-blue', 'outline-red', 'outline-grey']),
 };
 
 export default Button;

@@ -14,6 +14,11 @@ h1,h2,h3,h4,p{
   padding: 0;
 }
 
+ul, li{
+  margin: 0;
+  padding: 0;
+}
+
 input, select, textarea {
   font-family: 'Montserrat', sans-serif;
   font-weight: 300;
@@ -23,6 +28,15 @@ input, select, textarea {
 textarea {
   height: 320px;
   width: 100% !important;
+}
+
+a {
+  text-decoration: none; 
+  color: inherit; 
+}
+
+ul, li{
+  list-style: none;
 }
 
 .layout {
@@ -49,7 +63,6 @@ textarea {
 .h3-medium {
   font-weight: 500;
   font-size: 25px;
-  line-height: 42px;
 }
 
 .form-group .h3-medium {
@@ -73,9 +86,15 @@ textarea {
   transition: background-color 0.1s ease-in-out;
   font-weight: 450;
   font-size: 18px;
-
   color: #FFFFFF;
+}
 
+.custom-button.no-label {
+  padding: 0; 
+  width: 60px; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .full-width{
@@ -111,9 +130,7 @@ textarea {
   background-color: #901F1F;
 }
 
-.button-outline-blue svg {
-  fill: #2F57BF;
-}
+
 .button-outline-blue {
   color: #2F57BF;
   background-color: transparent;
@@ -126,10 +143,6 @@ textarea {
   border-color: #537EEF;
   color:  #537EEF;
 }
-.button-outline-blue:hover svg {
-  fill: #537EEF;
-}
-
 .button-outline-red {
   color: #BF3636;
   background-color: transparent;
@@ -138,22 +151,15 @@ textarea {
   color: #BF3636;
   transition: background-color 0.1s ease-in-out;
 }
-.button-outline-red svg{
-  fill: #BF3636;
-}
+
 .button-outline-red:hover {
   border-color: #F36565;
   color:#F36565;
 }
-.button-outline-red:hover svg{
-  fill: #F36565;
-}
+
 .button-outline-red:active {
   border-color: #901F1F;
   color:#901F1F;
-}
-.button-outline-red:active svg{
-  fill: #901F1F;
 }
 
 .button-outline-grey {
@@ -164,22 +170,14 @@ textarea {
   color: #B3B3B3;
   transition: background-color 0.1s ease-in-out;
 }
-.button-outline-grey svg{
-  fill: #B3B3B3;
-}
 .button-outline-grey:hover {
   border-color: white;
   color:white;
 }
-.button-outline-grey:hover svg{
-  fill: white;
-}
+
 .button-outline-grey:active {
   border-color: white;
   color: white;
-}
-.button-outline-grey:active svg{
-  fill: white;
 }
 
 
@@ -526,6 +524,5 @@ select.error {
     .h3-medium {
       font-weight: 400;
       font-size: 24px;
-      line-height: 31px;
     }
   }
