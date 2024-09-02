@@ -9,11 +9,11 @@ const Pagination = () => {
         <Button iconType="arrowLeft" variant="outline-grey" labelPosition="none"  />
       </div>
 
-      <div><Button variant="blue" label="1" iconType="none" labelPosition="center"/></div>
-      <div><Button variant="transparent" label="2" iconType="none" color="blue"/></div>
-      <div><Button variant="transparent" label="3" iconType="none" color="blue"/></div>
-      <div><Button variant="transparent" label="..." iconType="none" color="blue"/></div>
-      <div><Button variant="transparent" label="10" iconType="none" color="blue"/></div>
+      <div><Button variant="blue" label="1" labelPosition="center"/></div>
+      <div><Button variant="transparent" label="2"  color="blue"/></div>
+      <div><Button variant="transparent" label="3" color="blue"/></div>
+      <div><Button variant="transparent" label="..."  color="blue"/></div>
+      <div><Button variant="transparent" label="10" color="blue"/></div>
 
       <div>
       <Button 

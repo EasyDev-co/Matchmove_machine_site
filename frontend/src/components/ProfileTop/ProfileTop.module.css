@@ -6,7 +6,7 @@ align-items: flex-start;
 padding-top: 90px;
 gap: 40px;
 background: url("https://s3-alpha-sig.figma.com/img/5873/1cb8/9d9c338d4201e5ba8e33c11e778d1926?Expires=1725840000&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=EIb6QixlDfwT7Hi9yAEcvv2~N6uCbZm2z~jfesNa2glT7t6p4a95cbKGnooOqFgdwa4zPK8Zj4MonQryBRvbYeWKWsRsFaiJHrI1GvNjA5B4OxkP9meJijyqY1XAIo9h0NR7cUyRnBRF8lxdcA925a3H9bxFldUezwpRBuA3rvwf~FLRZ99IPgEp7ZmZk89feXKwEuUaPEMW8h5GEQ81pe9G9ey23aYQ1pPpRnfDKguNn5vJtUfBmLEmj4~ix47kF8lBNgYdkmCbIAJzcBLxhda5rLyceXrqVYpNs0qWt48Q~Cqql93NrsTk6WkYf3C2LCLrX~bRh2Rx9m1OGrVlMQ__") no-repeat right;
-background-size: auto;
+background-size: 200%;
 color: white;
 overflow: hidden;
 }

@@ -65,13 +65,19 @@ ul, li{
 }
 
 .h2-medium {
-  font-weight: 500;
-  font-size: 48px;
+  font-weight: 600;
+  font-size: 45px;
 }
 
 .h3-medium {
   font-weight: 500;
   font-size: 25px;
+}
+
+.h4-medium {
+font-weight: 600;
+font-size: 22px;
+line-height: 31px;
 }
 
 .form-group .h3-medium {
