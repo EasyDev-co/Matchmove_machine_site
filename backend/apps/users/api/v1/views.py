@@ -1,5 +1,5 @@
 from rest_framework import viewsets, status
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from django.db import transaction, IntegrityError
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -89,6 +89,7 @@ class UserAPIView(APIView):
 
 class UserRegisterView(APIView):
     """Вьюсет регистрации."""
+    permission_classes = [AllowAny]
     serializer_class = UserRegistrationSerializer
 
     def post(self, request):
@@ -167,6 +168,7 @@ class EmailVerificationCodeAPIView(ConfirmCodeMixin, APIView):
 
 class ResetPasswordAPIView(APIView):
     """Представление для восстановления пароля."""
+    permission_classes = [AllowAny]
     email_serializer = EmailSerializer
 
     def post(self, request, *args, **kwargs):
@@ -222,6 +224,7 @@ class PasswordChangeAPIView(ConfirmCodeMixin, APIView):
 
 class UserLoginView(TokenObtainPairView):
     """Вьюсет логина."""
+    permission_classes = [AllowAny]
     serializer_class = UserTokenObtainPairSerializer
 
 

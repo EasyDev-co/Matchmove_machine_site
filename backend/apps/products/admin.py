@@ -1,10 +1,19 @@
+import os
+import logging
+
+from django.conf import settings
 from django.contrib import admin
 from django.utils.translation import gettext_lazy as _
-from apps.products.models.products import Product
+
 from apps.products.models.cameras import Camera
-from apps.products.models.lens import Lens
 from apps.products.models.file_formats import Format
 from apps.products.models.files import File
+from apps.products.models.lens import Lens
+from apps.products.models.products import Product
+from apps.products.tasks import upload_file_to_ftp
+
+
+logger = logging.getLogger(__name__)
 
 
 @admin.register(Product)
@@ -81,3 +90,25 @@ class FileAdmin(admin.ModelAdmin):
     list_display = ("id", "file")
     search_fields = ("file",)
     ordering = ("id",)
+    fields = ("file",)
+    actions = ("upload_to_ftp",)
+
+    def upload_to_ftp(self, request, queryset):
+        """Загружает выделенные файлы на FTP через Celery."""
+
+        for file in queryset:
+            local_file_path = os.path.join(settings.MEDIA_ROOT, str(file.id))
+            if not os.path.exists(local_file_path):
+                self.message_user(request, f"Файл {file.id} не найден.")
+                continue
+            try:
+                # Отправка задачи в Celery
+                upload_file_to_ftp.delay(local_file_path, str(file.id))
+                self.message_user(request, f"Файл {file.id} отправлен на сервер.")
+            except Exception as e:
+                # Логирование ошибки и сообщение пользователю
+                logger.error(f"Ошибка при загрузке файла {file.id} на FTP: {str(e)}")
+                self.message_user(request, f"Ошибка при загрузке файла {file.id}: {str(e)}")
+
+
+    upload_to_ftp.short_description = "Загрузить выделенные файлы на FTP"
