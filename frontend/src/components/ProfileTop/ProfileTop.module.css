@@ -1,18 +1,14 @@
-.main {
-    color: white;
-}
-
 .background {
 position: relative;
 display: flex;
 flex-direction: column;
 align-items: flex-start;
-padding: 180px 0px 0px;
+padding-top: 90px;
 gap: 40px;
-height: 560px;
 background: url("https://s3-alpha-sig.figma.com/img/5873/1cb8/9d9c338d4201e5ba8e33c11e778d1926?Expires=1725840000&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=EIb6QixlDfwT7Hi9yAEcvv2~N6uCbZm2z~jfesNa2glT7t6p4a95cbKGnooOqFgdwa4zPK8Zj4MonQryBRvbYeWKWsRsFaiJHrI1GvNjA5B4OxkP9meJijyqY1XAIo9h0NR7cUyRnBRF8lxdcA925a3H9bxFldUezwpRBuA3rvwf~FLRZ99IPgEp7ZmZk89feXKwEuUaPEMW8h5GEQ81pe9G9ey23aYQ1pPpRnfDKguNn5vJtUfBmLEmj4~ix47kF8lBNgYdkmCbIAJzcBLxhda5rLyceXrqVYpNs0qWt48Q~Cqql93NrsTk6WkYf3C2LCLrX~bRh2Rx9m1OGrVlMQ__") no-repeat right;
-background-size: auto 200%;
-
+background-size: auto;
+color: white;
+overflow: hidden;
 }
 
 .background::before{
@@ -39,7 +35,7 @@ opacity: 80%;
     align-items: center;
     justify-content: space-between;
     width: 100%;
-    padding: 40px 80px;
+    padding:40px 80px;
     box-sizing: border-box;
 }
 
@@ -60,12 +56,15 @@ opacity: 80%;
     height: 100%;
     width: 100%;
     object-fit: cover;
+    overflow: hidden;
+    border-radius: 10px;
 }
 
 .perofileinfo {
     display: flex;
     flex-direction: row;
     gap: 20px;
+    box-sizing: border-box;
 }
 
 .perofileinfo ul {
@@ -147,9 +146,16 @@ opacity: 80%;
     }
 }
 
-@media (max-width: 350px) {
+@media (max-width: 390px) {
 
     .container {
-        padding: 10px;
+        padding: 20px;
+    }
+
+    .perofileinfo a {
+        font-weight: 400;
+        font-size: 15px;
+
+
     }
 }

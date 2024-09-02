@@ -19,6 +19,15 @@ ul, li{
   padding: 0;
 }
 
+section{
+  padding-top: 80px;
+}
+
+.width {
+  padding-left: 80px;
+  padding-right: 80px;
+}
+
 input, select, textarea {
   font-family: 'Montserrat', sans-serif;
   font-weight: 300;
@@ -77,6 +86,7 @@ ul, li{
   align-items: center;
   padding: 0px 20px;
   width: 100%;
+  min-width: 60px;
   height: 60px;
   background: #505050;
   border-radius: 5px;
@@ -87,6 +97,40 @@ ul, li{
   font-weight: 450;
   font-size: 18px;
   color: #FFFFFF;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.button-transparent {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  min-width: fit-content;
+  font-weight: 300;
+}
+
+.button-center {
+  justify-content: center; 
+}
+
+.button-transparent-blue {
+  color: #2F57BF;
+}
+
+.button-transparent-blue:hover {
+  color: #537EEF;
+}
+
+.button-transparent-blue:active {
+  color: #083098;
+}
+
+.button-transparent-red {
+  color: red;
+}
+
+.button-transparent-grey {
+  color: grey;
 }
 
 .custom-button.no-label {
@@ -171,13 +215,11 @@ ul, li{
   transition: background-color 0.1s ease-in-out;
 }
 .button-outline-grey:hover {
-  border-color: white;
-  color:white;
+
 }
 
 .button-outline-grey:active {
-  border-color: white;
-  color: white;
+
 }
 
 
@@ -483,6 +525,31 @@ select.error {
   z-index: 1;
 }
 
+.assets-toggle {
+  display: flex;
+  flex-direction: row;
+  gap: 60px;
+}
+
+.asset-category{
+  background: transparent;
+  border: none;
+  font-weight: 600;
+  font-size: 40px;
+  color: #A79895;
+  cursor: pointer;
+  transition: color 0.1s ease;
+
+}
+
+.asset-category.active {
+  text-decoration-line: underline;
+  color: #2F57BF;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+}
+
+
 .white-text {
   color: #FFFFFF;
 }
@@ -504,6 +571,15 @@ select.error {
   .login-form {
     padding: 10px;
   }
+
+  .width {
+    padding-left: 40px;
+    padding-right: 40px;
+  }
+
+  .asset-category{
+    font-size: 35px;
+}
 }
 @media screen and (max-width: 500px) {
   .h2-bold {
@@ -525,4 +601,18 @@ select.error {
       font-weight: 400;
       font-size: 24px;
     }
+
+    .width {
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+
+    .asset-category{
+      font-weight: 500;
+      font-size: 22px;
+          }
+
+          .asset-category{
+            gap: 20px;
+          }
   }

@@ -4,8 +4,7 @@ import Button from "../Button";
 
 const ProfileTop =()=>{
     return (
-      <section className={styles.main}>
-        <div className={styles.background}>
+      <section  className={styles.background}>
 
           <div className={styles.container}>
             <div className={styles.namecont}>
@@ -32,7 +31,6 @@ const ProfileTop =()=>{
             </div>
           </div>
 
-        </div>
       </section>
     );
 }
