@@ -1,12 +1,68 @@
-import os
-
-from apps.products.api.v1.serializers import FileSerializer
-from apps.products.models.files import File
-from apps.products.tasks import download_file_from_ftp, upload_file_to_ftp
-from django.conf import settings
-from rest_framework import status, viewsets
+from rest_framework import generics, filters, status, viewsets
+from rest_framework.generics import ListAPIView
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
+from django_filters.rest_framework import DjangoFilterBackend
+from django.conf import settings
+from rest_framework.pagination import PageNumberPagination
+from apps.products.models import Camera, Format, Lens, Product, File
+from apps.products.tasks import download_file_from_ftp, upload_file_to_ftp
+from .serializers import (
+    ProductDetailSerializer,
+    CameraSerializer,
+    FormatSerializer,
+    LensSerializer,
+    ProductSerializer,
+    FileSerializer
+)
+
+
+class ProductDetailView(generics.RetrieveAPIView):
+    queryset = Product.objects.all()
+    serializer_class = ProductDetailSerializer
+
+
+class CameraListView(ListAPIView):
+    queryset = Camera.objects.all()
+    serializer_class = CameraSerializer
+
+
+class FormatListView(ListAPIView):
+    queryset = Format.objects.all()
+    serializer_class = FormatSerializer
+
+
+class LensListView(ListAPIView):
+    queryset = Lens.objects.all()
+    serializer_class = LensSerializer
+
+
+class ProductPagination(PageNumberPagination):
+    page_size = 10
+    page_size_query_param = 'page_size'
+    max_page_size = 100
+
+
+class ProductListView(generics.ListAPIView):
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
+    pagination_class = ProductPagination
+    filter_backends = [DjangoFilterBackend, filters.SearchFilter]
+    search_fields = ['author__username', 'category', 'file_format__name']
+    filterset_fields = {
+        'camera': ['exact'],
+        'lens': ['exact'],
+        'file_format': ['exact'],
+        'access_type': ['exact'],
+        'price': ['gte', 'lte'],
+    }
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        access_type = self.request.query_params.get('access_type')
+        if access_type:
+            queryset = queryset.filter(access_type=access_type)
+        return querysetimport os
 
 
 class FileViewSet(viewsets.ViewSet):
