@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import (
+from apps.products.api.v1.views import (
     CameraListView,
     FormatListView,
     LensListView,

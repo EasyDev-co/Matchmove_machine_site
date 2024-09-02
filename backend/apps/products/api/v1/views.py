@@ -1,10 +1,13 @@
+import os
+
+from django_filters.rest_framework import DjangoFilterBackend
+from django.conf import settings
 from rest_framework import generics, filters, status, viewsets
 from rest_framework.generics import ListAPIView
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
-from django_filters.rest_framework import DjangoFilterBackend
-from django.conf import settings
 from rest_framework.pagination import PageNumberPagination
+
 from apps.products.models import Camera, Format, Lens, Product, File
 from apps.products.tasks import download_file_from_ftp, upload_file_to_ftp
 from .serializers import (
@@ -62,11 +65,10 @@ class ProductListView(generics.ListAPIView):
         access_type = self.request.query_params.get('access_type')
         if access_type:
             queryset = queryset.filter(access_type=access_type)
-        return querysetimport os
+        return queryset
 
 
 class FileViewSet(viewsets.ViewSet):
-    permission_classes = [AllowAny]
 
     def upload(self, request):
         """Эндпоинт для загрузки файла на FTP."""

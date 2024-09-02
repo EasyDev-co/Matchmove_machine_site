@@ -1,5 +1,8 @@
 from config.celery import BaseTask, app
 from apps.products.services import get_ftp_service
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 class UploadFileToFtpTask(BaseTask):

@@ -45,6 +45,7 @@ class FTPDownloadUploadService:
         with self.ftp_manager.connect_and_login(self.host, self.username, self.password, self.port) as ftp:
             with open(file_path, "rb") as local_file:
                 ftp.storbinary(f"STOR {remote_file_path}", local_file)
+        self.delete_local_file(file_path)
 
     def download_file(self, file_path: str, file_id: str) -> None:
         """Скачивание файла с FTP по его ID."""
@@ -53,6 +54,17 @@ class FTPDownloadUploadService:
         with self.ftp_manager.connect_and_login(self.host, self.username, self.password, self.port) as ftp:
             with open(file_path, "wb") as local_file:
                 ftp.retrbinary(f"RETR {remote_file_path}", local_file.write)
+
+    def delete_local_file(self, file_path: str) -> None:
+        """Удаляет файл с локального сервера."""
+        if os.path.exists(file_path):
+            try:
+                os.remove(file_path)
+                logger.info(f"File {file_path} was successfully deleted from the local server.")
+            except Exception as e:
+                logger.error(f"Error deleting file {file_path}: {str(e)}")
+        else:
+            logger.warning(f"File {file_path} was not found on the local server.")
 
 
 def get_ftp_service():
