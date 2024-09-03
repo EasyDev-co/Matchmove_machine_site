@@ -16,7 +16,7 @@ const Header = () => {
         <div className={styles.logo}><img src={mobilelogo} alt="m-logo" /></div>
         <HeaderLinks isMenuOpen={isMenuOpen}/>
         <div className={styles.btncont}>
-          <div><Button labelPosition="none" variant="grey" iconType="person" /></div>
+          <div><Button labelPosition="none" variant="grey" iconType="cart" /></div>
           <div><Button label="Sign In" variant="blue" iconType="person" /></div>
           <div className={styles.mobilebtn}><Button labelPosition="none" variant="grey" iconType="person" onClick={()=>setIsMenuOpen(prev=>!prev)} /></div>
         </div>

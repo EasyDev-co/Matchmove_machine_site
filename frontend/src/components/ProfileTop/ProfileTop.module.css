@@ -95,10 +95,18 @@ opacity: 80%;
     font-weight: 700;
     font-size: 18px;
     line-height: 31px;
-
     color: #2F57BF;
-
 }
+
+.userlink {
+    height: 60px;
+    width: 60px;
+    background-color: 
+    #FFFFFF;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
 @media (max-width: 900px) {
     .iconCont {
         height: 100px;

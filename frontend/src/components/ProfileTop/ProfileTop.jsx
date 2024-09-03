@@ -2,7 +2,9 @@ import styles from "./ProfileTop.module.css"
 import iconimg from "../../assets/images/iconplaceholder.png"
 import Button from "../Button";
 import { useNavigate } from "react-router-dom";
+import { instagram, facebook, vimeo, linkedin, youtube } from "../../assets/svg/footerbtnhs";
 
+const userlinks = [facebook, vimeo,instagram, linkedin, youtube]
 
 const ProfileTop =()=>{
 
@@ -36,7 +38,7 @@ const navigateTo =()=>{
 
             <div className={styles.perofileinfo}>
                 <h3 className={`h3-medium ${styles.socialmobile}`}>Contacts: </h3>
-                <div className={styles.socialsbtns}>{ Array.from({ length: 5 },(_, index)=> <div key={index}><Button labelPosition="none" variant="grey" iconType="person" /></div>)} </div>
+                <div className={styles.socialsbtns}>{userlinks.map((item, index)=><button className={styles.userlink} key={index}>{item}</button>)} </div>
             </div>
           </div>
 
