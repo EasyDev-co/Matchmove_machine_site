@@ -1,14 +1,23 @@
 import styles from "./ProfileTop.module.css"
 import iconimg from "../../assets/images/iconplaceholder.png"
 import Button from "../Button";
+import { useNavigate } from "react-router-dom";
+
 
 const ProfileTop =()=>{
+
+  const navigate = useNavigate()
+
+  
+const navigateTo =()=>{
+  navigate("/profile/edit");
+}
     return (
       <section  className={styles.background}>
 
           <div className={styles.container}>
             <div className={styles.namecont}>
-            <div><Button labelPosition="none" variant="outline-blue" iconType="settings" /></div>
+            <div><Button labelPosition="none" variant="outline-blue" iconType="settings" onClick={navigateTo} /></div>
               <p className="h2-bold"><span className={styles.rating} >#109/</span> <span>Greg</span></p>
             </div>
             <div><Button labelPosition="none" variant="outline-red" iconType="logout" /></div>

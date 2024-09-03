@@ -92,7 +92,7 @@ const ICONS = {
           y="-6.92383"
           width="33.2308"
           height="49.8462"
-          fill="white"
+          fill="currentColor"
         />
       </g>
     </svg>
@@ -169,10 +169,11 @@ const ICONS = {
 </svg>
   ),
 };
+
 const Button = ({ iconType = null, label, labelPosition = 'left', onClick = () => {}, variant = 'blue', color = 'blue', ...props }) => {
   const icon = ICONS[iconType] || null;
 
-  // Construct button class names based on props
+
   const buttonClass = `custom-button ${
     variant === 'transparent' ? `button-transparent button-transparent-${color}` : `button-${variant}`
   } ${labelPosition === 'none' ? 'no-label' : ''} ${labelPosition === 'center' ? 'button-center' : ''}`;
@@ -181,22 +182,18 @@ const Button = ({ iconType = null, label, labelPosition = 'left', onClick = () =
   const renderIcon = icon;
 
   return (
-    <button className={buttonClass} onClick={onClick} {...props}>
+    <button 
+      type={props.type || 'button'} 
+      className={buttonClass} 
+      onClick={onClick} 
+      {...props}
+    >
       {labelPosition === 'left' && renderLabel && <span className="button-label">{label}</span>}
-      {renderIcon && <span className="button-icon">{icon}</span>}
+      {renderIcon && icon}
       {labelPosition === 'right' && renderLabel && <span className="button-label">{label}</span>}
       {labelPosition === 'center' && renderLabel && <span className="button-label">{label}</span>}
     </button>
   );
-};
-
-Button.propTypes = {
-  iconType: PropTypes.oneOf(['arrowRight', 'person', 'arrowLeft', 'checkMark', 'crossbtn', 'settings', 'logout']),
-  label: PropTypes.string,
-  labelPosition: PropTypes.oneOf(['left', 'right', 'none', 'center']),
-  onClick: PropTypes.func,
-  variant: PropTypes.oneOf(['blue', 'red', 'grey', 'outline-blue', 'outline-red', 'outline-grey', 'transparent']),
-  color: PropTypes.oneOf(['blue', 'red', 'grey'])
 };
 
 export default Button
