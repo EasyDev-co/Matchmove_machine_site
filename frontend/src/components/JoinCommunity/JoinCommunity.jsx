@@ -6,7 +6,7 @@ const JoinCommunity =()=>{
       <section className={styles.main}>
         <div className={styles.content}>
           <h2 className="h2-bold">Join the community</h2>
-          <p className="h4-light">
+          <p className="h4-medium">
             Share your assets and become a valued contributor to the Distortion
             Grids Database with bonus access to the library. Let's build an
             incredible library of distortion grids!

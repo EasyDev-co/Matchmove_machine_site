@@ -164,3 +164,17 @@ export const camerasvg =(
   </defs>
 </svg>
 );
+
+export const arrowDown =(
+  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M17.5 7L10 14.6304L2.5 7" stroke="#2F57BF" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+
+)
+
+export const arrowUp =(
+  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M17.5 14.6309L10 7.00042L2.5 14.6309" stroke="#083098" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+
+)

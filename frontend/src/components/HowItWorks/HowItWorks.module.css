@@ -2,7 +2,21 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    position: relative;
   }
+
+  .main::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url("../../assets/images/sharebackground.png") no-repeat center center;
+    background-size: cover;
+    opacity: 20%; 
+    z-index: -1; 
+}
   
   .content {
     display: block;
@@ -32,6 +46,10 @@
     .content img {
         max-width: 250px;
         margin-top: 120px;
+    }
+
+    .btn{
+      place-self: center;
     }
     
 }

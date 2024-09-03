@@ -24,7 +24,7 @@ const HowItWorks =()=>{
             our process for preparing and testing distortion grids and presets.
           </p>
           <div className={styles.btn}>
-            <Button />
+            <Button label="See more" iconType="arrowRight" />
           </div>
         </div>
       </section>

@@ -103,8 +103,24 @@ li {
   font-weight: 300;
   font-size: 20px;
   line-height: 31px;
-
   color: #696969;
+}
+
+.h5-light {
+  font-weight: 300;
+  font-size: 17px;
+  line-height: 26px;
+  color: #B3B3B3;
+}
+
+.h5-extra-bold {
+
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 26px;
+
+  text-transform: uppercase;
+
 }
 
 .form-group .h3-medium {
@@ -671,6 +687,12 @@ select.error {
     font-size: 17px;
     line-height: 27px;
   }
+
+  .h5-light {
+    font-size: 16px;
+    line-height: 23px;
+  }
+
 
   .width {
     padding-left: 20px;

@@ -9,7 +9,7 @@ const MainShare =()=>{
             preset!”
           </h2>
           <p className="h4-medium">
-            We tested the hypothesis in practice and share the results
+            We tested the hypothesis in practice and <span>share the results.</span>
           </p>
         </div>
       </section>
