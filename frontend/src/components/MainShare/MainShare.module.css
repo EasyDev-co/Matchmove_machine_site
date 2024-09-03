@@ -1,0 +1,31 @@
+.main {
+    display: flex;
+    flex-direction: column;
+    padding: 160px 0px;
+    background: linear-gradient(110.35deg, rgba(73, 73, 75, 0.75) 0%, rgba(0, 8, 30, 0.75) 100%);
+    color: white;
+}
+
+.content {
+    place-self: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 50px;
+    align-items: center;
+    max-width: 1200px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.content h2,
+.content p  {
+    text-align: center;
+}
+
+@media (max-width: 768px) {
+    .main {
+        padding: 100px 0;
+    }
+
+}

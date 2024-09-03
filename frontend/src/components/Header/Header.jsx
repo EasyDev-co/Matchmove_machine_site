@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styles from "./Header.module.css"
 import Button from "../Button";
 import logo from "../../assets/images/logo.svg"
@@ -8,14 +9,20 @@ import User from "./HeaderUser";
 
 const Header = () => {
 
+  const navigate = useNavigate()
+
   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
   const [isUser, setIsUser] = useState(true)
 
+  const handkeGoToMainPage =()=>{
+    navigate("/")
+  }
+
   return (
     <header className={styles.main}>
       <div className={styles.container}>
-        <div className={styles.logocont}><img src={logo} alt="logo" /></div>
+        <div className={styles.logocont} onClick={handkeGoToMainPage}><img src={logo} alt="logo" /></div>
         <div className={styles.logo}><img src={mobilelogo} alt="m-logo" /></div>
         <HeaderLinks isMenuOpen={isMenuOpen}/>
         <div className={styles.btncont}>

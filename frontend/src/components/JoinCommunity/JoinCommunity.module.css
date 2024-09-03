@@ -1,0 +1,36 @@
+.main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 80px;
+    height: 650px;
+    background: linear-gradient(110.35deg, rgba(40, 40, 40, 0.85) 0%, rgba(0, 8, 30, 0.85) 100%);
+    color: white;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 0px;
+    gap: 40px;
+    max-width: 547px;
+}
+
+.content h2{
+    text-align: center;
+}
+
+.btn {
+    width: 180px;
+}
+
+@media screen and (max-width: 500px) {
+    .main{
+        padding: 40px 20px;
+        height: 476px;
+    }
+    
+}
