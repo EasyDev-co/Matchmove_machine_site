@@ -4,10 +4,13 @@ import Button from "../Button";
 import logo from "../../assets/images/logo.svg"
 import mobilelogo from "../../assets/images/mobilelogo.svg"
 import HeaderLinks from "./HeaderLinks";
+import User from "./HeaderUser";
 
 const Header = () => {
 
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+
+  const [isUser, setIsUser] = useState(true)
 
   return (
     <header className={styles.main}>
@@ -17,7 +20,7 @@ const Header = () => {
         <HeaderLinks isMenuOpen={isMenuOpen}/>
         <div className={styles.btncont}>
           <div><Button labelPosition="none" variant="grey" iconType="cart" /></div>
-          <div><Button label="Sign In" variant="blue" iconType="person" /></div>
+          <div>{isUser?<User/>:<Button label="Sign In" variant="blue" iconType="person" />}</div>
           <div className={styles.mobilebtn}><Button labelPosition="none" variant="grey" iconType="person" onClick={()=>setIsMenuOpen(prev=>!prev)} /></div>
         </div>
       </div>

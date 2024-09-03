@@ -80,6 +80,24 @@
     }
 }
 
+.userbtn img {
+    height: 60px;
+    width: 60px;
+}
+
+.userbtn {
+    display: flex;
+    flex-direction: row;
+    gap:10px;
+    background: transparent;
+    border: none;
+    font: inherit;
+    font-weight: 500;
+    color: white;
+    align-items: center;
+    cursor: pointer;
+}
+
 
 @media (max-width: 768px) {
     .main {
