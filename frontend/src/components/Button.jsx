@@ -1,4 +1,4 @@
-import PropTypes from "prop-types"
+import PropTypes from "prop-types";
 
 const ICONS = {
   arrowRight: (
@@ -195,32 +195,110 @@ const ICONS = {
       />
     </svg>
   ),
+
+  download: (
+    <svg
+      width="27"
+      height="36"
+      viewBox="0 0 27 36"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <mask
+        id="mask0_415_4203"
+        style={{ maskType: "alpha" }}
+        maskUnits="userSpaceOnUse"
+        x="2"
+        y="7"
+        width="22"
+        height="22"
+      >
+        <path
+          d="M13 23.621L7.44029 18.0597L8.55129 16.9299L12.2143 20.5929L12.2143 7H13.7857L13.7857 20.5929L17.4471 16.9314L18.5597 18.0597L13 23.621ZM4.53786 29C3.815 29 3.21157 28.758 2.72757 28.274C2.24252 27.789 2 27.185 2 26.4621L2 22.6546H3.57143V26.4621C3.57143 26.7031 3.672 26.9247 3.87314 27.1269C4.07533 27.328 4.2969 27.4286 4.53786 27.4286L21.4621 27.4286C21.7031 27.4286 21.9247 27.328 22.1269 27.1269C22.328 26.9247 22.4286 26.7031 22.4286 26.4621V22.6546H24V26.4621C24 27.185 23.758 27.7884 23.274 28.2724C22.789 28.7575 22.185 29 21.4621 29L4.53786 29Z"
+          fill="black"
+        />
+      </mask>
+      <g mask="url(#mask0_415_4203)">
+        <rect
+          width="27"
+          height="36"
+          transform="matrix(-1 0 0 1 27 0)"
+          fill="white"
+        />
+      </g>
+    </svg>
+  ),
+
+  submit: (
+    <svg
+      width="27"
+      height="36"
+      viewBox="0 0 27 36"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <mask
+        id="mask0_305_11199"
+        style={{ maskType: "alpha" }}
+        maskUnits="userSpaceOnUse"
+        x="0"
+        y="3"
+        width="27"
+        height="32"
+      >
+        <path
+          d="M14.9999 12V3L5.99987 3C5.20422 3 4.44116 3.31607 3.87855 3.87868C3.31594 4.44129 2.99987 5.20435 2.99987 6L2.99987 17.4C4.54629 16.6101 6.30252 16.3284 8.01842 16.5948C9.73432 16.8612 11.3224 17.6623 12.5565 18.8839C13.7906 20.1056 14.6077 21.6854 14.8916 23.3985C15.1754 25.1116 14.9115 26.8706 14.1374 28.425L17.2304 31.5195C17.6474 31.935 17.8949 32.4585 17.9729 33H23.9999C24.7955 33 25.5586 32.6839 26.1212 32.1213C26.6838 31.5587 26.9999 30.7956 26.9999 30V15H17.9999C17.2042 15 16.4412 14.6839 15.8785 14.1213C15.3159 13.5587 14.9999 12.7956 14.9999 12ZM17.2499 12V3.75L26.2499 12.75H17.9999C17.801 12.75 17.6102 12.671 17.4695 12.5303C17.3289 12.3897 17.2499 12.1989 17.2499 12ZM6.74987 31.5C8.15163 31.502 9.51894 31.0657 10.6604 30.252L14.5799 34.17C14.6829 34.2805 14.8071 34.3692 14.9451 34.4307C15.0831 34.4922 15.232 34.5252 15.3831 34.5279C15.5341 34.5306 15.6842 34.5028 15.8243 34.4462C15.9643 34.3896 16.0916 34.3054 16.1984 34.1986C16.3053 34.0917 16.3895 33.9645 16.4461 33.8244C16.5026 33.6843 16.5304 33.5343 16.5278 33.3832C16.5251 33.2322 16.492 33.0832 16.4305 32.9452C16.3691 32.8072 16.2804 32.683 16.1699 32.58L12.2519 28.6605C13.1285 27.4271 13.5653 25.935 13.4921 24.4236C13.4189 22.9122 12.8401 21.4692 11.8484 20.3263C10.8567 19.1834 9.5098 18.4068 8.02382 18.1213C6.53785 17.8357 4.99902 18.0577 3.65437 18.7517C2.30972 19.4457 1.23724 20.5713 0.609091 21.9479C-0.0190579 23.3245 -0.166439 24.8723 0.190606 26.3427C0.547651 27.8132 1.38841 29.121 2.57793 30.0562C3.76744 30.9915 5.23671 31.5 6.74987 31.5ZM6.74987 29.25C5.55639 29.25 4.4118 28.7759 3.56789 27.932C2.72397 27.0881 2.24987 25.9435 2.24987 24.75C2.24987 23.5565 2.72397 22.4119 3.56789 21.568C4.4118 20.7241 5.55639 20.25 6.74987 20.25C7.94334 20.25 9.08793 20.7241 9.93185 21.568C10.7758 22.4119 11.2499 23.5565 11.2499 24.75C11.2499 25.9435 10.7758 27.0881 9.93185 27.932C9.08793 28.7759 7.94334 29.25 6.74987 29.25Z"
+          fill="white"
+        />
+      </mask>
+      <g mask="url(#mask0_305_11199)">
+        <rect width="27" height="36" fill="white" />
+      </g>
+    </svg>
+  ),
 };
 
-const Button = ({ iconType = null, label, labelPosition = 'left', onClick = () => {}, variant = 'blue', color = 'blue', ...props }) => {
+const Button = ({
+  iconType = null,
+  label,
+  labelPosition = "left",
+  onClick = () => {},
+  variant = "blue",
+  color = "blue",
+  ...props
+}) => {
   const icon = ICONS[iconType] || null;
 
-
   const buttonClass = `custom-button ${
-    variant === 'transparent' ? `button-transparent button-transparent-${color}` : `button-${variant}`
-  } ${labelPosition === 'none' ? 'no-label' : ''} ${labelPosition === 'center' ? 'button-center' : ''}`;
+    variant === "transparent"
+      ? `button-transparent button-transparent-${color}`
+      : `button-${variant}`
+  } ${labelPosition === "none" ? "no-label" : ""} ${
+    labelPosition === "center" ? "button-center" : ""
+  }`;
 
-  const renderLabel = label && labelPosition !== 'none';
+  const renderLabel = label && labelPosition !== "none";
   const renderIcon = icon;
 
   return (
-    <button 
-      type={props.type || 'button'} 
-      className={buttonClass} 
-      onClick={onClick} 
+    <button
+      type={props.type || "button"}
+      className={buttonClass}
+      onClick={onClick}
       {...props}
     >
-      {labelPosition === 'left' && renderLabel && <span className="button-label">{label}</span>}
+      {labelPosition === "left" && renderLabel && (
+        <span className="button-label">{label}</span>
+      )}
       {renderIcon && icon}
-      {labelPosition === 'right' && renderLabel && <span className="button-label">{label}</span>}
-      {labelPosition === 'center' && renderLabel && <span className="button-label">{label}</span>}
+      {labelPosition === "right" && renderLabel && (
+        <span className="button-label">{label}</span>
+      )}
+      {labelPosition === "center" && renderLabel && (
+        <span className="button-label">{label}</span>
+      )}
     </button>
   );
 };
 
-export default Button
+export default Button;

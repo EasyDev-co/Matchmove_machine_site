@@ -38,10 +38,31 @@
     padding: 0px;
     gap: 20px;
     width: 413px;
+    position: relative;
 }
 
 .tutorial img {
     width: 100%;
+}
+
+.tutorial:hover h3 {
+color: #537EEF;
+}
+
+.tutorial:hover img {
+    opacity: 20%;
+}
+.tutorial:hover .readmorebtn {
+    display: flex;
+}
+
+.readmorebtn{
+    position: absolute;
+    top: 100px;
+    left: calc(50% - 90px);
+    width: 180px;
+    z-index: 2;
+    display: none;
 }
 
 .title {

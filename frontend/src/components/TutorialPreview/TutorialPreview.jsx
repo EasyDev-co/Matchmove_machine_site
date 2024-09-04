@@ -9,8 +9,9 @@ const TutorialPreview =()=>{
         <div className={styles.container}>
           {tutorialPreview.map((item) => (
             <article key={item.id} className={styles.tutorial}>
+              <div className={styles.readmorebtn}><Button variant="outline-blue" label="Read more" iconType="arrowRight"/></div>
               <img src={item.image} alt="tutorial" />
-              <div className={styles.title}><h3 className="h3-medium">{item.title}</h3> <div><Button/></div></div>
+              <div className={styles.title}><h3 className="h3-medium">{item.title}</h3> <div><Button iconType="download"/></div></div>
               <p className="h5-light">{item.text}</p>
             </article>
           ))}

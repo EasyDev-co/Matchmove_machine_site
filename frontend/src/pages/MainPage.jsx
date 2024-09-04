@@ -4,6 +4,7 @@ import MainShare from "../components/MainShare/MainShare";
 import HowItWorks from "../components/HowItWorks/HowItWorks";
 import TutorialPreview from "../components/TutorialPreview/TutorialPreview";
 import JoinCommunity from "../components/JoinCommunity/JoinCommunity";
+import ScrollToTopBtn from "../components/ScrollToTopBtn/ScrollToTopBtn";
 
 const MainPage = ()=>{
     return (
@@ -15,6 +16,7 @@ const MainPage = ()=>{
       <TutorialPreview/>
       <section>Reviews</section>
       <JoinCommunity/>
+      <ScrollToTopBtn/>
       </>
     );
 }

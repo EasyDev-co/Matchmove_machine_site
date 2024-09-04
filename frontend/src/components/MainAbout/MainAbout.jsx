@@ -3,7 +3,7 @@ import image from "../../assets/images/about.png"
 
 const MainAbout =()=>{
     return (
-      <section className={`height ${styles.main}`}>
+      <section className={`height ${styles.main}`} id="about-section">
         <div className={styles.content}>
           <h2 className="h2-bold">About</h2>
           <p className="h4-medium">
