@@ -1,0 +1,149 @@
+.container {
+    display: flex;
+    flex-direction: row;
+    gap: 30px;
+    margin-top: 40px;
+    max-width: 1440px;
+    width: 100%;
+}
+
+.link {
+    width: 100%;
+}
+
+.link button {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    margin: 0;
+}
+
+.content {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    justify-content: center;
+}
+
+.content h4 {
+    color: #3F3F3F;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.input {
+    background-color: #B3B3B3;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 15px 20px;
+    min-height: 58px;
+    height: auto;
+    background: #B3B3B3;
+    border: 1px solid #B3B3B3;
+    border-radius: 5px;
+    width: 100%;
+    min-width: 15px;
+    white-space: normal;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    word-break: break-word;
+    margin-bottom: 40px;
+}
+
+.inputcont {
+    position: relative;
+    box-sizing: border-box;
+}
+
+.copybtn {
+    position: absolute;
+    right: 10px;
+    top: 12px;
+}
+
+.socials {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
+
+.socialbtn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    margin: 0;
+    font-family: inherit;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    font-size: 15px;
+    font-weight: 300;
+    width: 80px;
+}
+
+
+
+@media (max-width: 920px) {
+    .socialbtn{
+        width: 65px;
+    }
+
+    .qr img {
+        width: 220px;
+    }
+}
+
+@media (max-width: 780px) {
+    .container {
+        flex-direction: column;
+        margin-top: 0px;
+        gap: 20px;
+    }
+
+    .qr img {
+        display: none;
+    }
+
+    .socialbtn{
+        width: 53px;
+    }
+
+    .socials {
+        place-self: center;
+    }
+}
+
+@media (max-width: 350px) {
+
+    .socialbtn{
+        width: 40px;
+    }
+}
+
+
+@media (max-width: 380px) {
+    .socials {
+        gap: 0px;
+        justify-content: space-between;
+    }
+    
+    .socialbtn{
+        width: 53px;
+    font-weight: 300;
+    font-size: 11.588px;
+    line-height: 15px;
+    }
+}
+
+
+
+

@@ -1,0 +1,67 @@
+.main {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding: 160px 0; 
+    color: white;
+    overflow: hidden; 
+}
+
+.main::before {
+    content: "";
+    position: absolute; 
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(110.35deg, rgba(73, 73, 75, 0.75) 0%, rgba(0, 8, 30, 0.75) 100%);
+    z-index: 1; 
+}
+
+.main::after {
+    content: "";
+    position: absolute; 
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url("../../assets/images/share.jfif") no-repeat center center;
+    background-size: cover;
+    z-index: 0;
+}
+
+
+.content {
+    place-self: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 50px;
+    align-items: center;
+    max-width: 1200px;
+    padding-left: 20px;
+    padding-right: 20px;
+    z-index: 2;
+}
+
+.content h2,
+.content p  {
+    text-align: center;
+}
+
+.content p {
+    color: rgb(158, 158, 158);
+}
+
+.content span {
+    color: 
+    #537EEF;
+    font-weight: 600;
+}
+
+@media (max-width: 768px) {
+    .main {
+        padding: 100px 0;
+    }
+
+}
