@@ -1,0 +1,37 @@
+.main {
+display: flex;
+justify-content: center;
+align-items: center;
+padding: 150px 182px;
+color: white;
+position: relative;
+}
+
+.main::before {
+    content: "";
+    position: absolute; 
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(110.35deg, rgba(73, 73, 75, 0.75) 0%, rgba(0, 8, 30, 0.75) 100%);
+    z-index: 1; 
+}
+
+.main::after {
+    content: "";
+    position: absolute; 
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url("../../assets/images/data.png") no-repeat center center;
+    background-size: cover;
+    z-index: 0;
+}
+
+.main h2 {
+    max-width: 1076px;
+    text-align: center;
+    z-index: 2;
+}

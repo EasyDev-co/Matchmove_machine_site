@@ -1,0 +1,105 @@
+.filterscont {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
+.body {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
+
+
+.assetscont {
+    width: 100%;
+}
+
+.assets {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    gap: 10px;
+}
+
+.assets>* {
+    flex: 1 1 calc(25% - 10px);
+    box-sizing: border-box;
+    min-width: 200px
+}
+
+.resetallfilters {
+    width: 307px;
+}
+
+.deleteFilter {
+    font: inherit;
+    font-weight: 300;
+    font-size: 17px;
+    color: #282828;
+    cursor: pointer;
+    background: transparent;
+    box-sizing: border-box;
+    padding: 0px 20px;
+    gap: 10px;
+
+    border: 2px solid #EBEBEB;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-items: center;
+}
+
+
+.deleteFilter:hover {
+    border-color: #BF3636;
+}
+
+.topPagination {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.toggleCont {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 20px;
+    font-weight: 500;
+    font-size: 18px;
+    color: #383838;
+
+}
+
+.toggleSwitch {
+    position: relative;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    padding-right: 5px;
+    width: 120px;
+    height: 60px;
+    background: #505050;
+    border-radius: 5px;
+}
+
+.toggleButton {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    transition: transform 0.3s ease;
+    align-items: center;
+    padding: 0px;
+    width: 55px;
+    height: 50px;
+    background: #FFFFFF;
+    border-radius: 5px;
+}
+
+.on .toggleButton {
+    transform: translateX(60px);
+}

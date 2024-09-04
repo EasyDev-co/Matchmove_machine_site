@@ -4,6 +4,7 @@ import Button from "../Button";
 import Select from "../Forms/Select";
 import { scrollArrowsvg } from "../../assets/svg/svgimages";
 import useSmoothScroll from "../../hooks/useSmoothScroll";
+import { useNavigate } from "react-router-dom";
 
 const MainHeader = () => {
   const [formData, setFormData] = useState({
@@ -13,6 +14,7 @@ const MainHeader = () => {
   });
 
   const scrollToSection = useSmoothScroll(); 
+  const navigate= useNavigate()
 
   const handleSelectChange = (name, option) => {
     setFormData({ ...formData, [name]: option });
@@ -36,6 +38,10 @@ const MainHeader = () => {
   const handleScroll = () => {
     scrollToSection("about-section");
   };
+
+  const goToLibrary =()=>{
+    navigate("library")
+  }
 
   return (
     <section className={styles.main}>
@@ -89,6 +95,7 @@ const MainHeader = () => {
             variant="outline-grey"
             label="See full library"
             iconType="arrowRight"
+            onClick={goToLibrary}
           />
 
           <button className={styles.scroll} onClick={handleScroll}>
