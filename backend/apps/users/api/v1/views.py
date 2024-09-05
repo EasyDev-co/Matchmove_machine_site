@@ -133,6 +133,7 @@ class ConfirmCodeMixin:
 
 class EmailVerificationCodeAPIView(ConfirmCodeMixin, APIView):
     """Представление для верификации кода при регистрации пользователя."""
+    permission_classes = [AllowAny]
     email_serializer = EmailAndCodeSerializer
 
     def post(self, request, *args, **kwargs):
