@@ -2,15 +2,17 @@ import styles from "./NavigationTop.module.css"
 import { Link } from "react-router-dom"
 import { breadcrumbsvg } from "../../assets/svg/svgimages"
 
-const NavigationTop =()=>{
+const NavigationTop =({title, text})=>{
+    
+    
     return(
         <section className={`height ${styles.main}`}>
             <div className={styles.breadcrumbs}>
                 <Link>Home {breadcrumbsvg}</Link>
                 <p>Full library</p>
             </div>
-            <h2 className="h2-bold">Distortion Grids Database </h2>
-            <p className="h4-light">Search for available distortion grids for chosen camera and lens models.</p>
+            <h2 className="h2-bold">{title} </h2>
+           {text &&  <p className="h4-light">{text}</p>}
         </section>
     )
 }

@@ -26,3 +26,21 @@ export const tutorialPreview = [
     image: img3,
   },
 ];
+
+export const files = [
+  { id: 1, file: "Distortion grid for 100mm f/4.5 0.3m" },
+  { id: 2, file: "Sigma 100-300mm f/4 APO EX DG HSM + Kenko Teleplus PRO 300 AF 1.4× DGX ext." },
+  { id: 3, file: "XF 27mm f/2.8 R WR" },
+  { id: 4, file: "Canon EF 50mm f/1.8 STM" },
+  { id: 5, file: "Nikon AF-S NIKKOR 24-70mm f/2.8E ED VR" },
+  { id: 6, file: "Sony FE 24-105mm f/4 G OSS" },
+  { id: 7, file: "Tamron SP 70-200mm f/2.8 Di VC USD G2" },
+  { id: 8, file: "Olympus M.Zuiko Digital ED 12-40mm f/2.8 PRO" },
+  { id: 9, file: "Leica Summicron-M 50mm f/2" },
+  { id: 10, file: "Fujifilm XF 16-55mm f/2.8 R LM WR" },
+  { id: 11, file: "Panasonic Lumix G X Vario 12-35mm f/2.8 II ASPH" },
+  { id: 12, file: "Sigma 14-24mm f/2.8 DG HSM Art" },
+  { id: 13, file: "Voigtländer Nokton 40mm f/1.2 Aspherical" },
+  { id: 14, file: "Pentax DA 18-135mm f/3.5-5.6 ED AL" },
+  { id: 15, file: "Zeiss Otus 28mm f/1.4" }
+];

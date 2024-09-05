@@ -6,7 +6,7 @@ import JoinCommunity from "../components/JoinCommunity/JoinCommunity";
 const Library = () => {
   return (
     <>
-      <NavigationTop />
+      <NavigationTop title="Distortion Grids Database" text="Search for available distortion grids for chosen camera and lens models." />
       <DatabaseBanner/>
       <LibraryItems/>
       <JoinCommunity/>

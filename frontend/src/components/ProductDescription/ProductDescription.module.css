@@ -1,0 +1,73 @@
+.main {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.pricecont {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 400px;
+}
+
+.priceBtn {
+    max-width: 180px;
+    width: 100%;
+}
+
+.container {
+    max-width: 400px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.license {
+    align-items: end;
+}
+
+.license h2 {
+    text-align: end;
+    width: 100%;
+}
+
+.license p {
+
+    text-align: end;
+}
+
+@media (max-width: 1100px) {
+    .pricecont{
+        gap: 10px;
+        width: 180px;
+    }
+}
+
+@media (max-width: 950px) {
+
+    .main{
+        gap: 54px;
+    }
+
+    .container {
+        align-items: start;
+    }
+}
+
+@media (max-width: 700px) {
+    .main{
+        flex-direction: column;
+    }
+
+    .license p {
+        text-align: start;
+    }
+
+    .license h2 {
+        text-align: start;
+    }
+}

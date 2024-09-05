@@ -1,0 +1,106 @@
+.wrap {
+    display: grid;
+    place-items: center;
+}
+
+.main {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    padding: 20px;
+    background: linear-gradient(90deg, #F0F0F0 0%, #E4EBFF 100%);
+    border: 1px solid rgba(132, 132, 132, 0.2);
+    border-radius: 5px;
+    width: fit-content;
+    place-self: center;
+}
+
+.top {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+
+.line {
+    background-color: rgba(202, 202, 202, 0.6);
+    height: 1px;
+
+    flex: 1;
+}
+
+.orCard p {
+    font-weight: 300;
+    font-size: 18px;
+    line-height: 31px;
+
+    color: #848484;
+}
+
+
+.orCard {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 0px;
+    gap: 25px;
+    width: 100%;
+}
+
+.paySystems {
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+}
+
+.systembtn {
+
+    box-sizing: border-box;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0 50px;
+    height: 60px;
+    width: 170px;
+    background: #FFFFFF;
+    border: 1px solid rgba(179, 179, 179, 0.5);
+    border-radius: 5px;
+    cursor: pointer;
+
+}
+
+.form {
+    width: 100%;
+}
+
+.formMain {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.formMain input{
+box-sizing: border-box;
+padding: 15px;
+background: #F8F8F8;
+border: 1px solid rgba(179, 179, 179, 0.5);
+border-radius: 5px;
+
+
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+}
+
+.subfield {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
