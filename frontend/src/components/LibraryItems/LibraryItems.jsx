@@ -6,6 +6,8 @@ import Asset from "../AssetsGrid/Asset";
 import Button from "../Button";
 import Filters from "../Filters/Filters";
 import { useNavigate } from "react-router-dom";
+import Toggle from "../Forms/Toggle";
+import AdaptFilters from "../LibraryAdaptFilters/AdaptFilters";
 
 const assets = [
     { id: 1, price: 0, camera: "Canon", lense: "ME20F-SH", creator: "company" },
@@ -25,17 +27,12 @@ const assets = [
     const [openBrand, setOpenBrand] = useState(null);
 
     const [showFilters, setShowFilters] = useState(false);
-    const [isOn, setIsOn] = useState(false)
 
     const navigate = useNavigate()
 
     const toggleLensMenu = (brand) => {
         setOpenBrand(openBrand === brand ? null : brand);
     };
-
-    const handleToggle =()=>{
-      setIsOn(prev =>!prev)
-    }
 
     const handleBrandSelect = (brand, event) => {
         event.stopPropagation();
@@ -85,8 +82,16 @@ const assets = [
     };
 
     return (
-      <section className="height">
+      <section className={`height ${styles.main}`}>
         <div className={styles.filterscont}>
+          <AdaptFilters
+            selected={selected}
+            openBrand={openBrand}
+            toggleLensMenu={toggleLensMenu}
+            handleBrandSelect={handleBrandSelect}
+            handleLensSelect={handleLensSelect}
+            applyFilters={applyFilters}
+          />
           <div className={styles.resetallfilters}>
             {showFilters && (
               <Button
@@ -122,26 +127,25 @@ const assets = [
         </div>
 
         <div className={styles.body}>
-          <Filters
-            selected={selected}
-            openBrand={openBrand}
-            toggleLensMenu={toggleLensMenu}
-            handleBrandSelect={handleBrandSelect}
-            handleLensSelect={handleLensSelect}
-            applyFilters={applyFilters}
-          />
+          <div className={styles.filterwrap}>
+            <Filters
+              selected={selected}
+              openBrand={openBrand}
+              toggleLensMenu={toggleLensMenu}
+              handleBrandSelect={handleBrandSelect}
+              handleLensSelect={handleLensSelect}
+              applyFilters={applyFilters}
+            />
+          </div>
 
           <div className={styles.assetscont}>
             <div className={styles.topPagination}>
-              <Pagination />
+              <div className={styles.contpag}>
+                <Pagination />
+              </div>
               <div className={styles.toggleCont}>
                 <p>Free assets</p>
-                <div
-                  className={`${styles.toggleSwitch} ${isOn ? styles.on : ""}`}
-                  onClick={handleToggle}
-                >
-                  <div className={styles.toggleButton}></div>
-                </div>
+                <Toggle />
               </div>
             </div>
             <div className={styles.assets}>

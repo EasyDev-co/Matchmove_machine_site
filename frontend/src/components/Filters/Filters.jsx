@@ -3,6 +3,7 @@ import styles from "./Filters.module.css";
 import Input from "../Forms/Input";
 import Button from "../Button";
 import { minussvg, plussvg } from "../../assets/svg/svgimages";
+import SearchInput from "../Forms/SearchInput";
 
 const cameraBrands = [
     { brand: 'ARRI ALEXA 65', lenses: [
@@ -69,7 +70,9 @@ const Filters = ({
   return (
     <div className={styles.filterform}>
       <h3 className="h3-medium">Camera and Lens</h3>
-      <div className={styles.input}></div>
+      <div className={styles.input}>
+        <SearchInput/>
+      </div>
       <div className={styles.filters}>
         {cameraBrands.map(({ brand, lenses }, i) => (
           <div key={i} className={styles.filter}>

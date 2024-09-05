@@ -35,3 +35,11 @@ position: relative;
     text-align: center;
     z-index: 2;
 }
+
+
+@media (max-width: 1200px) {
+
+    .main {
+        padding: 100px 60px;
+    }
+}
