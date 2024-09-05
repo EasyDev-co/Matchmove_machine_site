@@ -54,4 +54,3 @@ class DeleteFileFromFtpTask(BaseTask):
 upload_file_to_ftp = app.register_task(UploadFileToFtpTask())
 download_file_from_ftp = app.register_task(DownloadFileFromFtpTask())
 delete_file_from_ftp = app.register_task(DeleteFileFromFtpTask())
-
