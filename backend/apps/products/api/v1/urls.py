@@ -17,4 +17,5 @@ urlpatterns = [
     path('products/<uuid:pk>/', ProductDetailView.as_view(), name='product-detail'),
     path('upload/', FileViewSet.as_view({'post': 'upload'}), name='file-upload'),
     path('download/<str:file_id>/', FileViewSet.as_view({'get': 'download'}), name='file-download'),
+    path('delete/<str:file_id>/', FileViewSet.as_view({'delete': 'delete'}), name='file-delete'),
 ]

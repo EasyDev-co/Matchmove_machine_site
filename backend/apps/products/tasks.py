@@ -34,6 +34,23 @@ class DownloadFileFromFtpTask(BaseTask):
             print(f"Error downloading file ID {file_id}: {str(e)}")
             raise e
 
+
+class DeleteFileFromFtpTask(BaseTask):
+    """Задача для удаления файла с FTP по его ID."""
+    name = "delete_file_from_ftp"
+
+    def process(self, file_id, *args, **kwargs):
+        ftp_service = get_ftp_service()
+        try:
+            ftp_service.delete_file(file_id)
+            return f"File ID {file_id} has been successfully deleted."
+        except Exception as e:
+            self.on_failure(exc=e, task_id=self.request.id, args=args, kwargs=kwargs, einfo=None)
+            print(f"Error deleting file ID {file_id}: {str(e)}")
+            raise e
+
+
 # Регистрация задач в Celery
 upload_file_to_ftp = app.register_task(UploadFileToFtpTask())
 download_file_from_ftp = app.register_task(DownloadFileFromFtpTask())
+delete_file_from_ftp = app.register_task(DeleteFileFromFtpTask())
