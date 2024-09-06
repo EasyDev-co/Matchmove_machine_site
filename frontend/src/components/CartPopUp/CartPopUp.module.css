@@ -1,13 +1,53 @@
-.main {
+
+
+@keyframes slideInBounce {
+    0% {
+      transform: translateX(+100%);
+    }
+    100% {
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes slideOut {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(+100%);
+
+    }
+  }
+
+  .main {
     display: flex;
     flex-direction: column;
     padding: 40px;
-    width: 500px;
-    height: 85vh;
+    max-width: 500px;
+    max-height: 810px;
+    height: (100vh - 90px);
+    width: 100%;
     background: #D9D9D9;
     z-index: 10;
     color: #282828;    
+    animation: slideInBounce 0.3s ease-out;
 }
+
+  .main.exit {
+    animation: slideOut 0.3s ease-in forwards;
+  }
+
+.fixWrap {
+    position: fixed;
+    right: 0;
+    top: 90px;
+    bottom: 0;
+    left: 0;
+    z-index: 10;
+    display: flex;
+    justify-content: flex-end;
+}
+
 
 .closeBtn button{
     color: inherit;    

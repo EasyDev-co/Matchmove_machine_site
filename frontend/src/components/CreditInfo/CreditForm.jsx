@@ -1,5 +1,6 @@
 import { useState } from "react";
 import styles from "./CreditInfo.module.css";
+import Button from "../Button";
 
 const countries = [
   "United States",
@@ -141,7 +142,7 @@ const CreditCardForm = () => {
           </div>
         </div>
 
-        <div className={styles.subfield}>
+        <div className={`${styles.subfield} ${styles.fieldPosition}`}>
           <div className={styles.field}>
             <label htmlFor="country">Country</label>
             <select id="country" value={country} onChange={handleCountryChange}>
@@ -157,18 +158,19 @@ const CreditCardForm = () => {
 
           <div className={styles.field}>
             <label htmlFor="promocode">Promocode</label>
-            <input
-              type="text"
-              id="promocode"
-              value={promocode}
-              onChange={handlePromocodeChange}
-              placeholder="XXXX-XXXX-XXXX-XXXX"
-            />
+            <div className={styles.promocodeCont}>
+              <input
+                type="text"
+                id="promocode"
+                value={promocode}
+                onChange={handlePromocodeChange}
+                placeholder="XXXX-XXXX-XXXX-XXXX"
+              />
+              <div className={styles.promobtn}><Button labelPosition="none" variant="grey" iconType="checkMark"/></div>
+            </div>
             {errors.promocode && <span>{errors.promocode}</span>}
           </div>
         </div>
-
-        <button type="submit">Submit</button>
       </div>
     </form>
   );

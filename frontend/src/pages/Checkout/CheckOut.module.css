@@ -1,6 +1,5 @@
 .header {
     padding: 0px 80px;
-
     width: 100%;
     height: 90px;
 
@@ -22,36 +21,36 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     height: calc(100vh - 90px);
+    position: relative;
 }
 
 .orderInfo {
-display: flex;
-flex-direction: column;
-align-items: center;
-padding: 80px;
-background: #E4EBFF;
-height: calc(100vh - 90px);
-box-sizing: border-box;
-gap: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 80px;
+    background: #E4EBFF;
+    height: calc(100vh - 90px);
+    box-sizing: border-box;
+    gap: 20px;
 }
 
 .check {
-display: flex;
-flex-direction: column;
-justify-content: center;
-align-items: flex-start;
-padding: 0px;
-gap: 10px;
-flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 0px;
+    gap: 10px;
 
 }
 
 .cart {
     width: 100%;
     overflow: auto;
-    height: 1;
-    display: flex; 
-    flex-direction: column; 
+    display: flex;
+    flex-direction: column;
 }
 
 
@@ -60,4 +59,71 @@ flex: 1;
     flex-direction: row;
     justify-content: space-between;
     width: 100%;
+}
+
+.itemsBtn {
+    display: none;
+    padding: 20px;
+}
+
+.openItems {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0px 20px;
+    width: 100%;
+    height: 60px;
+    background: #EBEFF9;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 31px;
+    color: #282828;
+}
+
+.active {
+    color: white;
+    background: #2F57BF;
+
+}
+
+
+@media (max-width: 700px) {
+    .body {
+        grid-template-columns: 1fr;
+    }
+
+    .cart {
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: inherit;
+        position: absolute;
+        box-sizing: border-box;
+        padding: 20px;
+        background: linear-gradient(0deg, #E4EBFF, #E4EBFF), #FFFFFF;
+    }
+
+    .itemsBtn {
+        display: flex;
+    }
+
+    .open {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .closed {
+        opacity: 0;
+        visibility: hidden;
+    }
+
+    .orderInfo {padding: 20px;
+background-color: transparent;
+height: fit-content;}
 }
