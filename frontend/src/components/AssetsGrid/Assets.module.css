@@ -58,6 +58,10 @@ color: white;
     box-sizing: border-box;
 }
 
+.creator svg {
+    height: 30px;
+}
+
 .user {
     display: flex;
     flex-direction: row;

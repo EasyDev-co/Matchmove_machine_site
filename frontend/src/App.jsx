@@ -11,6 +11,7 @@ import ProtectedRoute from './pages/ProtectedRoute';
 import Layout from './components/Layout';
 import EditProfile from './pages/EditProfile/EditProfile';
 import CheckOut from './pages/Checkout/CheckOut';
+import AffiliateProgram from './pages/AffiliateProgram/AffiliateProgram';
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
                 <Route path="/" element={<MainPage />} />
                 <Route path="library" element={<Library />} />
                 <Route path="library/product/:productId" element={<Product />} />
+                <Route path="affiliate-program" element={<AffiliateProgram />} />
                 <Route path="authorization" element={<Authorization />} />
                 <Route path="registration" element={<Authorization />} />
                 <Route path="reset-password" element={<Authorization />} />

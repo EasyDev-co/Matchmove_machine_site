@@ -1,6 +1,8 @@
 import styles from "./ProductField.module.css"
 import { useState } from "react"
 import FileBlock from "./FileBlock";
+import Description from "./Description";
+import HowToUse from "./HowToUse";
 
 const ProductField =()=>{
     const [activeButton, setActiveButton] = useState('Assets');
@@ -31,7 +33,9 @@ const ProductField =()=>{
                     <h2 className="h2-medium">How to use</h2>
                 </button>
             </div>
-            <FileBlock/>
+            {activeButton==="Assets" && <FileBlock/>}
+            {activeButton==="Description" && <Description/>}
+            {activeButton === "How to use" && <HowToUse/>}
         </section>
     );
 };

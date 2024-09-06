@@ -7,6 +7,19 @@
     background: linear-gradient(110.35deg, rgba(40, 40, 40, 0.9) 0%, rgba(0, 8, 30, 0.9) 100%);
     box-sizing: border-box;
     height: 600px;
+    position: relative;
+}
+
+.main::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url("../../assets//images/formbackground.png") no-repeat center center;
+    background-size: cover;
+    z-index: -1; 
 }
 
 .imgcont {

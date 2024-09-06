@@ -19,7 +19,7 @@ const SharePage =()=>{
 
 
     return (
-      <section className="width">
+      <section className={` width ${styles.bottom}`}>
         <h2 className="h2-medium">Share this page</h2>
         <div className={styles.container}>
           <div className={styles.qr}>

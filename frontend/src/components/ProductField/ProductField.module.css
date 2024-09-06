@@ -7,6 +7,20 @@
     padding: 120px 80px;
     background: linear-gradient(110.35deg, rgba(40, 40, 40, 0.85) 0%, rgba(0, 8, 30, 0.85) 100%);
     color: #FFFFFF;
+    position: relative;
+}
+
+.main::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url("../../assets//images/formbackground.png") no-repeat center center;
+    background-size: cover;
+    opacity: 60%; 
+    z-index: -1; 
 }
 
 .toggleCont {
@@ -47,11 +61,69 @@
 
 }
 
+.fileCont::-webkit-scrollbar {
+    width: 5px;
+}
+
+.fileCont::-webkit-scrollbar-track {
+    background: #f0f0f0;
+    border-radius: 10px;
+}
+
+.fileCont::-webkit-scrollbar-thumb {
+    background: #2F57BF;
+    border-radius: 10px;
+}
+
+.fileCont::-webkit-scrollbar-thumb:hover {
+    background: #1a2a6c;
+}
+
 .file {
     display: flex;
     flex-direction: row;
+    gap: 10px;
     width: 400px;
+    padding: 10px;
+    box-sizing: border-box;
     justify-content: space-between;
+    color: #B3B3B3;
+}
+
+.fileName {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+}
+
+.btn {
+    color: white;
+}
+
+.descriptionBlock {
+    max-width: 1280px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 20px;
+}
+
+.howtoCont img{
+max-width: 770px;
+width: 100%;
+}
+
+
+.howtoCont{
+    align-items: center;
+}
+
+.textCont {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 }
 
 
