@@ -3,6 +3,7 @@ import { useState } from "react";
 import CreditInfo from "../../components/CreditInfo/CreditInfo"
 import CartItems from "../../components/CartItems/CartItems";
 import Button from "../../components/Button";
+import logo from "../../assets/images/logo.svg"
 
 const CheckOut =()=>{
 
@@ -15,9 +16,9 @@ const CheckOut =()=>{
     return (
       <div className={styles.main}>
         <div className={styles.header}>
-          <div>logo</div>
+        <div className={styles.logocont}><img src={logo} alt="logo" /></div>
           <div className={styles.emailcont}>
-            <p>Email:</p>
+            <p className={styles.email}>Email:</p>
             <p>grids@matchmovemachine.com</p>
           </div>
         </div>
@@ -32,18 +33,20 @@ const CheckOut =()=>{
             <CartItems />
           </div>
 
-            <div className={styles.check}>
+            <div className={`${styles.check} h5-light`}>
               <div className={styles.checkField}>
                 <p>Subtotal: </p> <p>$625.00</p>
               </div>
               <div className={styles.checkField}>
                 <p>Promocode: </p> <p>$0.00</p>
               </div>
-              <div className={styles.checkField}>
+              <div className={`${styles.checkField} ${styles.total} h4-medium`}>
                 <p>Total: </p> <p>$625.00</p>
               </div>
 
-              <p>
+              <div className={styles.line} />
+
+              <p className={styles.advice}>
                 The price of all chosen assets includes VAT. You can apply promo
                 code and complete the payment during the checkout.
               </p>

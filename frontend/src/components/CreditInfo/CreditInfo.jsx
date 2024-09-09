@@ -1,5 +1,6 @@
 import styles from "./CreditInfo.module.css";
 import CreditCardForm from "./CreditForm";
+import { paypalIconsvg, gPaysvg, applePaysvg } from "../../assets/svg/svgimages";
 
 const CreditInfo = () => {
   return (
@@ -7,9 +8,9 @@ const CreditInfo = () => {
       <div className={styles.main}>
         <div className={styles.top}>
           <div className={styles.paySystems}>
-            <button className={styles.systembtn}>PayPal</button>
-            <button className={styles.systembtn}>GPay</button>
-            <button className={styles.systembtn}>Pal</button>
+            <button className={styles.systembtn}>{paypalIconsvg}</button>
+            <button className={styles.systembtn}>{gPaysvg}</button>
+            <button className={styles.systembtn}>{applePaysvg}</button>
           </div>
           <div className={styles.orCard}>
             <div className={styles.line} /> <p>Or pay by card</p>

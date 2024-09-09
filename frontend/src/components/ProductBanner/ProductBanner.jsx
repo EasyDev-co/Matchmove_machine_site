@@ -21,47 +21,55 @@ const camerasvg =(
 )
 
 const ProductBanner = () => {
-    const [variant, setVariant] = useState(null); 
-    const scrollToSection = useSmoothScroll(); 
-  
-    const handleLensClick = () => {
-      setVariant('lens');
-    };
-  
-    const handleCameraClick = () => {
-      setVariant('camera');
-    };
-  
-    const imageToDisplay = variant === 'lens'
-      ? imgLeft
-      : variant === 'camera'
-      ? imgRight
-      : img;
+  const [variant, setVariant] = useState(null); 
+  const scrollToSection = useSmoothScroll(); 
 
-      const handleScroll =()=>{
-        scrollToSection("description")
-      }
-  
-    return (
-      <section className={styles.main}>
-        <div className={styles.imgcont}>
-          <div className={`${styles.camerasection} ${variant === 'lens' ? styles.selected : ''}`}  onClick={handleLensClick}>
-            <div className={styles.sectionTitle}>
-              {svg} <h3 className="h3-medium">Lens model</h3>
-            </div>
-            <p className="h4-medium">EF</p>
-          </div>
-          <div className={`${styles.camerasection} ${styles.right} ${variant === 'camera' ? styles.selected : ''}`} onClick={handleCameraClick}>
-            <div className={styles.sectionTitle}>
-              {camerasvg} <h3 className="h3-medium">Camera model</h3>
-            </div>
-            <p className="h4-medium">ARRI ALEXA 65</p>
-          </div>
-          <img className={styles.image} src={imageToDisplay} alt="display" />
-        </div>
-        <button className={styles.scrollbtn} onClick={handleScroll}>{scrollArrowsvg}</button>
-      </section>
-    );
+  const handleLensMouseEnter = () => {
+    setVariant('lens');
   };
-  
-  export default ProductBanner;
+
+  const handleCameraMouseEnter = () => {
+    setVariant('camera');
+  };
+
+  const imageToDisplay = variant === 'lens'
+    ? imgLeft
+    : variant === 'camera'
+    ? imgRight
+    : img;
+
+  const handleScroll = () => {
+    scrollToSection("description");
+  };
+
+  return (
+    <section className={styles.main}>
+      <div className={styles.imgcont}>
+        <div 
+          className={`${styles.camerasection} ${variant === 'lens' ? styles.selected : ''}`}  
+          onMouseEnter={handleLensMouseEnter}
+          onMouseLeave={() => setVariant(null)}
+        >
+          <div className={styles.sectionTitle}>
+            {svg} <h3 className="h3-medium">Lens model</h3>
+          </div>
+          <p className="h4-medium">EF</p>
+        </div>
+        <div 
+          className={`${styles.camerasection} ${styles.right} ${variant === 'camera' ? styles.selected : ''}`} 
+          onMouseEnter={handleCameraMouseEnter}
+          onMouseLeave={() => setVariant(null)}
+        >
+          <div className={styles.sectionTitle}>
+            {camerasvg} <h3 className="h3-medium">Camera model</h3>
+          </div>
+          <p className="h4-medium">ARRI ALEXA 65</p>
+        </div>
+        <img className={styles.image} src={imageToDisplay} alt="display" />
+      </div>
+      <button className={styles.scrollbtn} onClick={handleScroll}>{scrollArrowsvg}</button>
+    </section>
+  );
+};
+
+export default ProductBanner;

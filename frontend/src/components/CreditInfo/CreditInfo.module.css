@@ -75,7 +75,7 @@
 .formMain {
     display: flex;
     flex-direction: column;
-    gap: 5px;
+    gap: 10px;
 }
 
 .formMain input{
@@ -115,8 +115,25 @@ height: 60px;
     overflow: hidden;
 }
 
+.checkboxInput {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-items: center;
+}
+
+.checkboxInput input {
+    height: 25px;
+    width: 25px;
+}
+
 @media (max-width: 800px) {
     .fieldPosition{
         flex-direction: column;
+    }
+
+    .wrap {display: grid;
+        place-items: center;
+        margin: 0 20px;
     }
 }

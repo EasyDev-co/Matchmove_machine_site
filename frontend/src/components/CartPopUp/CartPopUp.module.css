@@ -55,7 +55,7 @@
 }
 
 .closeBtn:hover button{
-    color: white;
+    color: inherit;
 }
 
 .navigation {
@@ -68,5 +68,18 @@
 }
 
 .checkoutField {
-    margin-top: 40px;
+    margin-top: 20px;
+}
+
+.checkInfo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: row;
+  padding: 20px 0;
+}
+
+.checkInfo h4{
+  font-weight: 500;
+  color: #282828;
 }

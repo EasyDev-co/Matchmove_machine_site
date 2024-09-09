@@ -93,7 +93,7 @@ const CreditCardForm = () => {
     <form onSubmit={handleSubmit} className={styles.form}>
       <div className={styles.formMain}>
         <div className={styles.field}>
-          <label htmlFor="cardNumber">Card Number</label>
+          <label htmlFor="cardNumber" className="h5-medium">Card Number</label>
           <input
             type="text"
             id="cardNumber"
@@ -105,7 +105,7 @@ const CreditCardForm = () => {
         </div>
 
         <div className={styles.field}>
-          <label htmlFor="cardholderName">Cardholder Name</label>
+          <label htmlFor="cardholderName" className="h5-medium">Cardholder Name</label>
           <input
             type="text"
             id="cardholderName"
@@ -118,7 +118,7 @@ const CreditCardForm = () => {
 
         <div className={styles.subfield}>
           <div className={styles.field}>
-            <label htmlFor="expiryDate">Expiry Date</label>
+            <label htmlFor="expiryDate" className="h5-medium">Expiry Date</label>
             <input
               type="text"
               id="expiryDate"
@@ -130,7 +130,7 @@ const CreditCardForm = () => {
           </div>
 
           <div className={styles.field}>
-            <label htmlFor="cvv">CVV</label>
+            <label htmlFor="cvv" className="h5-medium">CVV</label>
             <input
               type="text"
               id="cvv"
@@ -144,7 +144,7 @@ const CreditCardForm = () => {
 
         <div className={`${styles.subfield} ${styles.fieldPosition}`}>
           <div className={styles.field}>
-            <label htmlFor="country">Country</label>
+            <label htmlFor="country" className="h5-medium">Country</label>
             <select id="country" value={country} onChange={handleCountryChange}>
               <option value="">Select Country</option>
               {countries.map((c, index) => (
@@ -157,7 +157,7 @@ const CreditCardForm = () => {
           </div>
 
           <div className={styles.field}>
-            <label htmlFor="promocode">Promocode</label>
+            <label htmlFor="promocode" className="h5-medium">Promocode</label>
             <div className={styles.promocodeCont}>
               <input
                 type="text"
@@ -171,6 +171,10 @@ const CreditCardForm = () => {
             {errors.promocode && <span>{errors.promocode}</span>}
           </div>
         </div>
+        <div className={styles.checkboxInput}>
+            <input type="checkbox" is="saveCard"/>
+            <label htmlFor="saveCard">Save this card for future use.</label>
+          </div>
       </div>
     </form>
   );

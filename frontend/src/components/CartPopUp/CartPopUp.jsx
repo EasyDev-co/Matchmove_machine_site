@@ -43,7 +43,7 @@ const CartPopUp = ({ closeCart }) => {
         </div>
         <CartItems />
         <div className={styles.checkoutField}>
-          <div>
+          <div className={styles.checkInfo}>
             <h4 className="h4-medium">Total</h4>
             <h4 className="h4-medium">$625.00</h4>
           </div>

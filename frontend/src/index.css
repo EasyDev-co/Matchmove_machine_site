@@ -106,6 +106,12 @@ li {
   color: #696969;
 }
 
+.h5-medium {
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 26px;
+}
+
 .h5-light {
   font-weight: 300;
   font-size: 17px;
