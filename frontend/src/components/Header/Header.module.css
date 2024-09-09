@@ -1,0 +1,125 @@
+.main {
+    padding: 0px 80px;
+    background: #282828;
+    color: #FFFFFF;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 23px;
+    height: 90px;
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+    position: relative;
+}
+
+.logocont {
+    position: absolute;
+    z-index: 3;
+    top: 0;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+
+.logo {
+    width: 110px;
+}
+
+.container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.linkslist{
+    list-style: none;
+    display: flex;
+    flex-direction: row;
+    position: relative;
+    gap: 25px;
+}
+
+.mobilebtn {
+    display: none;
+}
+
+.signInbtn {
+    width: 160px;
+}
+
+.btncont {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+@media (max-width: 1290px) {
+    .linkslist{
+        gap: 15px;
+        font-size: 13px;
+    }
+}
+
+.linkslist.open{
+    display: flex;
+}
+
+@media (max-width: 1100px) {
+    .linkslist{
+        position: absolute;
+        right: 0;
+        top: 80px;
+        flex-direction: column;
+        background-color: #282828;
+        display: none;
+        z-index: 20;
+    }
+
+    .mobilebtn {
+        display: block;
+    }
+
+    .main {
+        padding: 0px 40px;
+        height: 90px;
+    }
+
+    .signInbtn {
+        width: 100%;
+    }
+    
+}
+
+.userbtn img {
+    height: 60px;
+    width: 60px;
+}
+
+.userbtn {
+    display: flex;
+    flex-direction: row;
+    gap:10px;
+    background: transparent;
+    border: none;
+    font: inherit;
+    font-weight: 500;
+    color: white;
+    align-items: center;
+    cursor: pointer;
+}
+
+
+@media (max-width: 768px) {
+    .main {
+        padding: 20px;
+    }
+
+    .logocont{
+        display: none;
+    }
+
+    .useName {
+        display: none;
+    }
+}

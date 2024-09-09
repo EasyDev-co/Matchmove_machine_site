@@ -1,0 +1,135 @@
+.filterscont {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
+.body {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
+
+
+.assetscont {
+    width: 100%;
+}
+
+.assets {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    gap: 10px;
+}
+
+.assets>* {
+    flex: 1 1 calc(25% - 10px);
+    box-sizing: border-box;
+    width: 223px
+}
+
+.mobileview {
+    display: flex;
+}
+
+.resetallfilters {
+    width: 307px;
+}
+
+.deleteFilter {
+    font: inherit;
+    font-weight: 300;
+    font-size: 17px;
+    color: #282828;
+    cursor: pointer;
+    background: transparent;
+    box-sizing: border-box;
+    padding: 10px 20px;
+    gap: 10px;
+    border: 2px solid #EBEBEB;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-items: center;
+}
+
+
+.deleteFilter:hover {
+    border-color: #BF3636;
+}
+
+.topPagination {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+
+
+.contpag {
+    width: 100%;
+}
+
+.toggleCont {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 20px;
+    font-weight: 500;
+    font-size: 18px;
+    color: #383838;
+}
+
+.toggleCont p{
+    white-space: nowrap;
+}
+
+
+@media (max-width: 1200px) {
+    .filterwrap {
+        display: none;
+    }
+
+    .assets>* {
+        flex: 1 1 calc(33.3333% - 20px);
+        width: calc(33.3333% - 20px);
+        min-width: 167px;
+    }
+
+    .main {
+        padding: 40px;
+    }
+}
+
+@media (max-width: 729px) {
+    .assets>* {
+        flex: 1 1 calc(50% - 10px);
+        width: calc(50% - 10px);
+        min-width: 0;
+    }
+
+    .mobileview {
+        display: flex;
+    }
+
+    .toggleCont {
+        display: none;
+    }
+
+    .main {
+        padding: 20px;
+    }
+
+}
+
+@media (max-width: 500px) {
+
+    .resetallfilters {
+        width: 100%;
+    }
+}

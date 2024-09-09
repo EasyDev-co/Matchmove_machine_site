@@ -1,0 +1,118 @@
+.main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+    background: linear-gradient(110.35deg, rgba(40, 40, 40, 0.85) 0%, rgba(0, 8, 30, 0.85) 100%);
+    color: white;
+    position: relative;
+}
+
+.main::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url("../../assets/images/formbackground.png") no-repeat center center;
+    background-size: cover;
+    opacity: 7%;
+    z-index: 1;
+}
+
+.container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    padding: 0px;
+    gap: 20px;
+    flex-wrap: wrap;
+    z-index: 2;
+}
+
+.tutorial {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0px;
+    gap: 20px;
+    width: 413px;
+    position: relative;
+}
+
+.tutorial img {
+    width: 100%;
+}
+
+.tutorial:hover h3 {
+color: #537EEF;
+}
+
+.tutorial:hover img {
+    opacity: 20%;
+}
+.tutorial:hover .readmorebtn {
+    display: flex;
+}
+
+.readmorebtn{
+    position: absolute;
+    top: 100px;
+    left: calc(50% - 90px);
+    width: 180px;
+    z-index: 2;
+    display: none;
+}
+
+.title {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 20px;
+    width: 100%;
+}
+
+.btn {
+    width: 180px;
+}
+
+
+@media (max-width: 1450px) {
+
+    .container>.tutorial:nth-child(n+3) {
+        display: none;
+    }
+
+}
+
+@media (max-width: 1050px) {
+
+    .tutorial {
+        width: 334px;
+    }
+
+    .main {
+        padding: 40px;
+    }
+}
+
+
+@media (max-width: 760px) {
+
+    .container>.tutorial:nth-child(n+2) {
+        display: none;
+    }
+}
+
+
+@media (max-width: 500px) {
+
+    .main {
+        padding: 40px 20px;
+    }
+
+    .tutorial {
+        width: 100%;
+    }
+}

@@ -1,0 +1,169 @@
+.background {
+position: relative;
+display: flex;
+flex-direction: column;
+align-items: flex-start;
+padding-top: 90px;
+gap: 40px;
+background: url("https://s3-alpha-sig.figma.com/img/5873/1cb8/9d9c338d4201e5ba8e33c11e778d1926?Expires=1725840000&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=EIb6QixlDfwT7Hi9yAEcvv2~N6uCbZm2z~jfesNa2glT7t6p4a95cbKGnooOqFgdwa4zPK8Zj4MonQryBRvbYeWKWsRsFaiJHrI1GvNjA5B4OxkP9meJijyqY1XAIo9h0NR7cUyRnBRF8lxdcA925a3H9bxFldUezwpRBuA3rvwf~FLRZ99IPgEp7ZmZk89feXKwEuUaPEMW8h5GEQ81pe9G9ey23aYQ1pPpRnfDKguNn5vJtUfBmLEmj4~ix47kF8lBNgYdkmCbIAJzcBLxhda5rLyceXrqVYpNs0qWt48Q~Cqql93NrsTk6WkYf3C2LCLrX~bRh2Rx9m1OGrVlMQ__") no-repeat right;
+background-size: 200%;
+color: white;
+overflow: hidden;
+}
+
+.background::before{
+position: absolute;
+gap: 40px;
+content: "";
+top: 0;
+bottom: 0;
+left: 0;
+right: 0;
+background: linear-gradient(
+  to top right, 
+  rgba(10, 10, 10, 1),
+  rgba(20, 20, 20, 1), 
+  rgba(0, 4, 15, 1)  
+);
+opacity: 80%;
+}
+
+.container{
+    z-index: 2;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding:40px 80px;
+    box-sizing: border-box;
+}
+
+.namecont {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 20px;
+}
+
+.iconCont {
+    height: 204px;
+    width: 204px;
+    overflow: hidden;
+}
+
+.iconCont img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    overflow: hidden;
+    border-radius: 10px;
+}
+
+.perofileinfo {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    box-sizing: border-box;
+}
+
+.perofileinfo ul {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.socialsbtns {
+    display: flex;
+    flex-direction: row;
+    max-width: 190px;
+    height: fit-content;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+
+.mobile {
+    gap: 20px;
+}
+
+.rating {
+    color: #404040;
+}
+
+.perofileinfo a {
+    color: #2F57BF;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 31px;
+    color: #2F57BF;
+}
+
+.userlink {
+    height: 60px;
+    width: 60px;
+    background-color: 
+    #FFFFFF;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+@media (max-width: 900px) {
+    .iconCont {
+        height: 100px;
+        width: 100px;
+        overflow: hidden;
+    }
+
+    .container{
+        padding: 40px;
+    }
+
+    .socialmobile {
+        display: none;
+    }
+}
+@media (max-width: 680px) {
+    .mobile {
+        flex-direction: column;
+    }
+
+    .socialsbtns {
+        display: flex;
+        flex-direction: row;
+        max-width: 100%;
+        height: fit-content;
+        flex-wrap: wrap;
+        gap: 5px;
+    }
+
+    .background {
+        padding-top: 30px;
+    }
+
+    .container {
+        padding: 20px;
+    }
+
+    .background {
+        height: fit-content;
+        padding-bottom: 40px;
+    }
+
+    .rating {
+        display: none;
+    }
+}
+
+@media (max-width: 390px) {
+
+    .container {
+        padding: 20px;
+    }
+
+    .perofileinfo a {
+        font-weight: 400;
+        font-size: 15px;
+
+
+    }
+}

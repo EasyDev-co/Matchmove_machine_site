@@ -1,0 +1,148 @@
+.main {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding: 40px 0;
+    background: linear-gradient(110.35deg, rgba(40, 40, 40, 0.9) 0%, rgba(0, 8, 30, 0.9) 100%);
+    box-sizing: border-box;
+    height: 600px;
+    position: relative;
+}
+
+.main::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url("../../assets//images/formbackground.png") no-repeat center center;
+    background-size: cover;
+    z-index: -1; 
+}
+
+.imgcont {
+    position: relative;
+    width: 100%;
+    max-width: 1000px;
+    box-sizing: border-box;
+    padding: 0 120px;
+    display: flex;
+    justify-content: center;
+    box-sizing: border-box;
+}
+
+.image {
+    width: 100%;
+}
+
+.camerasection {
+    position: absolute;
+    top: 30%;
+    left: 10px;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    gap: 20px;
+    background: #7D7D7D;
+    border-radius: 5px;
+    color: #FFFFFF;
+    cursor: pointer;
+    transition: background-color 0.1s ease;
+}
+
+.right {
+    left: auto;
+    right: 10px;
+}
+
+.selected {
+    background-color: #2F57BF; 
+
+  }
+
+.camerasection:hover {
+    background-color: #2F57BF;
+}
+
+.camerasection  p{
+    color: white;
+}
+
+.sectionTitle {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-items: center;
+}
+
+.scrollbtn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+@media (max-width: 900px) {
+
+    .imgcont {
+        padding: 0 40px;
+    }
+}
+
+@media (max-width: 800px) {
+    .main {
+        height: 550px;
+    }
+}
+
+@media (max-width: 768px) {
+
+    .camerasection svg {
+        width: 50px;
+    }
+
+}
+
+@media (max-width: 650px) {
+
+    .imgcont {
+        padding: 0 10px;
+        height: 440px;
+    }
+
+    .main {
+        height: 443px;
+    }
+
+
+    .camerasection {
+        top: auto;
+        bottom: 0;
+
+    }
+
+    .right {
+        top: 0;
+        bottom: auto;
+    }
+
+    .camerasection svg {
+        width: 40px;
+    }
+
+    .camerasection h3 {
+        font-weight: 400;
+        font-size: 20px;
+
+    }
+
+    .main {
+        padding: 10px 0;
+    }
+
+    .scrollbtn {
+        display: none;
+    }
+
+}

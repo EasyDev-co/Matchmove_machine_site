@@ -1,0 +1,110 @@
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px;
+}
+
+.asset {
+    width: calc(20% - 32px);
+    box-sizing: border-box;
+    height: 240px;
+    max-width: 223px;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    border-radius: 5px;
+
+    background-image: url("../../assets/images/asset-bg.png");
+    background-size: cover;
+    background-blend-mode: overlay;
+}
+
+.assetthumbnail {
+    flex: 1;
+    background: conic-gradient(from 44.92deg at 50% 50%,
+            rgba(255, 255, 255, 0.85) 0deg,
+            rgba(245, 245, 245, 0.85) 360deg);
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    text-align: center;
+    cursor: pointer;
+    color: #282828;
+}
+
+.assetthumbnail:hover {
+background: linear-gradient(0deg, rgba(40, 40, 40, 0.75), rgba(40, 40, 40, 0.75));
+color: white;
+
+}
+
+.title {
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 26px;
+    padding: 10px;
+
+    
+}
+
+.creator {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+    padding: 20px;
+    padding-bottom: 0;
+    box-sizing: border-box;
+}
+
+.creator svg {
+    height: 30px;
+}
+
+.user {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+
+
+font-weight: 400;
+font-size: 15px;
+
+
+}
+
+.user img {
+    width: 30px;
+    height: 30px;
+    border-radius: 5px;
+
+}
+
+@media (max-width: 1200px) {
+    .asset {
+        width: calc(25% - 30px);
+        /* 4 items per row */
+    }
+}
+
+@media (max-width: 1000px) {
+    .asset {
+        width: calc(33.33% - 14px);
+        max-width: 240px;
+        /* 3 items per row */
+    }
+
+    .container {
+        gap: 20px;
+    }
+}
+
+@media (max-width: 600px) {
+    .asset {
+        width: calc(50% - 10px);
+        height: 200px;
+        /* 2 items per row */
+    }
+}
