@@ -1,0 +1,33 @@
+.spoilerCont button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.spoilerCont h4 {
+    font-weight: 500;
+    color: #000000;
+    cursor: pointer;
+}
+
+.spoilerCont hr {
+    border-top: 2px solid #cacaca;
+    margin: 0;
+}
+
+.question {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 20px;
+    gap: 20px;
+}
+
+.question:hover h4 {
+    color: #537EEF;
+}
+
+.answer {
+    padding-bottom: 20px;
+}

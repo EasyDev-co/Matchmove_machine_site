@@ -25,7 +25,7 @@ const HeaderLinks =({isMenuOpen})=>{
             <Link>Magnetic grid</Link>
           </li>
           <li>
-            <Link>FAQ</Link>
+            <Link to="/faq">FAQ</Link>
           </li>
         </ul>
       </div>

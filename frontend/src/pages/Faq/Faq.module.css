@@ -1,0 +1,154 @@
+.main button {
+    background: transparent;
+    border: none;
+    font: inherit;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 31px;
+    text-align: start;
+}
+
+.banner {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 60px 0px;
+    gap: 10px;
+    color: white;
+    width: 100%;
+    position: relative;
+}
+
+.banner::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+    background: linear-gradient(110.35deg, rgba(40, 40, 40, 0.9) 0%, rgba(0, 8, 30, 0.9) 100%);
+}
+
+.banner::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url("../../assets/images/about.png") no-repeat center center;
+    opacity: 20%;
+    background-size: cover;
+    z-index: 0;
+}
+
+.bannerCont {
+    z-index: 2;
+    max-width: 1128px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+}
+
+.bannerCont h2 {
+    text-align: center;
+}
+
+.bannerCont p {
+    color: white;
+}
+
+.main {
+    display: flex;
+    flex-direction: row;
+    padding: 0;
+}
+
+.sidebar {
+    background: #F2F2F2;
+    flex: 1;
+    padding: 80px;
+}
+
+.links {
+    position: sticky;
+    top: 170px;
+    z-index: 1;
+}
+
+.body {
+    flex: 3;
+    padding: 80px;
+}
+
+.links ul {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.spoilerCont {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+button.clicked {
+    position: relative;
+    color: #2F57BF;
+}
+
+button.clicked::before {
+    content: "";
+    position: absolute;
+    left: -10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 4px;
+    height: 100%;
+    background-color: #2F57BF;
+}
+
+.adaptiveSidebar {
+    display: none;
+}
+
+
+@media (max-width: 1000px) {
+    .sidebar{
+        position: fixed;
+        top: 170px;
+        left: 0;
+        right: 0;
+        padding: 0;
+        background-color: rgb(75, 75, 73);
+    }
+
+    .adaptiveSidebar {
+        display: block;
+    }
+
+    .links {
+        position: absolute;
+        top: 20px;
+        right: 0;
+        left: 0;
+        background-color: bisque;
+    }
+
+    button.clicked::before{
+        display: none;
+    }
+
+    .links.open {
+        display: flex;
+      }
+      
+      .links.closed {
+        display: none;
+      }
+}

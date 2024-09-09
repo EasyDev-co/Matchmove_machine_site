@@ -1,5 +1,8 @@
 .main {
     padding: 0px 80px;
+    top: 0;
+    right: 0;
+    left: 0;
     background: #282828;
     color: #FFFFFF;
     font-weight: 700;
@@ -9,7 +12,8 @@
     display: flex;
     align-items: center;
     box-sizing: border-box;
-    position: relative;
+    position: fixed;
+    z-index: 100;
 }
 
 .logocont {

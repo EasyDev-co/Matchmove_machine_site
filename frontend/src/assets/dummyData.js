@@ -44,3 +44,142 @@ export const files = [
   { id: 14, file: "Pentax DA 18-135mm f/3.5-5.6 ED AL", price: "free" },
   { id: 15, file: "Zeiss Otus 28mm f/1.4", price: "free" }
 ];
+
+
+export 
+const questions = {
+  techSpecs: [
+    {
+      id: 1,
+      title: "What are the technical specifications of the grid sets?",
+      text: "Lorem ipsum dolor sit amet consectetur. Habitant quam eget mollis dui justo duis euismod sit quis. Velit ullamcorper arcu sit pellentesque dictum morbi leo cursus tortor. Facilisi sem neque convallis ultriciesullamcorper metus. Senectus quam interdum dictum consecteturvestibulum.",
+    },
+
+    {   id: 2,
+        title: "What technical standards do your grid sets adhere to?",
+        text:"Lorem ipsum dolor sit amet consectetur."
+    },
+
+    {   id: 3,
+        title: "Do you support customization of grid sets to meet specific requirements of a film project?",
+        text:"Lorem ipsum dolor sit amet consectetur."
+    },
+  ],
+
+  pricing:[
+    {
+        id: 1,
+        title: "What are the prices of your grid sets?",
+        text: "Lorem ipsum dolor sit amet consectetur. Habitant quam eget mollis dui justo duis euismod sit quis. Velit ullamcorper arcu sit pellentesque dictum morbi leo cursus tortor. Facilisi sem neque convallis ultriciesullamcorper metus. Senectus quam interdum dictum consecteturvestibulum.",
+      },
+  
+      {   id: 2,
+          title: "Do you offer discounts or special offers for regular customers?",
+          text:"Lorem ipsum dolor sit amet consectetur."
+      },
+  
+      {   id: 3,
+          title: "Is the cost of shipping included in the price of the grid sets?",
+          text:"Lorem ipsum dolor sit amet consectetur."
+      },
+  ],
+
+  payment:[
+    {
+        id: 1,
+        title: "What payment methods do you accept?",
+        text: "Lorem ipsum dolor sit amet consectetur. Habitant quam eget mollis dui justo duis euismod sit quis. Velit ullamcorper arcu sit pellentesque dictum morbi leo cursus tortor. Facilisi sem neque convallis ultriciesullamcorper metus. Senectus quam interdum dictum consecteturvestibulum.",
+      },
+  
+      {   id: 2,
+          title: "Is it safe to make payments on your website?",
+          text:"Lorem ipsum dolor sit amet consectetur."
+      },
+  
+      {   id: 3,
+          title: "Can I request an invoice for my purchase?",
+          text:"Lorem ipsum dolor sit amet consectetur."
+      },
+  ],
+
+  howToUse:[
+    {
+        id: 1,
+        title: "How to Multi-Camera Geometry Tracking? ",
+        text: "Lorem ipsum dolor sit amet consectetur. Habitant quam eget mollis dui justo duis euismod sit quis. Velit ullamcorper arcu sit pellentesque dictum morbi leo cursus tortor. Facilisi sem neque convallis ultriciesullamcorper metus. Senectus quam interdum dictum consecteturvestibulum.",
+      },
+  
+      {   id: 2,
+          title: "How to Extract Focal Length?",
+          text:"Lorem ipsum dolor sit amet consectetur."
+      },
+  
+      {   id: 3,
+          title: "How to OpenEXR Metadata Reader?",
+          text:"Lorem ipsum dolor sit amet consectetur."
+      },
+
+      {   id: 4,
+        title: "How to Favorite's Project?",
+        text:"Lorem ipsum dolor sit amet consectetur."
+    },
+    {   id: 5,
+        title: "How to Extract Focus Distance?",
+        text:"Lorem ipsum dolor sit amet consectetur."
+    },
+    {   id: 6,
+        title: "How to Camera Database?",
+        text:"Lorem ipsum dolor sit amet consectetur."
+    },
+    {   id: 7,
+        title: "How to Change Setting for Points?",
+        text:"Lorem ipsum dolor sit amet consectetur."
+    },
+    {   id: 8,
+        title: "How to Export Camera and Lens?",
+        text:"Lorem ipsum dolor sit amet consectetur."
+    },
+    {   id: 9,
+        title: "How to Replace Ref Cams Paths?",
+        text:"Lorem ipsum dolor sit amet consectetur."
+    },
+  ],
+
+  personalAccount:[
+    {
+        id: 1,
+        title: "How do I create a personal account on your website?",
+        text: "Lorem ipsum dolor sit amet consectetur. Habitant quam eget mollis dui justo duis euismod sit quis. Velit ullamcorper arcu sit pellentesque dictum morbi leo cursus tortor. Facilisi sem neque convallis ultriciesullamcorper metus. Senectus quam interdum dictum consecteturvestibulum.",
+      },
+  
+      {   id: 2,
+          title: "What are the benefits of having a personal account?",
+          text:"Lorem ipsum dolor sit amet consectetur."
+      },
+  
+      {   id: 3,
+          title: "How do I update my personal information or preferences in my account?",
+          text:"Lorem ipsum dolor sit amet consectetur."
+      },
+  ],
+
+  license:[
+    {
+        id: 1,
+        title: "What type of license do I need to use your grid sets for film production?",
+        text: "Lorem ipsum dolor sit amet consectetur. Habitant quam eget mollis dui justo duis euismod sit quis. Velit ullamcorper arcu sit pellentesque dictum morbi leo cursus tortor. Facilisi sem neque convallis ultriciesullamcorper metus. Senectus quam interdum dictum consecteturvestibulum.",
+      },
+  
+      {   id: 2,
+          title: "Can I use your grid sets in multiple film projects with a single license?",
+          text:"Lorem ipsum dolor sit amet consectetur."
+      },
+  
+      {   id: 3,
+          title: "Are there any restrictions on how I can use your grid sets in film production?",
+          text:"Lorem ipsum dolor sit amet consectetur."
+      },
+  ],
+
+
+};
