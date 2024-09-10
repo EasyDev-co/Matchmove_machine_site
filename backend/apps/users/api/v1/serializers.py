@@ -112,7 +112,6 @@ class UserTokenObtainPairSerializer(TokenObtainPairSerializer):
         refresh = RefreshToken.for_user(user)
         refresh["email"] = user.email
         refresh["username"] = user.username
-        refresh["role"] = user.role
 
         return {
             "refresh": str(refresh),

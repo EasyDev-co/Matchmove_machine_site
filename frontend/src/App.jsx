@@ -11,6 +11,7 @@ import ProtectedRoute from './pages/ProtectedRoute';
 import Layout from './components/Layout';
 import EditProfile from './pages/EditProfile/EditProfile';
 
+
 function App() {
   return (
     <Router>

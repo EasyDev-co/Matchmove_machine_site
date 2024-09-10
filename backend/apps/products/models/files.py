@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from apps.utils.models_mixins.models_mixins import UUIDMixin
+from apps.users.models.users import User
 
 
 class File(UUIDMixin):
