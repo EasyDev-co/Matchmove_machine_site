@@ -4,12 +4,17 @@ from django_filters.rest_framework import DjangoFilterBackend
 from django.conf import settings
 from rest_framework import generics, filters, status, viewsets
 from rest_framework.generics import ListAPIView
-from rest_framework.permissions import AllowAny
+
 from rest_framework.response import Response
 from rest_framework.pagination import PageNumberPagination
 
 from apps.products.models import Camera, Format, Lens, Product, File
-from apps.products.tasks import download_file_from_ftp, upload_file_to_ftp
+
+from apps.products.tasks import (
+    download_file_from_ftp,
+    upload_file_to_ftp,
+    delete_file_from_ftp
+)
 from .serializers import (
     ProductDetailSerializer,
     CameraSerializer,
@@ -18,6 +23,10 @@ from .serializers import (
     ProductSerializer,
     FileSerializer
 )
+
+
+import logging
+logger = logging.getLogger(__name__)
 
 
 class ProductDetailView(generics.RetrieveAPIView):
@@ -117,3 +126,33 @@ class FileViewSet(viewsets.ViewSet):
             {"message": f"File downloaded to {file_path}"},
             status=status.HTTP_200_OK
         )
+
+
+    def delete(self, request, file_id):
+        """Эндпоинт для удаления файла с FTP."""
+        try:
+            # Поиск продукта, который использует файл с данным ID и проверка автора
+            Product.objects.get(file__id=file_id, author=request.user)
+            file_instance = File.objects.get(id=file_id)
+        except Product.DoesNotExist:
+            return Response(
+                {"error": "File not found or you don't have permission to delete it."},
+                status=status.HTTP_404_NOT_FOUND
+            )
+        except File.DoesNotExist:
+            return Response(
+                {"error": "File not found."},
+                status=status.HTTP_404_NOT_FOUND
+            )
+
+        # Удаление файла с FTP
+        delete_file_from_ftp.delay(file_id)
+
+        # Удаление файла из базы данных
+        file_instance.delete()
+
+        return Response(
+            {"message": f"File {file_id} successfully deleted."},
+            status=status.HTTP_200_OK
+        )
+

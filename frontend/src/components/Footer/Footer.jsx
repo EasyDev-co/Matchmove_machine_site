@@ -1,3 +1,4 @@
+
 import styles from "./Footer.module.css"
 
 const Footer = () => {
@@ -19,8 +20,9 @@ const Footer = () => {
           </div>
         </div>
         <p className="h2-light">&copy; Matchmove machine, 2024</p>
+
       </footer>
     );
   };
   
-  export default Footer;
+  export default Footer
