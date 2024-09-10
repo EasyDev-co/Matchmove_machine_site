@@ -1,0 +1,139 @@
+.wrap {display: grid;
+    place-items: center;
+    margin: 0 20px;
+}
+
+.main {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    padding: 20px;
+    background: linear-gradient(90deg, #F0F0F0 0%, #E4EBFF 100%);
+    border: 1px solid rgba(132, 132, 132, 0.2);
+    border-radius: 5px;
+    place-self: center;
+    max-width: 560px;
+    width: 100%;
+}
+
+.top {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+
+.line {
+    background-color: rgba(202, 202, 202, 0.6);
+    height: 1px;
+    flex: 1;
+}
+
+.orCard p {
+    font-weight: 300;
+    font-size: 18px;
+    line-height: 31px;
+
+    color: #848484;
+}
+
+
+.orCard {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 0px;
+    gap: 25px;
+    width: 100%;
+}
+
+.paySystems {
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+    width: 100%;
+}
+
+.systembtn {
+    flex: 1; 
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 60px;
+    background: #FFFFFF;
+    border: 1px solid rgba(179, 179, 179, 0.5);
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.form {
+    width: 100%;
+}
+
+.formMain {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.formMain input{
+box-sizing: border-box;
+padding: 15px;
+background: #F8F8F8;
+border: 1px solid rgba(179, 179, 179, 0.5);
+border-radius: 5px;
+height: 60px;
+}
+
+.formMain input, textarea{
+    width: 100%;
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+}
+
+.subfield {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
+
+.promocodeCont{
+    position: relative;
+}
+
+.promobtn {
+    position: absolute;
+    top: 0;
+    right: 0;
+    overflow: hidden;
+}
+
+.checkboxInput {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-items: center;
+}
+
+.checkboxInput input {
+    height: 25px;
+    width: 25px;
+}
+
+@media (max-width: 800px) {
+    .fieldPosition{
+        flex-direction: column;
+    }
+
+    .wrap {display: grid;
+        place-items: center;
+        margin: 0 20px;
+    }
+}

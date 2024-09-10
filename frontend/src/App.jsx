@@ -10,38 +10,56 @@ import Profile from './pages/Profile';
 import ProtectedRoute from './pages/ProtectedRoute'; 
 import Layout from './components/Layout';
 import EditProfile from './pages/EditProfile/EditProfile';
+import CheckOut from './pages/Checkout/CheckOut';
+import AffiliateProgram from './pages/AffiliateProgram/AffiliateProgram';
 
 
 function App() {
   return (
     <Router>
-    <Layout>
       <Routes>
-        <Route path="/" element={<MainPage />} />
-        <Route path="library" element={<Library />} />
-        <Route path="library/product/:productId" element={<Product />} />
-        <Route path="authorization" element={<Authorization />} />
-        <Route path="registration" element={<Authorization />} />
-        <Route path="reset-password" element={<Authorization />} />
         <Route
-          path="profile/:id"
+          path="checkout"
           element={
             <ProtectedRoute>
-              <Profile />
+              <CheckOut />
             </ProtectedRoute>
           }
         />
         <Route
-          path="profile/edit"
+          path="*"
           element={
-            <ProtectedRoute>
-              <EditProfile />
-            </ProtectedRoute>
+            <Layout>
+              <Routes>
+                <Route path="/" element={<MainPage />} />
+                <Route path="library" element={<Library />} />
+                <Route path="library/product/:productId" element={<Product />} />
+                <Route path="affiliate-program" element={<AffiliateProgram />} />
+                <Route path="authorization" element={<Authorization />} />
+                <Route path="registration" element={<Authorization />} />
+                <Route path="reset-password" element={<Authorization />} />
+                <Route
+                  path="profile/:id"
+                  element={
+                    <ProtectedRoute>
+                      <Profile />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="profile/edit"
+                  element={
+                    <ProtectedRoute>
+                      <EditProfile />
+                    </ProtectedRoute>
+                  }
+                />
+              </Routes>
+            </Layout>
           }
         />
       </Routes>
-    </Layout>
-  </Router>
+    </Router>
   );
 }
 

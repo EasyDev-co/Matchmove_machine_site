@@ -1,0 +1,19 @@
+.main {
+    padding-top: 0;
+}
+
+.textCont {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.textCont span {
+    font-weight: 600;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}

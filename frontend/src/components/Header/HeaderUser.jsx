@@ -13,7 +13,7 @@ const User =()=>{
 
     return (
       <button className={styles.userbtn} onClick={handleGoToProfile}>
-        <img src={icon} alt="icon" /> <p>Greg</p>
+        <img src={icon} alt="icon" /> <p className={styles.useName}>Greg</p>
       </button>
     );
 }
