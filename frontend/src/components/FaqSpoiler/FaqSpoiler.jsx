@@ -1,6 +1,6 @@
 import styles from "./FaqSpoiler.module.css";
 import { useState } from "react";
-import { spoilerbtnopen } from "../../assets/svg/svgimages";
+import { spoilerbtnopen, spoilerbtnclose } from "../../assets/svg/svgimages";
 
 const FaqSpoiler = ({ spoiler }) => {
     const [isOpen, setIsOpen] = useState(false);
@@ -12,9 +12,9 @@ const FaqSpoiler = ({ spoiler }) => {
     return (
       <div className={styles.spoilerCont}>
         <div className={styles.question}  onClick={toggleAnswer}>
-          <h4 className="h4-medium">{spoiler.title}</h4>
+          <h4 className={`h4-medium ${isOpen? styles.active :""}`}>{spoiler.title}</h4>
           <button>
-            {spoilerbtnopen}
+            {isOpen? spoilerbtnclose : spoilerbtnopen}
           </button>
         </div>
         {isOpen && (
@@ -22,7 +22,7 @@ const FaqSpoiler = ({ spoiler }) => {
             <p>{spoiler.text}</p>
           </div>
         )}
-        <hr />
+       
       </div>
     );
   };

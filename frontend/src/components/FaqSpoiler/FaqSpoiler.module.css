@@ -4,17 +4,15 @@
     cursor: pointer;
 }
 
+.spoilerCont svg {
+    width: 83px;
+}
+
 .spoilerCont h4 {
     font-weight: 500;
     color: #000000;
     cursor: pointer;
 }
-
-.spoilerCont hr {
-    border-top: 2px solid #cacaca;
-    margin: 0;
-}
-
 .question {
     display: flex;
     flex-direction: row;
@@ -24,10 +22,27 @@
     gap: 20px;
 }
 
-.question:hover h4 {
+.question button {
+    color: #2F57BF;
+}
+
+.question:hover h4,
+.question:hover button {
     color: #537EEF;
 }
 
 .answer {
     padding-bottom: 20px;
+    line-height: 26px;
+    color: #505050;
+}
+
+h4.active {
+    color: #083098;
+}
+
+@media (max-width: 600px) {
+    .spoilerCont svg {
+        width: 60px;
+    }
 }

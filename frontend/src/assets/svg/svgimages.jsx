@@ -748,18 +748,44 @@ export const applePaysvg = (
 
 export const spoilerbtnopen = (
   <svg
-    width="85"
-    height="85"
+    width="100%"
+    height="100%"
     viewBox="0 0 85 85"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
   >
     <path
       d="M43.3305 20.9199L43.3305 60.7599M43.3305 60.7599L58.2705 42.3359M43.3305 60.7599L28.3905 42.3359M84 42.5C84 65.4198 65.4198 84 42.5 84C19.5802 84 1 65.4198 1 42.5C1 19.5802 19.5802 1 42.5 1C65.4198 1 84 19.5802 84 42.5Z"
-      stroke="#2F57BF"
+      stroke="currentColor"
       stroke-width="2"
       stroke-linecap="round"
       stroke-linejoin="round"
     />
   </svg>
 );
+
+export const spoilerbtnclose = (
+  <svg
+    width="100%"
+    height="100%"
+    viewBox="0 0 85 85"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M43.3305 64.0801L43.3305 24.2401M43.3305 24.2401L58.2705 42.6641M43.3305 24.2401L28.3905 42.6641M84 42.5C84 19.5802 65.4198 1 42.5 1C19.5802 1 1 19.5802 1 42.5C1 65.4198 19.5802 84 42.5 84C65.4198 84 84 65.4198 84 42.5Z"
+      stroke="#083098"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+  </svg>
+);
+
+
+export const burgersvg =(
+  <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M6 9H30M6 18H30M6 27H30" stroke="white" stroke-width="1.6" stroke-linecap="round"/>
+</svg>
+
+)

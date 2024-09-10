@@ -4,6 +4,7 @@ import NavigationTop from "../../components/NavigationTop/NavigationTop";
 import FaqSpoiler from "../../components/FaqSpoiler/FaqSpoiler";
 import { questions } from "../../assets/dummyData";
 import useSmoothScroll from "../../hooks/useSmoothScroll";
+import { burgersvg, closesvg } from "../../assets/svg/svgimages";
 
 const Faq = () => {
 
@@ -15,6 +16,7 @@ const Faq = () => {
     const handleScroll = (sectionId) => {
         setClickedButton(sectionId);
         scrollTo(sectionId);
+        setIsSidebarOpen(false)
       };      
 
       const toggleSidebar = () => {
@@ -30,17 +32,19 @@ const Faq = () => {
             Find answers to all your questions about our free and paid products
           </h2>
           <p className="h4-medium">
-            Or contact us via email grids@matchmovemachine.com
+            Or contact us via email{" "}
+            <span className={styles.highLight}>grids@matchmovemachine.com</span>
           </p>
         </div>
       </section>
 
       <section className={styles.main}>
         <div className={styles.sidebar}>
-          <div className={styles.adaptiveSidebar} onClick={toggleSidebar}>
-            Contents
-          </div>
-          <div className={`${styles.links} ${isSidebarOpen ? styles.open : styles.closed}`}>
+          <div
+            className={`${styles.links} ${
+              isSidebarOpen ? styles.open : styles.closed
+            }`}
+          >
             <ul>
               <li>
                 <button
@@ -96,70 +100,104 @@ const Faq = () => {
               </li>
             </ul>
           </div>
+          <div className={styles.adaptiveSidebar} onClick={toggleSidebar}>
+            <p className="h4-bold">Contents</p>
+            {isSidebarOpen ? closesvg : burgersvg}
+          </div>
         </div>
         <div className={styles.body}>
-          <section id="tech-specs">
-            <div className={styles.bannerCont}>
+          <section id="tech-specs" className={styles.spoilerSection}>
+            <div className={styles.spoilerBanner}>
               <h2 className="h2-bold">Tech specs</h2>
             </div>
             <div className={styles.spoilerCont}>
-              {questions.techSpecs.map((item, i) => (
-                <FaqSpoiler key={i} spoiler={item} />
+              {questions.howToUse.map((item, i) => (
+                <div key={i}>
+                  <FaqSpoiler spoiler={item} />
+                  {i !== questions.howToUse.length - 1 && (
+                    <div className={styles.underline} />
+                  )}
+                </div>
               ))}
             </div>
           </section>
 
-          <section id="pricing">
-            <div className={styles.bannerCont}>
+          <section id="pricing" className={styles.spoilerSection}>
+            <div className={styles.spoilerBanner}>
               <h2 className="h2-bold">Pricing</h2>
             </div>
             <div className={styles.spoilerCont}>
-              {questions.pricing.map((item, i) => (
-                <FaqSpoiler key={i} spoiler={item} />
+              {questions.howToUse.map((item, i) => (
+                <div key={i}>
+                  <FaqSpoiler spoiler={item} />
+                  {i !== questions.howToUse.length - 1 && (
+                    <div className={styles.underline} />
+                  )}
+                </div>
               ))}
             </div>
           </section>
 
-          <section id="payment">
-            <div className={styles.bannerCont}>
+          <section id="payment" className={styles.spoilerSection}>
+            <div className={styles.spoilerBanner}>
               <h2 className="h2-bold">Payment</h2>
             </div>
             <div className={styles.spoilerCont}>
-              {questions.payment.map((item, i) => (
-                <FaqSpoiler key={i} spoiler={item} />
+              {questions.howToUse.map((item, i) => (
+                <div key={i}>
+                  <FaqSpoiler spoiler={item} />
+                  {i !== questions.howToUse.length - 1 && (
+                    <div className={styles.underline} />
+                  )}
+                </div>
               ))}
             </div>
           </section>
 
-          <section id="howToUse">
-            <div className={styles.bannerCont}>
+          <section id="howToUse" className={styles.spoilerSection}>
+            <div className={styles.spoilerBanner}>
               <h2 className="h2-bold">How to use the website</h2>
             </div>
             <div className={styles.spoilerCont}>
               {questions.howToUse.map((item, i) => (
-                <FaqSpoiler key={i} spoiler={item} />
+                <div key={i}>
+                  <FaqSpoiler spoiler={item} />
+                  {i !== questions.howToUse.length - 1 && (
+                    <div className={styles.underline} />
+                  )}
+                </div>
               ))}
             </div>
           </section>
 
-          <section id="personalAccount">
-            <div className={styles.bannerCont}>
+          <section id="personalAccount" className={styles.spoilerSection}>
+            <div className={styles.spoilerBanner}>
               <h2 className="h2-bold">Personal account</h2>
             </div>
             <div className={styles.spoilerCont}>
-              {questions.personalAccount.map((item, i) => (
-                <FaqSpoiler key={i} spoiler={item} />
+              {questions.howToUse.map((item, i) => (
+                <div key={i}>
+                  <FaqSpoiler spoiler={item} />
+                  {i !== questions.howToUse.length - 1 && (
+                    <div className={styles.underline} />
+                  )}
+                </div>
               ))}
             </div>
           </section>
 
-          <section id="license">
-            <div className={styles.bannerCont}>
+          <section id="license" className={styles.spoilerSection}>
+            <div className={styles.spoilerBanner}>
               <h2 className="h2-bold">License</h2>
             </div>
             <div className={styles.spoilerCont}>
-              {questions.license.map((item, i) => (
-                <FaqSpoiler key={i} spoiler={item} />
+              {questions.howToUse.map((item, i) => (
+                <div key={i}>
+                  <FaqSpoiler spoiler={item} />
+                  {i !== questions.howToUse.length - 1 && (
+                    <div className={styles.underline} />
+                  )}
+                </div>
               ))}
             </div>
           </section>
