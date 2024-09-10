@@ -1,0 +1,149 @@
+.container {
+    width: 100%;
+    padding: 80px;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    background-color: white;
+}
+
+.scrollableToggle {
+    overflow-x: auto; 
+    white-space: nowrap; 
+    -webkit-overflow-scrolling: touch; 
+    margin-bottom: 10px; 
+}
+
+.scrollableToggle::-webkit-scrollbar {
+    display: none; /* Hide scrollbar for WebKit browsers */
+}
+
+.toggle {
+    display: flex;
+    flex-direction: row;
+    gap: 60px;
+    width: 100%;
+}
+
+.fieldbtn {
+    font-weight: 600;
+    font-size: 32px;
+    line-height: 100%;
+    font-family: 'Montserrat', sans-serif;
+    color: #A79895;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    white-space: nowrap;
+
+}
+
+.fieldbtn:hover {
+    color: #2F57BF;
+}
+
+.fieldbtn.active {
+    color: #2F57BF;
+}
+
+.btncont {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    max-width: 450px;
+    width: 100%;
+}
+
+.formcontainer label {
+    width: calc(50% - 20px);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.hr {
+    margin: 40px 0;
+}
+
+
+@media screen and (max-width: 1400px) {
+    .fieldbtn {
+        font-size: 25px;
+        line-height: 41px;
+    }
+
+    .container {
+        padding: 40px;
+    }
+}
+
+@media screen and (max-width: 800px) {
+    .fieldbtn {
+        font-size: 20px;
+        line-height: 41px;
+    }
+
+    .container {
+        padding: 40px;
+    }
+
+    .btncont {
+        max-width: 100%;
+    }
+}
+
+@media screen and (max-width: 760px) {
+    .toggle{
+        gap: 20px;
+    }
+
+    .container {
+        padding: 20px;
+    }
+
+    .formcontainer label {
+        width: 100%;
+    }
+
+    .hr {
+        margin: 20px 0;
+    }
+}
+
+.formcontainer {
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 31px;
+    width: 100%;
+    color: #000000;
+}
+
+.formcontainer input,
+.formcontainer select,
+.formcontainer textarea {
+    background-color: #F8F8F8;
+    font-weight: 400;
+    font-size: 17px;
+    line-height: 26px;
+    width: 100%;
+    color: #282828;
+}
+
+.textarea label{
+    width: 100%;
+    height: auto;
+}
+
+.textarea textarea{
+    width: 100%;
+    min-height: 300px;
+}
+
+.forms {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 20px;
+    width: 100%;
+}
+

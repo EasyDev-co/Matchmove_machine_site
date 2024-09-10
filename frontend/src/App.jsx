@@ -9,26 +9,39 @@ import Authorization from './pages/Authorization';
 import Profile from './pages/Profile';
 import ProtectedRoute from './pages/ProtectedRoute'; 
 import Layout from './components/Layout';
+import EditProfile from './pages/EditProfile/EditProfile';
+
 
 function App() {
   return (
     <Router>
-      <Layout>
-        <Routes>
-          <Route path="/" element={<MainPage />} />
-          <Route path="library" element={<Library />} />
-          <Route path="library/product/:productId" element={<Product />} />
-          <Route path="authorization" element={<Authorization />} />
-          <Route path="registration" element={<Authorization />} />
-          <Route path="reset-password" element={<Authorization />} />
-          <Route path="profile" element={
+    <Layout>
+      <Routes>
+        <Route path="/" element={<MainPage />} />
+        <Route path="library" element={<Library />} />
+        <Route path="library/product/:productId" element={<Product />} />
+        <Route path="authorization" element={<Authorization />} />
+        <Route path="registration" element={<Authorization />} />
+        <Route path="reset-password" element={<Authorization />} />
+        <Route
+          path="profile/:id"
+          element={
             <ProtectedRoute>
               <Profile />
             </ProtectedRoute>
-          } />
-        </Routes>
-      </Layout>
-    </Router>
+          }
+        />
+        <Route
+          path="profile/edit"
+          element={
+            <ProtectedRoute>
+              <EditProfile />
+            </ProtectedRoute>
+          }
+        />
+      </Routes>
+    </Layout>
+  </Router>
   );
 }
 

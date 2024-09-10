@@ -1,0 +1,53 @@
+.container {
+    position: relative;
+    height: 124px;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    background: url("https://s3-alpha-sig.figma.com/img/5873/1cb8/9d9c338d4201e5ba8e33c11e778d1926?Expires=1725840000&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=EIb6QixlDfwT7Hi9yAEcvv2~N6uCbZm2z~jfesNa2glT7t6p4a95cbKGnooOqFgdwa4zPK8Zj4MonQryBRvbYeWKWsRsFaiJHrI1GvNjA5B4OxkP9meJijyqY1XAIo9h0NR7cUyRnBRF8lxdcA925a3H9bxFldUezwpRBuA3rvwf~FLRZ99IPgEp7ZmZk89feXKwEuUaPEMW8h5GEQ81pe9G9ey23aYQ1pPpRnfDKguNn5vJtUfBmLEmj4~ix47kF8lBNgYdkmCbIAJzcBLxhda5rLyceXrqVYpNs0qWt48Q~Cqql93NrsTk6WkYf3C2LCLrX~bRh2Rx9m1OGrVlMQ__") no-repeat right;
+    background-size: 200%;
+    color: white;
+    box-sizing: border-box;
+}
+
+.container::before {
+    position: absolute;
+    content: "";
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(to top right,
+            rgba(10, 10, 10, 1),
+            rgba(20, 20, 20, 1),
+            rgba(0, 4, 15, 1));
+    opacity: 80%;
+}
+
+.content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 2;
+    width: 100%;
+    padding: 30px 80px;
+}
+
+@media screen and (max-width: 800px) {
+    .content {
+        padding: 20px 40px;
+    }
+}
+
+@media screen and (max-width: 760px) {
+    .content {
+        padding: 20px 20px;
+    }
+}
+
+
+.btn {
+    cursor: pointer;
+    background: transparent;
+    border: none;
+}

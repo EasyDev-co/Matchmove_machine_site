@@ -1,0 +1,36 @@
+.btn {
+    position: fixed;
+    justify-content: center;
+    align-items: center;
+    bottom: 40px;
+    right: 1px;
+    z-index: 10;
+    background: transparent;
+    box-sizing: border-box;
+    border: none;
+    mix-blend-mode: difference;
+    color: white;
+    background-color: rgba(0, 8, 30, 0.8);
+    padding: 0;
+    height: 60px;
+    width: 66px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.visible {
+    opacity: 1; 
+    visibility: visible; 
+}
+
+.hidden {
+    opacity: 0;
+    visibility: hidden; 
+}
+
+@media (max-width: 1024px) {
+
+    .btn{
+        display: none;
+    }
+}
