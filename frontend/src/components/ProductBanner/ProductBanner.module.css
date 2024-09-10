@@ -1,0 +1,9 @@
+.main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0px 0px 40px;
+    background: linear-gradient(110.35deg, rgba(40, 40, 40, 0.9) 0%, rgba(0, 8, 30, 0.9) 100%);
+
+}
