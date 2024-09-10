@@ -31,8 +31,13 @@ const NavigationTop =({title, text})=>{
             <Link>Home {breadcrumbsvg}</Link>
             <p>FAQ</p>
           </div>
+        ) : title === "Error" ? (
+          <div className={styles.breadcrumbs}>
+            <Link>Home {breadcrumbsvg}</Link>
+            <p>Error</p>
+          </div>
         ) : (
-          ""
+          "Error"
         )}
         <h2 className="h2-bold">{title} </h2>
         {text && <p className="h4-light">{text}</p>}

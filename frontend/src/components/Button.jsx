@@ -271,6 +271,19 @@ const ICONS = {
 <path d="M1 31H37" stroke="white" stroke-width="2" stroke-linecap="round"/>
 </svg>
 
+  ),
+
+  home: (
+    <svg width="27" height="36" viewBox="0 0 27 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+<mask id="mask0_3920_8465" style={{ maskType: "alpha" }} maskUnits="userSpaceOnUse" x="1" y="6" width="24" height="24">
+<path d="M6 18H4L13 9L22 18H20M6 18L6 25C6 25.5304 6.21071 26.0391 6.58579 26.4142C6.96086 26.7893 7.46957 27 8 27L18 27C18.5304 27 19.0391 26.7893 19.4142 26.4142C19.7893 26.0391 20 25.5304 20 25V18" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M10 27L10 21C10 20.4696 10.2107 19.9609 10.5858 19.5858C10.9609 19.2107 11.4696 19 12 19H14C14.5304 19 15.0391 19.2107 15.4142 19.5858C15.7893 19.9609 16 20.4696 16 21L16 27" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</mask>
+<g mask="url(#mask0_3920_8465)">
+<rect width="27" height="36" transform="matrix(-1 0 0 1 27 0)" fill="white"/>
+</g>
+</svg>
+
   )
 };
 
