@@ -28,6 +28,7 @@ INSTALLED_APPS = [
     "django_celery_beat",
     "django_filters",
     "corsheaders",
+    "drf_yasg",
     # Приложения
     "apps.users",
     "apps.products",
