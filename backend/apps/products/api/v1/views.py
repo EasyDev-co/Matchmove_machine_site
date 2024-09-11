@@ -7,6 +7,7 @@ from rest_framework.generics import ListAPIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.pagination import PageNumberPagination
+from apps.utils.pagination import StandardPagination
 
 from apps.products.models import Camera, Format, Lens, Product, File
 
@@ -24,8 +25,8 @@ from .serializers import (
     FileSerializer,
 )
 
-
 import logging
+
 logger = logging.getLogger(__name__)
 
 
@@ -154,8 +155,8 @@ class FileViewSet(viewsets.ViewSet):
 
 class UserProductsAPIView(ListAPIView):
     serializer_class = ProductSerializer
-    pagination_class = ProductPagination
     permission_classes = [IsAuthenticated]
+    pagination_class = StandardPagination
 
     def get_queryset(self):
         return Product.objects.filter(author=self.request.user)
