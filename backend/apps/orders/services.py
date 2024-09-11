@@ -14,8 +14,6 @@ class OrderService:
 
     def get_user_products(self, page_number=1, items_per_page=15):
         """Получение всех продуктов пользователя с пагинацией."""
-        products = (
-            self.user.products.all()
-        )  # Предполагается, что у пользователя есть related_name 'products'
+        products = self.user.products.all()
         paginator = Paginator(products, items_per_page)
         return paginator.get_page(page_number)
