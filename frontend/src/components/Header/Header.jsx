@@ -28,12 +28,17 @@ const Header = () => {
     navigate("/")
   }
 
+  const handleCloseMenu =()=>{
+    setIsMenuOpen(false)
+    
+  }
+
   return (
     <header className={styles.main}>
       <div className={styles.container}>
         <div className={styles.logocont} onClick={handkeGoToMainPage}><img src={logo} alt="logo" /></div>
         <div className={styles.logo}><img src={mobilelogo} alt="m-logo" /></div>
-        <HeaderLinks isMenuOpen={isMenuOpen}/>
+        <HeaderLinks isMenuOpen={isMenuOpen} handleCloseMenu={handleCloseMenu}/>
         <div className={styles.btncont}>
           <div><Button labelPosition="none" variant={window.innerWidth>1000? "transparent": "grey"} color="white" iconType="cart" onClick={openCart} /></div>
           <div>{isUser?<User/>: <div className={styles.signInbtn}><Button label="Sign In" variant="blue" iconType="person" labelPosition={window.innerWidth>1000? "left": "none"} /></div>}</div>

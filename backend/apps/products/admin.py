@@ -11,6 +11,7 @@ from apps.products.models.files import File
 from apps.products.models.lens import Lens
 from apps.products.models.products import Product
 
+
 from apps.products.tasks import upload_file_to_ftp, delete_file_from_ftp
 
 
@@ -112,7 +113,6 @@ class FileAdmin(admin.ModelAdmin):
                 logger.error(f"Ошибка при загрузке файла {file.id} на FTP: {str(e)}")
                 self.message_user(request, f"Ошибка при загрузке файла {file.id}: {str(e)}")
 
-
     upload_to_ftp.short_description = "Загрузить выделенные файлы на FTP"
 
     def delete_from_ftp(self, request, queryset):
@@ -131,4 +131,5 @@ class FileAdmin(admin.ModelAdmin):
                 self.message_user(request, f"Ошибка при удалении файла {file.id}: {str(e)}")
 
     delete_from_ftp.short_description = "Удалить выделенные файлы с FTP"
+
 

@@ -1,5 +1,8 @@
 .main {
     padding: 0px 80px;
+    top: 0;
+    right: 0;
+    left: 0;
     background: #282828;
     color: #FFFFFF;
     font-weight: 700;
@@ -9,18 +12,20 @@
     display: flex;
     align-items: center;
     box-sizing: border-box;
-    position: relative;
+    position: fixed;
+    z-index: 100;
 }
 
 .logocont {
     position: absolute;
-    z-index: 3;
+    z-index: 30;
     top: 0;
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 }
 
 .logo {
     width: 110px;
+    z-index: 25;
 }
 
 .container {
@@ -31,7 +36,13 @@
     width: 100%;
 }
 
-.linkslist{
+.linkslist {
+    display: flex;
+    flex-direction: row;
+    position: relative;
+}
+
+.linkslist ul {
     list-style: none;
     display: flex;
     flex-direction: row;
@@ -54,41 +65,86 @@
     gap: 10px;
 }
 
+.closebtn {
+    position: absolute;
+    top: 40px;
+    right: 40px;
+    display: none;
+}
+
+.closebtn button {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    z-index: 21;
+}
+
+.menuTitle {
+    display: none;
+}
+
 @media (max-width: 1290px) {
-    .linkslist{
+    .linkslist ul {
         gap: 15px;
         font-size: 13px;
     }
 }
 
-.linkslist.open{
+.linkslist.open {
     display: flex;
 }
 
-@media (max-width: 1100px) {
-    .linkslist{
+@media (max-width:1100px) {
+    .main {
+        padding: 0px 40px;
+    }    
+}
+
+@media (max-width: 1000px) {
+    .linkslist {
+        display: none;
         position: absolute;
         right: 0;
-        top: 80px;
-        flex-direction: column;
-        background-color: #282828;
-        display: none;
+        left: 0;
+        top: 0px;
         z-index: 20;
+        flex-direction: column;
+        align-items: center;
+        padding: 90px 0;
+        background: linear-gradient(110.35deg, rgba(40, 40, 40, 0.85) 0%, rgba(0, 8, 30, 0.85) 100%), url("../../assets/images/formbackground.png"), rgba(0, 0, 0, 0.95);
+    }
+
+    .linkslist ul {
+        flex-direction: column;
+        gap: 40px;
     }
 
     .mobilebtn {
         display: block;
     }
 
-    .main {
-        padding: 0px 40px;
-        height: 90px;
-    }
-
     .signInbtn {
         width: 100%;
     }
-    
+
+    .closebtn {
+        display: block;
+    }
+
+    .linkslist li {
+        font-weight: 200;
+        font-size: 26px;
+        line-height: 41px;
+        text-align: center;
+    }
+
+    .menuTitle {
+        display: block;
+        padding-bottom: 40px;
+        margin-bottom: 40px;
+        border-bottom: 1px solid #B3B3B3; 
+    }
+
 }
 
 .userbtn img {
@@ -99,7 +155,7 @@
 .userbtn {
     display: flex;
     flex-direction: row;
-    gap:10px;
+    gap: 10px;
     background: transparent;
     border: none;
     font: inherit;
@@ -115,11 +171,23 @@
         padding: 20px;
     }
 
-    .logocont{
+    .logocont {
         display: none;
     }
 
     .useName {
         display: none;
     }
+
+    .closebtn {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+    }
+
+    .linkslist li {
+font-size: 20px;
+line-height: 31px;
+    }
+    
 }

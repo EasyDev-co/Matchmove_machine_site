@@ -3,7 +3,7 @@ import { searchsvg } from "../../assets/svg/svgimages"
 const SearchInput = ()=>{
     return (
       <>
-        <input type="text" placeholder="Serch" />
+        <input type="text" placeholder="Serch" id="search" />
         {searchsvg}
       </>
     );
