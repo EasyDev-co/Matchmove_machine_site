@@ -8,6 +8,7 @@ urlpatterns = [
     path("api/users/", include("apps.users.api.urls")),
     path("api/products/", include("apps.products.api.urls")),
     path("api/cart/", include("apps.cart.api.urls")),
+    path("api/payments/", include("apps.payments.api.urls")),
 ]
 
 if settings.DEBUG:

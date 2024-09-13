@@ -31,7 +31,8 @@ INSTALLED_APPS = [
     # Приложения
     "apps.users",
     "apps.products",
-    'apps.cart',
+    "apps.cart",
+    "apps.payments",
 ]
 
 MIDDLEWARE = [
@@ -146,6 +147,10 @@ EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 SERVER_EMAIL = EMAIL_HOST_USER
 EMAIL_ADMIN = EMAIL_HOST_USER
+
+PADDLE_VENDOR_ID = os.environ.get('PADDLE_VENDOR_ID')
+PADDLE_API_KEY = os.environ.get('PADDLE_API_KEY')
+PADDLE_SANDBOX = os.environ.get('PADDLE_SANDBOX')
 
 LANGUAGE_CODE = "en-us"
 
