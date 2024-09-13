@@ -63,7 +63,7 @@ def fetch_or_create_customer(user, address_data=None):
         )
         response.raise_for_status()
         customers_data = response.json().get('data', [])
-        
+
         if customers_data:
             customer_id = customers_data[0]['id']
             # Получаем последний адрес клиента
@@ -112,7 +112,7 @@ def fetch_or_create_product(product_id):
         )
         response.raise_for_status()
         product_data_list = response.json().get('data', [])
-        
+
         if product_data_list:
             return product_data_list[0]['id']
         else:
