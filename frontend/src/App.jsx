@@ -15,6 +15,7 @@ import AffiliateProgram from './pages/AffiliateProgram/AffiliateProgram';
 import NotFound from './pages/NotFound/NotFound';
 import Faq from './pages/Faq/Faq';
 
+
 function App() {
   return (
     <Router>

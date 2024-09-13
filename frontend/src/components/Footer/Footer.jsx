@@ -1,3 +1,4 @@
+
 import styles from "./Footer.module.css"
 import logo from "../../assets/images/logo.svg"
 import { visaIcon, masercardIcon, paypalIcon, americanExpressIcon, googlePayIcon, applePay } from "../../assets/svg/paymenticons";
@@ -108,8 +109,9 @@ const Footer = () => {
           </div>
         </div>
         <p className="h2-light">&copy; Matchmove machine, 2024</p>
+
       </footer>
     );
   };
   
-  export default Footer;
+  export default Footer

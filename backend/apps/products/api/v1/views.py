@@ -4,10 +4,12 @@ from django_filters.rest_framework import DjangoFilterBackend
 from django.conf import settings
 from rest_framework import generics, filters, status, viewsets
 from rest_framework.generics import ListAPIView
+
 from rest_framework.response import Response
 from rest_framework.pagination import PageNumberPagination
 
 from apps.products.models import Camera, Format, Lens, Product, File
+
 from apps.products.tasks import (
     download_file_from_ftp,
     upload_file_to_ftp,
@@ -125,6 +127,7 @@ class FileViewSet(viewsets.ViewSet):
             status=status.HTTP_200_OK
         )
 
+
     def delete(self, request, file_id):
         """Эндпоинт для удаления файла с FTP."""
         try:
@@ -152,3 +155,4 @@ class FileViewSet(viewsets.ViewSet):
             {"message": f"File {file_id} successfully deleted."},
             status=status.HTTP_200_OK
         )
+

@@ -62,6 +62,7 @@ class FTPDownloadUploadService:
         with self.ftp_manager.connect_and_login(self.host, self.username, self.password, self.port) as ftp:
             ftp.delete(remote_file_path)
 
+
     def delete_local_file(self, file_path: str) -> None:
         """Удаляет файл с локального сервера."""
         if os.path.exists(file_path):
