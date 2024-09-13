@@ -84,11 +84,21 @@
     width: 180px;
 }
 
+@keyframes scrollBounce {
+    0%, 100% {
+        transform: translateY(10px);
+    }
+    50% {
+        transform: translateY(-5px);
+    }
+}
+
 .scroll {
     cursor: pointer;
     background: transparent;
     border: none;
     margin-top: 20px;
+    animation: scrollBounce 1s infinite; 
 }
 
 @media (max-width: 1000px) {
