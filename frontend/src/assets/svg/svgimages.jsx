@@ -1,4 +1,4 @@
-
+export const eyesvg = (
   <svg
     width="27"
     height="27"
