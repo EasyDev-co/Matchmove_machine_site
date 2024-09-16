@@ -33,6 +33,7 @@ INSTALLED_APPS = [
     "apps.users",
     "apps.products",
     "apps.cart",
+    "apps.payments",
     "apps.orders",
 ]
 
@@ -148,6 +149,10 @@ EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 SERVER_EMAIL = EMAIL_HOST_USER
 EMAIL_ADMIN = EMAIL_HOST_USER
+
+PADDLE_API_KEY = os.environ.get('PADDLE_API_KEY')
+PADDLE_API_MODE = os.getenv('PADDLE_API_MODE', 'sandbox-api')
+PADDLE_API_BASE_URL = f'https://{PADDLE_API_MODE}.paddle.com'
 
 LANGUAGE_CODE = "en-us"
 
