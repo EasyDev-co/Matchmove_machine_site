@@ -1,0 +1,41 @@
+.main {
+    padding-top: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 100px;
+}
+
+.imageCont {
+    display: flex;
+    flex-direction: row;
+    gap: 50px;
+    height: fit-content;
+    max-width: 750px;
+}
+
+.text {
+    color: #000000;
+    max-width: 790px;
+    width: 100%;
+    text-align: center;
+}
+
+.btn {
+    width: 100%;
+    max-width: 180px;
+}
+
+@media screen and (max-width: 768px) {
+    .main {
+        gap: 40px;
+    }
+}
+
+
+@media screen and (max-width: 700px) {
+    .imageCont {
+        flex-direction: column;
+        gap: 20px;
+    }
+}

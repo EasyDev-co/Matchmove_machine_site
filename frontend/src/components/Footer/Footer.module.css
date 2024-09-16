@@ -8,16 +8,11 @@
 
 .content {
     display: flex;
-    flex-wrap: wrap;
     width: 100%;
     flex-direction: row;
     justify-content: space-between;
     padding: 0px 80px 40px;
     box-sizing: border-box;
-}
-
-.list {
-    padding-top: 50px;
 }
 
 .container .h2-light {
@@ -29,37 +24,196 @@
     padding: 15px 80px;
 }
 
-.list{
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
-
-.container ul{
+.container ul {
     display: flex;
     flex-direction: column;
     gap: 10px;
 }
 
 .container li {
-font-weight: 500;
-font-size: 17px;
-line-height: 23px;
-color: #B3B3B3;
+    font-weight: 500;
+    font-size: 17px;
+    line-height: 23px;
+    color: #B3B3B3;
 }
 
 .wrap {
     display: flex;
-    flex-wrap: wrap;
+    flex: 2;
     flex-direction: row;
-    justify-content: space-between;
     box-sizing: border-box;
 }
 
+.menu,
+.payments,
+.links,
+.item {
+    flex: 1;
+    padding-top: 50px;
+    align-items: center;
+}
 
+.menu,
+.links,
+.payments,
+.email,
+.contacts {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.item {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+.payments ul {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 300px;
+    gap: 5px;
+}
+
+.payments button {
+    display: flex;
+    width: fit-content;
+    height: fit-content;
+    padding: 0;
+    margin: 0;
+    opacity: 0.5;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+}
+
+.payments button:hover {
+    opacity: 1;
+}
+
+.contacts ul {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 200px;
+    gap: 5px;
+}
+
+.contacts button {
+    height: 60px;
+    width: 60px;
+    cursor: pointer;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    background: #FFFFFF;
+    opacity: 0.5;
+    border: 1px solid #383838;
+    border-radius: 5px;
+}
+
+.contacts button:hover {
+    opacity: 1;
+}
+
+.line {
+margin: 0 auto;
+width: 1px;
+height: 280.77px;
+background: rgba(64, 64, 64, 0.5);
+margin-top: 50p;
+}
+
+.lineCont {
+    width: 1px;
+    height: 1px;
+    background: rgba(64, 64, 64, 0.5);
+}
+
+.column {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
 
 @media (max-width: 1100px) {
+
+    .line{
+        display: none;
+    }
+
     .logoCont {
         display: none;
+    }
+
+    .menu,
+    .payments,
+    .links,
+    .item,
+    .wrap {
+        flex: none;
+        padding-top: 20px;
+        align-items: start;
+    }
+
+    .content {
+        flex-wrap: wrap;
+        padding: 40px;
+    }
+
+    .menu {
+        width: 100%;
+    }
+
+    .menu ul,
+    .links ul {
+        display: flex;
+        flex-direction: row;
+        gap: 20px;
+        flex-wrap: wrap;
+        box-sizing: border-box;
+    }
+
+    .item{
+        gap: 20px;
+    }
+
+    .wrap {
+        flex-direction: column;
+        padding-top: 0;
+    }
+
+    .email {
+        order: 1;
+    }
+
+    .contacts ul {
+        width: fit-content;
+    }
+
+    .contacts .column {
+        order: 2;
+    }
+
+    .email,
+    .links {
+        min-height: 70px;
+    }
+}
+
+@media (max-width: 800px) {
+    .content {
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 500px) {
+    .content {
+        padding: 20px;
     }
 }

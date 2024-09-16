@@ -28,11 +28,13 @@ INSTALLED_APPS = [
     "django_celery_beat",
     "django_filters",
     "corsheaders",
+    "drf_yasg",
     # Приложения
     "apps.users",
     "apps.products",
     "apps.cart",
     "apps.payments",
+    "apps.orders",
 ]
 
 MIDDLEWARE = [
