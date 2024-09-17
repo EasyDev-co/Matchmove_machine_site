@@ -56,7 +56,7 @@ class ProductPagination(PageNumberPagination):
 
 
 class ProductListView(generics.ListAPIView):
-    queryset = Product.objects.filter(is_approved=True)
+    queryset = Product.objects.all()
     serializer_class = ProductSerializer
     pagination_class = ProductPagination
     filter_backends = [DjangoFilterBackend, filters.SearchFilter]
@@ -152,12 +152,21 @@ class FileViewSet(viewsets.ViewSet):
         )
 
 
+class ApprovedProductsAPIView(ListAPIView):
+    """Возвращает список продуктов, которые прошли модерацию (is_approved=True)."""
+
+    queryset = Product.objects.filter(is_approved=True)
+    serializer_class = ProductSerializer
+    pagination_class = StandardPagination
+    permission_classes = [IsAuthenticated]
+
+
 class UserProductsAPIView(ListAPIView):
+    """Возвращает список всех продуктов текущего пользователя, вне зависимости от статуса модерации."""
+
     serializer_class = ProductSerializer
     permission_classes = [IsAuthenticated]
     pagination_class = StandardPagination
 
     def get_queryset(self):
-        return Product.objects.filter(
-            author=self.request.user, is_approved=True
-        )  # Фильтрация по автору и статусу модерации
+        return Product.objects.filter(author=self.request.user)

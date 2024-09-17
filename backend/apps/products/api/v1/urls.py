@@ -7,6 +7,7 @@ from apps.products.api.v1.views import (
     ProductDetailView,
     FileViewSet,
     UserProductsAPIView,
+    ApprovedProductsAPIView,
 )
 
 urlpatterns = [
@@ -15,6 +16,7 @@ urlpatterns = [
     path("lenses/", LensListView.as_view(), name="lens-list"),
     path("products/", ProductListView.as_view(), name="product-list"),
     path("products/<uuid:pk>/", ProductDetailView.as_view(), name="product-detail"),
+    path("approved-products/", ApprovedProductsAPIView.as_view(), name="approved-product-list"),
     path("user-products/", UserProductsAPIView.as_view(), name="user-product-list"),
     path("upload/", FileViewSet.as_view({"post": "upload"}), name="file-upload"),
     path(
