@@ -1,7 +1,6 @@
 import os
 import logging
 
-from django.conf import settings
 from django.contrib import admin
 from django.utils.translation import gettext_lazy as _
 
@@ -11,9 +10,7 @@ from apps.products.models.files import File
 from apps.products.models.lens import Lens
 from apps.products.models.products import Product
 
-
 from apps.products.tasks import upload_file_to_ftp, delete_file_from_ftp
-
 
 logger = logging.getLogger(__name__)
 
@@ -67,9 +64,9 @@ class ProductAdmin(admin.ModelAdmin):
 
 @admin.register(Lens)
 class LensAdmin(admin.ModelAdmin):
-    list_display = ("id", "brand", "focal_length", "lens_type")
-    search_fields = ("brand", "focal_length", "lens_type")
-    list_filter = ("lens_type",)
+    list_display = ("id", "brand", "model_name")
+    search_fields = ("brand", "model_name")
+    list_filter = ("model_name",)
     ordering = ("brand",)
 
 
