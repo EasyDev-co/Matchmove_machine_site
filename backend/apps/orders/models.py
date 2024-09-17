@@ -13,6 +13,18 @@ class Order(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    def calculate_total_price(self):
+        return sum(item.price for item in self.items.all())
+
+    def save(self, *args, **kwargs):
+        # Если это новая запись (нет pk), сохраняем объект без рассчета цены
+        if not self.pk:
+            super().save(*args, **kwargs)
+
+        self.total_price = self.calculate_total_price()
+
+        Order.objects.filter(pk=self.pk).update(total_price=self.total_price)
+
     def __str__(self):
         return f"Заказ {self.id} для {self.user.username}"
 

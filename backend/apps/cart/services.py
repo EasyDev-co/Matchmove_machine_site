@@ -1,4 +1,5 @@
 from django.shortcuts import get_object_or_404
+
 from apps.cart.models import Cart, CartItem
 from apps.products.models import Product
 
@@ -9,20 +10,26 @@ class CartService:
 
     def get_or_create_cart(self):
         """Получаем активную корзину пользователя или создаем новую, если необходимо."""
-        cart = Cart.objects.filter(user=self.user, is_active=True).first()
+
+        cart = Cart.objects.filter(user=self.user).first()
         if not cart:
             cart = Cart.objects.create(user=self.user)
+        else:
+            # Если корзина найдена, но не активна, делаем ее активной
+            if not cart.is_active:
+                cart.is_active = True
+                cart.save()
         return cart
 
     def add_product(self, product_id, quantity=1):
         """Добавление товара в корзину."""
+
         cart = self.get_or_create_cart()
         product = get_object_or_404(Product, id=product_id)
 
-        if product.stock < quantity:
-            raise ValueError(f"Недостаточно товара '{product.name}' на складе")
-
-        cart_item, item_created = CartItem.objects.get_or_create(cart=cart, product=product)
+        cart_item, item_created = CartItem.objects.get_or_create(
+            cart=cart, product=product
+        )
 
         if not item_created:
             cart_item.quantity += int(quantity)
