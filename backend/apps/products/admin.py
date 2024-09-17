@@ -1,6 +1,7 @@
 import os
 import logging
 
+from django.conf import settings
 from django.contrib import admin
 from django.utils.translation import gettext_lazy as _
 
@@ -18,9 +19,22 @@ logger = logging.getLogger(__name__)
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
     fieldsets = (
-        (None, {"fields": (
-            "access_type", "category", "camera", "lens", "file_format", "price", "file"
-        )}),
+        (
+            None,
+            {
+                "fields": (
+                    "access_type",
+                    "category",
+                    "is_approved",
+                    "camera",
+                    "lens",
+                    "file_format",
+                    "description",
+                    "price",
+                    "file",
+                )
+            },
+        ),
         (
             _("Important Information"),
             {
@@ -36,11 +50,13 @@ class ProductAdmin(admin.ModelAdmin):
         "id",
         "access_type",
         "category",
+        "is_approved",
         "camera",
         "lens",
         "file_format",
         "date_added",
         "author",
+        "description",
         "price",
     )
 
@@ -53,9 +69,11 @@ class ProductAdmin(admin.ModelAdmin):
     list_filter = (
         "access_type",
         "category",
+        "is_approved",
         "camera",
         "lens",
         "file_format",
+        "author",
     )
 
     ordering = ("price",)

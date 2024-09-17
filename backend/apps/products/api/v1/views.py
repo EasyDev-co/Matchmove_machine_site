@@ -1,4 +1,5 @@
 import os
+import logging
 
 from django_filters.rest_framework import DjangoFilterBackend
 from django.conf import settings
@@ -24,8 +25,6 @@ from .serializers import (
     ProductSerializer,
     FileSerializer,
 )
-
-import logging
 
 logger = logging.getLogger(__name__)
 
@@ -57,7 +56,7 @@ class ProductPagination(PageNumberPagination):
 
 
 class ProductListView(generics.ListAPIView):
-    queryset = Product.objects.all()
+    queryset = Product.objects.filter(is_approved=True)
     serializer_class = ProductSerializer
     pagination_class = ProductPagination
     filter_backends = [DjangoFilterBackend, filters.SearchFilter]
@@ -159,4 +158,6 @@ class UserProductsAPIView(ListAPIView):
     pagination_class = StandardPagination
 
     def get_queryset(self):
-        return Product.objects.filter(author=self.request.user)
+        return Product.objects.filter(
+            author=self.request.user, is_approved=True
+        )  # Фильтрация по автору и статусу модерации
