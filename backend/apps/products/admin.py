@@ -82,9 +82,9 @@ class FormatAdmin(admin.ModelAdmin):
 
 @admin.register(Camera)
 class CameraAdmin(admin.ModelAdmin):
-    list_display = ("id", "brand", "model_name")
-    search_fields = ("brand", "model_name")
-    ordering = ("brand",)
+    list_display = ("id", "model_name")
+    search_fields = ("model_name",)
+    ordering = ("model_name",)
 
 
 @admin.register(File)
