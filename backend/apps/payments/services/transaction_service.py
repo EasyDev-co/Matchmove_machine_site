@@ -151,13 +151,4 @@ class TransactionService:
             items, customer_id, address_id
         )
 
-        # Проверяем статус транзакции и деактивируем корзину
-        if transaction_response.get('status') == 'ready':
-            cart = Cart.objects.filter(user=user, is_active=True).first()
-            if cart:
-                # Деактивируем корзину и удаляем товары
-                cart.is_active = False
-                cart.save()
-                cart.items.all().delete()
-
         return transaction_response
