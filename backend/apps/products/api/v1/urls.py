@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, include
 from apps.products.api.v1.views import (
     CameraListView,
     FormatListView,
@@ -16,17 +16,22 @@ urlpatterns = [
     path("lenses/", LensListView.as_view(), name="lens-list"),
     path("products/", ProductListView.as_view(), name="product-list"),
     path("products/<uuid:pk>/", ProductDetailView.as_view(), name="product-detail"),
-    path("approved-products/", ApprovedProductsAPIView.as_view(), name="approved-product-list"),
+    path(
+        "approved-products/",
+        ApprovedProductsAPIView.as_view(),
+        name="approved-product-list",
+    ),
     path("user-products/", UserProductsAPIView.as_view(), name="user-product-list"),
     path("upload/", FileViewSet.as_view({"post": "upload"}), name="file-upload"),
     path(
-        "download/<str:file_id>/",
+        "download/<uuid:file_id>/",
         FileViewSet.as_view({"get": "download"}),
         name="file-download",
     ),
     path(
-        "delete/<str:file_id>/",
+        "delete/<uuid:file_id>/",
         FileViewSet.as_view({"delete": "delete"}),
         name="file-delete",
     ),
+    path("upload/", include("django_file_form.urls")),
 ]

@@ -29,6 +29,8 @@ INSTALLED_APPS = [
     "django_filters",
     "corsheaders",
     "drf_yasg",
+    "django_file_form",
+    "django_file_form.ajaxuploader",
     # Приложения
     "apps.users",
     "apps.products",

@@ -13,10 +13,7 @@ class File(UUIDMixin):
     """Модель файла для синхронизации с сервером."""
 
     file = models.FileField(
-        upload_to=upload_to,
-        verbose_name=_("Файл"),
-        null=True,
-        blank=True,
+        upload_to=upload_to, verbose_name=_("Файл"), null=True, blank=True
     )
 
     def __str__(self):
