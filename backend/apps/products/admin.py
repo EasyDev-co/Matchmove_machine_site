@@ -97,7 +97,7 @@ class FileAdmin(admin.ModelAdmin):
         """Загружает выделенные файлы на FTP через Celery."""
 
         for file in queryset:
-            local_file_path = os.path.join(settings.MEDIA_ROOT, str(file.id))
+            local_file_path = file.file.path
             if not os.path.exists(local_file_path):
                 self.message_user(request, f"Файл {file.id} не найден.")
                 continue
@@ -108,7 +108,9 @@ class FileAdmin(admin.ModelAdmin):
             except Exception as e:
                 # Логирование ошибки и сообщение пользователю
                 logger.error(f"Ошибка при загрузке файла {file.id} на FTP: {str(e)}")
-                self.message_user(request, f"Ошибка при загрузке файла {file.id}: {str(e)}")
+                self.message_user(
+                    request, f"Ошибка при загрузке файла {file.id}: {str(e)}"
+                )
 
     upload_to_ftp.short_description = "Загрузить выделенные файлы на FTP"
 
@@ -125,8 +127,8 @@ class FileAdmin(admin.ModelAdmin):
             except Exception as e:
                 # Логирование ошибки и сообщение пользователю
                 logger.error(f"Ошибка при удалении файла {file.id} с FTP: {str(e)}")
-                self.message_user(request, f"Ошибка при удалении файла {file.id}: {str(e)}")
+                self.message_user(
+                    request, f"Ошибка при удалении файла {file.id}: {str(e)}"
+                )
 
     delete_from_ftp.short_description = "Удалить выделенные файлы с FTP"
-
-
