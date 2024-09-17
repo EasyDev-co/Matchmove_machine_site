@@ -1,7 +1,6 @@
 import os
 import logging
 
-from django.conf import settings
 from django.contrib import admin
 from django.utils.translation import gettext_lazy as _
 
@@ -105,7 +104,7 @@ class CameraAdmin(admin.ModelAdmin):
 @admin.register(File)
 class FileAdmin(admin.ModelAdmin):
     list_display = ("id", "file")
-    search_fields = ("file",)
+    search_fields = ("id",)
     ordering = ("id",)
     fields = ("file",)
 
@@ -115,8 +114,8 @@ class FileAdmin(admin.ModelAdmin):
         """Загружает выделенные файлы на FTP через Celery."""
 
         for file in queryset:
-            local_file_path = file.file.path
-            if not os.path.exists(local_file_path):
+            local_file_path = file.file.path if file.file else None
+            if not local_file_path or not os.path.exists(local_file_path):
                 self.message_user(request, f"Файл {file.id} не найден.")
                 continue
             try:
