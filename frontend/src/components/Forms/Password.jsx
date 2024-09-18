@@ -29,10 +29,10 @@ const Password = ({ formData, setFormData, errors, setErrors }) => {
         </div>
         <input
           type={showPassword ? "text" : "password"}
-          id="password"
-          name="password"
+          id="old_password"
+          name="old_password"
           placeholder="Password"
-          value={formData.password || ''}
+          value={formData.old_password || ''}
           onChange={handleChange}
           className={errors.password ? "error" : ""}
         />

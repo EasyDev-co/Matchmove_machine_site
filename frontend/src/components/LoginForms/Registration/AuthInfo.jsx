@@ -5,19 +5,25 @@ import Password from "../../Forms/Password";
 import Name from "../../Forms/Name";
 import Occupation from "../../Forms/Occupation";
 
-const AuthInfo = ({handleNext}) => {
+import { useDispatch } from "react-redux";
+import { registerUser } from "../../../store/userSlice";
+
+const AuthInfo = ({ handleNext }) => {
+
+  const dispatch = useDispatch()
+
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     password: '',
-    occupation: '', 
+    occupation: '',
   });
 
   const [errors, setErrors] = useState({
     name: '',
     email: '',
     password: '',
-    occupation: '', 
+    occupation: '',
   });
 
   const handleChange = (e) => {
@@ -36,6 +42,11 @@ const AuthInfo = ({handleNext}) => {
   const validateEmail = (email) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
+  };
+
+  const validatePassword = (password) => {
+    const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+    return passwordRegex.test(password);
   };
 
   const handleSubmit = (e) => {
@@ -59,6 +70,9 @@ const AuthInfo = ({handleNext}) => {
     if (!formData.password) {
       newErrors.password = 'Password is required';
       valid = false;
+    } else if (!validatePassword(formData.password)) {
+      newErrors.password = 'Password must be at least 8 characters, contain letters and numbers';
+      valid = false;
     }
 
     if (!formData.occupation) {
@@ -69,8 +83,9 @@ const AuthInfo = ({handleNext}) => {
     setErrors(newErrors);
 
     if (valid) {
-      console.log('Form data submitted:', formData);
-      handleNext()
+      console.log('Form data submitted:', {username:formData.name, email:formData.email, password:formData.password});
+      dispatch(registerUser({username:formData.name, email:formData.email, password:formData.password}))
+      handleNext();
     }
   };
 
@@ -95,11 +110,11 @@ const AuthInfo = ({handleNext}) => {
           setErrors={setErrors}
         />
         <Occupation
-          formData={{ occupation: formData.occupation }} // Pass occupation to Occupation component
+          formData={{ occupation: formData.occupation }}
           handleChange={handleChange}
           errors={errors}
         />
-        <Button variant="blue" iconType="arrowRight" label="Next" />
+        <Button variant="blue" iconType="arrowRight" label="Next" type="submit" />
       </div>
     </form>
   );

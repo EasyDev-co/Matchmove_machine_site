@@ -5,12 +5,16 @@ import { useNavigate } from "react-router-dom";
 
 import styles from "./EditProfileForm.module.css"
 
+import { useDispatch } from "react-redux";
+import { updateUserProfile } from "../../store/slices/profileSlice";
 
-const AboutMeForm = () => {
+
+const AboutMeForm = ({about}) => {
 
     const navigate = useNavigate()
+    const dispatch = useDispatch()
     const [formData, setFormData] = useState({
-        aboutMe: 'Lorem ipsum dolor sit amet consectetur. Habitant quam eget mollis dui justo duis euismod sit quis. Velit ullamcorper arcu sit pellentesque dictum morbi leo cursus tortor. Facilisi sem neque convallis ultricies ullamcorper metus. Senectus quam interdum dictum consectetur vestibulum.Lorem ipsum dolor sit amet consectetur. Habitant quam eget mollis dui justo duis euismod sit quis. Velit ullamcorper arcu sit pellentesque dictum morbi leo cursus tortor.',
+        aboutMe: about,
     });
 
     const handleChange = (event) => {
@@ -23,6 +27,7 @@ const AboutMeForm = () => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
+        dispatch(updateUserProfile({about_me:formData.aboutMe}))
         console.log('Form submitted:', formData);
     };
 

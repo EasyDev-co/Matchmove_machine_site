@@ -6,26 +6,30 @@ import Email from "../Forms/Email";
 import Website from "../Forms/Website";
 import Portfolio from "../Forms/Portfolio";
 import Button from "../Button";
-import { useNavigate } from "react-router-dom";
 
-const InformationForm = () => {
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { updateUserProfile } from "../../store/slices/profileSlice";
+
+const InformationForm = ({profile, picture}) => {
 
   const navigate = useNavigate()
+  const dispatch = useDispatch()
 
   const [formData, setFormData] = useState({
-    name: 'Greg',
-    email: 'greg-grids@machine.com',
-    occupation: 'editor',
-    website: '', 
-    portfolio: '', 
+    name: profile.username || "",
+    email: profile.email || "",
+    occupation: '',
+    website: profile.website || "", 
+    portfolio: profile.portfolio || "", 
   });
 
   const [errors, setErrors] = useState({
     name: '',
     email: '',
     occupation: '',
-    website: '', // Add website error field
-    portfolio: '', // Add portfolio error field
+    website: '',
+    portfolio: '', 
   });
 
   const handleChange = (e) => {
@@ -86,7 +90,18 @@ const InformationForm = () => {
 
     setErrors(newErrors);
 
+    console.log(picture);
+    
+
     if (valid) {
+      const userProfileUpdate = {
+        username: formData.name,
+        email: formData.email,
+        website: formData.website,
+        portfolio: formData.portfolio,
+        profile_picture: picture
+      };
+      dispatch(updateUserProfile(userProfileUpdate))
       console.log('Form data submitted:', formData);
     }
   };
@@ -94,6 +109,8 @@ const InformationForm = () => {
   const goBack =()=>{
     navigate("/profile/1")
   }
+
+  if(profile){
 
   return (
     <div className={styles.formcontainer}>
@@ -164,6 +181,7 @@ const InformationForm = () => {
       </form>
     </div>
   );
+}
 };
 
 export default InformationForm;

@@ -8,21 +8,15 @@ import Filters from "../Filters/Filters";
 import { useNavigate } from "react-router-dom";
 import Toggle from "../Forms/Toggle";
 import AdaptFilters from "../LibraryAdaptFilters/AdaptFilters";
-
-const assets = [
-    { id: 1, price: 0, camera: "Canon", lense: "ME20F-SH", creator: "company" },
-    { id: 2, price: 0, camera: "Craft", lense: "Camera 4K",  creator: "company"},
-    { id: 3, price: 30, camera: "RED", lense: "EPIC-W 5K", creator: "user" },
-    { id: 4, price: 0, camera: "Sony", lense: "Alpha a7S III",  creator: "company" },
-    { id: 5, price: 0, camera: "Nikon", lense: "Z6 II",  creator: "company" },
-    { id: 6, price: 10, camera: "Panasonic", lense: "Lumix GH5", creator: "user" },
-    { id: 7, price: 0, camera: "Fujifilm", lense: "X-T4", creator: "user" },
-    { id: 8, price: 0, camera: "Blackmagic", lense: "Pocket Cinema Camera 6K", creator: "company" },
-    { id: 9, price: 0, camera: "GoPro", lense: "Hero 9 Black", creator: "company" },
-    { id: 10, price: 0, camera: "Leica", lense: "SL2-S",  creator: "company" },
-  ];
+import { useSelector } from "react-redux";
 
   const LibraryItems = () => {
+
+    const {products} = useSelector(state => state.products)
+
+    console.log(products);
+    
+
     const [selected, setSelected] = useState({ cameras: [], lenses: [] });
     const [openBrand, setOpenBrand] = useState(null);
 
@@ -149,9 +143,9 @@ const assets = [
               </div>
             </div>
             <div className={styles.assets}>
-              {assets.map((item) => (
+              {products.results? products.results.map((item) => (
                 <Asset key={item.id} asset={item} />
-              ))}
+              )):""}
             </div>
             <Pagination />
           </div>

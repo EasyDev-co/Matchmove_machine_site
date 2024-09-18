@@ -21,8 +21,8 @@ const CartPopUp = ({ closeCart }) => {
   useEffect(() => {
     if (!isVisible) {
       const timer = setTimeout(() => {
-        closeCart(); // Call the parent closeCart function after animation
-      }, 400); // Match this duration with your exit animation duration
+        closeCart(); 
+      }, 400); 
 
       return () => clearTimeout(timer);
     }

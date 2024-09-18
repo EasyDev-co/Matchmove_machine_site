@@ -1,4 +1,3 @@
-import PropTypes from "prop-types";
 
 const ICONS = {
   arrowRight: (
@@ -74,7 +73,7 @@ const ICONS = {
     >
       <mask
         id="mask0_3719_35129"
-        maskType="alpha"
+        style={{ maskType: "alpha" }}
         maskUnits="userSpaceOnUse"
         x="1"
         y="5"

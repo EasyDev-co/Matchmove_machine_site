@@ -1,6 +1,10 @@
 import styles from "./CartItems.module.css"
 import Item from "./Item"
 
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchCart } from "../../store/slices/cartSlice";
+
 const items = [
     { id: 1, title: "Wireless Mouse", price: 20 },
     { id: 2, title: "Bluetooth Keyboard", price: 40 },
@@ -14,6 +18,16 @@ const items = [
   ];
 
 const CartItems =()=>{
+
+    const {cart} = useSelector(state => state.cart)
+    const dispatch = useDispatch()
+
+    console.log(cart);
+    
+
+    useEffect(()=>{
+        dispatch(fetchCart())
+    },[dispatch])
     return <div className={styles.container}>
         {items.length>0? items.map((item)=><Item key={item.id} item={item}/>): <p className="h4-medium">Your cart is empty.</p>}
     </div>

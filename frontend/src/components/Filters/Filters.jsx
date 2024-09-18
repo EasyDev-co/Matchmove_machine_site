@@ -1,9 +1,12 @@
 
 import styles from "./Filters.module.css";
-import Input from "../Forms/Input";
 import Button from "../Button";
 import { minussvg, plussvg } from "../../assets/svg/svgimages";
 import SearchInput from "../Forms/SearchInput";
+
+import { useEffect } from "react";
+import { useDispatch, iseselector, useSelector } from "react-redux";
+import { fetchCameras, fetchFormats, fetchLenses } from "../../store/slices/optionsSlice";
 
 const cameraBrands = [
     { brand: 'ARRI ALEXA 65', lenses: [
@@ -67,6 +70,20 @@ const Filters = ({
   openBrand,
   applyFilters
 }) => {
+
+  const dispatch = useDispatch()
+  const {cameras, formats, lenses} = useSelector(state=> state.options)
+
+  console.log(cameras);
+  console.log(formats);
+  console.log(lenses);
+  
+  useEffect(()=>{
+    dispatch(fetchCameras())
+    dispatch(fetchFormats())
+    dispatch(fetchLenses())
+  },[])
+
   return (
     <div className={styles.filterform}>
       <h3 className="h3-medium">Camera and Lens</h3>

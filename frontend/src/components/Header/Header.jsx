@@ -8,6 +8,8 @@ import HeaderLinks from "./HeaderLinks";
 import User from "./HeaderUser";
 import CartPopUp from "../CartPopUp/CartPopUp";
 
+import { useSelector } from "react-redux";
+
 const Header = () => {
 
   const navigate = useNavigate()
@@ -15,7 +17,7 @@ const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [showCart, setShowCart] = useState(false)
 
-  const [isUser, setIsUser] = useState(true)
+  const {isAuthenticated} = useSelector(state=> state.user)
 
   const openCart =()=>{
     setShowCart(prev=>!prev)
@@ -41,7 +43,7 @@ const Header = () => {
         <HeaderLinks isMenuOpen={isMenuOpen} handleCloseMenu={handleCloseMenu}/>
         <div className={styles.btncont}>
           <div><Button labelPosition="none" variant={window.innerWidth>1000? "transparent": "grey"} color="white" iconType="cart" onClick={openCart} /></div>
-          <div>{isUser?<User/>: <div className={styles.signInbtn}><Button label="Sign In" variant="blue" iconType="person" labelPosition={window.innerWidth>1000? "left": "none"} /></div>}</div>
+          <div>{isAuthenticated?<User/>: <div className={styles.signInbtn}><Button label="Sign In" variant="blue" iconType="person" labelPosition={window.innerWidth>1000? "left": "none"} /></div>}</div>
           <div className={styles.mobilebtn}><Button labelPosition="none" variant="grey" iconType="headerMenu" onClick={()=>setIsMenuOpen(prev=>!prev)} /></div>
         </div>
       </div>

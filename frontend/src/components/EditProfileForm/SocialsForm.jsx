@@ -3,14 +3,20 @@ import Input from "../Forms/Input"
 import Button from "../Button";
 import styles from "./EditProfileForm.module.css"
 
-const SocialsForm = () => {
+import { useDispatch} from "react-redux";
+import { updateUserProfile } from "../../store/slices/profileSlice";
+
+const SocialsForm = ({ profile}) => {
+
+    const dispatch = useDispatch()
+
     const [formData, setFormData] = useState({
-        facebook: '',
-        twitter: '',
+        facebook: profile.facebook || '',
+        twitter:  profile.twitter || '',
         whatsapp: '',
-        telegram: '',
+        telegram:  '',
         messenger: '',
-        linkedin: '',
+        linkedin: profile.linkedin || '',
     });
 
     const [errors, setErrors] = useState({});
@@ -25,9 +31,8 @@ const SocialsForm = () => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        // Handle form submission
+        dispatch(updateUserProfile({facebook: formData.facebook, twitter: formData.twitter, linkedin: formData.linkedin }))
         console.log('Form submitted:', formData);
-        // Example: send formData to API or process it as needed
     };
 
     const goBack = () => {
@@ -49,6 +54,7 @@ const SocialsForm = () => {
                                 value={formData[social]}
                                 onChange={handleChange}
                                 errors={errors}
+                                setErrors={setErrors}
                             />
                         </label>
                     ))}

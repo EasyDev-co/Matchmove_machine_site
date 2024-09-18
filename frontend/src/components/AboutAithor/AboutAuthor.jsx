@@ -1,7 +1,7 @@
 import styles from "./AboutAuthor.module.css"
 import { quotesvg } from "../../assets/svg/svgimages"
 
-const AboutAuthor =()=>{
+const AboutAuthor =({about})=>{
     return (
       <section className={styles.container}>
         <div className={styles.content}>
@@ -12,14 +12,7 @@ const AboutAuthor =()=>{
             </div>
             <div className={styles.about}>
               <p>
-                Lorem ipsum dolor sit amet consectetur. Habitant quam eget
-                mollis dui justo duis euismod sit quis. Velit ullamcorper arcu
-                sit pellentesque dictum morbi leo cursus tortor. Facilisi sem
-                neque convallis ultricies ullamcorper metus. Senectus quam
-                interdum dictum consectetur vestibulum.Lorem ipsum dolor sit
-                amet consectetur. Habitant quam eget mollis dui justo duis
-                euismod sit quis. Velit ullamcorper arcu sit pellentesque dictum
-                morbi leo cursus tortor.
+               {about}
               </p>
             </div>
           </div>

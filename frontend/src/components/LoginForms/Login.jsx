@@ -1,12 +1,18 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {closesvg, googleIconsvg, facebooksvg, applesvg, microsoftsvg } from "../../assets/svg/svgimages";
 import Button from "../Button";
 import Password from "../Forms/Password";
 import Email from "../Forms/Email";
 import { useNavigate } from "react-router-dom";
 
+import { loginUser } from "../../store/userSlice";
+import { useDispatch } from "react-redux";
+
 
 const Login = ({ onModalClose }) => {
+
+  const dispatch = useDispatch()
+
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -59,6 +65,7 @@ const Login = ({ onModalClose }) => {
 
     if (valid) {
       console.log('Form data submitted:', formData);
+      dispatch(loginUser({email:formData.email, password:formData.password}))
     }
   };
 
@@ -69,7 +76,6 @@ const Login = ({ onModalClose }) => {
   const handleForgotPassword = () => {
     navigate("/reset-password");
   };
-
 
   return (
     <div className="popup-content">
@@ -107,7 +113,7 @@ const Login = ({ onModalClose }) => {
                 <button className="forgot-password-btn" type="button" onClick={handleForgotPassword}>Forgot password</button>
               </div>
               <div className="form-button-cont">
-                <Button label="Sign In" iconType="arrowRight" variant="blue" />
+                <Button label="Sign In" iconType="arrowRight" variant="blue" type="submit" />
                 <Button
                   label="Register"
                   iconType="arrowRight"

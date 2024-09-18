@@ -8,14 +8,11 @@ const Asset = ({asset})=>{
   const navigate =useNavigate()
 
   const handleNavigation = () => {
-
-    const currentQueryString = window.location.search;
     
-    navigate(`/library/product/1?${currentQueryString}`);
+    navigate(`/library/product/${asset.id}`);
   };
 
-
-  const user = <div className={styles.user}><p>Marvin McKinney</p> <img src={pfp} alt="icon" /></div>
+  const user = <div className={styles.user}><p>{asset.author}</p> <img src={pfp} alt="icon" /></div>
   
     return (
       <article className={styles.asset} onClick={handleNavigation}>
