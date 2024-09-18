@@ -134,14 +134,22 @@ class FileAdmin(admin.ModelAdmin):
 
     def save_model(self, request, obj, form, change):
         """
-        Переопределение метода сохранения модели для отправки файлов на FTP после сохранения.
+        Переопределение метода сохранения модели для обработки нескольких файлов.
+        Если загружается архив, он сохраняется как единый файл.
         """
-        super().save_model(request, obj, form, change)
+        files = request.FILES.getlist("file")  # Получаем список загруженных файлов
 
-        # Отправка загруженных файлов на FTP
-        if obj.file:
-            local_file_path = obj.file.path
-            upload_file_to_ftp.delay(local_file_path, str(obj.id))
+        # Проходим по каждому загруженному файлу
+        for file in files:
+            # Создаем новый экземпляр File для каждого файла и сохраняем его
+            new_file_instance = File(file=file)
+            new_file_instance.save()
+
+            # Отправляем файл на FTP через Celery
+            local_file_path = new_file_instance.file.path
+            upload_file_to_ftp.delay(
+                local_file_path, str(new_file_instance.id)
+            )  # Используем Celery для асинхронной загрузки
 
     def upload_to_ftp(self, request, queryset):
         """Загружает выделенные файлы на FTP через Celery."""
@@ -151,7 +159,7 @@ class FileAdmin(admin.ModelAdmin):
                 self.message_user(request, f"Файл {file.id} не найден.")
                 continue
             try:
-                # Отправка задачи в Celery
+                # Отправка задачи в Celery для загрузки на FTP
                 upload_file_to_ftp.delay(local_file_path, str(file.id))
                 self.message_user(request, f"Файл {file.id} отправлен на сервер.")
             except Exception as e:
@@ -167,7 +175,7 @@ class FileAdmin(admin.ModelAdmin):
         """Удаляет выделенные файлы с FTP через Celery."""
         for file in queryset:
             try:
-                # Отправка задачи в Celery
+                # Отправка задачи в Celery для удаления с FTP
                 delete_file_from_ftp.delay(file.id)
                 # Удаление файла из базы данных
                 file_instance = File.objects.get(id=file.id)
