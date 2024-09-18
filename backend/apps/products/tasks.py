@@ -15,16 +15,8 @@ class UploadFileToFtpTask(BaseTask):
         ftp_service = get_ftp_service()
         try:
             logger.info(f"Начинаем загрузку файла с ID {file_id} на FTP")
-            logger.info(f"Путь локального файла: {file_path}")
             ftp_service.upload_file(file_path, file_id)
             logger.info(f"Файл ID {file_id} успешно загружен на FTP")
-
-            # Удаляем локальный файл после успешной загрузки
-            if os.path.exists(file_path):
-                os.remove(file_path)
-                logger.info(f"Локальный файл {file_path} был успешно удалён.")
-
-            return f"File ID {file_id} has been successfully uploaded."
         except Exception as e:
             logger.error(f"Ошибка при загрузке файла ID {file_id} на FTP: {str(e)}")
             self.on_failure(
@@ -41,13 +33,14 @@ class DownloadFileFromFtpTask(BaseTask):
     def process(self, file_path, file_id, *args, **kwargs):
         ftp_service = get_ftp_service()
         try:
+            logger.info(f"Начинаем загрузку файла с FTP с ID {file_id}")
             ftp_service.download_file(file_path, file_id)
-            return f"File ID {file_id} has been successfully downloaded."
+            logger.info(f"Файл ID {file_id} успешно загружен с FTP")
         except Exception as e:
+            logger.error(f"Ошибка при скачивании файла ID {file_id} с FTP: {str(e)}")
             self.on_failure(
                 exc=e, task_id=self.request.id, args=args, kwargs=kwargs, einfo=None
             )
-            print(f"Error downloading file ID {file_id}: {str(e)}")
             raise e
 
 
@@ -56,16 +49,19 @@ class DeleteFileFromFtpTask(BaseTask):
 
     name = "delete_file_from_ftp"
 
-    def process(self, file_id, *args, **kwargs):
+    def process(self, file_id, file_extension, *args, **kwargs):
         ftp_service = get_ftp_service()
         try:
-            ftp_service.delete_file(file_id)
-            return f"File ID {file_id} has been successfully deleted."
+            logger.info(
+                f"Начинаем удаление файла с FTP с ID {file_id} и расширением {file_extension}"
+            )
+            ftp_service.delete_file(file_id, file_extension)
+            logger.info(f"Файл ID {file_id} успешно удален с FTP")
         except Exception as e:
+            logger.error(f"Ошибка при удалении файла ID {file_id} с FTP: {str(e)}")
             self.on_failure(
                 exc=e, task_id=self.request.id, args=args, kwargs=kwargs, einfo=None
             )
-            print(f"Error deleting file ID {file_id}: {str(e)}")
             raise e
 
 
