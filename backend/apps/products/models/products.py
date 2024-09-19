@@ -32,6 +32,10 @@ class Product(UUIDMixin, TimeStampedMixin):
     category = models.CharField(
         max_length=30, choices=AssetCategory.choices(), verbose_name=_("Категория")
     )
+    is_approved = models.BooleanField(
+        default=False,
+        verbose_name=_("Одобрен модерацией")
+    )
     camera = models.ForeignKey(
         Camera,
         on_delete=models.SET_NULL,
@@ -67,6 +71,11 @@ class Product(UUIDMixin, TimeStampedMixin):
         null=True,
         related_name="products",
         verbose_name=_("Автор")
+    )
+    description = models.TextField(
+        blank=True,
+        null=True,
+        verbose_name=_("Описание")
     )
     price = models.PositiveSmallIntegerField(
         blank=True,

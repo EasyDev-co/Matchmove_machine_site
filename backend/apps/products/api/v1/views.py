@@ -1,4 +1,5 @@
 import os
+import logging
 
 from django_filters.rest_framework import DjangoFilterBackend
 from django.conf import settings
@@ -24,8 +25,6 @@ from .serializers import (
     ProductSerializer,
     FileSerializer,
 )
-
-import logging
 
 logger = logging.getLogger(__name__)
 
@@ -153,7 +152,18 @@ class FileViewSet(viewsets.ViewSet):
         )
 
 
+class ApprovedProductsAPIView(ListAPIView):
+    """Возвращает список продуктов, которые прошли модерацию (is_approved=True)."""
+
+    queryset = Product.objects.filter(is_approved=True)
+    serializer_class = ProductSerializer
+    pagination_class = StandardPagination
+    permission_classes = [IsAuthenticated]
+
+
 class UserProductsAPIView(ListAPIView):
+    """Возвращает список всех продуктов текущего пользователя, вне зависимости от статуса модерации."""
+
     serializer_class = ProductSerializer
     permission_classes = [IsAuthenticated]
     pagination_class = StandardPagination
