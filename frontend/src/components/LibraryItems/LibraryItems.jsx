@@ -9,16 +9,16 @@ import { useNavigate } from "react-router-dom";
 import Toggle from "../Forms/Toggle";
 import AdaptFilters from "../LibraryAdaptFilters/AdaptFilters";
 import { useSelector } from "react-redux";
+import { useSearchParams } from "react-router-dom";
 
   const LibraryItems = () => {
 
     const {products} = useSelector(state => state.products)
-
-    console.log(products);
-    
+    const [searchParams, setSearchParams] = useSearchParams();
 
     const [selected, setSelected] = useState({ cameras: [], lenses: [] });
     const [openBrand, setOpenBrand] = useState(null);
+    const [search, setSearch] = useState("")
 
     const [showFilters, setShowFilters] = useState(false);
 
@@ -48,6 +48,11 @@ import { useSelector } from "react-redux";
         
     };
 
+    const handleSearch =(e)=>{
+      const value = e.target.value;
+      setSearch(value)
+    }
+
     const resetAllFilters = () => {
         setSelected({ cameras: [], lenses: [] });
         setShowFilters(false);
@@ -55,11 +60,12 @@ import { useSelector } from "react-redux";
     };
 
     const applyFilters = () => {
-        const query = new URLSearchParams();
-        selected.cameras.forEach(camera => query.append('camera', camera));
-        selected.lenses.forEach(lens => query.append('lens', lens));
-        navigate({ search: query.toString() }); // Update URL with filters
         setShowFilters(true)
+        
+        const updatedSearchParams = new URLSearchParams(searchParams);
+        updatedSearchParams.set("search", search);
+
+        setSearchParams(updatedSearchParams);
     };
 
     const discardFilter = (item, type) => {
@@ -68,11 +74,7 @@ import { useSelector } from "react-redux";
             updated[type] = updated[type].filter(i => i !== item);
             return updated;
         });
-
-        const query = new URLSearchParams();
-        selected.cameras.filter(c => c !== item).forEach(camera => query.append('camera', camera));
-        selected.lenses.filter(l => l !== item).forEach(lens => query.append('lens', lens));
-        navigate({ search: query.toString() }); // Update URL with filters
+        setSearch("")
     };
 
     return (
@@ -128,6 +130,8 @@ import { useSelector } from "react-redux";
               toggleLensMenu={toggleLensMenu}
               handleBrandSelect={handleBrandSelect}
               handleLensSelect={handleLensSelect}
+              handleSearch={handleSearch}
+              search={search}
               applyFilters={applyFilters}
             />
           </div>
@@ -135,7 +139,7 @@ import { useSelector } from "react-redux";
           <div className={styles.assetscont}>
             <div className={styles.topPagination}>
               <div className={styles.contpag}>
-                <Pagination />
+                <Pagination pagination={{count:products.count, next:products.next, previous:products.previous}} />
               </div>
               <div className={styles.toggleCont}>
                 <p>Free assets</p>
@@ -147,7 +151,7 @@ import { useSelector } from "react-redux";
                 <Asset key={item.id} asset={item} />
               )):""}
             </div>
-            <Pagination />
+            <Pagination pagination={{count:products.count, next:products.next, previous:products.previous}} />
           </div>
         </div>
       </section>

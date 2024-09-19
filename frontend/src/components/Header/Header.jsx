@@ -32,7 +32,10 @@ const Header = () => {
 
   const handleCloseMenu =()=>{
     setIsMenuOpen(false)
-    
+  }
+
+  const handleSignIn =()=>{
+    navigate("/authorization")
   }
 
   return (
@@ -43,7 +46,7 @@ const Header = () => {
         <HeaderLinks isMenuOpen={isMenuOpen} handleCloseMenu={handleCloseMenu}/>
         <div className={styles.btncont}>
           <div><Button labelPosition="none" variant={window.innerWidth>1000? "transparent": "grey"} color="white" iconType="cart" onClick={openCart} /></div>
-          <div>{isAuthenticated?<User/>: <div className={styles.signInbtn}><Button label="Sign In" variant="blue" iconType="person" labelPosition={window.innerWidth>1000? "left": "none"} /></div>}</div>
+          <div>{isAuthenticated?<User/>: <div className={styles.signInbtn}><Button label="Sign In" variant="blue" iconType="person" labelPosition={window.innerWidth>1000? "left": "none"} onClick={handleSignIn} /></div>}</div>
           <div className={styles.mobilebtn}><Button labelPosition="none" variant="grey" iconType="headerMenu" onClick={()=>setIsMenuOpen(prev=>!prev)} /></div>
         </div>
       </div>

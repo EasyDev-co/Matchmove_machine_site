@@ -32,7 +32,8 @@ const Password = ({ formData, setFormData, errors, setErrors }) => {
           id="old_password"
           name="old_password"
           placeholder="Password"
-          value={formData.old_password || ''}
+          autoComplete="current-password"
+          value={formData.old_password || ""}
           onChange={handleChange}
           className={errors.password ? "error" : ""}
         />

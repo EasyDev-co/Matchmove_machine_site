@@ -10,14 +10,24 @@ import {
   youtube,
 } from "../../assets/svg/footerbtnhs";
 
+import { useDispatch } from "react-redux";
+import { logoutUserThunk } from "../../store/userSlice";
+
 const userlinks = [facebook, vimeo, instagram, linkedin, youtube];
 
 const ProfileTop = ({ profile }) => {
+
   const navigate = useNavigate();
+  const dispatch=useDispatch()
 
   const navigateTo = () => {
     navigate("/profile/edit");
   };
+
+  const handleLogOut =()=>{
+    dispatch(logoutUserThunk())
+    navigate("/")
+  }
 
   if(profile){
   return (
@@ -42,6 +52,7 @@ const ProfileTop = ({ profile }) => {
             labelPosition="none"
             variant="outline-red"
             iconType="logout"
+            onClick={handleLogOut}
           />
         </div>
       </div>
@@ -53,15 +64,15 @@ const ProfileTop = ({ profile }) => {
           </div>
           <ul>
             <li>
-              <h3 className="h3-medium">Email:</h3> <a>{profile.email}</a>
+              <h3 className="h3-medium">Email:</h3> <a href="/">{profile.email}</a>
             </li>
-            <li>
-              <h3 className="h3-medium">Website:</h3> <a>{profile.website}</a>
-            </li>
-            <li>
-              <h3 className="h3-medium">Portfolio:</h3>{" "}
-              <a>{profile.portfolio}</a>
-            </li>
+            {profile.website &&<li>
+              <h3 className="h3-medium">Website:</h3> <a href={profile.website}>{profile.website}</a>
+            </li>}
+            {profile.portfolio &&<li>
+              <h3 className="h3-medium">Portfolio:</h3>
+              <a href={profile.portfolio}>{profile.portfolio}</a>
+            </li>}
           </ul>
         </div>
 

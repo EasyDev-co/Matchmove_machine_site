@@ -5,7 +5,7 @@ import { minussvg, plussvg } from "../../assets/svg/svgimages";
 import SearchInput from "../Forms/SearchInput";
 
 import { useEffect } from "react";
-import { useDispatch, iseselector, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { fetchCameras, fetchFormats, fetchLenses } from "../../store/slices/optionsSlice";
 
 const cameraBrands = [
@@ -45,7 +45,7 @@ const cameraBrands = [
         'Sony FE 90mm f/2.8 Macro G OSS',
         'Sony FE 35mm f/1.4 GM'
     ] },
-    { brand: 'Panasonic AG-UX90', lenses: [
+    { brand: 'Panasonic AG-UX9099', lenses: [
         'Lumix G Vario 12-32mm f/3.5-5.6 ASPH',
         'Lumix G Vario 35-100mm f/4-5.6 ASPH',
         'Lumix G X Vario 12-35mm f/2.8 II ASPH',
@@ -67,28 +67,26 @@ const Filters = ({
   toggleLensMenu,
   handleBrandSelect,
   handleLensSelect,
+  handleSearch,
+  search,
   openBrand,
   applyFilters
 }) => {
 
   const dispatch = useDispatch()
   const {cameras, formats, lenses} = useSelector(state=> state.options)
-
-  console.log(cameras);
-  console.log(formats);
-  console.log(lenses);
   
   useEffect(()=>{
     dispatch(fetchCameras())
     dispatch(fetchFormats())
     dispatch(fetchLenses())
-  },[])
+  },[dispatch])
 
   return (
     <div className={styles.filterform}>
       <h3 className="h3-medium">Camera and Lens</h3>
       <div className={styles.input}>
-        <SearchInput/>
+        <SearchInput handleSearch={handleSearch} search={search}/>
       </div>
       <div className={styles.filters}>
         {cameraBrands.map(({ brand, lenses }, i) => (
@@ -97,6 +95,7 @@ const Filters = ({
               <div>
                 <input
                   type="checkbox"
+                  id={brand}
                   checked={selected.cameras.includes(brand)}
                   onChange={(e) => handleBrandSelect(brand, e)}
                 />
@@ -120,6 +119,7 @@ const Filters = ({
                     <div>
                       <input
                         type="checkbox"
+                        id={lens}
                         checked={selected.lenses.includes(lens)}
                         onChange={() => handleLensSelect(lens)}
                       />

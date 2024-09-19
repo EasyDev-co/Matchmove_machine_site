@@ -11,9 +11,25 @@ const initialState = {
 //  thunk for fetching 
 export const fetchProducts = createAsyncThunk(
   "products/fetchProducts",
-  async (_, { rejectWithValue }) => {
+  async ({ page, pageSize, camera, lens, file_format, accessType, price__gte, price__lte, search }, { rejectWithValue }) => {
     try {
-      const response = await fetchWithAuth(`${BASE_URL}/products/v1/products/`, {
+      // Build query parameters
+      const queryParams = new URLSearchParams({
+        page,
+        page_size: pageSize,
+        access_type: accessType,
+        search,
+        ...(camera && { camera }),
+        ...(lens && { lens }),
+        ...(file_format && { file_format }),
+        ...(price__gte && { price__gte }),
+        ...(price__lte && { price__lte }),
+      }).toString();
+
+      console.log(queryParams);
+      
+
+      const response = await fetchWithAuth(`${BASE_URL}/products/v1/products/?${queryParams}`, {
         method: 'GET',
       });
 

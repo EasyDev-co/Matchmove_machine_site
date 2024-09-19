@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import { eyesvg, warningsvg, closedeyesvg } from "../../assets/svg/svgimages";
+import { warningsvg} from "../../assets/svg/svgimages";
 
 const Occupation = ({ formData, handleChange, errors }) => {
   

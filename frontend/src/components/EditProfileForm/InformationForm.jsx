@@ -50,21 +50,18 @@ const InformationForm = ({profile, picture}) => {
     return emailRegex.test(email);
   };
 
-  const validateURL = (url) => {
-    const urlRegex = /^(https?:\/\/)?([\w-]+\.)+[\w-]{2,4}\/?$/;
-    return urlRegex.test(url);
-  };
-
   const handleSubmit = (e) => {
     e.preventDefault();
     let valid = true;
     let newErrors = {};
-
+  
+    // Name validation
     if (!formData.name) {
       newErrors.name = 'Name is required';
       valid = false;
     }
-
+  
+    // Email validation
     if (!formData.email) {
       newErrors.email = 'Email is required';
       valid = false;
@@ -72,39 +69,21 @@ const InformationForm = ({profile, picture}) => {
       newErrors.email = 'Invalid email format';
       valid = false;
     }
-
-    if (!formData.occupation) {
-      newErrors.occupation = 'Occupation is required';
-      valid = false;
-    }
-
-    if (formData.website && !validateURL(formData.website)) {
-      newErrors.website = 'Invalid website URL';
-      valid = false;
-    }
-
-    if (formData.portfolio && !validateURL(formData.portfolio)) {
-      newErrors.portfolio = 'Invalid portfolio URL';
-      valid = false;
-    }
-
+  
     setErrors(newErrors);
-
-    console.log(picture);
-    
-
+  
     if (valid) {
       const userProfileUpdate = {
         username: formData.name,
         email: formData.email,
         website: formData.website,
-        portfolio: formData.portfolio,
-        profile_picture: picture
+        portfolio: formData.portfolio
       };
-      dispatch(updateUserProfile(userProfileUpdate))
-      console.log('Form data submitted:', formData);
+      dispatch(updateUserProfile(userProfileUpdate));
+      console.log('Form data submitted:', userProfileUpdate);
     }
   };
+
 
   const goBack =()=>{
     navigate("/profile/1")

@@ -305,11 +305,11 @@ li {
   justify-content: center;
   align-items: center;
   z-index: 1000;
-  overflow: auto;
+  overflow-y: auto;
   animation: allowScroll 0.5s ease-out forwards;
 }
 
-.closebtn {
+.closebtn{
   position: absolute;
   top: 7%;
   right: 5%;
@@ -317,6 +317,11 @@ li {
   background: transparent;
   border: none;
   cursor: pointer;
+}
+
+.cross svg{
+  height: 60px;
+  width: 60px;
 }
 
 .arrowclosebtn {
@@ -333,12 +338,13 @@ li {
   display: grid;
   grid-template-columns: 1fr 1fr;
   position: relative;
-  min-height: 96%;
-  max-height: fit-content;
-  width: 96%;
-  background-image: url('https://s3-alpha-sig.figma.com/img/ac90/3f96/cdc98f02f98e9d549eeb4c56f0bbc30d?Expires=1725840000&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=TPjJ7DTMZ5Qsz4kbZ3KljOc25i-wtUEwo-QPNctujLeMBGOB7K3F~TAaLbXCNoiHsCNhvsja4stN6lmkRRCCpC-MWhMNxfSmYhgw-fnXpakPR0Kkdoy4zq1GyTySb4AXGboqw0sJhYIa84bGZKKXhCU--fDpdUonvvtoMszuKZ1B72rVnMrJPn8cWlv8T1YD~APzrG~StfEHLGZu825cltw3RDzATy0~96GtqIfo4PZeVcapXs46wDB5-KvK03T5DDX20K5sz3wy3igpcW79zKt-zLSjLbjQrrWiFkv5V8F6t0ZaeYo6xvu8srFUdOaelnMvlwnyuoouFBcYQS00eA__');
-  background-size: auto 180%;
-  background-position: center;
+  min-height: 100%;
+  max-height: calc(100vh - 40px);
+  width: 100%;
+  overflow: auto;
+  background-image: url('./assets/images/join.png');
+  background-position: fixed;
+  background-size: cover; 
   background-repeat: no-repeat;
 }
 
@@ -635,6 +641,7 @@ select.error {
   .login-wrap {
     padding: 70px 40px;
     min-height: 100px;
+    width: inherit;
   }
 
   .closebtn {

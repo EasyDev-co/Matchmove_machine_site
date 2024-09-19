@@ -1,6 +1,7 @@
 import BASE_URL from '../config';  // Make sure this path is correct
 import Cookies from 'js-cookie';
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { fetchWithAuth } from '../utils/authUtils';
 
 const initialState = {
   user: null,
@@ -56,9 +57,37 @@ export const registerUser = createAsyncThunk(
         return rejectWithValue(errorDetails);
       }
 
-      return await response.json(); // Return successful response data
+      return await response.json(); 
     } catch (error) {
       console.error('Error:', error);
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
+export const logoutUserThunk = createAsyncThunk(
+  'user/logoutUserThunk',
+  async (_, { getState, rejectWithValue }) => {
+    const { refreshToken } = getState().user;
+
+    try {
+      const response = await fetchWithAuth(`${BASE_URL}/users/v1/logout/`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ refresh: refreshToken }),
+      });
+
+      if (!response.ok) {
+        const errorDetails = await response.json();
+        console.error('Logout failed:', errorDetails);
+        return rejectWithValue(errorDetails);
+      }
+
+      return 'Logged out'
+    } catch (error) {
+      console.error('Error logging out:', error);
       return rejectWithValue(error.message);
     }
   }
@@ -68,14 +97,6 @@ const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    logoutUser: (state) => {
-      state.user = null;
-      state.isAuthenticated = false;
-      state.accessToken = null;
-      state.refreshToken = null;
-      Cookies.remove('access_token');
-      Cookies.remove('refresh_token');
-    },
     setTokens: (state, action) => {
       state.accessToken = action.payload.access;
       state.refreshToken = action.payload.refresh;
@@ -99,13 +120,31 @@ const userSlice = createSlice({
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.status = 'failed';
-        state.error = action.error.message;
+        state.error = action.payload;
       })
       .addCase(registerUser.fulfilled, (state, action) => {
         // Handle registration success if needed
       })
+
+      // Handling logout actions
+      .addCase(logoutUserThunk.pending, (state) => {
+        state.status = 'logging out';
+      })
+      .addCase(logoutUserThunk.fulfilled, (state) => {
+        state.user = null;
+        state.isAuthenticated = false;
+        state.accessToken = null;
+        state.refreshToken = null;
+        Cookies.remove('access_token');
+        Cookies.remove('refresh_token');
+        state.status = 'logged out';
+      })
+      .addCase(logoutUserThunk.rejected, (state, action) => {
+        state.status = 'logout failed';
+        state.error = action.payload || action.error.message;
+      });
   },
 });
 
-export const { logoutUser, setTokens } = userSlice.actions;
+export const { setTokens } = userSlice.actions;
 export default userSlice.reducer;
