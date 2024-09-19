@@ -11,11 +11,11 @@ class UploadFileToFtpTask(BaseTask):
 
     name = "upload_file_to_ftp"
 
-    def process(self, file_path, file_id, *args, **kwargs):
+    def process(self, file_content, file_id, file_extension, *args, **kwargs):
         ftp_service = get_ftp_service()
         try:
             logger.info(f"Начинаем загрузку файла с ID {file_id} на FTP")
-            ftp_service.upload_file(file_path, file_id)
+            ftp_service.upload_file_content(file_content, file_id, file_extension)
             logger.info(f"Файл ID {file_id} успешно загружен на FTP")
         except Exception as e:
             logger.error(f"Ошибка при загрузке файла ID {file_id} на FTP: {str(e)}")
@@ -56,7 +56,7 @@ class DeleteFileFromFtpTask(BaseTask):
                 f"Начинаем удаление файла с FTP с ID {file_id} и расширением {file_extension}"
             )
             ftp_service.delete_file(file_id, file_extension)
-            logger.info(f"Файл ID {file_id} успешно удален с FTP")
+            logger.info(f"Файл ID {file_id} успешно удалён с FTP")
         except Exception as e:
             logger.error(f"Ошибка при удалении файла ID {file_id} с FTP: {str(e)}")
             self.on_failure(

@@ -13,9 +13,9 @@ from apps.products.models.products import Product
 from apps.products.tasks import (
     upload_file_to_ftp,
     delete_file_from_ftp,
-    download_file_from_ftp,
 )
 from apps.products.forms import FileUploadForm
+from apps.products.services import get_ftp_service
 
 logger = logging.getLogger(__name__)
 
@@ -110,7 +110,7 @@ class CameraAdmin(admin.ModelAdmin):
 class FileAdmin(admin.ModelAdmin):
     form = FileUploadForm
 
-    list_display = ("id", "file_link", "delete_local_button", "delete_ftp_button")
+    list_display = ("id", "file_link", "delete_ftp_button")
     search_fields = ("id",)
     ordering = ("id",)
     fields = ("file",)
@@ -118,141 +118,100 @@ class FileAdmin(admin.ModelAdmin):
 
     def save_model(self, request, obj, form, change):
         """
-        При сохранении объекта загружаем файл на FTP, но НЕ удаляем его с локального сервера.
+        При сохранении объекта загружаем файлы на FTP, не сохраняя их локально.
         """
-        files = request.FILES.getlist("file")
+        uploaded_files = form.cleaned_data.get("file")
+        if uploaded_files:
+            for uploaded_file in uploaded_files:
+                # Читаем содержимое файла
+                file_content = uploaded_file.read()
+                file_name = uploaded_file.name
+                file_extension = os.path.splitext(file_name)[1]
 
-        if files:
-            for file in files:
-                obj.file = file
-                super().save_model(request, obj, form, change)
+                # Создаём новый объект для каждого файла
+                new_obj = File()
+                new_obj.file.name = f"{str(new_obj.id)}{file_extension}"
+                new_obj.save()
 
-                local_file_path = obj.file.path
-                upload_file_to_ftp.delay(local_file_path, str(obj.id))
+                # Запускаем задачу на загрузку файла на FTP
+                upload_file_to_ftp.delay(file_content, str(new_obj.id), file_extension)
         else:
             super().save_model(request, obj, form, change)
 
+    def delete_model(self, request, obj):
+        """При удалении объекта из админки, удаляем файл с FTP."""
+        file_name = os.path.basename(obj.file.name)
+        file_extension = os.path.splitext(file_name)[1]
+
+        # Запускаем задачу на удаление файла с FTP
+        delete_file_from_ftp.delay(str(obj.id), file_extension)
+        logger.info(f"Запущена задача на удаление файла ID {obj.id} с FTP")
+
+        # Удаляем запись из базы данных
+        super().delete_model(request, obj)
+
     def file_link(self, obj):
-        """Отображаем ссылку на файл в админке, с учетом типа файла."""
-        if obj.file:
-            local_file_path = obj.file.path
-            if not os.path.exists(local_file_path):
-                # Добавляем ссылку на загрузку файла с FTP
-                url = reverse(
-                    "admin:products_file_download_from_ftp", args=[str(obj.id)]
-                )
-                return format_html('<a href="{}">Загрузить с FTP</a>', url)
-
-            file_url = obj.file.url
-            file_name = obj.file.name
-            file_extension = os.path.splitext(file_name)[1].lower()
-
-            # Список расширений изображений
-            image_extensions = [
-                ".jpg",
-                ".jpeg",
-                ".png",
-                ".gif",
-                ".bmp",
-                ".webp",
-                ".svg",
-            ]
-
-            if file_extension in image_extensions:
-                link_text = "Посмотреть файл"
-            else:
-                link_text = "Скачать файл"
-
-            return format_html(
-                '<a href="{}" target="_blank">{}</a>', file_url, link_text
-            )
-        return "Файл не загружен"
+        """Отображаем ссылку на скачивание файла с FTP."""
+        if obj.file.name:
+            url = reverse("admin:products_file_download_from_ftp", args=[str(obj.id)])
+            return format_html('<a href="{}">Скачать файл</a>', url)
+        return ""  # Если файла нет, ничего не отображаем
 
     file_link.short_description = "Файл"
 
-    def delete_local_button(self, obj):
-        """Добавляем кнопку для удаления файла с локального сервера."""
-        if obj.file and os.path.exists(obj.file.path):
-            url = reverse("admin:products_file_delete_local_file", args=[str(obj.id)])
-            return format_html(
-                '<a class="button" href="{}">Удалить локальный файл</a>', url
-            )
-        return "Файл отсутствует локально"
-
-    delete_local_button.short_description = "Удалить локально"
-
     def delete_ftp_button(self, obj):
-        """Добавляем кнопку для удаления файла с FTP."""
+        """Добавляем кнопку для удаления файла и записи."""
         url = reverse("admin:products_file_delete_ftp_file", args=[str(obj.id)])
-        return format_html('<a class="button" href="{}">Удалить файл с FTP</a>', url)
+        return format_html('<a class="button" href="{}">Удалить файл</a>', url)
 
-    delete_ftp_button.short_description = "Удалить с FTP"
-
-    def delete_local_file(self, request, obj_id):
-        """Удаление файла только с локального сервера."""
-        try:
-            file_instance = File.objects.get(id=obj_id)
-            local_file_path = file_instance.file.path
-
-            if os.path.exists(local_file_path):
-                os.remove(local_file_path)
-                self.message_user(
-                    request, f"Файл {obj_id} успешно удален с локального сервера."
-                )
-            else:
-                self.message_user(request, f"Файл {obj_id} отсутствует локально.")
-        except File.DoesNotExist:
-            self.message_user(request, f"Файл с ID {obj_id} не найден.")
-        except Exception as e:
-            self.message_user(
-                request, f"Ошибка при удалении файла с локального сервера: {str(e)}"
-            )
-        return redirect(reverse("admin:products_file_changelist"))
+    delete_ftp_button.short_description = "Удалить файл"
 
     def delete_ftp_file(self, request, obj_id):
-        """Удаление файла с FTP и очистка поля 'file' в базе данных."""
+        """Удаление файла с FTP и удаление записи из базы данных."""
         try:
             file_instance = File.objects.get(id=obj_id)
+            file_name = os.path.basename(file_instance.file.name)
+            file_extension = os.path.splitext(file_name)[1]
 
-            if file_instance.file:
-                file_name = os.path.basename(file_instance.file.name)
-                file_extension = os.path.splitext(file_name)[1]
+            # Запускаем задачу на удаление файла с FTP
+            delete_file_from_ftp.delay(str(obj_id), file_extension)
+            logger.info(f"Запущена задача на удаление файла ID {obj_id} с FTP")
 
-                # Отправляем задачу на удаление с FTP
-                delete_file_from_ftp.delay(str(obj_id), file_extension)
-                self.message_user(request, f"Файл {obj_id} удален с FTP.")
-
-                # Очищаем поле 'file' в базе данных
-                file_instance.file.delete(
-                    save=False
-                )  # Удаляем локальный файл, если он есть
-                file_instance.file = None
-                file_instance.save()
-                self.message_user(
-                    request,
-                    f"Поле 'file' очищено в базе данных. Теперь вы можете загрузить новый файл.",
-                )
-            else:
-                self.message_user(request, f"Файл с ID {obj_id} не найден.")
+            # Удаляем запись из базы данных
+            file_instance.delete()
+            self.message_user(request, f"Файл {obj_id} удалён и запись удалена.")
         except File.DoesNotExist:
             self.message_user(request, f"Файл с ID {obj_id} не найден.")
-        except Exception as e:
-            self.message_user(request, f"Ошибка при удалении файла с FTP: {str(e)}")
         return redirect(reverse("admin:products_file_changelist"))
 
     def download_from_ftp(self, request, obj_id):
-        """Загружает файл с FTP и сохраняет его локально."""
+        """Скачивает файл с FTP и предоставляет его для скачивания."""
         try:
             file_instance = File.objects.get(id=obj_id)
-            local_file_path = file_instance.file.path
+            file_name = os.path.basename(file_instance.file.name)
+            file_extension = os.path.splitext(file_name)[1]
+            remote_file_name = f"{obj_id}{file_extension}"
 
-            # Отправляем задачу на скачивание с FTP
-            download_file_from_ftp.delay(local_file_path, str(obj_id))
-            self.message_user(request, f"Файл {obj_id} загружается с FTP.")
+            # Получаем содержимое файла с FTP
+            ftp_service = get_ftp_service()
+            file_content = ftp_service.download_file_content(
+                str(obj_id), file_extension
+            )
+
+            if file_content is not None:
+                from django.http import HttpResponse
+
+                response = HttpResponse(
+                    file_content, content_type="application/octet-stream"
+                )
+                response["Content-Disposition"] = (
+                    f'attachment; filename="{remote_file_name}"'
+                )
+                return response
+            else:
+                self.message_user(request, f"Файл с ID {obj_id} не найден на FTP.")
         except File.DoesNotExist:
             self.message_user(request, f"Файл с ID {obj_id} не найден.")
-        except Exception as e:
-            self.message_user(request, f"Ошибка при загрузке файла с FTP: {str(e)}")
         return redirect(reverse("admin:products_file_changelist"))
 
     def get_urls(self):
@@ -261,11 +220,6 @@ class FileAdmin(admin.ModelAdmin):
 
         urls = super().get_urls()
         custom_urls = [
-            path(
-                "delete-local-file/<uuid:obj_id>/",
-                self.admin_site.admin_view(self.delete_local_file),
-                name="products_file_delete_local_file",
-            ),
             path(
                 "delete-ftp-file/<uuid:obj_id>/",
                 self.admin_site.admin_view(self.delete_ftp_file),
