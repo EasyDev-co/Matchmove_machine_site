@@ -1,8 +1,16 @@
-from rest_framework import generics
-from rest_framework.permissions import IsAuthenticated
+import logging
+
 from apps.orders.models import Order
-from .serializers import OrderSerializer
+from apps.orders.services import OrderService
 from apps.utils.pagination import StandardPagination
+from rest_framework import generics, views
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
+
+from .serializers import OrderSerializer
+
+
+logger = logging.getLogger(__name__)
 
 
 class UserOrdersAPIView(generics.ListAPIView):
@@ -12,3 +20,25 @@ class UserOrdersAPIView(generics.ListAPIView):
 
     def get_queryset(self):
         return Order.objects.filter(user=self.request.user).order_by("-created_at")
+
+
+class CreateOrderAPIView(views.APIView):
+    """Вьюсет для создания заказа из корзины пользователя."""
+
+    def post(self, request):
+        user = request.user
+
+        try:
+            # Создаем заказ из корзины пользователя
+            order_service = OrderService(user)
+            order = order_service.create_order_from_cart()
+
+            # Возвращаем информацию о заказе
+            return Response({
+                "order_id": order.id,
+                "total_price": order.total_price,
+                "created_at": order.created_at
+            })
+        except Exception as e:
+            logger.error(f"Ошибка при создании заказа: {str(e)}")
+            return Response({"error": str(e)}, status=500)

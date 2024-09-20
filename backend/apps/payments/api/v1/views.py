@@ -1,19 +1,20 @@
 import logging
 
+from apps.orders.models import Order
+from apps.payments.services.transaction_service import TransactionService
+from django.shortcuts import get_object_or_404
 from rest_framework import views
 from rest_framework.response import Response
-
-from apps.payments.services.transaction_service import TransactionService
 
 logger = logging.getLogger(__name__)
 
 
 class CreateTransactionAPIView(views.APIView):
     """
-    Вьюсет для создании транзакции Paddle.
-    Пример API request body:
+    Вьюсет для создания транзакции Paddle на основе существующего заказа.
+    Пример body api запроса:
     {
-        "product_id": "e99955f1-cf57-4ac0-83f9-a5e4b89ad269",
+        "order_id": "22",
         "address": {
             "description": "Head Office",
             "first_line": "4050 Jefferson Plaza, 41st Floor",
@@ -23,21 +24,21 @@ class CreateTransactionAPIView(views.APIView):
             "country_code": "US"
         }
     }
-    Если пользователь ранее совершал транзакции, то адрес подтянется из Puddle
     """
 
     def post(self, request):
         user = request.user
-        product_id = request.data.get("product_id")
-        quantity = request.data.get("quantity", 1)
-        address_data = request.data.get("address", None)
-
-        transaction_service = TransactionService()
+        order_id = request.data.get("order_id")
 
         try:
-            transaction_response = transaction_service.process_transaction(
-                user, product_id, quantity, address_data
-            )
+            # Получаем заказ по его ID
+            order = get_object_or_404(Order, id=order_id, user=user)
+
+            # Проводим транзакцию по заказу
+            transaction_service = TransactionService()
+            transaction_response = transaction_service.process_transaction(user, order.id)
+
+            # Возвращаем ответ с данными о транзакции
             return Response(transaction_response)
         except Exception as e:
             logger.error(f"Ошибка транзакции: {str(e)}")

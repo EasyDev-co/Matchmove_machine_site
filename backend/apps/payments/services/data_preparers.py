@@ -2,17 +2,10 @@ class DataPreparer:
     """Структура api запросов для транзакций"""
 
     @staticmethod
-    def prepare_transaction_data(
-        price_id, customer_id, quantity, address_id=None
-    ):
+    def prepare_transaction_data(items, customer_id, address_id=None):
         """Данные для проведения транзакции в Paddle."""
         return {
-            "items": [
-                {
-                    'price_id': price_id,
-                    "quantity": quantity
-                }
-            ],
+            "items": items,
             "customer_id": customer_id,
             "address_id": address_id,
             "currency_code": "USD",
