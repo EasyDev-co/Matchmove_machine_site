@@ -15,7 +15,7 @@ import { logoutUserThunk } from "../../store/userSlice";
 
 const userlinks = [facebook, vimeo, instagram, linkedin, youtube];
 
-const ProfileTop = ({ profile, status }) => {
+const ProfileTop = ({ profile, status, profileId }) => {
 
   const navigate = useNavigate();
   const dispatch=useDispatch()
@@ -49,7 +49,7 @@ const ProfileTop = ({ profile, status }) => {
             />
           </div>
           <p className="h2-bold">
-            <span className={styles.rating}>#109/</span>{" "}
+            <span className={styles.rating}>#{profileId}/</span>{" "}
             <span>{profile.username}</span>
           </p>
         </div>

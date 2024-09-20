@@ -12,14 +12,14 @@ const Asset = ({asset})=>{
     navigate(`/library/product/${asset.id}`);
   };
 
-  const user = <div className={styles.user}><p>{asset.author}</p> <img src={pfp} alt="icon" /></div>
+  const user = <div className={styles.user}><p>{asset.author.username}</p> <img src={pfp} alt="icon" /></div>
   
     return (
       <article className={styles.asset} onClick={handleNavigation}>
         <div className={styles.assetthumbnail}>
             <div className={styles.creator}>{asset.creator==="company"? companysvg: user}</div>
-            <p className={styles.title}>{asset.camera} {asset.lense}</p>
-            <Button label={asset.price===0? "Free": `${asset.price}$`} variant={asset.price===0? "grey": "blue"}/>
+            <p className={styles.title}>{asset.camera.model_name} {asset.lens.brand} {asset.lens.model_name}</p>
+            <Button label={!asset.price? "Free": `${asset.price}$`} variant={!asset.price? "grey": "blue"}/>
         </div>
       </article>
     );

@@ -40,6 +40,7 @@ const CartPopUp = ({ closeCart }) => {
     }
   }, [isVisible, closeCart]);
 
+if(cart.items){
   return (
     <div className={styles.fixWrap}>
       <div className={`${styles.main} ${!isVisible ? styles.exit : ""}`}>
@@ -73,6 +74,7 @@ const CartPopUp = ({ closeCart }) => {
       </div>
     </div>
   );
+}
 };
 
 export default CartPopUp;

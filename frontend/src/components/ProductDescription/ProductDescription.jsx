@@ -2,21 +2,17 @@ import styles from "./ProductDescription.module.css"
 import Button from "../Button"
 import { companysvg } from "../../assets/svg/svgimages";
 
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { postCartItem } from "../../store/slices/cartItemSlice";
 
-const ProductDescription =()=>{
+const ProductDescription =({singleProduct})=>{
 
-  const { singleProduct } = useSelector(state => state.singleProduct)
   const dispatch = useDispatch()
-
-  console.log(singleProduct);
 
   const addToCart =()=>{
     dispatch(postCartItem(singleProduct.id))
   }
 
-  if(singleProduct){
     return (
       <section className="height" id="description">
         <div className={styles.main}>
@@ -47,9 +43,15 @@ const ProductDescription =()=>{
 
           <div className={styles.container}>
             <h2 className="h2-medium">Author</h2>
-            <a href="/" className={styles.authorInfo}>
-              {companysvg} Matchmove machine
-            </a>
+            {singleProduct.author.username ? (
+              <a href="/" className={styles.authorInfo}>
+                {singleProduct.author.username }
+              </a>
+            ) : (
+              <a href="/" className={styles.authorInfo}>
+                {companysvg} Matchmove machine
+              </a>
+            )}
           </div>
 
           <div className={`${styles.container} ${styles.license}`}>
@@ -64,7 +66,6 @@ const ProductDescription =()=>{
         </div>
       </section>
     );
-  }
 }
 
 export default ProductDescription

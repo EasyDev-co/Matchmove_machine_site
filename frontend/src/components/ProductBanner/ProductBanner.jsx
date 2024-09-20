@@ -20,7 +20,7 @@ const camerasvg =(
 
 )
 
-const ProductBanner = () => {
+const ProductBanner = ({singleProduct}) => {
   const [variant, setVariant] = useState(null); 
   const scrollToSection = useSmoothScroll(); 
 
@@ -53,7 +53,7 @@ const ProductBanner = () => {
           <div className={styles.sectionTitle}>
             {svg} <h3 className="h3-medium">Lens model</h3>
           </div>
-          <p className="h4-medium">EF</p>
+          <p className="h4-medium">{singleProduct.lens.model_name}</p>
         </div>
         <div 
           className={`${styles.camerasection} ${styles.right} ${variant === 'camera' ? styles.selected : ''}`} 
@@ -63,7 +63,7 @@ const ProductBanner = () => {
           <div className={styles.sectionTitle}>
             {camerasvg} <h3 className="h3-medium">Camera model</h3>
           </div>
-          <p className="h4-medium">ARRI ALEXA 65</p>
+          <p className="h4-medium">{singleProduct.camera.model_name}</p>
         </div>
         <img className={styles.image} src={imageToDisplay} alt="display" />
       </div>

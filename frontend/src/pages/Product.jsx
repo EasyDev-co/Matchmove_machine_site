@@ -7,27 +7,31 @@ import ProductField from "../components/ProductField/ProductField";
 
 import { useParams } from "react-router-dom";
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { fetchSingleProduct } from "../store/slices/singleProductSlice";
 
 const Product = ()=>{
 
+  const { singleProduct } = useSelector(state => state.singleProduct)
   const dispatch = useDispatch()
   const { productId } = useParams();
 
   useEffect(()=>{
     dispatch(fetchSingleProduct(productId))
   },[dispatch, productId])
+
+  if(singleProduct){
     return (
       <>
-        <NavigationTop title="Distortion grids pack for Canon EF"/>
-        <ProductBanner/>
-        <ProductDescription/>
-        <ProductField/>
+        <NavigationTop title="Distortion grids pack for Canon EF" singleProduct={singleProduct}/>
+        <ProductBanner singleProduct={singleProduct}/>
+        <ProductDescription singleProduct={singleProduct}/>
+        <ProductField singleProduct={singleProduct}/>
         <JoinCommunity/>
         <SharePage/>
       </>
     );
+  }
 }
 
 export default Product

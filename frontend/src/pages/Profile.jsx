@@ -4,11 +4,13 @@ import AboutAuthor from "../components/AboutAithor/AboutAuthor";
 import SharePage from "../components/SharePage/SharePage";
 
 import { useEffect } from "react";
+import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchUserProfile } from "../store/slices/profileSlice";
 
 const Profile=()=>{
 
+  const { id } = useParams();
   const dispatch = useDispatch()
   const {profile, status} = useSelector(state=> state.profile)
 
@@ -20,10 +22,10 @@ const Profile=()=>{
 
     return (
       <>
-        <ProfileTop profile={profile} status={status} />
+        <ProfileTop profile={profile} status={status} profileId={id} />
         <ProfileAssets />
         <AboutAuthor about={profile.about_me}/>
-        <SharePage/>
+        <SharePage profileId={id}/>
       </>
     );
   }
