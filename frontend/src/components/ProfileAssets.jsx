@@ -31,7 +31,7 @@ const ProfileAssets =()=>{
         dispatch(fetchUserProducts({ page, pageSize }));
       }, [page, pageSize, dispatch]);
 
-    if(userProducts.results){
+    if(userProducts.results && userProducts.results.length>0){
         return (
             <section className="width">
                 <div className="assets-toggle">
@@ -51,6 +51,10 @@ const ProfileAssets =()=>{
                 <AssetsGrid items={userProducts.results} pagination={{count:userProducts.count, next:userProducts.next, previous:userProducts.previous}}/>
             </section>
         );
+    }
+
+    if(userProducts.results && userProducts.results.length<=0){
+        return <section className="width">  <h2 className="h2-medium">Author has no assets yet</h2></section>
     }
 };
 export default ProfileAssets

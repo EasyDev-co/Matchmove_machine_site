@@ -17,20 +17,15 @@ const items = [
     { id: 9, title: "Desk Lamp", price: 30 }
   ];
 
-const CartItems =()=>{
+const CartItems =({cart})=>{
 
-    const {cart} = useSelector(state => state.cart)
-    const dispatch = useDispatch()
-
-    console.log(cart);
-    
-
-    useEffect(()=>{
-        dispatch(fetchCart())
-    },[dispatch])
+if (cart.items.length>0) {
     return <div className={styles.container}>
-        {items.length>0? items.map((item)=><Item key={item.id} item={item}/>): <p className="h4-medium">Your cart is empty.</p>}
-    </div>
+    {items.map((item)=><Item key={item.id} item={item}/>)}
+</div>
+}else{
+    return <p className="h4-medium">Your cart is empty.</p>
+}
 }
 
 export default CartItems

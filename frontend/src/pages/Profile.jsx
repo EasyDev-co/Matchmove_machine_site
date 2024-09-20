@@ -10,10 +10,7 @@ import { fetchUserProfile } from "../store/slices/profileSlice";
 const Profile=()=>{
 
   const dispatch = useDispatch()
-  const {profile} = useSelector(state=> state.profile)
-
-  console.log(profile);
-  
+  const {profile, status} = useSelector(state=> state.profile)
 
   useEffect(()=>{
     dispatch(fetchUserProfile())
@@ -23,7 +20,7 @@ const Profile=()=>{
 
     return (
       <>
-        <ProfileTop profile={profile} />
+        <ProfileTop profile={profile} status={status} />
         <ProfileAssets />
         <AboutAuthor about={profile.about_me}/>
         <SharePage/>

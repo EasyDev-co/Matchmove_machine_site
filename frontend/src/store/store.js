@@ -7,6 +7,7 @@ import profileReducer from './slices/profileSlice';
 import cartReducer from './slices/cartSlice';
 import cartItemReducer from './slices/cartItemSlice';
 import profileProductReducer from './slices/profileProductSlice';
+import paymentReducer from './slices/paymentSlice';
 
 const store = configureStore({
   reducer: {
@@ -17,7 +18,8 @@ const store = configureStore({
     profile: profileReducer,
     cart: cartReducer,
     cartItem: cartItemReducer,
-    profileProduct: profileProductReducer
+    profileProduct: profileProductReducer,
+    payment: paymentReducer
   },
 });
 

@@ -11,7 +11,7 @@ import { useSelector, useDispatch } from "react-redux"
 import { useEffect, useState } from "react"
 
 const EditProfile = () => {
-  const { profile } = useSelector(state => state.profile);
+  const { profile, status } = useSelector(state => state.profile);
   const dispatch = useDispatch();
   const [picture, setPicture] = useState(null);
 
@@ -55,7 +55,7 @@ const EditProfile = () => {
                 />
               </div>
             </div>
-            <EditProfileForm profile={profile} picture={picture} />
+            <EditProfileForm profile={profile} picture={picture} status={status} />
           </div>
         </div>
       </ModalWrap>

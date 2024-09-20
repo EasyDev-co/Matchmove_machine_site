@@ -3,6 +3,21 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import BASE_URL from '../../config'; 
 import { fetchWithAuth } from '../../utils/authUtils';
 
+
+const initialState = {
+  profile: null,
+  status: {
+    fetchUserProfileStatus: 'idle',
+    updateUserProfileStatus: 'idle',
+    changePasswordStatus: 'idle',
+  },
+  errors: {
+    fetchUserProfileError: null,
+    updateUserProfileError: null,
+    changePasswordError: null,
+  },
+};
+
 export const fetchUserProfile = createAsyncThunk(
   'profile/fetchUserProfile',
   async (_, { rejectWithValue }) => {
@@ -80,47 +95,50 @@ export const changePassword = createAsyncThunk(
 
 const profileSlice = createSlice({
   name: 'profile',
-  initialState: {
-    profile: null,
-    status: 'idle',
-    error: null,
-  },
+  initialState,
   reducers: {},
   extraReducers: (builder) => {
     builder
+      // Fetch User Profile
       .addCase(fetchUserProfile.pending, (state) => {
-        state.status = 'loading';
+        state.status.fetchUserProfileStatus = 'loading';
+        state.errors.fetchUserProfileError = null;
       })
       .addCase(fetchUserProfile.fulfilled, (state, action) => {
-        state.status = 'succeeded';
+        state.status.fetchUserProfileStatus = 'succeeded';
         state.profile = action.payload;
       })
       .addCase(fetchUserProfile.rejected, (state, action) => {
-        state.status = 'failed';
-        state.error = action.payload;
-      })
-      .addCase(updateUserProfile.pending, (state) => {
-        state.status = 'loading';
-      })
-      .addCase(updateUserProfile.fulfilled, (state, action) => {
-        state.status = 'succeeded';
-        // state.profile = action.payload;
-      })
-      .addCase(updateUserProfile.rejected, (state, action) => {
-        state.status = 'failed';
-        state.error = action.payload;
+        state.status.fetchUserProfileStatus = 'failed';
+        state.errors.fetchUserProfileError = action.payload
       })
 
+      // Update User Profile
+      .addCase(updateUserProfile.pending, (state) => {
+        state.status.updateUserProfileStatus = 'loading';
+        state.errors.updateUserProfileError = null;
+      })
+      .addCase(updateUserProfile.fulfilled, (state) => {
+        state.status.updateUserProfileStatus = 'succeeded';
+        // Optionally update the profile here
+      })
+      .addCase(updateUserProfile.rejected, (state, action) => {
+        state.status.updateUserProfileStatus = 'failed';
+        state.errors.updateUserProfileError = action.payload
+      })
+
+      // Change Password
       .addCase(changePassword.pending, (state) => {
-        state.status = 'loading';
+        state.status.changePasswordStatus = 'loading';
+        state.errors.changePasswordError = null;
       })
       .addCase(changePassword.fulfilled, (state) => {
-        state.status = 'succeeded';
+        state.status.changePasswordStatus = 'succeeded';
         // Optionally handle success, like showing a success message
       })
       .addCase(changePassword.rejected, (state, action) => {
-        state.status = 'failed';
-        state.error = action.payload;
+        state.status.changePasswordStatus = 'failed';
+        state.errors.changePasswordError = action.payload
       });
   },
 });

@@ -16,7 +16,8 @@ import { useDispatch, useSelector } from "react-redux";
 const Login = ({ onModalClose }) => {
 
   const dispatch = useDispatch();
-  const {error, status} = useSelector(state=> state.user)
+  const {status} = useSelector(state=> state.user)
+  const apiError =useSelector(state=> state.user.errors.loginError)
 
   const [formData, setFormData] = useState({
     email: "",
@@ -69,7 +70,6 @@ const Login = ({ onModalClose }) => {
     setErrors(newErrors);
 
     if (valid) {
-      console.log("Form data submitted:", formData);
       dispatch(
         loginUser({ email: formData.email, password: formData.old_password })
       );
@@ -83,12 +83,12 @@ const Login = ({ onModalClose }) => {
   const handleForgotPassword = () => {
     navigate("/reset-password");
   };
-
+  
   useEffect(() => {
-    if (error && error.non_field_errors) {
+    if (apiError && apiError.non_field_errors) {
       setErrors({
         ...errors,
-        email: error.non_field_errors[0],
+        email: apiError.non_field_errors[0],
       });
     } else {
       setErrors({
@@ -96,10 +96,10 @@ const Login = ({ onModalClose }) => {
         email: "",
       });
     }
-  }, [error]);
+  }, [apiError]);
 
   useEffect(()=>{
-    if(status==="succeeded"){
+    if(status.loginStatus==="succeeded"){
       setErrors({
         email: "",
         old_password: "",

@@ -8,8 +8,18 @@ const initialState = {
   isAuthenticated: !!Cookies.get('access_token'),
   accessToken: Cookies.get('access_token') || null,
   refreshToken: Cookies.get('refresh_token') || null,
-  status: 'idle',
-  error: null,
+  status: {
+    loginStatus: 'idle',
+    registerStatus: 'idle',
+    logoutStatus: 'idle',
+    emailVerificationStatus: 'idle',
+  },
+  errors: {
+    loginError: null,
+    registerError: null,
+    emailVerificationError:null,
+    logoutError: null,
+  },
 };
 
 // Thunks
@@ -65,6 +75,33 @@ export const registerUser = createAsyncThunk(
   }
 );
 
+export const verifyEmailCode = createAsyncThunk(
+  'user/verifyEmailCode',
+  async (verificationData, { rejectWithValue }) => {
+    try {
+      const response = await fetch(`${BASE_URL}/users/v1/email_verification_code/`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(verificationData),
+      });
+
+      if (!response.ok) {
+        const errorDetails = await response.json();
+        console.error('Verification failed:', errorDetails);
+        return rejectWithValue(errorDetails);
+      }
+
+      return await response.json();
+      
+    } catch (error) {
+      console.error('Error verifying email:', error);
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
 export const logoutUserThunk = createAsyncThunk(
   'user/logoutUserThunk',
   async (_, { getState, rejectWithValue }) => {
@@ -97,54 +134,102 @@ const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    setTokens: (state, action) => {
-      state.accessToken = action.payload.access;
-      state.refreshToken = action.payload.refresh;
-      Cookies.set('access_token', action.payload.access, { expires: 7, secure: true, sameSite: 'Strict' });
-      Cookies.set('refresh_token', action.payload.refresh, { expires: 7, secure: true, sameSite: 'Strict' });
-    },
   },
   extraReducers: (builder) => {
     builder
+      // Handling login actions
       .addCase(loginUser.pending, (state) => {
-        state.status = 'loading';
+        state.status.loginStatus = "loading";
+        state.errors.loginError = null;
       })
       .addCase(loginUser.fulfilled, (state, action) => {
         state.user = action.payload.user;
         state.isAuthenticated = true;
         state.accessToken = action.payload.access;
         state.refreshToken = action.payload.refresh;
-        Cookies.set('access_token', action.payload.access, { expires: 7, secure: true, sameSite: 'Strict' });
-        Cookies.set('refresh_token', action.payload.refresh, { expires: 7, secure: true, sameSite: 'Strict' });
-        state.status = 'succeeded';
+        state.user = action.payload.user
+        Cookies.set("access_token", action.payload.access, {
+          expires: 7,
+          secure: true,
+          sameSite: "Strict",
+        });
+        Cookies.set("refresh_token", action.payload.refresh, {
+          expires: 7,
+          secure: true,
+          sameSite: "Strict",
+        });
+        state.status.loginStatus = "succeeded";
       })
       .addCase(loginUser.rejected, (state, action) => {
-        state.status = 'failed';
-        state.error = action.payload;
+        state.status.loginStatus = "failed";
+        state.errors.loginError = action.payload || action.error.message;
+      })
+
+      // Handling register actions
+      .addCase(registerUser.pending, (state) => {
+        state.status.registerStatus = "loading";
+        state.errors.registerError = null;
       })
       .addCase(registerUser.fulfilled, (state, action) => {
-        // Handle registration success if needed
+        state.status.registerStatus = "succeeded";
+        state.errors.registerError = null;
       })
+      .addCase(registerUser.rejected, (state, action) => {
+        state.status.registerStatus = "failed";
+        state.errors.registerError = action.payload
+      })
+
+      .addCase(verifyEmailCode.pending, (state) => {
+        state.status.emailVerificationStatus = "loading";
+        state.errors.emailVerificationError = null;
+      })
+      .addCase(verifyEmailCode.fulfilled, (state, action) => {
+        state.status.emailVerificationStatus = "succeeded";
+        state.errors.emailVerificationError = null;
+
+        // Set tokens from the response
+        state.accessToken = action.payload.access;
+        state.refreshToken = action.payload.refresh;
+
+        // Save tokens to cookies
+        Cookies.set("access_token", action.payload.access, {
+          expires: 7,
+          secure: true,
+          sameSite: "Strict",
+        });
+        Cookies.set("refresh_token", action.payload.refresh, {
+          expires: 7,
+          secure: true,
+          sameSite: "Strict",
+        });
+
+        state.isAuthenticated = true; // Update authentication status
+      })
+      .addCase(verifyEmailCode.rejected, (state, action) => {
+        state.status.emailVerificationStatus = "failed";
+        state.errors.emailVerificationError = action.payload
+      })
+
 
       // Handling logout actions
       .addCase(logoutUserThunk.pending, (state) => {
-        state.status = 'logging out';
+        state.status.logoutStatus = "loading";
+        state.errors.logoutError = null;
       })
       .addCase(logoutUserThunk.fulfilled, (state) => {
         state.user = null;
         state.isAuthenticated = false;
         state.accessToken = null;
         state.refreshToken = null;
-        Cookies.remove('access_token');
-        Cookies.remove('refresh_token');
-        state.status = 'logged out';
+        Cookies.remove("access_token");
+        Cookies.remove("refresh_token");
+        state.status.logoutStatus = "succeeded";
       })
       .addCase(logoutUserThunk.rejected, (state, action) => {
-        state.status = 'logout failed';
-        state.error = action.payload || action.error.message;
+        state.status.logoutStatus = "failed";
+        state.errors.logoutError = action.payload || action.error.message;
       });
   },
 });
 
-export const { setTokens } = userSlice.actions;
 export default userSlice.reducer;

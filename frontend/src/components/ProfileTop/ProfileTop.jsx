@@ -15,7 +15,7 @@ import { logoutUserThunk } from "../../store/userSlice";
 
 const userlinks = [facebook, vimeo, instagram, linkedin, youtube];
 
-const ProfileTop = ({ profile }) => {
+const ProfileTop = ({ profile, status }) => {
 
   const navigate = useNavigate();
   const dispatch=useDispatch()
@@ -24,10 +24,16 @@ const ProfileTop = ({ profile }) => {
     navigate("/profile/edit");
   };
 
-  const handleLogOut =()=>{
+  const handleLogOut = () => {
     dispatch(logoutUserThunk())
-    navigate("/")
-  }
+      .unwrap()
+      .then(() => {
+        navigate("/"); // Navigate to the main screen after successful logout
+      })
+      .catch((error) => {
+        console.log("Logout failed", error); // Handle any errors
+      });
+  };
 
   if(profile){
   return (

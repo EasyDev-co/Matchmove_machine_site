@@ -11,7 +11,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { updateUserProfile } from "../../store/slices/profileSlice";
 
-const InformationForm = ({profile, picture}) => {
+const InformationForm = ({profile, picture, status}) => {
 
   const navigate = useNavigate()
   const dispatch = useDispatch()
@@ -50,7 +50,7 @@ const InformationForm = ({profile, picture}) => {
     return emailRegex.test(email);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     let valid = true;
     let newErrors = {};
@@ -79,11 +79,15 @@ const InformationForm = ({profile, picture}) => {
         website: formData.website,
         portfolio: formData.portfolio
       };
-      dispatch(updateUserProfile(userProfileUpdate));
-      console.log('Form data submitted:', userProfileUpdate);
+      try {
+        await dispatch(updateUserProfile(userProfileUpdate)).unwrap();
+        // Handle success (e.g., show a success message)
+      } catch (error) {
+        // Handle error (e.g., show an error message)
+        console.log('Update profile failed:', error);
+      }
     }
   };
-
 
   const goBack =()=>{
     navigate("/profile/1")
@@ -151,7 +155,7 @@ const InformationForm = ({profile, picture}) => {
           />
           <Button
             variant="blue"
-            label="Save changes"
+            label={status.updateUserProfileStatus==="loading"? "Loading":"Save changes"}
             labelPosition="left"
             iconType="checkMark"
             type="submit"

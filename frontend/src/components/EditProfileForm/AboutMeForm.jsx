@@ -9,7 +9,7 @@ import { useDispatch } from "react-redux";
 import { updateUserProfile } from "../../store/slices/profileSlice";
 
 
-const AboutMeForm = ({about}) => {
+const AboutMeForm = ({about, status}) => {
 
     const navigate = useNavigate()
     const dispatch = useDispatch()
@@ -25,10 +25,14 @@ const AboutMeForm = ({about}) => {
         }));
     };
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
-        dispatch(updateUserProfile({about_me:formData.aboutMe}))
-        console.log('Form submitted:', formData);
+        
+        try {
+         await dispatch(updateUserProfile({about_me:formData.aboutMe})).unwrap();
+        } catch (error) {
+          console.log('Update profile failed:', error);
+        }
     };
 
     const goBack = () => {
@@ -58,7 +62,7 @@ const AboutMeForm = ({about}) => {
               />
               <Button
                 variant="blue"
-                label="Save changes"
+                label={status.updateUserProfileStatus==="loading"? "Loading":"Save changes"}
                 labelPosition="left"
                 iconType="checkMark"
                 type="submit"

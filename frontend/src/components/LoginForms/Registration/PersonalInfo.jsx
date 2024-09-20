@@ -1,11 +1,19 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 import Button from "../../Button";
 import Website from "../../Forms/Website";
 import Portfolio from "../../Forms/Portfolio";
 import AboutMe from "../../Forms/AboutMe";
 
-const PersonalInfo = ({handlePrev}) => {
+const PersonalInfo = ({handlePrev,handleConfirm}) => {
+
+  const {registerStatus} = useSelector(state=> state.user.status)
+  const {registerError} = useSelector(state=> state.user.errors)
+
+  console.log(registerStatus);
+  
+
   const [formData, setFormData] = useState({
     website: '',
     portfolio: '',
@@ -25,8 +33,7 @@ const PersonalInfo = ({handlePrev}) => {
   const handleFormSubmit = (e) => {
     e.preventDefault();
     console.log('Form data submitted:', formData);
-    navigate("/")
-   // or all the submit handler passed as a prop
+    handleConfirm()
   };
 
   return (
