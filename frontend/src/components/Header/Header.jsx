@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./Header.module.css"
 import Button from "../Button";
@@ -8,16 +8,19 @@ import HeaderLinks from "./HeaderLinks";
 import User from "./HeaderUser";
 import CartPopUp from "../CartPopUp/CartPopUp";
 
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { fetchUserProfile } from "../../store/slices/profileSlice";
 
 const Header = () => {
 
   const navigate = useNavigate()
+  const dispatch = useDispatch()
 
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [showCart, setShowCart] = useState(false)
 
   const {isAuthenticated} = useSelector(state=> state.user)
+  const {profile} = useSelector(state=> state.profile)
 
   const openCart =()=>{
     setShowCart(prev=>!prev)
@@ -38,6 +41,10 @@ const Header = () => {
     navigate("/authorization")
   }
 
+  useEffect(()=>{
+    dispatch(fetchUserProfile())
+  },[dispatch])
+
   return (
     <header className={styles.main}>
       <div className={styles.container}>
@@ -46,7 +53,7 @@ const Header = () => {
         <HeaderLinks isMenuOpen={isMenuOpen} handleCloseMenu={handleCloseMenu}/>
         <div className={styles.btncont}>
           <div><Button labelPosition="none" variant={window.innerWidth>1000? "transparent": "grey"} color="white" iconType="cart" onClick={openCart} /></div>
-          <div>{isAuthenticated?<User/>: <div className={styles.signInbtn}><Button label="Sign In" variant="blue" iconType="person" labelPosition={window.innerWidth>1000? "left": "none"} onClick={handleSignIn} /></div>}</div>
+          <div>{isAuthenticated?<User user={profile}/>: <div className={styles.signInbtn}><Button label="Sign In" variant="blue" iconType="person" labelPosition={window.innerWidth>1000? "left": "none"} onClick={handleSignIn} /></div>}</div>
           <div className={styles.mobilebtn}><Button labelPosition="none" variant="grey" iconType="headerMenu" onClick={()=>setIsMenuOpen(prev=>!prev)} /></div>
         </div>
       </div>

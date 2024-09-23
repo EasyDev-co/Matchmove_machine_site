@@ -4,6 +4,7 @@ import { companysvg } from "../../assets/svg/svgimages";
 
 import { useDispatch } from "react-redux";
 import { postCartItem } from "../../store/slices/cartItemSlice";
+import { downloadProductFile } from "../../store/slices/singleProductSlice";
 
 const ProductDescription =({singleProduct})=>{
 
@@ -11,6 +12,10 @@ const ProductDescription =({singleProduct})=>{
 
   const addToCart =()=>{
     dispatch(postCartItem(singleProduct.id))
+  }
+
+  const downloadAsset = ()=>{
+    dispatch(downloadProductFile(singleProduct.id))
   }
 
     return (
@@ -32,6 +37,7 @@ const ProductDescription =({singleProduct})=>{
                   label="FREE ASSET"
                   iconType="download"
                   variant="outline-blue"
+                  onClick={downloadAsset}
                 />
               </div>
               <p>

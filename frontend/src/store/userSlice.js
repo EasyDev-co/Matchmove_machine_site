@@ -13,12 +13,14 @@ const initialState = {
     registerStatus: 'idle',
     logoutStatus: 'idle',
     emailVerificationStatus: 'idle',
+    resetPasswordStatus: 'idle',
   },
   errors: {
     loginError: null,
     registerError: null,
-    emailVerificationError:null,
+    emailVerificationError: null,
     logoutError: null,
+    resetPasswordError: null,
   },
 };
 
@@ -99,6 +101,29 @@ export const verifyEmailCode = createAsyncThunk(
       console.error('Error verifying email:', error);
       return rejectWithValue(error.message);
     }
+  }
+);
+
+export const resetPassword = createAsyncThunk(
+  'user/resetPassword',
+  async (email, { rejectWithValue }) => {
+
+      const response = await fetch(`${BASE_URL}/users/v1/reset_password/`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email }),
+      });
+
+      if (!response.ok) {
+        const errorDetails = await response.json();
+        console.log('Password reset failed:', errorDetails);
+        return rejectWithValue(errorDetails);
+      }
+
+      return await response.json(); 
+    
   }
 );
 
@@ -210,6 +235,19 @@ const userSlice = createSlice({
         state.errors.emailVerificationError = action.payload
       })
 
+      // Handling reset password
+      .addCase(resetPassword.pending, (state) => {
+        state.status.resetPasswordStatus = "loading";
+        state.errors.resetPasswordError = null;
+      })
+      .addCase(resetPassword.fulfilled, (state, action) => {
+        state.status.resetPasswordStatus = "succeeded";
+        state.errors.resetPasswordError = null;
+      })
+      .addCase(resetPassword.rejected, (state, action) => {
+        state.status.resetPasswordStatus = "failed";
+        state.errors.resetPasswordError = action.payload
+      })
 
       // Handling logout actions
       .addCase(logoutUserThunk.pending, (state) => {

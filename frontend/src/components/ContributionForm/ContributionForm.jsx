@@ -1,7 +1,10 @@
 import styles from "./ContributionForm.module.css";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import Button from "../Button";
 import { selectFilesvg } from "../../assets/svg/svgimages";
+
+import { useDispatch } from "react-redux";
+import { uploadProductFile } from "../../store/slices/singleProductSlice";
 
 const ContributionForm = () => {
   const [formValues, setFormValues] = useState({
@@ -10,7 +13,14 @@ const ContributionForm = () => {
     lensModel: "",
     description: "",
   });
+  const [file, setFile] = useState(null);
+  const [dragActive, setDragActive] = useState(false);
+  const dispatch = useDispatch()
 
+  // Reference for the file input
+  const fileInputRef = useRef(null);
+
+  // Handling input field changes
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormValues((prevValues) => ({
@@ -19,22 +29,63 @@ const ContributionForm = () => {
     }));
   };
 
+  // Handling file change (from input or drag-drop)
+  const handleFileChange = (e) => {
+    const selectedFile = e.target.files[0];
+    setFile(selectedFile);
+  };
+
+  // Triggering the file input when the Import button is clicked
+  const handleFileClick = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
+    }
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    console.log("Form Submitted:", formValues);
+    // Ensure a file is selected
+    if (!file) {
+      alert("Please select a file to upload.");
+      return;
+    }
 
+    dispatch(uploadProductFile({ formData: formValues, file }));
+
+    // Reset the form and file input after submission
     setFormValues({
       camera: "",
       lensManufacturer: "",
       lensModel: "",
       description: "",
     });
+    setFile(null);
   };
+
+  // Drag and Drop Handlers
+  const handleDrag = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (e.type === "dragenter" || e.type === "dragover") {
+      setDragActive(true);
+    } else if (e.type === "dragleave") {
+      setDragActive(false);
+    }
+  };
+
+  const handleDrop = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setDragActive(false);
+    if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+      setFile(e.dataTransfer.files[0]);
+    }
+  };
+
   return (
-    <form>
-    <div className={styles.formCont}>
-      
+    <form onSubmit={handleSubmit}>
+      <div className={styles.formCont}>
         <div className={styles.form}>
           <input
             type="text"
@@ -45,6 +96,7 @@ const ContributionForm = () => {
             placeholder="Camera"
             required
           />
+
           <select
             id="lensManufacturer"
             name="lensManufacturer"
@@ -86,18 +138,41 @@ const ContributionForm = () => {
             onClick={handleSubmit}
           />
         </div>
-      
 
-      <div className={styles.atachment}>
-        <div className={styles.attachCont}>
-          {selectFilesvg}
-          <p className={styles.selectmessage}>Select a file from local drive or <span>drag it here</span></p>
-          <p className={styles.caution}>(The download file cannot be larger than 15 MB)</p>
+        <div
+          className={styles.atachment}
+          onDragEnter={handleDrag}
+          onDragOver={handleDrag}
+          onDragLeave={handleDrag}
+          onDrop={handleDrop}
+        >
+          <div className={styles.attachCont}>
+            {selectFilesvg}
+            <p className={styles.selectmessage}>
+              Select a file from local drive or <span>drag it here</span>
+            </p>
+            <p className={styles.caution}>
+              (The download file cannot be larger than 15 MB)
+            </p>
+          </div>
+          <div className={styles.btn}>
+            <input
+              type="file"
+              id="fileInput"
+              accept=".jpg,.jpeg,.png,.pdf" // Adjust file types accordingly
+              ref={fileInputRef}
+              style={{ display: "none" }} // Hiding the file input using CSS
+              onChange={handleFileChange}
+            />
+            <Button
+              variant="grey"
+              label="Import"
+              iconType="arrowRight"
+              onClick={handleFileClick}
+            />
+          </div>
         </div>
-        <div className={styles.btn}><Button variant="grey" label="Import" iconType="arrowRight"/></div>
       </div>
-      
-    </div>
     </form>
   );
 };

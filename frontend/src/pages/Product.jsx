@@ -15,7 +15,7 @@ const Product = ()=>{
   const { singleProduct } = useSelector(state => state.singleProduct)
   const dispatch = useDispatch()
   const { productId } = useParams();
-
+  
   useEffect(()=>{
     dispatch(fetchSingleProduct(productId))
   },[dispatch, productId])

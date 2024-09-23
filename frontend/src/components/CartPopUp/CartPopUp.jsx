@@ -4,6 +4,7 @@ import Button from "../Button"
 import { useNavigate } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
 import { fetchCart } from "../../store/slices/cartSlice"
+import { createOrder } from "../../store/slices/orderSlice"
 
 import styles from "./CartPopUp.module.css"
 
@@ -14,16 +15,19 @@ const CartPopUp = ({ closeCart }) => {
   const {cart} = useSelector(state => state.cart)
   const dispatch = useDispatch()
 
-  console.log(cart);
-  
-
   useEffect(()=>{
       dispatch(fetchCart())
   },[dispatch])
 
-  const handleCheckOut = () => {
-    navigate("checkout");
-    handleClose();
+  const handleCheckOut = async () => {
+    try {
+      // Wait for the createOrder dispatch to complete
+      await dispatch(createOrder()).unwrap();
+      navigate("checkout"); 
+      handleClose(); 
+    } catch (error) {
+      console.error("Failed to create order:", error);
+    }
   };
 
   const handleClose = () => {
