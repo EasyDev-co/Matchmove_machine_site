@@ -14,7 +14,6 @@ const MainPage = ()=>{
       <MainShare/>
       <HowItWorks/>
       <TutorialPreview/>
-      <section>Reviews</section>
       <JoinCommunity/>
       <ScrollToTopBtn/>
       </>

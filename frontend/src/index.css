@@ -12,6 +12,7 @@ body {
 
 body{
   padding-top: 90px;
+  box-sizing: border-box;
 }
 
 h1,
@@ -69,7 +70,7 @@ li {
 .layout {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  min-height: calc(100vh - 90px);
 }
 
 .content {

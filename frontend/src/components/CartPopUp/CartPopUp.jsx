@@ -34,6 +34,9 @@ const CartPopUp = ({ closeCart }) => {
     setIsVisible(false);
   };
 
+  console.log(cart);
+  
+
   useEffect(() => {
     if (!isVisible) {
       const timer = setTimeout(() => {
@@ -58,12 +61,12 @@ if(cart.items){
             />
           </div>
         </div>
-        <CartItems cart={cart} />
+        <CartItems cart={cart.items} />
         <div className={styles.checkoutField}>
           {cart.items.length > 0 && (
             <div className={styles.checkInfo}>
               <h4 className="h4-medium">Total</h4>
-              <h4 className="h4-medium">$625.00</h4>
+              <h4 className="h4-medium">${cart.total_price}</h4>
             </div>
           )}
           {cart.items.length > 0 && (

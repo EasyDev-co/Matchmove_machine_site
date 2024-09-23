@@ -15,9 +15,6 @@ export const fetchCameras = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     const accessToken = Cookies.get('access_token');
 
-    console.log("fierd");
-    
-
     try {
       const response = await fetch(`${BASE_URL}/products/v1/cameras/`, {
         method: 'GET',

@@ -1,0 +1,33 @@
+.main {
+    color: white;
+    position: fixed;
+    z-index: 10000;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0px;
+    gap: 50px;
+}
+
+.main::before {
+    content: '';
+    position: absolute; /* Position it absolutely */
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url("../../assets/images/loading.png") center center / cover no-repeat; 
+    background-color:  #5D5D5D;
+    opacity: 0.5; 
+    z-index: -1; 
+}
+
+.conent {
+    z-index: 3;
+}

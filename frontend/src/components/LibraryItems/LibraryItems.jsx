@@ -11,151 +11,201 @@ import AdaptFilters from "../LibraryAdaptFilters/AdaptFilters";
 import { useSelector } from "react-redux";
 import { useSearchParams } from "react-router-dom";
 
-  const LibraryItems = () => {
+const LibraryItems = () => {
+  const { products } = useSelector(state => state.products);
+  const [searchParams, setSearchParams] = useSearchParams();
+  
+  const [selected, setSelected] = useState({ cameras: [], lenses: [] });
+  const [openBrand, setOpenBrand] = useState(null);
+  const [search, setSearch] = useState("");
+  const [showFilters, setShowFilters] = useState(false);
 
-    const {products} = useSelector(state => state.products)
-    const [searchParams, setSearchParams] = useSearchParams();
+  const urlCameras = searchParams.getAll('camera');
+  const urlLenses = searchParams.getAll('lens');
 
-    const [selected, setSelected] = useState({ cameras: [], lenses: [] });
-    const [openBrand, setOpenBrand] = useState(null);
-    const [search, setSearch] = useState("")
+  const navigate = useNavigate();
 
-    const [showFilters, setShowFilters] = useState(false);
+  const toggleLensMenu = (brand) => {
+    setOpenBrand(openBrand === brand ? null : brand);
+  };
 
-    const navigate = useNavigate()
+  const handleBrandSelect = (cameraObj, event) => {
+    event.stopPropagation();
+    setSelected(prev => {
+      const updatedCameras = prev.cameras.some(cam => cam.id === cameraObj.id)
+        ? prev.cameras.filter(b => b.id !== cameraObj.id)
+        : [...prev.cameras, cameraObj];
+      return { ...prev, cameras: updatedCameras };
+    });
+  };
 
-    const toggleLensMenu = (brand) => {
-        setOpenBrand(openBrand === brand ? null : brand);
-    };
+  const handleLensSelect = (lensObj) => {
+    setSelected(prev => {
+      const updatedLenses = prev.lenses.some(lens => lens.id === lensObj.id)
+        ? prev.lenses.filter(l => l.id !== lensObj.id)
+        : [...prev.lenses, lensObj];
+      return { ...prev, lenses: updatedLenses };
+    });
+  };
 
-    const handleBrandSelect = (brand, event) => {
-        event.stopPropagation();
-        setSelected(prev => {
-            const updatedCameras = prev.cameras.includes(brand)
-                ? prev.cameras.filter(b => b !== brand)
-                : [...prev.cameras, brand];
-            return { ...prev, cameras: updatedCameras };
-        });
-    };
+  const handleSearch = (e) => {
+    setSearch(e.target.value);
+  };
 
-    const handleLensSelect = (lens) => {
-        setSelected(prev => {
-            const updatedLenses = prev.lenses.includes(lens)
-                ? prev.lenses.filter(l => l !== lens)
-                : [...prev.lenses, lens];
-            return { ...prev, lenses: updatedLenses };
-        });
-        
-    };
+  const resetAllFilters = () => {
+    setSelected({ cameras: [], lenses: [] });
+    setShowFilters(false);
+    setSearch("")
+    navigate({ search: '' }); // Clear URL filters
+  };
 
-    const handleSearch =(e)=>{
-      const value = e.target.value;
-      setSearch(value)
+  const applyFilters = () => {
+    setShowFilters(true);
+    
+    const updatedSearchParams = new URLSearchParams(searchParams);
+    updatedSearchParams.delete("camera");
+    updatedSearchParams.delete("lens");
+  
+    // Update the search parameter if there's a search value
+    if (search) {
+      updatedSearchParams.set("search", search);
+    } else {
+      updatedSearchParams.delete("search");
     }
+  
+    // Append the IDs of selected cameras
+    selected.cameras.forEach(camera => {
+      updatedSearchParams.append("camera", camera.id);
+    });
+  
+    // Append the IDs of selected lenses
+    selected.lenses.forEach(lens => {
+      updatedSearchParams.append("lens", lens.id);
+    });
+  
+    // Update the URL with the new search parameters
+    setSearchParams(updatedSearchParams);
+  };
 
-    const resetAllFilters = () => {
-        setSelected({ cameras: [], lenses: [] });
-        setShowFilters(false);
-        navigate({ search: '' }); // Clear URL filters
+  const discardFilter = (itemId, type) => {
+    const updatedSelected = {
+      ...selected,
+      [type]: selected[type].filter((item) => item.id !== itemId), // Compare IDs for filtering
     };
+    
+    setSelected(updatedSelected);
+    
+    const updatedSearchParams = new URLSearchParams(searchParams);
+    updatedSearchParams.delete(type === "cameras" ? "camera" : "lens");
+    
+    updatedSelected[type].forEach((remainingItem) => {
+      updatedSearchParams.append(type === "cameras" ? "camera" : "lens", remainingItem.id); // Append the ID
+    });
+    
+    setSearchParams(updatedSearchParams);
+  };
 
-    const applyFilters = () => {
-        setShowFilters(true)
-        
-        const updatedSearchParams = new URLSearchParams(searchParams);
-        updatedSearchParams.set("search", search);
+  return (
+    <section className={`height ${styles.main}`}>
+      <div className={styles.filterscont}>
+        <AdaptFilters
+          selected={selected}
+          openBrand={openBrand}
+          toggleLensMenu={toggleLensMenu}
+          handleBrandSelect={handleBrandSelect}
+          handleLensSelect={handleLensSelect}
+          handleSearch={handleSearch}
+          search={search}
+          applyFilters={applyFilters}
+        />
+        <div className={styles.resetallfilters}>
+        {showFilters && (urlCameras.length > 0 || urlLenses.length > 0 || search) && (
+    <Button
+      variant="outline-red"
+      label="Reset all filters"
+      iconType="crossbtn"
+      onClick={resetAllFilters}
+    />
+  )}
+</div>
+{showFilters && urlCameras.map((cameraId, i) => {
+  const camera = selected.cameras.find(cam => cam.id === cameraId);
+  return (
+    camera && (
+      <button
+        onClick={() => discardFilter(cameraId, "cameras")}
+        key={i}
+        className={styles.deleteFilter}
+      >
+        {camera.model_name} {redCross}
+      </button>
+    )
+  );
+})}
+{showFilters && urlLenses.map((lensId, i) => {
+  const lens = selected.lenses.find(lens => lens.id === lensId);
+  return (
+    lens && (
+      <button
+        onClick={() => discardFilter(lensId, "lenses")}
+        key={i}
+        className={styles.deleteFilter}
+      >
+        {`${lens.brand} ${lens.model_name}`} {redCross}
+      </button>
+    )
+  );
+})}
+      </div>
 
-        setSearchParams(updatedSearchParams);
-    };
-
-    const discardFilter = (item, type) => {
-        setSelected(prev => {
-            const updated = { ...prev };
-            updated[type] = updated[type].filter(i => i !== item);
-            return updated;
-        });
-        setSearch("")
-    };
-
-    return (
-      <section className={`height ${styles.main}`}>
-        <div className={styles.filterscont}>
-          <AdaptFilters
+      <div className={styles.body}>
+        <div className={styles.filterwrap}>
+          <Filters
             selected={selected}
             openBrand={openBrand}
             toggleLensMenu={toggleLensMenu}
             handleBrandSelect={handleBrandSelect}
             handleLensSelect={handleLensSelect}
+            handleSearch={handleSearch}
+            search={search}
             applyFilters={applyFilters}
           />
-          <div className={styles.resetallfilters}>
-            {showFilters && (
-              <Button
-                variant="outline-red"
-                label="Reset all filters"
-                iconType="crossbtn"
-                onClick={resetAllFilters}
+        </div>
+
+        <div className={styles.assetscont}>
+          <div className={styles.topPagination}>
+            <div className={styles.contpag}>
+              <Pagination
+                pagination={{
+                  count: products.count,
+                  next: products.next,
+                  previous: products.previous,
+                }}
               />
-            )}
-          </div>
-          {showFilters &&
-            selected.cameras &&
-            selected.cameras.map((item, i) => (
-              <button
-                onClick={() => discardFilter(item, "cameras")}
-                key={i}
-                className={styles.deleteFilter}
-              >
-                {item} {redCross}
-              </button>
-            ))}
-          {showFilters &&
-            selected.lenses &&
-            selected.lenses.map((item, i) => (
-              <button
-                onClick={() => discardFilter(item, "lenses")}
-                key={i}
-                className={styles.deleteFilter}
-              >
-                {item} {redCross}
-              </button>
-            ))}
-        </div>
-
-        <div className={styles.body}>
-          <div className={styles.filterwrap}>
-            <Filters
-              selected={selected}
-              openBrand={openBrand}
-              toggleLensMenu={toggleLensMenu}
-              handleBrandSelect={handleBrandSelect}
-              handleLensSelect={handleLensSelect}
-              handleSearch={handleSearch}
-              search={search}
-              applyFilters={applyFilters}
-            />
-          </div>
-
-          <div className={styles.assetscont}>
-            <div className={styles.topPagination}>
-              <div className={styles.contpag}>
-                <Pagination pagination={{count:products.count, next:products.next, previous:products.previous}} />
-              </div>
-              <div className={styles.toggleCont}>
-                <p>Free assets</p>
-                <Toggle />
-              </div>
             </div>
-            <div className={styles.assets}>
-              {products.results? products.results.map((item) => (
-                <Asset key={item.id} asset={item} />
-              )):""}
+            <div className={styles.toggleCont}>
+              <p>Free assets</p>
+              <Toggle />
             </div>
-            <Pagination pagination={{count:products.count, next:products.next, previous:products.previous}} />
           </div>
+          <div className={styles.assets}>
+            {products.results
+              ? products.results.map((item) => (
+                  <Asset key={item.id} asset={item} />
+                ))
+              : ""}
+          </div>
+          <Pagination
+            pagination={{
+              count: products.count,
+              next: products.next,
+              previous: products.previous,
+            }}
+          />
         </div>
-      </section>
-    );
+      </div>
+    </section>
+  );
 };
 
-export default LibraryItems
+export default LibraryItems;

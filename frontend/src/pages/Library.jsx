@@ -24,11 +24,19 @@ const Library = () => {
   const accessType = searchParams.get('access_type') || "";
   const search = searchParams.get('search') || "";
 
+  const cameras = searchParams.getAll('camera') || [];
+  const lenses = searchParams.getAll('lens') || [];
+
   useEffect(() => {
-    dispatch(fetchProducts({ page, pageSize, accessType, search }));
-  }, [page, pageSize, accessType, search, dispatch]);
-
-
+    dispatch(fetchProducts({ 
+      page, 
+      pageSize, 
+      accessType, 
+      search, 
+      camera: cameras,  // Pass arrays of cameras
+      lens: lenses      // Pass arrays of lenses
+    }));
+  }, [page, pageSize, accessType, search, cameras, lenses, dispatch]);
   
   return (
     <>

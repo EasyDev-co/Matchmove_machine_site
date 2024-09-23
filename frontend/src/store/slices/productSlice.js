@@ -13,29 +13,39 @@ export const fetchProducts = createAsyncThunk(
   "products/fetchProducts",
   async ({ page, pageSize, camera, lens, file_format, accessType, price__gte, price__lte, search }, { rejectWithValue }) => {
     try {
-      // Build query parameters
+      // Initialize URLSearchParams with common parameters
       const queryParams = new URLSearchParams({
         page,
         page_size: pageSize,
         access_type: accessType,
-        search,
-        ...(camera && { camera }),
-        ...(lens && { lens }),
-        ...(file_format && { file_format }),
-        ...(price__gte && { price__gte }),
-        ...(price__lte && { price__lte }),
-      }).toString();
+        search: search,
+      });
 
-      console.log(queryParams);
-      
+      // Append each camera as a separate parameter
+      if (camera && camera.length > 0) {
+        camera.forEach(cam => {
+          queryParams.append('camera', cam);
+        });
+      }
 
-      const response = await fetchWithAuth(`${BASE_URL}/products/v1/products/?${queryParams}`, {
+      // Append each lens as a separate parameter
+      if (lens && lens.length > 0) {
+        lens.forEach(l => {
+          queryParams.append('lens', l);
+        });
+      }
+
+      // Convert query parameters to string
+      const queryString = queryParams.toString();
+      console.log(queryString); // Check query string for correctness
+
+      const response = await fetchWithAuth(`${BASE_URL}/products/v1/products/?${queryString}`, {
         method: 'GET',
       });
 
       if (!response.ok) {
         const errorDetails = await response.json();
-        console.error('Server responded with error:', errorDetails);
+        console.log('Server responded with error:', errorDetails);
         return rejectWithValue(errorDetails);
       }
 

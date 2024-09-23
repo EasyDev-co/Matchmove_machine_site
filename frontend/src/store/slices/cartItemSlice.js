@@ -7,8 +7,12 @@ export const postCartItem = createAsyncThunk(
   'cart/postCartItem',
   async ( id, { rejectWithValue }) => {
     try {
-      const response = await fetchWithAuth(`${BASE_URL}/cart/v1/cart/${id}/`, {
-        method: 'POST'
+      const response = await fetchWithAuth(`${BASE_URL}/cart/v1/cart/`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json', 
+        },
+        body: JSON.stringify({product:id, quantity:1 }), 
       });
 
       if (!response.ok) {
@@ -36,7 +40,10 @@ export const deleteCartItem = createAsyncThunk(
         return rejectWithValue(errorDetails);
       }
 
-      return id;
+      const res = await response.json()
+      console.log(res);
+      return res
+      
     } catch (error) {
       return rejectWithValue(error.message);
     }

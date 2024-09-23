@@ -4,6 +4,7 @@ import JoinCommunity from "../components/JoinCommunity/JoinCommunity";
 import SharePage from "../components/SharePage/SharePage";
 import ProductDescription from "../components/ProductDescription/ProductDescription";
 import ProductField from "../components/ProductField/ProductField";
+import LoadingScreen from "../components/LoadingScreen/LoadingScreen";
 
 import { useParams } from "react-router-dom";
 import { useEffect } from "react";
@@ -22,16 +23,17 @@ const Product = ()=>{
 
   if(singleProduct){
     return (
-      <>
-        <NavigationTop title="Distortion grids pack for Canon EF" singleProduct={singleProduct}/>
-        <ProductBanner singleProduct={singleProduct}/>
-        <ProductDescription singleProduct={singleProduct}/>
-        <ProductField singleProduct={singleProduct}/>
-        <JoinCommunity/>
-        <SharePage/>
-      </>
+      // <>
+      //   <NavigationTop title="Distortion grids pack for Canon EF" singleProduct={singleProduct}/>
+      //   <ProductBanner singleProduct={singleProduct}/>
+      //   <ProductDescription singleProduct={singleProduct}/>
+      //   <ProductField singleProduct={singleProduct}/>
+      //   <JoinCommunity/>
+      //   <SharePage/>
+      // </>
+      <LoadingScreen/>
     );
-  }
+  } 
 }
 
 export default Product
