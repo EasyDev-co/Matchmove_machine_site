@@ -1,5 +1,4 @@
 from django.shortcuts import get_object_or_404
-
 from apps.cart.models import Cart, CartItem
 from apps.products.models import Product
 
@@ -10,33 +9,25 @@ class CartService:
 
     def get_or_create_cart(self):
         """Получаем активную корзину пользователя или создаем новую, если необходимо."""
-
         cart = Cart.objects.filter(user=self.user).first()
         if not cart:
             cart = Cart.objects.create(user=self.user)
-        else:
-            # Если корзина найдена, но не активна, делаем ее активной
-            if not cart.is_active:
-                cart.is_active = True
-                cart.save()
+        elif not cart.is_active:
+            cart.is_active = True
+            cart.save()
         return cart
 
     def add_product(self, product_id, quantity=1):
-        """Добавление товара в корзину."""
-
+        """Добавление уникального товара в корзину. Нельзя добавить один и тот же товар дважды."""
         cart = self.get_or_create_cart()
         product = get_object_or_404(Product, id=product_id)
 
-        cart_item, item_created = CartItem.objects.get_or_create(
-            cart=cart, product=product
+        if CartItem.objects.filter(cart=cart, product=product).exists():
+            raise ValueError("Этот товар уже добавлен в корзину")
+
+        cart_item = CartItem.objects.create(
+            cart=cart, product=product, quantity=int(quantity)
         )
-
-        if not item_created:
-            cart_item.quantity += int(quantity)
-        else:
-            cart_item.quantity = int(quantity)
-
-        cart_item.save()
         return cart_item
 
     def update_quantity(self, cart_item_id, quantity):
@@ -50,7 +41,8 @@ class CartService:
         cart_item.save()
         return cart_item
 
-    def delete_item(self, cart_item_id):
+    @staticmethod
+    def delete_item(cart_item_id):
         """Удаление товара из корзины."""
         cart_item = get_object_or_404(CartItem, id=cart_item_id)
         cart_item.delete()
