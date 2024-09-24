@@ -60,7 +60,14 @@ class ProductListView(generics.ListAPIView):
     serializer_class = ProductSerializer
     pagination_class = ProductPagination
     filter_backends = [DjangoFilterBackend, filters.SearchFilter]
-    search_fields = ["author__username", "category", "file_format__name"]
+    search_fields = [
+        "author__username",
+        "category",
+        "file_format__format_type",
+        "camera__model_name",
+        "lens__brand",
+        "lens__model_name",
+    ]
     filterset_fields = {
         "camera": ["exact"],
         "lens": ["exact"],
