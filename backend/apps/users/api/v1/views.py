@@ -38,7 +38,9 @@ class UserViewSet(viewsets.GenericViewSet):
 
     def partial_update(self, request, *args, **kwargs):
         user = self.get_object()
-        serializer = UserUpdateSerializer(instance=user, data=request.data, partial=True)
+        serializer = UserUpdateSerializer(
+            instance=user, data=request.data, partial=True
+        )
         if serializer.is_valid():
             try:
                 serializer.save()
@@ -89,6 +91,7 @@ class UserAPIView(APIView):
 
 class UserRegisterView(APIView):
     """Вьюсет регистрации."""
+
     permission_classes = [AllowAny]
     serializer_class = UserRegistrationSerializer
 
@@ -103,17 +106,13 @@ class UserRegisterView(APIView):
             )
             user.save()
             send_confirm_code.delay(
-                user_id=user.pk,
-                code_purpose=CodePurpose.CONFIRM_EMAIL
+                user_id=user.pk, code_purpose=CodePurpose.CONFIRM_EMAIL
             )
             return Response(
-                {"message": "User registered successfully!"},
-                status=status.HTTP_201_CREATED
+                {"message": "Пользователь успешно зарегистрирован!"},
+                status=status.HTTP_201_CREATED,
             )
-        return Response(
-            serializer.errors,
-            status=status.HTTP_400_BAD_REQUEST
-        )
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class ConfirmCodeMixin:
@@ -133,14 +132,15 @@ class ConfirmCodeMixin:
 
 class EmailVerificationCodeAPIView(ConfirmCodeMixin, APIView):
     """Представление для верификации кода при регистрации пользователя."""
+
     permission_classes = [AllowAny]
     email_serializer = EmailAndCodeSerializer
 
     def post(self, request, *args, **kwargs):
         serializer = self.email_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        email = serializer.validated_data['email']
-        code = serializer.validated_data['code']
+        email = serializer.validated_data["email"]
+        code = serializer.validated_data["code"]
         user = User.objects.get(email=email)
         try:
             self.validate_code(
@@ -150,8 +150,8 @@ class EmailVerificationCodeAPIView(ConfirmCodeMixin, APIView):
             )
         except InvalidCode:
             return Response(
-                {'message': InvalidCode.default_detail},
-                status=status.HTTP_400_BAD_REQUEST
+                {"message": InvalidCode.default_detail},
+                status=status.HTTP_400_BAD_REQUEST,
             )
         with transaction.atomic():
             user.is_verified = True
@@ -160,15 +160,17 @@ class EmailVerificationCodeAPIView(ConfirmCodeMixin, APIView):
         refresh_token = RefreshToken.for_user(user)
         return Response(
             {
-                'user': str(user.id),
-                'refresh': str(refresh_token),
-                'access': str(refresh_token.access_token)
-            }, status=status.HTTP_201_CREATED
+                "user": str(user.id),
+                "refresh": str(refresh_token),
+                "access": str(refresh_token.access_token),
+            },
+            status=status.HTTP_201_CREATED,
         )
 
 
 class ResetPasswordAPIView(APIView):
     """Представление для восстановления пароля."""
+
     permission_classes = [AllowAny]
     email_serializer = EmailSerializer
 
@@ -185,13 +187,16 @@ class ResetPasswordAPIView(APIView):
         )
 
         return Response(
-            data={'message': 'A code for password reset has been sent to the specified email.'},
-            status=status.HTTP_200_OK
+            data={
+                "message": "Код для восстановления пароля отправлен на указанный email."
+            },
+            status=status.HTTP_200_OK,
         )
 
 
 class PasswordChangeAPIView(ConfirmCodeMixin, APIView):
     """Представление для смены пароля пользователя."""
+
     password_change_serializer = PasswordChangeSerializer
 
     def post(self, request, *args, **kwargs):
@@ -204,8 +209,7 @@ class PasswordChangeAPIView(ConfirmCodeMixin, APIView):
         # добавлено двойное подтверждение пароля
         if new_password != confirm_password:
             return Response(
-                {"message": "The passwords do not match."},
-                status=status.HTTP_400_BAD_REQUEST
+                {"message": "Пароли не совпадают."}, status=status.HTTP_400_BAD_REQUEST
             )
         user = User.objects.get(email=email)
         self.validate_code(
@@ -218,13 +222,13 @@ class PasswordChangeAPIView(ConfirmCodeMixin, APIView):
             user.save()
             ConfirmCode.objects.filter(code=code).update(is_used=True)
         return Response(
-            {"message": "Password changed successfully."},
-            status=status.HTTP_200_OK
+            {"message": "Пароль успешно изменен."}, status=status.HTTP_200_OK
         )
 
 
 class UserLoginView(TokenObtainPairView):
     """Вьюсет логина."""
+
     permission_classes = [AllowAny]
     serializer_class = UserTokenObtainPairSerializer
 
@@ -238,11 +242,8 @@ class UserLogoutView(APIView):
             token = RefreshToken(logout_token)
             token.blacklist()
             return Response(
-                {"message": "Logged out successfully."},
-                status=status.HTTP_205_RESET_CONTENT
+                {"message": "Успешный выход из системы."},
+                status=status.HTTP_205_RESET_CONTENT,
             )
         except Exception as e:
-            return Response(
-                {"message": str(e)},
-                status=status.HTTP_400_BAD_REQUEST
-            )
+            return Response({"message": str(e)}, status=status.HTTP_400_BAD_REQUEST)

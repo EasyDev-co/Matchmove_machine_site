@@ -11,15 +11,12 @@ User = get_user_model()
 
 
 class UserRegistrationSerializer(serializers.ModelSerializer):
-    """"Сериалайзер пользователя."""
+    """Сериалайзер пользователя."""
 
     password = serializers.CharField(
         write_only=True,
         required=True,
-        validators=[
-            validate_custom_password,
-            validate_password
-        ]
+        validators=[validate_custom_password, validate_password],
     )
 
     class Meta:
@@ -29,9 +26,7 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
             "email",
             "password",
         )
-        extra_kwargs = {
-            "password": {"write_only": True}
-        }
+        extra_kwargs = {"password": {"write_only": True}}
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -43,6 +38,11 @@ class UserSerializer(serializers.ModelSerializer):
             "website",
             "portfolio",
             "about_me",
+            "whatsapp",
+            "messenger",
+            "twitter",
+            "telegram",
+            "reddit",
             "linkedin",
             "instagram",
             "youtube",
@@ -51,9 +51,7 @@ class UserSerializer(serializers.ModelSerializer):
             "profile_picture",
             "password",
         ]
-        extra_kwargs = {
-            "password": {"write_only": True}
-        }
+        extra_kwargs = {"password": {"write_only": True}}
 
 
 class UserDetailSerializer(serializers.ModelSerializer):
@@ -65,6 +63,11 @@ class UserDetailSerializer(serializers.ModelSerializer):
             "website",
             "portfolio",
             "about_me",
+            "whatsapp",
+            "messenger",
+            "twitter",
+            "telegram",
+            "reddit",
             "linkedin",
             "instagram",
             "youtube",
@@ -83,6 +86,11 @@ class UserUpdateSerializer(serializers.ModelSerializer):
             "website",
             "portfolio",
             "about_me",
+            "whatsapp",
+            "messenger",
+            "twitter",
+            "telegram",
+            "reddit",
             "linkedin",
             "instagram",
             "youtube",
@@ -121,29 +129,32 @@ class UserTokenObtainPairSerializer(TokenObtainPairSerializer):
 
 class EmailSerializer(serializers.Serializer):
     """Сериализатор для проверки email."""
+
     email = serializers.EmailField()
 
     def validate_email(self, value):
         user = User.objects.filter(email=value).first()
         if not user:
-            raise ValidationError("No such user.")
+            raise ValidationError("Нет такого пользователя.")
         return value
 
 
 class EmailAndCodeSerializer(EmailSerializer):
     """Сериализатор для проверки кода."""
+
     code = serializers.CharField()
 
 
 class PasswordChangeSerializer(EmailAndCodeSerializer):
     """Сериализатор для смены пароля."""
+
     new_password = serializers.CharField(
         write_only=True,
         required=True,
         validators=[
             validate_custom_password,
             validate_password,
-        ]
+        ],
     )
     confirm_password = serializers.CharField(
         write_only=True,
@@ -151,5 +162,5 @@ class PasswordChangeSerializer(EmailAndCodeSerializer):
         validators=[
             validate_custom_password,
             validate_password,
-        ]
+        ],
     )
