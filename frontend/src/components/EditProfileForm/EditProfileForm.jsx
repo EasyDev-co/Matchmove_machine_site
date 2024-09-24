@@ -44,10 +44,10 @@ const EditProfileForm = ({profile, picture, status}) => {
                     </button>
                 </div>
             </div>
-            {activeButton === 'Information' && <InformationForm profile={profile} picture={picture} status={status} />}
-            {activeButton === 'About me' && <AboutMeForm about={profile.about_me} picture={picture} status={status} />}
-            {activeButton === 'Socials' && <SocialsForm profile={ profile} picture={picture} />}
-            {activeButton === 'Password' && <PasswordForm email={profile.email} picture={picture} />}
+            {activeButton === 'Information' && <InformationForm profile={profile} picture={picture} status={status.updateUserProfileStatus} />}
+            {activeButton === 'About me' && <AboutMeForm about={profile.about_me} picture={picture} status={status.updateUserProfileStatus} />}
+            {activeButton === 'Socials' && <SocialsForm profile={ profile} picture={picture} status={status.updateUserProfileStatus} />}
+            {activeButton === 'Password' && <PasswordForm email={profile.email} picture={picture} status={status.changePasswordStatus} />}
         </div>
     );
 };

@@ -156,9 +156,9 @@ const Login = ({ onModalClose }) => {
               </div>
               <div className="form-button-cont">
                 <Button
-                  label="Sign In"
+                  label={status.loginStatus==="loading"?"Signing in...":"Sign In"}
                   iconType="arrowRight"
-                  variant="blue"
+                  variant={status.loginStatus==="loading"? "grey":"blue"}
                   type="submit"
                 />
                 <Button

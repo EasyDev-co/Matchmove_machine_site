@@ -13,7 +13,7 @@ import { fetchSingleProduct } from "../store/slices/singleProductSlice";
 
 const Product = ()=>{
 
-  const { singleProduct } = useSelector(state => state.singleProduct)
+  const { singleProduct, status} = useSelector(state => state.singleProduct)
   const dispatch = useDispatch()
   const { productId } = useParams();
   
@@ -21,19 +21,28 @@ const Product = ()=>{
     dispatch(fetchSingleProduct(productId))
   },[dispatch, productId])
 
+  if(status.fetchProductStatus==="loading"){
+    return(
+      <LoadingScreen/>
+    )
+  }
+
   if(singleProduct){
     return (
-      // <>
-      //   <NavigationTop title="Distortion grids pack for Canon EF" singleProduct={singleProduct}/>
-      //   <ProductBanner singleProduct={singleProduct}/>
-      //   <ProductDescription singleProduct={singleProduct}/>
-      //   <ProductField singleProduct={singleProduct}/>
-      //   <JoinCommunity/>
-      //   <SharePage/>
-      // </>
-      <LoadingScreen/>
+      <>
+        <NavigationTop title="Distortion grids pack for Canon EF" singleProduct={singleProduct}/>
+        <ProductBanner singleProduct={singleProduct}/>
+        <ProductDescription singleProduct={singleProduct}/>
+        <ProductField singleProduct={singleProduct}/>
+        <JoinCommunity/>
+        <SharePage/>
+      </>
     );
   } 
+
+  if(status.fetchProductStatus==="failed"){
+    return <section className="width"><h2 className="h2-medium">Item not found or an error occurred.</h2> <p className="h4-medium">Please try again.</p></section>
+  }
 }
 
 export default Product

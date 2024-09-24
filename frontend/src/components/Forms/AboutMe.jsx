@@ -6,7 +6,7 @@ const AboutMe = ({ formData, handleChange }) => {
         id="aboutMe"
         name="aboutMe"
         placeholder="About me"
-        value={"" || formData.aboutMe}
+        value={formData.aboutMe}
         onChange={handleChange}
       />
     );

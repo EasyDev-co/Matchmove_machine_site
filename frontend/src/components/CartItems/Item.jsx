@@ -2,20 +2,26 @@ import styles from "./CartItems.module.css";
 import Button from "../Button";
 
 import { deleteCartItem } from "../../store/slices/cartItemSlice";
+import { fetchCart } from "../../store/slices/cartSlice";
 import { useDispatch } from "react-redux";
 
 const Item = ({ item }) => {
 
   const dispatch = useDispatch()
 
-  const handleDeleteItem =()=>{
-    dispatch(deleteCartItem(item.id))
-  }
+  const handleDeleteItem = async () => {
+    try {
+      await dispatch(deleteCartItem(item.id)).unwrap();
+      dispatch(fetchCart())
+    } catch (error) {
+      console.error('Error processing request:', error);
+    }
+  };
 
   return (
     <div className={styles.itemCont}>
       <div className={styles.start}>
-        <div className={styles.priceCont}>${item.total_price}</div>
+        <div><div className={styles.priceCont}>${item.total_price}</div></div>
         {item.product}
       </div>
       <Button

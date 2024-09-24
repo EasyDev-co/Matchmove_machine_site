@@ -44,8 +44,7 @@
     color: white;
     font-weight: 600;
     font-size: 15px;
-    line-height: 23px;
-
+    line-height: 23px
 }
 
 .itemCont {
@@ -65,4 +64,21 @@
     flex-direction: row;
     align-items: center;
     gap: 20px;
+}
+
+
+@media (max-width: 400px) {
+    .container {
+        padding: 0px;
+    }
+    .itemCont {
+        gap: 0px;
+        padding: 0;
+    }
+
+    .start{
+        max-width: 200px;
+        padding: 0;
+        margin: 10px;
+    }
 }

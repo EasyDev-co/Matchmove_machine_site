@@ -42,8 +42,10 @@ const Header = () => {
   }
 
   useEffect(()=>{
-    dispatch(fetchUserProfile())
-  },[dispatch])
+    if(isAuthenticated){
+      dispatch(fetchUserProfile())
+    }
+  },[dispatch, isAuthenticated])
 
   return (
     <header className={styles.main}>

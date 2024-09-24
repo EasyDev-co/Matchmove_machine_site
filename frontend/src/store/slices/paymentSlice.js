@@ -4,24 +4,34 @@ import { fetchWithAuth } from "../../utils/authUtils";
 
 export const postPayment = createAsyncThunk(
     'payment/postPayment',
-    async (_, {rejectWithValue})=>{
+    async (orderData, { rejectWithValue }) => {
+
+        console.log( JSON.stringify(orderData));
+        
         try {
             const response = await fetchWithAuth(`${BASE_URL}/payments/v1/transactions/create/`, {
-                method: 'POST'
-              });
-            
-              if (!response.ok) {
-                const errorDetails = await response.json();
-                return rejectWithValue(errorDetails);
-              }
-        
-              return response.json();
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(orderData),
+            });
 
+            if (!response.ok) {
+                const errorDetails = await response.json();
+                console.log(errorDetails);
+                
+                return rejectWithValue(errorDetails);
+            }
+
+            const res = response.json();
+            console.log(res);
+            return res
         } catch (error) {
             return rejectWithValue(error.message);
         }
     }
-)
+);
 
 const initialState={
     status:'idle',

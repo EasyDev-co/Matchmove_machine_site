@@ -15,14 +15,15 @@ const Library = () => {
 
   useEffect(() => {
     if (!searchParams.get("page")) {
-      setSearchParams({ page: 1, page_size: 2 });
+      setSearchParams({ page: 1, page_size: 24 });
     }
   }, [searchParams, setSearchParams]);
 
   const page = Number(searchParams.get('page')) || 1;
-  const pageSize = Number(searchParams.get('page_size')) || 2;
+  const pageSize = Number(searchParams.get('page_size')) || 24;
   const accessType = searchParams.get('access_type') || "";
   const search = searchParams.get('search') || "";
+  const format = searchParams.get('format') || ""
 
   const cameras = searchParams.getAll('camera') || [];
   const lenses = searchParams.getAll('lens') || [];
@@ -33,10 +34,11 @@ const Library = () => {
       pageSize, 
       accessType, 
       search, 
-      camera: cameras,  // Pass arrays of cameras
-      lens: lenses      // Pass arrays of lenses
+      camera: cameras,
+      lens: lenses,
+      format,
     }));
-  }, [page, pageSize, accessType, search, cameras, lenses, dispatch]);
+  }, [page, pageSize, accessType, search, cameras, lenses, format, dispatch]);
   
   return (
     <>

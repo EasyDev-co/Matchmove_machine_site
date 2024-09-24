@@ -9,7 +9,7 @@ import styles from "./EditProfileForm.module.css"
 import { useDispatch } from "react-redux"
 import { changePassword } from "../../store/slices/profileSlice"
 
-const PasswordForm = () => {
+const PasswordForm = ({status}) => {
     const dispatch = useDispatch();
 
     const [formData, setFormData] = useState({
@@ -60,64 +60,64 @@ const PasswordForm = () => {
     };
 
     return (
-        <div className={styles.formcontainer}>
-            <hr className={styles.hr} />
-            <form onSubmit={handleSubmit}>
-                <div className={`form-group ${styles.forms}`}>
-                    <label htmlFor="old_password">
-                        <p>Old Password</p>
-                        <Password
-                            formData={formData}
-                            setFormData={setFormData}
-                            errors={errors}
-                            setErrors={setErrors}
-                        />
-                    </label>
+      <div className={styles.formcontainer}>
+        <hr className={styles.hr} />
+        <form onSubmit={handleSubmit}>
+          <div className={`form-group ${styles.forms}`}>
+            <label htmlFor="old_password">
+              <p>Old Password</p>
+              <Password
+                formData={formData}
+                setFormData={setFormData}
+                errors={errors}
+                setErrors={setErrors}
+              />
+            </label>
 
-                    <label htmlFor="new_password">
-                        <p>New Password</p>
-                        <div className="pass">
-                            <div
-                                className={`inputSvg ${errors.new_password ? "error" : ""}`}
-                                onClick={toggleNewPasswordVisibility}
-                            >
-                                {showNewPassword ? closedeyesvg : eyesvg}
-                            </div>
-                            <input
-                                type={showNewPassword ? "text" : "password"}
-                                id="new_password"
-                                name="new_password"
-                                placeholder="Enter new password"
-                                value={formData.new_password || ''}
-                                onChange={handleChange}
-                                className={errors.new_password ? "error" : ""}
-                            />
-                        </div>
-                        {errors.new_password && (
-                            <div className="error-message">
-                                {warningsvg} {errors.new_password}
-                            </div>
-                        )}
-                    </label>
+            <label htmlFor="new_password">
+              <p>New Password</p>
+              <div className="pass">
+                <div
+                  className={`inputSvg ${errors.new_password ? "error" : ""}`}
+                  onClick={toggleNewPasswordVisibility}
+                >
+                  {showNewPassword ? closedeyesvg : eyesvg}
                 </div>
-                <hr className={styles.hr} />
-                <div className={styles.btncont}>
-                    <Button
-                        variant="outline-red"
-                        label="Close"
-                        labelPosition="left"
-                        iconType="crossbtn"
-                    />
-                    <Button
-                        variant="blue"
-                        label="Save changes"
-                        labelPosition="left"
-                        iconType="checkMark"
-                        type="submit"
-                    />
+                <input
+                  type={showNewPassword ? "text" : "password"}
+                  id="new_password"
+                  name="new_password"
+                  placeholder="Enter new password"
+                  value={formData.new_password || ""}
+                  onChange={handleChange}
+                  className={errors.new_password ? "error" : ""}
+                />
+              </div>
+              {errors.new_password && (
+                <div className="error-message">
+                  {warningsvg} {errors.new_password}
                 </div>
-            </form>
-        </div>
+              )}
+            </label>
+          </div>
+          <hr className={styles.hr} />
+          <div className={styles.btncont}>
+            <Button
+              variant="outline-red"
+              label="Close"
+              labelPosition="left"
+              iconType="crossbtn"
+            />
+            <Button
+              variant={status === "loading" ? "grey" : "blue"}
+              label={status === "loading" ? "Saving..." : "Save changes"}
+              labelPosition="left"
+              iconType="checkMark"
+              type="submit"
+            />
+          </div>
+        </form>
+      </div>
     );
 };
 

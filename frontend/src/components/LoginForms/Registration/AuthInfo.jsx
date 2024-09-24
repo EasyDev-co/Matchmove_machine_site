@@ -6,12 +6,13 @@ import Password from "../../Forms/Password";
 import Name from "../../Forms/Name";
 import Occupation from "../../Forms/Occupation";
 
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { registerUser } from "../../../store/userSlice";
 
 const AuthInfo = ({ handleNext }) => {
 
   const dispatch = useDispatch();
+  const {status} = useSelector(state=> state.user)
 
   const [formData, setFormData] = useState({
     name: '',
@@ -135,7 +136,7 @@ const AuthInfo = ({ handleNext }) => {
           handleChange={handleChange}
           errors={errors}
         />
-        <Button variant="blue" iconType="arrowRight" label="Next" type="submit" />
+        <Button variant={status.registerStatus==="loading"? "grey":"blue"} iconType="arrowRight" type="submit" label={status.registerStatus==="loading"?"Registration...":"Next"} />
       </div>
     </form>
   );

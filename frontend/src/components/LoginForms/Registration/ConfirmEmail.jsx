@@ -1,11 +1,14 @@
 import { useState } from "react"
 import Button from "../../Button";
 import { warningsvg } from "../../../assets/svg/svgimages";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { verifyEmailCode } from "../../../store/userSlice";
 import { useNavigate } from "react-router-dom";
 
 const ConfirmEmail = () => {
+
+  const {status} = useSelector(state=> state.user)
+
     const [formData, setFormData] = useState({ email: '', code: '' });
     const [error, setError] = useState(null)
     const dispatch = useDispatch();
@@ -57,9 +60,9 @@ const ConfirmEmail = () => {
             onChange={handleChange}
           />
           <Button
-            variant="blue"
+            variant={status.emailVerificationStatus==="loading"? "grey":"blue"}
             iconType="arrowRight"
-            label="Confirm"
+            label={status.emailVerificationStatus==="loading"?"Confirmation...":"Confirm"}
             type="submit"
           />
         </div>

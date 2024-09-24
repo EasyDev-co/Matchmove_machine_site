@@ -6,7 +6,7 @@ import SearchInput from "../Forms/SearchInput";
 
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchCameras, fetchFormats, fetchLenses } from "../../store/slices/optionsSlice";
+import { fetchCameras, fetchLenses } from "../../store/slices/optionsSlice";
 
 
 const Filters = ({
@@ -41,8 +41,8 @@ const Filters = ({
                 <input
                   type="checkbox"
                   id={model_name}
-                  checked={selected.cameras.some(cam => cam.id === id)} // Check if the object is in the selected cameras
-                  onChange={(e) => handleBrandSelect({ id, model_name }, e)} // Pass the object
+                  checked={selected.cameras.some(cam => cam.id === id)} 
+                  onChange={(e) => handleBrandSelect({ id, model_name }, e)}
                 />
               </div>
               <button
@@ -62,7 +62,7 @@ const Filters = ({
                       <div>
                         <input
                           type="checkbox"
-                          id={item}
+                          id={id+item}
                           checked={selected.lenses.some(lens => lens.id === lensId)} // Check if the object is in the selected lenses
                           onChange={() => handleLensSelect({ id: lensId, brand, model_name: lensModelName })} // Pass the object
                         />

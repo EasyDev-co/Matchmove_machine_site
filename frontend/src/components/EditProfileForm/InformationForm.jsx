@@ -5,23 +5,22 @@ import Occupation from "../Forms/Occupation";
 import Email from "../Forms/Email";
 import Website from "../Forms/Website";
 import Portfolio from "../Forms/Portfolio";
-import Button from "../Button";
+import Button from "../Button";import { warningsvg } from "../../assets/svg/svgimages";
 
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { updateUserProfile } from "../../store/slices/profileSlice";
 
-const InformationForm = ({profile, picture, status}) => {
-
-  const navigate = useNavigate()
-  const dispatch = useDispatch()
+const InformationForm = ({ profile, status }) => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const [formData, setFormData] = useState({
-    name: profile.username || "",
-    email: profile.email || "",
+    name: profile.username || '',
+    email: profile.email || '',
     occupation: '',
-    website: profile.website || "", 
-    portfolio: profile.portfolio || "", 
+    website: profile.website || '',
+    portfolio: profile.portfolio || '',
   });
 
   const [errors, setErrors] = useState({
@@ -29,7 +28,7 @@ const InformationForm = ({profile, picture, status}) => {
     email: '',
     occupation: '',
     website: '',
-    portfolio: '', 
+    portfolio: '',
   });
 
   const handleChange = (e) => {
@@ -54,13 +53,13 @@ const InformationForm = ({profile, picture, status}) => {
     e.preventDefault();
     let valid = true;
     let newErrors = {};
-  
+
     // Name validation
     if (!formData.name) {
       newErrors.name = 'Name is required';
       valid = false;
     }
-  
+
     // Email validation
     if (!formData.email) {
       newErrors.email = 'Email is required';
@@ -69,15 +68,15 @@ const InformationForm = ({profile, picture, status}) => {
       newErrors.email = 'Invalid email format';
       valid = false;
     }
-  
+
     setErrors(newErrors);
-  
+
     if (valid) {
       const userProfileUpdate = {
         username: formData.name,
         email: formData.email,
         website: formData.website,
-        portfolio: formData.portfolio
+        portfolio: formData.portfolio,
       };
       try {
         await dispatch(updateUserProfile(userProfileUpdate)).unwrap();
@@ -89,16 +88,19 @@ const InformationForm = ({profile, picture, status}) => {
     }
   };
 
-  const goBack =()=>{
-    navigate("/profile/1")
-  }
-
-  if(profile){
+  const goBack = () => {
+    navigate('/profile/1');
+  };
 
   return (
     <div className={styles.formcontainer}>
-      <hr className={styles.hr}/>
+      <hr className={styles.hr} />
       <form onSubmit={handleSubmit}>
+        {status === 'failed' && (
+          <div className="error-message">
+            {warningsvg} Something went wrong
+          </div>
+        )}
         <div className={`form-group ${styles.forms}`}>
           <label htmlFor="name">
             <p>Name</p>
@@ -128,7 +130,7 @@ const InformationForm = ({profile, picture, status}) => {
           </label>
 
           <label htmlFor="portfolio">
-            <p>Portg</p>
+            <p>Portfolio</p>
             <Portfolio
               formData={{ portfolio: formData.portfolio }}
               handleChange={handleChange}
@@ -144,7 +146,7 @@ const InformationForm = ({profile, picture, status}) => {
             />
           </label>
         </div>
-        <hr className={styles.hr}/>
+        <hr className={styles.hr} />
         <div className={styles.btncont}>
           <Button
             variant="outline-red"
@@ -154,8 +156,8 @@ const InformationForm = ({profile, picture, status}) => {
             onClick={goBack}
           />
           <Button
-            variant="blue"
-            label={status.updateUserProfileStatus==="loading"? "Loading":"Save changes"}
+            variant={status === "loading" ? "grey" : "blue"}
+            label={status === "loading" ? "Saving..." : "Save changes"}
             labelPosition="left"
             iconType="checkMark"
             type="submit"
@@ -164,7 +166,6 @@ const InformationForm = ({profile, picture, status}) => {
       </form>
     </div>
   );
-}
 };
 
 export default InformationForm;

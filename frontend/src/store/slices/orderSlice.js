@@ -38,14 +38,10 @@ const initialState = {
   // Creating an order
   export const createOrder = createAsyncThunk(
     'orders/createOrder',
-    async (orderData, { rejectWithValue }) => {
+    async (_, { rejectWithValue }) => {
       try {
         const response = await fetchWithAuth(`${BASE_URL}/orders/v1/orders/create/`, {
           method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(orderData),
         });
   
         if (!response.ok) {
@@ -87,6 +83,7 @@ const initialState = {
         })
         .addCase(createOrder.fulfilled, (state, action) => {
           state.status.createOrderStatus = 'succeeded';
+          state.order = action.payload
         })
         .addCase(createOrder.rejected, (state, action) => {
           state.status.createOrderStatus = 'failed';

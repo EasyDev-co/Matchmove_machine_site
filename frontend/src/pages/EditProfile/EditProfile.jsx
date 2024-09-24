@@ -4,6 +4,7 @@ import EditHeader from "../../components/EditHeader/EditHeader"
 import EditProfileForm from "../../components/EditProfileForm/EditProfileForm"
 import iconimg from "../../assets/images/iconplaceholder.png";
 import { camerasvg } from "../../assets/svg/svgimages"
+import LoadingScreen from "../../components/LoadingScreen/LoadingScreen";
 
 import { fetchUserProfile } from "../../store/slices/profileSlice"
 
@@ -15,6 +16,7 @@ const EditProfile = () => {
   const dispatch = useDispatch();
   const [picture, setPicture] = useState(null);
 
+  
   useEffect(() => {
     dispatch(fetchUserProfile());
   }, [dispatch]);
@@ -33,6 +35,12 @@ const EditProfile = () => {
   const handlePictureChange = () => {
     document.getElementById('fileInput').click();
   };
+
+  if(status.fetchUserProfileStatus==="loading"){
+    return(
+      <LoadingScreen/>
+    )
+  }
 
   if (profile) {
     return (

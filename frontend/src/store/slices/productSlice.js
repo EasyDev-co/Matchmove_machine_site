@@ -11,7 +11,7 @@ const initialState = {
 //  thunk for fetching 
 export const fetchProducts = createAsyncThunk(
   "products/fetchProducts",
-  async ({ page, pageSize, camera, lens, file_format, accessType, price__gte, price__lte, search }, { rejectWithValue }) => {
+  async ({ page, pageSize, camera, lens, format, accessType, price__gte, price__lte, search }, { rejectWithValue }) => {
     try {
       // Initialize URLSearchParams with common parameters
       const queryParams = new URLSearchParams({
@@ -19,6 +19,7 @@ export const fetchProducts = createAsyncThunk(
         page_size: pageSize,
         access_type: accessType,
         search: search,
+        file_format: format
       });
 
       // Append each camera as a separate parameter
@@ -37,7 +38,6 @@ export const fetchProducts = createAsyncThunk(
 
       // Convert query parameters to string
       const queryString = queryParams.toString();
-      console.log(queryString); // Check query string for correctness
 
       const response = await fetchWithAuth(`${BASE_URL}/products/v1/products/?${queryString}`, {
         method: 'GET',
@@ -45,7 +45,6 @@ export const fetchProducts = createAsyncThunk(
 
       if (!response.ok) {
         const errorDetails = await response.json();
-        console.log('Server responded with error:', errorDetails);
         return rejectWithValue(errorDetails);
       }
 

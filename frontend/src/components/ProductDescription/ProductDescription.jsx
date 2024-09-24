@@ -1,14 +1,16 @@
 import styles from "./ProductDescription.module.css"
 import Button from "../Button"
+import { Link } from "react-router-dom";
 import { companysvg } from "../../assets/svg/svgimages";
 
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { postCartItem } from "../../store/slices/cartItemSlice";
 import { downloadProductFile } from "../../store/slices/singleProductSlice";
 
 const ProductDescription =({singleProduct})=>{
 
   const dispatch = useDispatch()
+  const { status} = useSelector(state => state.cartItem)
 
   const addToCart =()=>{
     dispatch(postCartItem(singleProduct.id))
@@ -25,12 +27,16 @@ const ProductDescription =({singleProduct})=>{
             <h2 className="h2-medium">Price</h2>
             <div className={styles.pricecont}>
               <div className={styles.priceBtn}>
-                <Button
-                  variant="blue"
-                  label={`${singleProduct.price}$`}
-                  iconType="cart"
-                  onClick={addToCart}
-                />
+                {singleProduct.access_type == "free" ? (
+                  <Button variant="grey" label="Free" />
+                ) : (
+                  <Button
+                    variant={status==="loading"? "grey": "blue"}
+                    label={`${status==="loading"?"Adding...":singleProduct.price+"$"}`}
+                    iconType="cart"
+                    onClick={addToCart}
+                  />
+                )}
               </div>
               <div className={styles.priceBtn}>
                 <Button
@@ -50,9 +56,9 @@ const ProductDescription =({singleProduct})=>{
           <div className={styles.container}>
             <h2 className="h2-medium">Author</h2>
             {singleProduct.author.username ? (
-              <a href="/" className={styles.authorInfo}>
-                {singleProduct.author.username }
-              </a>
+              <Link className={styles.authorInfo}>
+                {singleProduct.author.username}
+              </Link>
             ) : (
               <a href="/" className={styles.authorInfo}>
                 {companysvg} Matchmove machine

@@ -96,7 +96,11 @@ export const changePassword = createAsyncThunk(
 const profileSlice = createSlice({
   name: 'profile',
   initialState,
-  reducers: {},
+  reducers: {
+    resetProfile: (state) => {
+      state.profile = null; 
+    },
+  },
   extraReducers: (builder) => {
     builder
       // Fetch User Profile
@@ -142,5 +146,7 @@ const profileSlice = createSlice({
       });
   },
 });
+
+export const { resetProfile } = profileSlice.actions;
 
 export default profileSlice.reducer;
