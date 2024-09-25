@@ -46,3 +46,14 @@ class OrderService:
             cart.items.all().delete()
 
             return order
+
+    def get_last_order(self):
+        """Получить последний заказ пользователя."""
+
+        # Получаем последний заказ пользователя
+        last_order = Order.objects.filter(user=self.user).order_by('-created_at').first()
+
+        if not last_order:
+            raise ValueError("No orders found for the user.")
+
+        return last_order
