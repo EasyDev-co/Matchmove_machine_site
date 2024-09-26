@@ -6,6 +6,9 @@ from django.shortcuts import get_object_or_404
 from rest_framework import views, status
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
+from django.conf import settings
+from paddle_billing.Notifications import Secret, Verifier
+from apps.payments.services.paddle_webhook_service import PaddleWebhookService
 
 
 logger = logging.getLogger(__name__)
@@ -51,34 +54,23 @@ class CreateTransactionAPIView(views.APIView):
 
 class PaddleWebhookAPIView(views.APIView):
     """
-    API для принятия вебхуков оплаченных транзакций.
-    В кабинете Puddle требуется поставить notifications на этот api для событий transaction.paid
+    API для приема уведомлений вебхуков Paddle о оплаченных транзакциях.
+    Вам нужно настроить уведомления на этот API для событий transaction.paid в вашей панели управления Paddle.
     """
 
     permission_classes = [AllowAny]
 
     def post(self, request, *args, **kwargs):
-        body = request.data
+        # Создаем экземпляр сервиса с request
+        webhook_service = PaddleWebhookService(request)
 
-        if not isinstance(body, dict):
-            logger.error("Получен неверный формат данных.")
-            return Response({'detail': 'Неверный формат данных'}, status=status.HTTP_400_BAD_REQUEST)
+        # Проверяем подпись вебхука
+        if not webhook_service.verify_signature():
+            logger.error("Проверка подписи не удалась.")
+            return Response({'detail': 'Неверная подпись'}, status=status.HTTP_403_FORBIDDEN)
 
-        logger.info(f"Получено действительное уведомление от Paddle: {body}")
+        logger.info(f"Получено действительное уведомление от Paddle: {request.data}")
 
-        # Получаем тип транзакции
-        alert_name = body.get('event_type')
-        # Получаем id транзакции
-        transaction_id = body.get('data', {}).get('id')
-
-        if alert_name == 'transaction.paid':
-            order = get_object_or_404(Order, transaction_id=transaction_id)
-            # Отмечаем заказ с transaction.paid как оплаченный
-            order.is_paid = True
-            order.save()
-            logger.info(f"Заказ {order.id} обновлен как оплаченный.")
-            logger.info("Транзакция оплачена.")
-            return Response({'status': 'успех'}, status=status.HTTP_200_OK)
-
-        logger.warning(f"Необработанный тип события: {alert_name}")
-        return Response({'detail': 'Необработанный тип события'}, status=status.HTTP_400_BAD_REQUEST)
+        # Обрабатываем событие, если проверка успешна
+        response_data, response_status = webhook_service.process_event()
+        return Response(response_data, status=response_status)
