@@ -1,12 +1,11 @@
 import logging
 
 import requests
+from apps.cart.models import Cart
+from apps.orders.models import Order
+from apps.payments.services.data_preparers import DataPreparer
 from django.conf import settings
 from django.shortcuts import get_object_or_404
-
-from apps.payments.services.data_preparers import DataPreparer
-from apps.orders.models import Order
-from apps.cart.models import Cart
 
 logger = logging.getLogger(__name__)
 

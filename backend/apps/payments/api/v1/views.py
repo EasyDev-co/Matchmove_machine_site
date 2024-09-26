@@ -1,15 +1,13 @@
 import logging
 
 from apps.orders.models import Order
-from apps.payments.services.transaction_service import TransactionService
-from django.shortcuts import get_object_or_404
-from rest_framework import views, status
-from rest_framework.response import Response
-from rest_framework.permissions import AllowAny
-from django.conf import settings
-from paddle_billing.Notifications import Secret, Verifier
 from apps.payments.services.paddle_webhook_service import PaddleWebhookService
-
+from apps.payments.services.transaction_service import TransactionService
+from django.conf import settings
+from django.shortcuts import get_object_or_404
+from rest_framework import status, views
+from rest_framework.permissions import AllowAny
+from rest_framework.response import Response
 
 logger = logging.getLogger(__name__)
 
@@ -67,7 +65,9 @@ class PaddleWebhookAPIView(views.APIView):
         # Проверяем подпись вебхука
         if not webhook_service.verify_signature():
             logger.error("Проверка подписи не удалась.")
-            return Response({'detail': 'Неверная подпись'}, status=status.HTTP_403_FORBIDDEN)
+            return Response(
+                {'detail': 'Неверная подпись'}, status=status.HTTP_403_FORBIDDEN
+            )
 
         logger.info(f"Получено действительное уведомление от Paddle: {request.data}")
 

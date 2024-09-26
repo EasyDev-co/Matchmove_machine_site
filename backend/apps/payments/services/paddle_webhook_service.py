@@ -1,7 +1,8 @@
-from django.shortcuts import get_object_or_404
-from django.conf import settings
-from apps.orders.models import Order
 import logging
+
+from apps.orders.models import Order
+from django.conf import settings
+from django.shortcuts import get_object_or_404
 from paddle_billing.Notifications import Secret, Verifier
 from rest_framework import status
 

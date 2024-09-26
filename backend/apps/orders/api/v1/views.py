@@ -47,6 +47,8 @@ class CreateOrderAPIView(views.APIView):
 class LastOrderAPIView(views.APIView):
     """APIView для получения последнего заказа пользователя и списка товаров."""
 
+    serializer_class = OrderSerializer
+
     def get(self, request):
         user = request.user
         order_service = OrderService(user)
@@ -63,3 +65,14 @@ class LastOrderAPIView(views.APIView):
             })
         except ValueError as e:
             return Response({"error": str(e)}, status=404)
+
+
+class PaidOrdersAPIView(generics.ListAPIView):
+    """APIView для получения оплаченных заказов пользователя."""
+
+    serializer_class = OrderSerializer
+    pagination_class = StandardPagination
+
+    def get_queryset(self):
+        # Фильтруем заказы пользователя, чтобы получить только оплаченные.
+        return Order.objects.filter(user=self.request.user, is_paid=True).order_by("-created_at")
