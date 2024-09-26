@@ -25,6 +25,7 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
             "username",
             "email",
             "password",
+            "occupation",
         )
         extra_kwargs = {"password": {"write_only": True}}
 
@@ -50,6 +51,7 @@ class UserSerializer(serializers.ModelSerializer):
             "vimeo",
             "profile_picture",
             "password",
+            "occupation",
         ]
         extra_kwargs = {"password": {"write_only": True}}
 
@@ -74,6 +76,7 @@ class UserDetailSerializer(serializers.ModelSerializer):
             "facebook",
             "vimeo",
             "profile_picture",
+            "occupation",
         ]
 
 
@@ -97,6 +100,7 @@ class UserUpdateSerializer(serializers.ModelSerializer):
             "facebook",
             "vimeo",
             "profile_picture",
+            "occupation",
         ]
 
 

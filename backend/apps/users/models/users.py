@@ -3,6 +3,7 @@ from django.db import models
 from apps.utils.models_mixins.models_mixins import UUIDMixin, TimeStampedMixin
 from ..managers import CustomUserManager
 from django.utils.translation import gettext_lazy as _
+from apps.users.models.occupations import Occupations
 
 
 class User(UUIDMixin, TimeStampedMixin, AbstractUser):
@@ -27,6 +28,13 @@ class User(UUIDMixin, TimeStampedMixin, AbstractUser):
     youtube = models.URLField(blank=True, null=True, verbose_name=_("YouTube"))
     facebook = models.URLField(blank=True, null=True, verbose_name=_("Facebook"))
     vimeo = models.URLField(blank=True, null=True, verbose_name=_("Vimeo"))
+    occupation = models.CharField(
+        max_length=50,
+        choices=Occupations.choices,
+        blank=True,
+        null=True,
+        verbose_name=_("Профессия"),
+    )
     profile_picture = models.ImageField(
         upload_to="profile_pictures/",
         blank=True,
