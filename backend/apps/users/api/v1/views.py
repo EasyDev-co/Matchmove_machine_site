@@ -25,7 +25,9 @@ User = get_user_model()
 
 
 class UserViewSet(viewsets.GenericViewSet):
-    serializer_class = UserSerializer
+    """Обновление данных пользователя"""
+
+    serializer_class = UserUpdateSerializer
     permission_classes = [IsAuthenticated]
 
     def get_object(self):
@@ -105,11 +107,21 @@ class UserRegisterView(APIView):
                 **validate_data,
             )
             user.save()
+
+            # Генерация QR-кода после сохранения пользователя
+            user.generate_qr_code()
+            user.save()
+
+            # Отправляем email с кодом подтверждения
             send_confirm_code.delay(
                 user_id=user.pk, code_purpose=CodePurpose.CONFIRM_EMAIL
             )
+
             return Response(
-                {"message": "Пользователь успешно зарегистрирован!"},
+                {
+                    "message": "Пользователь успешно зарегистрирован!",
+                    "qr_code_url": user.qr_code.url,  # Возвращаем ссылку на QR-код
+                },
                 status=status.HTTP_201_CREATED,
             )
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
