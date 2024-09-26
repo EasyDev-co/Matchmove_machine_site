@@ -11,7 +11,7 @@ User = get_user_model()
 
 
 class UserRegistrationSerializer(serializers.ModelSerializer):
-    """Сериалайзер пользователя."""
+    """Сериалайзер пользователя для регистрации."""
 
     password = serializers.CharField(
         write_only=True,
@@ -26,8 +26,17 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
             "email",
             "password",
             "occupation",
+            "qr_code",
         )
         extra_kwargs = {"password": {"write_only": True}}
+
+    def create(self, validated_data):
+        password = validated_data.pop("password")
+        user = User.objects.create(**validated_data)
+        user.set_password(password)
+        user.generate_qr_code()  # Генерация QR-кода при создании пользователя
+        user.save()
+        return user
 
 
 class UserSerializer(serializers.ModelSerializer):
