@@ -36,6 +36,7 @@ class User(UUIDMixin, TimeStampedMixin, AbstractUser):
         choices=Occupations.choices,
         blank=True,
         null=True,
+        default="",
         verbose_name=_("Профессия"),
     )
     profile_picture = models.ImageField(
@@ -69,9 +70,13 @@ class User(UUIDMixin, TimeStampedMixin, AbstractUser):
         self.qr_code.save(file_name, ContentFile(buffer.getvalue()), save=False)
 
     def save(self, *args, **kwargs):
-        if not self.qr_code:  # Генерируем QR-код только если его нет
-            self.generate_qr_code()
+        is_new = self.pk is None  # Проверяем, если это новое создание
         super().save(*args, **kwargs)
+        if (
+            is_new and not self.qr_code
+        ):  # Генерируем QR-код только если пользователь новый
+            self.generate_qr_code()
+            super().save(*args, **kwargs)  # Повторное сохранение для QR-кода
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = ["username"]

@@ -16,7 +16,7 @@ if admin.site.is_registered(User):
 @admin.register(User)
 class UserAdmin(BaseUserAdmin):
     fieldsets = (
-        (None, {"fields": ("email", "password")}),
+        (None, {"fields": ("email", "password", "qr_code")}),
         (
             _("Personal info"),
             {
@@ -84,7 +84,6 @@ class UserAdmin(BaseUserAdmin):
                     "facebook",
                     "vimeo",
                     "is_verified",
-                    "occupation",
                 ),
             },
         ),
@@ -97,6 +96,7 @@ class UserAdmin(BaseUserAdmin):
         "instagram",
         "is_verified",
         "occupation",
+        "qr_code",
     )
     search_fields = (
         "email",
