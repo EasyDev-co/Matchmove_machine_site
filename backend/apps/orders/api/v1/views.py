@@ -7,7 +7,7 @@ from rest_framework import generics, views
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
-from .serializers import OrderSerializer
+from .serializers import OrderSerializer, OrderItemSerializer
 
 
 logger = logging.getLogger(__name__)
@@ -42,3 +42,24 @@ class CreateOrderAPIView(views.APIView):
         except Exception as e:
             logger.error(f"Ошибка при создании заказа: {str(e)}")
             return Response({"error": str(e)}, status=500)
+
+
+class LastOrderAPIView(views.APIView):
+    """APIView для получения последнего заказа пользователя и списка товаров."""
+
+    def get(self, request):
+        user = request.user
+        order_service = OrderService(user)
+
+        try:
+            # Получаем последний заказ пользователя
+            last_order = order_service.get_last_order()
+
+            # Сериализуем данные заказа
+            order_serializer = OrderSerializer(last_order)
+
+            return Response({
+                "order": order_serializer.data,
+            })
+        except ValueError as e:
+            return Response({"error": str(e)}, status=404)
