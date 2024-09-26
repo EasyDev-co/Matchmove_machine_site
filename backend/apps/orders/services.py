@@ -41,10 +41,6 @@ class OrderService:
             order.total_price = order.calculate_total_price()
             order.save()
 
-            cart.is_active = False
-            cart.save()
-            cart.items.all().delete()
-
             return order
 
     def get_last_order(self):
