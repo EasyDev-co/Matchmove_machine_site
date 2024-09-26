@@ -151,6 +151,10 @@ class TransactionService:
             items, customer_id, address_id
         )
 
+        #Сохраняем ID транзакции
+        order.transaction_id = transaction_response.get("id")
+        order.save()
+
         # Удаляем корзину
         cart = Cart.objects.filter(user=user, is_active=True).first()
         if cart:

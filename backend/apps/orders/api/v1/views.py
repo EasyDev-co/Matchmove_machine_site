@@ -7,7 +7,7 @@ from rest_framework import generics, views
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
-from .serializers import OrderSerializer, OrderItemSerializer
+from .serializers import OrderSerializer
 
 
 logger = logging.getLogger(__name__)
