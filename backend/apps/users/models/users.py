@@ -4,6 +4,9 @@ from apps.utils.models_mixins.models_mixins import UUIDMixin, TimeStampedMixin
 from ..managers import CustomUserManager
 from django.utils.translation import gettext_lazy as _
 from apps.users.models.occupations import Occupations
+from io import BytesIO
+import qrcode
+from django.core.files.base import ContentFile
 
 
 class User(UUIDMixin, TimeStampedMixin, AbstractUser):
@@ -50,6 +53,25 @@ class User(UUIDMixin, TimeStampedMixin, AbstractUser):
         default=False,
         verbose_name="Подтверждение email",
     )
+    qr_code = models.ImageField(
+        upload_to="qr_codes/", blank=True, null=True, verbose_name=_("QR код")
+    )
+
+    def generate_qr_code(self):
+        """
+        Метод для генерации QR-кода и сохранения в поле qr_code
+        """
+        url = f"https://grids.matchmovemachine.com/profile/{self.id}"  # Генерация URL с ID пользователя
+        qr_img = qrcode.make(url)  # Генерация QR-кода
+        buffer = BytesIO()
+        qr_img.save(buffer, format="PNG")
+        file_name = f"user_{self.id}_qr.png"
+        self.qr_code.save(file_name, ContentFile(buffer.getvalue()), save=False)
+
+    def save(self, *args, **kwargs):
+        if not self.qr_code:  # Генерируем QR-код только если его нет
+            self.generate_qr_code()
+        super().save(*args, **kwargs)
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = ["username"]
