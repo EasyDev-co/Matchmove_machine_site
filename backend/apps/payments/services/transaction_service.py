@@ -142,7 +142,7 @@ class TransactionService:
             # Добавляем товар в список items
             items.append({
                 'price_id': price_id,
-                'quantity': item.quantity
+                'quantity': 1
             })
 
         # Создаем транзакцию в Paddle

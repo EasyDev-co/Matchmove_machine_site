@@ -28,11 +28,10 @@ class CartItem(models.Model):
     """Модель товара в корзине."""
     cart = models.ForeignKey(Cart, on_delete=models.CASCADE, related_name="items")
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name="cart_items")
-    quantity = models.PositiveIntegerField(default=1)
 
     def __str__(self):
-        return f"{self.product.name} (x{self.quantity})"
+        return f"{self.product.name}"
 
     @property
     def total_price(self):
-        return self.product.price * self.quantity
+        return self.product.price
