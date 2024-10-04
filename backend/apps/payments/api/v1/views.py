@@ -1,9 +1,12 @@
 import logging
 
 from apps.orders.models import Order
+from apps.payments.services.paddle_webhook_service import PaddleWebhookService
 from apps.payments.services.transaction_service import TransactionService
+from django.conf import settings
 from django.shortcuts import get_object_or_404
-from rest_framework import views
+from rest_framework import status, views
+from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 
 logger = logging.getLogger(__name__)
@@ -12,6 +15,8 @@ logger = logging.getLogger(__name__)
 class CreateTransactionAPIView(views.APIView):
     """
     Вьюсет для создания транзакции Paddle на основе существующего заказа.
+    Создает в Puddle adress, customer, price, products,
+    И на их основании создает транзакцию
     Пример body api запроса:
     {
         "order_id": "22",
@@ -43,3 +48,29 @@ class CreateTransactionAPIView(views.APIView):
         except Exception as e:
             logger.error(f"Ошибка транзакции: {str(e)}")
             return Response({"error": str(e)}, status=500)
+
+
+class PaddleWebhookAPIView(views.APIView):
+    """
+    API для приема уведомлений вебхуков Paddle о оплаченных транзакциях.
+    Вам нужно настроить уведомления на этот API для событий transaction.paid в вашей панели управления Paddle.
+    """
+
+    permission_classes = [AllowAny]
+
+    def post(self, request, *args, **kwargs):
+        # Создаем экземпляр сервиса с request
+        webhook_service = PaddleWebhookService(request)
+
+        # Проверяем подпись вебхука
+        if not webhook_service.verify_signature():
+            logger.error("Проверка подписи не удалась.")
+            return Response(
+                {'detail': 'Неверная подпись'}, status=status.HTTP_403_FORBIDDEN
+            )
+
+        logger.info(f"Получено действительное уведомление от Paddle: {request.data}")
+
+        # Обрабатываем событие, если проверка успешна
+        response_data, response_status = webhook_service.process_event()
+        return Response(response_data, status=response_status)

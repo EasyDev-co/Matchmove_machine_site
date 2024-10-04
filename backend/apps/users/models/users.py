@@ -3,6 +3,10 @@ from django.db import models
 from apps.utils.models_mixins.models_mixins import UUIDMixin, TimeStampedMixin
 from ..managers import CustomUserManager
 from django.utils.translation import gettext_lazy as _
+from apps.users.models.occupations import Occupations
+from io import BytesIO
+import qrcode
+from django.core.files.base import ContentFile
 
 
 class User(UUIDMixin, TimeStampedMixin, AbstractUser):
@@ -17,11 +21,24 @@ class User(UUIDMixin, TimeStampedMixin, AbstractUser):
     website = models.URLField(blank=True, null=True, verbose_name=_("Сайт"))
     portfolio = models.URLField(blank=True, null=True, verbose_name=_("Портфолио"))
     about_me = models.TextField(blank=True, null=True, verbose_name=_("О себе"))
+    whatsapp = models.URLField(blank=True, null=True, verbose_name=_("WhatsApp"))
+    messenger = models.URLField(blank=True, null=True, verbose_name=_("Messenger"))
+    twitter = models.URLField(blank=True, null=True, verbose_name=_("Twitter"))
+    telegram = models.URLField(blank=True, null=True, verbose_name=_("Telegram"))
+    reddit = models.URLField(blank=True, null=True, verbose_name=_("Reddit"))
     linkedin = models.URLField(blank=True, null=True, verbose_name=_("LinkedIn"))
     instagram = models.URLField(blank=True, null=True, verbose_name=_("Instagram"))
     youtube = models.URLField(blank=True, null=True, verbose_name=_("YouTube"))
     facebook = models.URLField(blank=True, null=True, verbose_name=_("Facebook"))
     vimeo = models.URLField(blank=True, null=True, verbose_name=_("Vimeo"))
+    occupation = models.CharField(
+        max_length=50,
+        choices=Occupations.choices,
+        blank=True,
+        null=True,
+        default="",
+        verbose_name=_("Профессия"),
+    )
     profile_picture = models.ImageField(
         upload_to="profile_pictures/",
         blank=True,
@@ -37,6 +54,29 @@ class User(UUIDMixin, TimeStampedMixin, AbstractUser):
         default=False,
         verbose_name="Подтверждение email",
     )
+    qr_code = models.ImageField(
+        upload_to="qr_codes/", blank=True, null=True, verbose_name=_("QR код")
+    )
+
+    def generate_qr_code(self):
+        """
+        Метод для генерации QR-кода и сохранения в поле qr_code
+        """
+        url = f"https://grids.matchmovemachine.com/profile/{self.id}"  # Генерация URL с ID пользователя
+        qr_img = qrcode.make(url)  # Генерация QR-кода
+        buffer = BytesIO()
+        qr_img.save(buffer, format="PNG")
+        file_name = f"user_{self.id}_qr.png"
+        self.qr_code.save(file_name, ContentFile(buffer.getvalue()), save=False)
+
+    def save(self, *args, **kwargs):
+        is_new = self.pk is None  # Проверяем, если это новое создание
+        super().save(*args, **kwargs)
+        if (
+            is_new and not self.qr_code
+        ):  # Генерируем QR-код только если пользователь новый
+            self.generate_qr_code()
+            super().save(*args, **kwargs)  # Повторное сохранение для QR-кода
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = ["username"]

@@ -33,7 +33,6 @@ class OrderService:
                 OrderItem.objects.create(
                     order=order,
                     product=cart_item.product,
-                    quantity=cart_item.quantity,
                     price=cart_item.total_price
                 )
 
@@ -41,8 +40,15 @@ class OrderService:
             order.total_price = order.calculate_total_price()
             order.save()
 
-            cart.is_active = False
-            cart.save()
-            cart.items.all().delete()
-
             return order
+
+    def get_last_order(self):
+        """Получить последний заказ пользователя."""
+
+        # Получаем последний заказ пользователя
+        last_order = Order.objects.filter(user=self.user).order_by('-created_at').first()
+
+        if not last_order:
+            raise ValueError("No orders found for the user.")
+
+        return last_order

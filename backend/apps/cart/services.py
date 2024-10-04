@@ -1,6 +1,6 @@
 from django.shortcuts import get_object_or_404
-
 from apps.cart.models import Cart, CartItem
+from apps.orders.models import Order, OrderItem
 from apps.products.models import Product
 
 
@@ -10,47 +10,44 @@ class CartService:
 
     def get_or_create_cart(self):
         """Получаем активную корзину пользователя или создаем новую, если необходимо."""
-
         cart = Cart.objects.filter(user=self.user).first()
         if not cart:
             cart = Cart.objects.create(user=self.user)
-        else:
-            # Если корзина найдена, но не активна, делаем ее активной
-            if not cart.is_active:
-                cart.is_active = True
-                cart.save()
+        elif not cart.is_active:
+            cart.is_active = True
+            cart.save()
         return cart
 
-    def add_product(self, product_id, quantity=1):
-        """Добавление товара в корзину."""
-
+    def add_product(self, product_id):
+        """Добавляет продукт в корзину пользователя, проверяя на наличие в оплаченных заказах или дублирование"""
+        product = Product.objects.get(id=product_id)
         cart = self.get_or_create_cart()
-        product = get_object_or_404(Product, id=product_id)
 
-        cart_item, item_created = CartItem.objects.get_or_create(
+        # Проверяем, есть ли продукт в уже оплаченных заказах
+        paid_orders = Order.objects.filter(
+            user=self.user, is_paid=True
+        )
+        paid_order_items = OrderItem.objects.filter(
+            order__in=paid_orders, product=product
+        )
+        if paid_order_items.exists():
+            raise ValueError("Product has already been purchased.")
+
+        # Проверяем, есть ли продукт уже в корзине
+        existing_cart_item = CartItem.objects.filter(
+            cart=cart, product=product
+        ).first()
+        if existing_cart_item:
+            raise ValueError("Product is already in the cart.")
+
+        # Добавляем товар в корзину
+        cart_item = CartItem.objects.create(
             cart=cart, product=product
         )
-
-        if not item_created:
-            cart_item.quantity += int(quantity)
-        else:
-            cart_item.quantity = int(quantity)
-
-        cart_item.save()
         return cart_item
 
-    def update_quantity(self, cart_item_id, quantity):
-        """Обновление количества товара в корзине."""
-        cart_item = get_object_or_404(CartItem, id=cart_item_id)
-
-        if quantity < 1:
-            raise ValueError("Количество товара не может быть меньше 1")
-
-        cart_item.quantity = int(quantity)
-        cart_item.save()
-        return cart_item
-
-    def delete_item(self, cart_item_id):
+    @staticmethod
+    def delete_item(cart_item_id):
         """Удаление товара из корзины."""
         cart_item = get_object_or_404(CartItem, id=cart_item_id)
         cart_item.delete()
