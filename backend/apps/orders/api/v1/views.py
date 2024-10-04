@@ -42,3 +42,37 @@ class CreateOrderAPIView(views.APIView):
         except Exception as e:
             logger.error(f"Ошибка при создании заказа: {str(e)}")
             return Response({"error": str(e)}, status=500)
+
+
+class LastOrderAPIView(views.APIView):
+    """APIView для получения последнего заказа пользователя и списка товаров."""
+
+    serializer_class = OrderSerializer
+
+    def get(self, request):
+        user = request.user
+        order_service = OrderService(user)
+
+        try:
+            # Получаем последний заказ пользователя
+            last_order = order_service.get_last_order()
+
+            # Сериализуем данные заказа
+            order_serializer = OrderSerializer(last_order)
+
+            return Response({
+                "order": order_serializer.data,
+            })
+        except ValueError as e:
+            return Response({"error": str(e)}, status=404)
+
+
+class PaidOrdersAPIView(generics.ListAPIView):
+    """APIView для получения оплаченных заказов пользователя."""
+
+    serializer_class = OrderSerializer
+    pagination_class = StandardPagination
+
+    def get_queryset(self):
+        # Фильтруем заказы пользователя, чтобы получить только оплаченные.
+        return Order.objects.filter(user=self.request.user, is_paid=True).order_by("-created_at")
