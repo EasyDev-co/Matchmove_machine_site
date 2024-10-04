@@ -16,7 +16,7 @@ if admin.site.is_registered(User):
 @admin.register(User)
 class UserAdmin(BaseUserAdmin):
     fieldsets = (
-        (None, {"fields": ("email", "password")}),
+        (None, {"fields": ("email", "password", "qr_code")}),
         (
             _("Personal info"),
             {
@@ -27,6 +27,7 @@ class UserAdmin(BaseUserAdmin):
                     "website",
                     "portfolio",
                     "is_verified",
+                    "occupation",
                 )
             },
         ),
@@ -94,6 +95,8 @@ class UserAdmin(BaseUserAdmin):
         "linkedin",
         "instagram",
         "is_verified",
+        "occupation",
+        "qr_code",
     )
     search_fields = (
         "email",
@@ -107,17 +110,9 @@ class UserAdmin(BaseUserAdmin):
 
 @admin.register(EmailErrorLog)
 class EmailErrorLogAdmin(admin.ModelAdmin):
-    list_display = (
-        'confirm_code',
-        'message',
-        'is_sent',
-        'created_at',
-        'user'
-    )
-    search_fields = (
-        'user__email',
-    )
-    ordering = ('created_at',)
+    list_display = ("confirm_code", "message", "is_sent", "created_at", "user")
+    search_fields = ("user__email",)
+    ordering = ("created_at",)
 
     def has_add_permission(self, request):
         return False
@@ -132,9 +127,9 @@ class EmailErrorLogAdmin(admin.ModelAdmin):
 @admin.register(ConfirmCode)
 class ConfirmCodeAdmin(admin.ModelAdmin):
     list_display = (
-        'user',
-        'code',
-        'created_at',
-        'purpose',
-        'is_used',
+        "user",
+        "code",
+        "created_at",
+        "purpose",
+        "is_used",
     )
