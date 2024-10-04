@@ -33,7 +33,6 @@ class OrderService:
                 OrderItem.objects.create(
                     order=order,
                     product=cart_item.product,
-                    quantity=cart_item.quantity,
                     price=cart_item.total_price
                 )
 

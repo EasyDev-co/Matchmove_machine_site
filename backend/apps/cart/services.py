@@ -1,5 +1,6 @@
 from django.shortcuts import get_object_or_404
 from apps.cart.models import Cart, CartItem
+from apps.orders.models import Order, OrderItem
 from apps.products.models import Product
 
 
@@ -17,28 +18,32 @@ class CartService:
             cart.save()
         return cart
 
-    def add_product(self, product_id, quantity=1):
-        """Добавление уникального товара в корзину. Нельзя добавить один и тот же товар дважды."""
+    def add_product(self, product_id):
+        """Добавляет продукт в корзину пользователя, проверяя на наличие в оплаченных заказах или дублирование"""
+        product = Product.objects.get(id=product_id)
         cart = self.get_or_create_cart()
-        product = get_object_or_404(Product, id=product_id)
 
-        if CartItem.objects.filter(cart=cart, product=product).exists():
-            raise ValueError("Этот товар уже добавлен в корзину")
-
-        cart_item = CartItem.objects.create(
-            cart=cart, product=product, quantity=int(quantity)
+        # Проверяем, есть ли продукт в уже оплаченных заказах
+        paid_orders = Order.objects.filter(
+            user=self.user, is_paid=True
         )
-        return cart_item
+        paid_order_items = OrderItem.objects.filter(
+            order__in=paid_orders, product=product
+        )
+        if paid_order_items.exists():
+            raise ValueError("Product has already been purchased.")
 
-    def update_quantity(self, cart_item_id, quantity):
-        """Обновление количества товара в корзине."""
-        cart_item = get_object_or_404(CartItem, id=cart_item_id)
+        # Проверяем, есть ли продукт уже в корзине
+        existing_cart_item = CartItem.objects.filter(
+            cart=cart, product=product
+        ).first()
+        if existing_cart_item:
+            raise ValueError("Product is already in the cart.")
 
-        if quantity < 1:
-            raise ValueError("Количество товара не может быть меньше 1")
-
-        cart_item.quantity = int(quantity)
-        cart_item.save()
+        # Добавляем товар в корзину
+        cart_item = CartItem.objects.create(
+            cart=cart, product=product
+        )
         return cart_item
 
     @staticmethod

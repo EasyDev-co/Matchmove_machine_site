@@ -1,12 +1,11 @@
 import logging
 
 import requests
+from apps.cart.models import Cart
+from apps.orders.models import Order
+from apps.payments.services.data_preparers import DataPreparer
 from django.conf import settings
 from django.shortcuts import get_object_or_404
-
-from apps.payments.services.data_preparers import DataPreparer
-from apps.orders.models import Order
-from apps.cart.models import Cart
 
 logger = logging.getLogger(__name__)
 
@@ -143,13 +142,17 @@ class TransactionService:
             # Добавляем товар в список items
             items.append({
                 'price_id': price_id,
-                'quantity': item.quantity
+                'quantity': 1
             })
 
         # Создаем транзакцию в Paddle
         transaction_response = self.paddle_service.create_transaction(
             items, customer_id, address_id
         )
+
+        #Сохраняем ID транзакции
+        order.transaction_id = transaction_response.get("id")
+        order.save()
 
         # Удаляем корзину
         cart = Cart.objects.filter(user=user, is_active=True).first()

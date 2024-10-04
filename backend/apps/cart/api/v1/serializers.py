@@ -10,7 +10,7 @@ class CartItemSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = CartItem
-        fields = ["price", "product_name", "quantity"]
+        fields = ["price", "product_name"]
 
     def get_product_name(self, obj):
         """Формирует название продукта из камеры и линзы"""
