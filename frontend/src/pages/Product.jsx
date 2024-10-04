@@ -16,6 +16,9 @@ const Product = ()=>{
   const { singleProduct, status} = useSelector(state => state.singleProduct)
   const dispatch = useDispatch()
   const { productId } = useParams();
+
+  console.log(singleProduct);
+  
   
   useEffect(()=>{
     dispatch(fetchSingleProduct(productId))
@@ -30,7 +33,7 @@ const Product = ()=>{
   if(singleProduct){
     return (
       <>
-        <NavigationTop title="Distortion grids pack for Canon EF" singleProduct={singleProduct}/>
+        <NavigationTop title={`Distortion grids pack for ${singleProduct.camera.model_name} ${singleProduct.lens.model_name}`} singleProduct={singleProduct}/>
         <ProductBanner singleProduct={singleProduct}/>
         <ProductDescription singleProduct={singleProduct}/>
         <ProductField singleProduct={singleProduct}/>

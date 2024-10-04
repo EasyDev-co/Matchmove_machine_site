@@ -78,9 +78,9 @@ const InformationForm = ({ profile, status }) => {
         website: formData.website,
         portfolio: formData.portfolio,
       };
+
       try {
         await dispatch(updateUserProfile(userProfileUpdate)).unwrap();
-        // Handle success (e.g., show a success message)
       } catch (error) {
         // Handle error (e.g., show an error message)
         console.log('Update profile failed:', error);

@@ -4,13 +4,13 @@ import { Link } from "react-router-dom";
 import { companysvg } from "../../assets/svg/svgimages";
 
 import { useDispatch, useSelector } from "react-redux";
-import { postCartItem } from "../../store/slices/cartItemSlice";
+import { postCartItem } from "../../store/slices/cartSlice";
 import { downloadProductFile } from "../../store/slices/singleProductSlice";
 
 const ProductDescription =({singleProduct})=>{
 
   const dispatch = useDispatch()
-  const { status} = useSelector(state => state.cartItem)
+  const { postCartItemStatus} = useSelector(state => state.cart)
 
   const addToCart =()=>{
     dispatch(postCartItem(singleProduct.id))
@@ -31,8 +31,8 @@ const ProductDescription =({singleProduct})=>{
                   <Button variant="grey" label="Free" />
                 ) : (
                   <Button
-                    variant={status==="loading"? "grey": "blue"}
-                    label={`${status==="loading"?"Adding...":singleProduct.price+"$"}`}
+                    variant={postCartItemStatus==="loading"? "grey": "blue"}
+                    label={`${postCartItemStatus==="loading"?"Adding...":singleProduct.price+"$"}`}
                     iconType="cart"
                     onClick={addToCart}
                   />

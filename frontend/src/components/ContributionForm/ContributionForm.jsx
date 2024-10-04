@@ -2,8 +2,9 @@ import styles from "./ContributionForm.module.css";
 import { useState, useRef } from "react";
 import Button from "../Button";
 import { selectFilesvg } from "../../assets/svg/svgimages";
+import LoadingScreen from "../LoadingScreen/LoadingScreen";
 
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { uploadProductFile } from "../../store/slices/singleProductSlice";
 
 const ContributionForm = () => {
@@ -16,6 +17,7 @@ const ContributionForm = () => {
   const [file, setFile] = useState(null);
   const [dragActive, setDragActive] = useState(false);
   const dispatch = useDispatch()
+  const {status} = useSelector(state=> state.singleProduct)
 
   // Reference for the file input
   const fileInputRef = useRef(null);
@@ -132,8 +134,8 @@ const ContributionForm = () => {
           />
 
           <Button
-            variant="blue"
-            label="Send"
+            variant={status.uploadProductStatus==="loading"?"grey":"blue"}
+            label={status.uploadProductStatus==="loading"?"Sending...":"Send"}
             iconType="arrowRight"
             onClick={handleSubmit}
           />

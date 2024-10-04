@@ -1,7 +1,15 @@
 import styles from "./JoinCommunity.module.css"
 import Button from "../Button";
 
+import { useNavigate } from "react-router-dom";
+
 const JoinCommunity =()=>{
+
+  const navigate = useNavigate()
+
+  const handleClick = ()=>{
+    navigate("affiliate-program")
+  }
     return (
       <section className={styles.main}>
         <div className={styles.content}>
@@ -12,7 +20,7 @@ const JoinCommunity =()=>{
             incredible library of distortion grids!
           </p>
           <div className={styles.btn}>
-            <Button variant="blue" label="Learn how" iconType="arrowRight" />
+            <Button variant="blue" label="Learn how" iconType="arrowRight" onClick={handleClick}/>
           </div>
         </div>
       </section>

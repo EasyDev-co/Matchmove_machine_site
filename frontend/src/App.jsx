@@ -14,17 +14,28 @@ import CheckOut from './pages/Checkout/CheckOut';
 import AffiliateProgram from './pages/AffiliateProgram/AffiliateProgram';
 import NotFound from './pages/NotFound/NotFound';
 import Faq from './pages/Faq/Faq';
+import FinishCheckout from './pages/Checkout/FinishCheckout';
+import ScrollToTop from './hooks/ScrollToTop';
 
 
 function App() {
   return (
     <Router>
+      <ScrollToTop/>
       <Routes>
         <Route
           path="checkout"
           element={
             <ProtectedRoute>
               <CheckOut />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="checkout/payment"
+          element={
+            <ProtectedRoute>
+              <FinishCheckout />
             </ProtectedRoute>
           }
         />

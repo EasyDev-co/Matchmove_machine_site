@@ -5,10 +5,10 @@ import singleProductReducer from './slices/singleProductSlice';
 import optionsReducer from './slices/optionsSlice';
 import profileReducer from './slices/profileSlice';
 import cartReducer from './slices/cartSlice';
-import cartItemReducer from './slices/cartItemSlice';
 import profileProductReducer from './slices/profileProductSlice';
 import paymentReducer from './slices/paymentSlice';
 import orderReducer from './slices/orderSlice';
+import qrReducer from './slices/qrSlice';
 
 const store = configureStore({
   reducer: {
@@ -18,10 +18,10 @@ const store = configureStore({
     options: optionsReducer,
     profile: profileReducer,
     cart: cartReducer,
-    cartItem: cartItemReducer,
     profileProduct: profileProductReducer,
     payment: paymentReducer,
     order: orderReducer,
+    qr:qrReducer,
   },
 });
 

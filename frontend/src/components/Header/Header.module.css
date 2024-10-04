@@ -20,12 +20,16 @@
     position: absolute;
     z-index: 30;
     top: 0;
-    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px; /* Adjust as needed */
+    cursor: pointer;
+    width: 110px;  /* Set the width */
+    height: 136px; /* Set the height */
 }
 
 .logo {
     width: 110px;
     z-index: 25;
+    cursor: pointer;
 }
 
 .container {

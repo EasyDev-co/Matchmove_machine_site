@@ -1,21 +1,16 @@
 import styles from "./CartItems.module.css";
 import Button from "../Button";
 
-import { deleteCartItem } from "../../store/slices/cartItemSlice";
-import { fetchCart } from "../../store/slices/cartSlice";
+import { deleteCartItem } from "../../store/slices/cartSlice";
 import { useDispatch } from "react-redux";
 
 const Item = ({ item }) => {
 
   const dispatch = useDispatch()
 
-  const handleDeleteItem = async () => {
-    try {
-      await dispatch(deleteCartItem(item.id)).unwrap();
-      dispatch(fetchCart())
-    } catch (error) {
-      console.error('Error processing request:', error);
-    }
+  const handleDeleteItem = () => {
+ dispatch(deleteCartItem(item.id))
+
   };
 
   return (

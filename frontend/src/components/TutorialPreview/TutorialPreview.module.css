@@ -41,28 +41,53 @@
     position: relative;
 }
 
-.tutorial img {
+.tutorialImg{
     width: 100%;
+    box-sizing: border-box;
+    position: relative;
+    z-index: 1;
 }
+
+.tutorialImg::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255);
+    opacity: 0;
+    z-index: 2;
+}
+
+.tutorialImg img{
+    width: 100%;
+    z-index: 1;
+    position: relative;
+}
+
 
 .tutorial:hover h3 {
 color: #537EEF;
 }
 
-.tutorial:hover img {
-    opacity: 20%;
-}
-.tutorial:hover .readmorebtn {
-    display: flex;
+.tutorial:hover .tutorialImg::before {
+    opacity: 80%;
 }
 
-.readmorebtn{
+.readmorebtn {
     position: absolute;
     top: 100px;
     left: calc(50% - 90px);
     width: 180px;
     z-index: 2;
-    display: none;
+    transform: scale(0); /* Start small */
+    transition: transform 0.3s ease; /* Apply smooth transition */
+}
+
+.tutorial:hover .readmorebtn {
+    transform: scale(1); /* Grow to full size on hover */
 }
 
 .title {

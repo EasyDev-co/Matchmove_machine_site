@@ -3,30 +3,34 @@ import { useState, useEffect } from "react";
 import CartItems from "../../components/CartItems/CartItems";
 import Button from "../../components/Button";
 import logo from "../../assets/images/logo.svg"
-import ModalWrap from "../../components/Modal/ModalWrap";
-import Payment from "./Payment";
+import LoadingScreen from "../../components/LoadingScreen/LoadingScreen";
 
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchOrder } from "../../store/slices/orderSlice";
+import { fetchCart } from "../../store/slices/cartSlice";
+import { createOrder } from "../../store/slices/orderSlice";
 
 const CheckOut =()=>{
 
-  const [modal, setModal] = useState(false)
+  const [ordererror, setOrderError] = useState(null)
 
   const navigate = useNavigate()
   const dispatch = useDispatch()
-  const {cart} = useSelector(state=> state.cart)
-  const {order, status} = useSelector(state=> state.order)
+  const {cart, fetchCartStatus} = useSelector(state=> state.cart)
 
-  console.log(order);
-  
-  
+  const handleProceed = async () => {
+    try {
+      await dispatch(createOrder()).unwrap();
+      navigate('/');
+    } catch (error) {
+      setOrderError("Something went wrong, please try again")
+      console.error('Order creation failed:', error);
+    }
+  };
   useEffect(()=>{
     const fetchOrderData = async () => {
       try {
-        await dispatch(fetchOrder()).unwrap();
-        setModal(order.results.length>0)
+        await dispatch(fetchCart()).unwrap();
       } catch (error) {
         console.error("Failed to fetch order:", error);
       }
@@ -35,7 +39,20 @@ const CheckOut =()=>{
     fetchOrderData();
   },[dispatch])
 
-if(cart.items){
+  if(fetchCartStatus==="loading"){
+    return <LoadingScreen/>
+  }
+
+  if(fetchCartStatus==="failed"){
+    return(
+      <section className="width">
+        <h2 className="h2-medium">An error occurred</h2>
+        <p className="h4-medium">Please refresh or try again later. If the issue persists, contact support.</p>
+      </section>
+    )
+  }
+
+if(cart.items.length>0){
   return (
     <div className={styles.main}>
       <div className={styles.header}>
@@ -54,14 +71,15 @@ if(cart.items){
               <CartItems cart={cart.items} />
             </div>
           )}
-
-          <div className={`${styles.check} h5-light`}>
+        </div>
+        <div className={styles.proceed}>
+        <div className={`${styles.check} h5-light`}>
             <div className={styles.checkField}>
-              <p>Subtotal: </p> <p>${order.results[0].total_price}</p>
+              <p>Subtotal: </p> <p>${cart.total_price}</p>
             </div>
             <div className={styles.checkField}></div>
             <div className={`${styles.checkField} ${styles.total} h4-medium`}>
-              <p>Total: </p> <p>${order.results[0].total_price}</p>
+              <p>Total: </p> <p>${cart.total_price}</p>
             </div>
             <div className={styles.line} />
             <p className={styles.advice}>
@@ -69,9 +87,11 @@ if(cart.items){
               code and complete the payment during the checkout.
             </p>
           </div>
-        </div>
-        <div className={styles.proceed}>
-          <Payment />
+          <Button
+            variant={"blue"}
+            label={"Proceed"}
+            iconType="arrowRight"
+          />
         </div>
       </div>
     </div>

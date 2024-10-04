@@ -1,6 +1,6 @@
 import styles from "./LibraryItems.module.css"
 import { redCross } from "../../assets/svg/svgimages";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Pagination from "../Pagination/Pagination"
 import Asset from "../AssetsGrid/Asset";
 import Button from "../Button";
@@ -14,17 +14,29 @@ import LoadingScreen from "../LoadingScreen/LoadingScreen";
 
 const LibraryItems = () => {
   const { products, status } = useSelector((state) => state.products);
+  const { cameras, lenses } = useSelector((state) => state.options);
   const [searchParams, setSearchParams] = useSearchParams();
 
   const [selected, setSelected] = useState({ cameras: [], lenses: [] });
   const [openBrand, setOpenBrand] = useState(null);
   const [search, setSearch] = useState("");
-  const [showFilters, setShowFilters] = useState(false);
 
   const urlCameras = searchParams.getAll("camera");
   const urlLenses = searchParams.getAll("lens");
 
   const navigate = useNavigate();
+
+  // Set selected state based on URL parameters once cameras and lenses are fetched
+  useEffect(() => {
+    if (cameras.length > 0 && lenses.length > 0) {
+      const selectedCameras = cameras.filter((camera) => urlCameras.includes(camera.id.toString()));
+      const selectedLenses = lenses.filter((lens) => urlLenses.includes(lens.id.toString()));
+      setSelected({
+        cameras: selectedCameras,
+        lenses: selectedLenses,
+      });
+    }
+  }, [cameras, lenses]);
 
   const toggleLensMenu = (brand) => {
     setOpenBrand(openBrand === brand ? null : brand);
@@ -55,43 +67,36 @@ const LibraryItems = () => {
 
   const resetAllFilters = () => {
     setSelected({ cameras: [], lenses: [] });
-    setShowFilters(false);
     setSearch("");
     navigate({ search: "" }); // Clear URL filters
   };
 
   const applyFilters = () => {
-    setShowFilters(true);
-
     const updatedSearchParams = new URLSearchParams(searchParams);
     updatedSearchParams.delete("camera");
     updatedSearchParams.delete("lens");
 
-    // Update the search parameter if there's a search value
     if (search) {
       updatedSearchParams.set("search", search);
     } else {
       updatedSearchParams.delete("search");
     }
 
-    // Append the IDs of selected cameras
     selected.cameras.forEach((camera) => {
       updatedSearchParams.append("camera", camera.id);
     });
 
-    // Append the IDs of selected lenses
     selected.lenses.forEach((lens) => {
       updatedSearchParams.append("lens", lens.id);
     });
 
-    // Update the URL with the new search parameters
     setSearchParams(updatedSearchParams);
   };
 
   const discardFilter = (itemId, type) => {
     const updatedSelected = {
       ...selected,
-      [type]: selected[type].filter((item) => item.id !== itemId), // Compare IDs for filtering
+      [type]: selected[type].filter((item) => item.id !== itemId),
     };
 
     setSelected(updatedSelected);
@@ -103,7 +108,7 @@ const LibraryItems = () => {
       updatedSearchParams.append(
         type === "cameras" ? "camera" : "lens",
         remainingItem.id
-      ); // Append the ID
+      );
     });
 
     setSearchParams(updatedSearchParams);
@@ -128,7 +133,7 @@ const LibraryItems = () => {
             applyFilters={applyFilters}
           />
           <div className={styles.resetallfilters}>
-            {(urlCameras.length > 0 || urlLenses.length > 0 || search) && (
+            {(urlCameras.length > 0 || urlLenses.length > 0) && (
               <Button
                 variant="outline-red"
                 label="Reset all filters"
