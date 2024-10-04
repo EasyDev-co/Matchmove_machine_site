@@ -29,8 +29,15 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = [
+            "id",
             "username",
             "profile_picture",
+            "qr_code",
+            "facebook",
+            "twitter",
+            "linkedin",
+            "instagram",
+            "reddit",
         ]
 
 
@@ -62,5 +69,3 @@ class ProductDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
         fields = "__all__"
-
-

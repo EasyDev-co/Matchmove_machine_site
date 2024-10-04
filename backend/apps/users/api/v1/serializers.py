@@ -85,6 +85,7 @@ class UserDetailSerializer(serializers.ModelSerializer):
             "vimeo",
             "profile_picture",
             "occupation",
+            "qr_code",
         ]
 
 
