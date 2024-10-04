@@ -2,6 +2,7 @@ import styles from "./CheckOut.module.css"
 import {useEffect } from "react";
 import logo from "../../assets/images/logo.svg"
 import Payment from "./Payment";
+import LoadingScreen from "../../components/LoadingScreen/LoadingScreen";
 
 import { useDispatch, useSelector } from "react-redux";
 import { fetchOrder } from "../../store/slices/orderSlice";
@@ -26,7 +27,11 @@ const FinishCheckout =()=>{
     fetchOrderData();
   },[dispatch])
 
-if(order){
+  if(status.fetchOrderStatus === "loading"){
+    return <LoadingScreen/>
+  }
+
+if(status.fetchOrderStatus === "succeeded"&&order.order.items){
   return (
     <div className={styles.main}>
       <div className={styles.header}>
@@ -40,14 +45,13 @@ if(order){
       </div>
       <div className={styles.body}>
         <div className={styles.orderInfo}>
-
           <div className={`${styles.check} h5-light`}>
-            <div className={styles.checkField}>
-              <p>Subtotal: </p> <p>${order.total_price}</p>
-            </div>
+            
+              {order.order.items.map((item)=><div key={item.id} className={styles.checkField}><p>{item.product.lens.brand} {item.product.lens.model_name}</p> <p>${item.product.price}</p></div>)}
+            
             <div className={styles.checkField}></div>
             <div className={`${styles.checkField} ${styles.total} h4-medium`}>
-              <p>Total: </p> <p>${order.total_price}</p>
+              <p>Total: </p> <p>${order.order.total_price}</p>
             </div>
             <div className={styles.line} />
             <p className={styles.advice}>
@@ -57,11 +61,20 @@ if(order){
           </div>
         </div>
         <div className={styles.proceed}>
-          <Payment />
+          <Payment  orderId={order.order.id} />
         </div>
       </div>
     </div>
   );
+}
+
+if(status.fetchOrderStatus === "failed"){
+   return (
+     <section className="width">
+       <h2 className="h2-medium">Item not found or an error occurred.</h2>{" "}
+       <p className="h4-medium">Please try again.</p>
+     </section>
+   );
 }
 }
 

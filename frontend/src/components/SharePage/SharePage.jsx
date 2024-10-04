@@ -3,9 +3,9 @@ import qrimg from "../../assets/images/QR.svg"
 import { linksvg, copylinksvg } from "../../assets/svg/svgimages";
 import { socials } from "../../assets/svg/socialicons";
 
-const SharePage =({profileId})=>{
+const SharePage =({profileId, profileQR})=>{
 
-    const linkToCopy = `https://grids.matchmovemachine.com/profile/${profileId}`;
+    const linkToCopy = `https://grids.matchmovemachine.com/profile/${profileId}`;    
 
     const copyToClipboard = async () => {
         try {
@@ -23,7 +23,7 @@ const SharePage =({profileId})=>{
         <h2 className="h2-medium">Share this page</h2>
         <div className={styles.container}>
           <div className={styles.qr}>
-            <img src={qrimg} alt="qr" />
+            <img src={`http://localhost:8000/${profileQR}`} alt="qr" />
           </div>
           <div className={styles.content}>
             <h4 className="h4-medium">{linksvg} Link</h4>

@@ -15,6 +15,9 @@ const Profile=()=>{
   const dispatch = useDispatch()
   const {profile, status} = useSelector(state=> state.profile)
 
+  console.log(profile);
+  
+
   useEffect(()=>{
     dispatch(fetchUserProfile())
   },[dispatch])
@@ -39,7 +42,7 @@ const Profile=()=>{
         <ProfileTop profile={profile} status={status} profileId={id} />
         <ProfileAssets />
         <AboutAuthor about={profile.about_me}/>
-        <SharePage profileId={id}/>
+        <SharePage profileId={id} profileQR={profile.qr_code}/>
       </>
     );
   }

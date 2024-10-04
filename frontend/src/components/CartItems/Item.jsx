@@ -16,8 +16,8 @@ const Item = ({ item }) => {
   return (
     <div className={styles.itemCont}>
       <div className={styles.start}>
-        <div><div className={styles.priceCont}>${item.total_price}</div></div>
-        {item.product}
+        <div><div className={styles.priceCont}>${item.price}</div></div>
+        {item.product_name}
       </div>
       <Button
         labelPosition="none"

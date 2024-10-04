@@ -18,7 +18,7 @@ const InformationForm = ({ profile, status }) => {
   const [formData, setFormData] = useState({
     name: profile.username || '',
     email: profile.email || '',
-    occupation: '',
+    occupation: profile.occupation|| '',
     website: profile.website || '',
     portfolio: profile.portfolio || '',
   });
@@ -77,6 +77,7 @@ const InformationForm = ({ profile, status }) => {
         email: formData.email,
         website: formData.website,
         portfolio: formData.portfolio,
+        occupation: formData.occupation
       };
 
       try {

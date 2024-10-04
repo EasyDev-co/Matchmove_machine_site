@@ -19,7 +19,7 @@ const initialState = {
     'order/fetchOrder',
     async (_, { rejectWithValue }) => {
       try {
-        const response = await fetchWithAuth(`${BASE_URL}/orders/v1/orders/`, {
+        const response = await fetchWithAuth(`${BASE_URL}/orders/v1/orders/last/`, {
           method: 'GET',
         });
   
@@ -83,7 +83,6 @@ const initialState = {
         })
         .addCase(createOrder.fulfilled, (state, action) => {
           state.status.createOrderStatus = 'succeeded';
-          state.order = action.payload
         })
         .addCase(createOrder.rejected, (state, action) => {
           state.status.createOrderStatus = 'failed';

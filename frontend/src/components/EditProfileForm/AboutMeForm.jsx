@@ -15,7 +15,7 @@ const AboutMeForm = ({about, status}) => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const [formData, setFormData] = useState({
-        aboutMe: ""|| about,
+        aboutMe: !about?  "" : about,
     });
 
     const handleChange = (event) => {
@@ -66,7 +66,11 @@ const AboutMeForm = ({about, status}) => {
               onClick={goBack}
             />
             <Button
-              variant="blue"
+              variant={
+                status.updateUserProfileStatus === "loading"
+                  ? "grey"
+                  : "blue"
+              }
               label={
                 status.updateUserProfileStatus === "loading"
                   ? "Loading"

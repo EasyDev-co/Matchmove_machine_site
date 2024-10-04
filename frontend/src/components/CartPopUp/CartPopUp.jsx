@@ -12,6 +12,9 @@ const CartPopUp = ({ closeCart }) => {
   const [isVisible, setIsVisible] = useState(true);
   const navigate = useNavigate();
   const { cart } = useSelector((state) => state.cart);
+
+  console.log(cart);
+  
   const dispatch = useDispatch();
   const popUpRef = useRef(null); // Create a ref for the main popup
 

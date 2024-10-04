@@ -21,7 +21,7 @@ const CheckOut =()=>{
   const handleProceed = async () => {
     try {
       await dispatch(createOrder()).unwrap();
-      navigate('/');
+      navigate('/checkout/payment');
     } catch (error) {
       setOrderError("Something went wrong, please try again")
       console.error('Order creation failed:', error);
@@ -91,6 +91,7 @@ if(cart.items.length>0){
             variant={"blue"}
             label={"Proceed"}
             iconType="arrowRight"
+            onClick={handleProceed}
           />
         </div>
       </div>
