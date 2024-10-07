@@ -19,7 +19,7 @@ services:
       - static_dir:/opt/backend/static/
       - media_dir:/opt/backend/media/
     ports:
-      - "80:80"
+      - "8082:80"
     depends_on:
       - web
     networks:
@@ -37,7 +37,7 @@ services:
       - media_dir:/opt/backend/media/
       - ./backend:/opt/backend:rw
     ports:
-      - "8000:8000"
+      - "8084:8000"
     env_file:
       - .env
     depends_on:
@@ -51,7 +51,7 @@ services:
       dockerfile: frontend.dockerfile
     container_name: ${PROJECT_SLUG}_frontend
     ports:
-      - "3000:3000"
+      - "8083:3000"
     env_file:
       - .env
     volumes:
