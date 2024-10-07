@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
-import { eyesvg, warningsvg, closedeyesvg } from "../../assets/svg/svgimages";
+import { warningsvg} from "../../assets/svg/svgimages";
 
 const Email = ({ formData, handleChange, errors, validateEmail }) => {
   const handleEmailChange = (e) => {
-    const { name, value } = e.target;
+    const { value } = e.target;
     handleChange(e);
 
     if (!validateEmail(value)) {
@@ -19,6 +18,7 @@ const Email = ({ formData, handleChange, errors, validateEmail }) => {
         type="text"
         id="email"
         name="email"
+        autoComplete="email"
         placeholder="E-mail"
         value={formData.email}
         onChange={handleEmailChange}

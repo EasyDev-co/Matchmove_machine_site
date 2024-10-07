@@ -1,21 +1,33 @@
-import { useState } from "react";
-import {closesvg, googleIconsvg, facebooksvg, applesvg, microsoftsvg } from "../../assets/svg/svgimages";
+import { useState, useEffect } from "react";
+import {
+  googleIconsvg,
+  facebooksvg,
+  applesvg,
+  microsoftsvg,
+} from "../../assets/svg/svgimages";
 import Button from "../Button";
 import Password from "../Forms/Password";
 import Email from "../Forms/Email";
 import { useNavigate } from "react-router-dom";
 
+import { loginUser } from "../../store/userSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 const Login = ({ onModalClose }) => {
+
+  const dispatch = useDispatch();
+  const {status} = useSelector(state=> state.user)
+  const apiError =useSelector(state=> state.user.errors.loginError)
+
   const [formData, setFormData] = useState({
-    email: '',
-    password: '',
+    email: "",
+    old_password: "",
     rememberMe: false,
   });
 
   const [errors, setErrors] = useState({
-    email: '',
-    password: '',
+    email: "",
+    old_password: "",
   });
 
   const navigate = useNavigate();
@@ -24,11 +36,11 @@ const Login = ({ onModalClose }) => {
     const { name, value, type, checked } = e.target;
     setFormData({
       ...formData,
-      [name]: type === 'checkbox' ? checked : value,
+      [name]: type === "checkbox" ? checked : value,
     });
     setErrors({
       ...errors,
-      [name]: '',
+      [name]: "",
     });
   };
 
@@ -43,22 +55,24 @@ const Login = ({ onModalClose }) => {
     let newErrors = {};
 
     if (!formData.email) {
-      newErrors.email = 'Email is required';
+      newErrors.email = "Email is required";
       valid = false;
     } else if (!validateEmail(formData.email)) {
-      newErrors.email = 'Invalid email format';
+      newErrors.email = "Invalid email format";
       valid = false;
     }
 
-    if (!formData.password) {
-      newErrors.password = 'Password is required';
+    if (!formData.old_password) {
+      newErrors.old_password = "Password is required";
       valid = false;
     }
 
     setErrors(newErrors);
 
     if (valid) {
-      console.log('Form data submitted:', formData);
+      dispatch(
+        loginUser({ email: formData.email, password: formData.old_password })
+      );
     }
   };
 
@@ -69,13 +83,41 @@ const Login = ({ onModalClose }) => {
   const handleForgotPassword = () => {
     navigate("/reset-password");
   };
+  
+  useEffect(() => {
+    if (apiError && apiError.non_field_errors) {
+      setErrors({
+        ...errors,
+        email: apiError.non_field_errors[0],
+      });
+    } else {
+      setErrors({
+        ...errors,
+        email: "",
+      });
+    }
+  }, [apiError]);
 
+  useEffect(()=>{
+    if(status.loginStatus==="succeeded"){
+      setErrors({
+        email: "",
+        old_password: "",
+      })
+      navigate(-1)
+    }
+  }, [status, navigate])
 
   return (
     <div className="popup-content">
-      <button className="closebtn" onClick={onModalClose}>
-        {closesvg}
-      </button>
+      <div className="closebtn cross">
+        <Button
+          variant="transparent"
+          iconType="crossbtn"
+          color="white"
+          onClick={onModalClose}
+        />
+      </div>
       <div className="login-form inputsbg">
         <div className="login-wrap">
           <h2 className="h2-medium">Log in to your account</h2>
@@ -104,10 +146,21 @@ const Login = ({ onModalClose }) => {
                   />
                   <label htmlFor="rememberMe">Remember me</label>
                 </div>
-                <button className="forgot-password-btn" type="button" onClick={handleForgotPassword}>Forgot password</button>
+                <button
+                  className="forgot-password-btn"
+                  type="button"
+                  onClick={handleForgotPassword}
+                >
+                  Forgot password
+                </button>
               </div>
               <div className="form-button-cont">
-                <Button label="Sign In" iconType="arrowRight" variant="blue" />
+                <Button
+                  label={status.loginStatus==="loading"?"Signing in...":"Sign In"}
+                  iconType="arrowRight"
+                  variant={status.loginStatus==="loading"? "grey":"blue"}
+                  type="submit"
+                />
                 <Button
                   label="Register"
                   iconType="arrowRight"

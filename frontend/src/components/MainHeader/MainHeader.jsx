@@ -1,46 +1,62 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styles from "./MainHeader.module.css";
 import Button from "../Button";
 import Select from "../Forms/Select";
 import { scrollArrowsvg } from "../../assets/svg/svgimages";
 import useSmoothScroll from "../../hooks/useSmoothScroll";
 import { useNavigate } from "react-router-dom";
+import LoadingScreen from "../LoadingScreen/LoadingScreen";
+
+import { useSelector, useDispatch } from "react-redux";
+import { fetchCameras } from "../../store/slices/optionsSlice";
+import { fetchFormats } from "../../store/slices/optionsSlice";
+import { fetchLenses } from "../../store/slices/optionsSlice";
 
 const MainHeader = () => {
+  const dispatch = useDispatch();
+  const { cameras, lenses, formats, status } = useSelector(state => state.options);
+
   const [formData, setFormData] = useState({
     camera: "",
-    lensmanufacturer: "",
-    lensmodel: "",
+    lens: "",
+    format: "",
   });
 
-  const scrollToSection = useSmoothScroll(); 
-  const navigate= useNavigate()
+  const scrollToSection = useSmoothScroll();
+  const navigate = useNavigate();
 
-  const handleSelectChange = (name, option) => {
-    setFormData({ ...formData, [name]: option });
-    console.log(formData);
+  const handleSelectChange = (name, optionId) => {
+    setFormData({ ...formData, [name]: optionId });
   };
 
   const handleSubmit = () => {
-    console.log(formData);
-  };
+    const queryParams = new URLSearchParams({
+      page: 1,
+      page_size: 24,
+      camera: formData.camera,
+      lens: formData.lens,
+      format: formData.format,
+    }).toString();
 
-  const selectOptions = [
-    "Option 1",
-    "Option 2",
-    "Option 3",
-    "Option 4",
-    "Option 5",
-    "Option 6",
-    "Option 7",
-  ];
+    navigate(`/library?${queryParams}`);
+  };
 
   const handleScroll = () => {
     scrollToSection("about-section");
   };
 
-  const goToLibrary =()=>{
-    navigate("library")
+  const goToLibrary = () => {
+    navigate("/library?page=1&page_size=24");
+  };
+
+  useEffect(() => {
+    dispatch(fetchCameras());
+    dispatch(fetchFormats());
+    dispatch(fetchLenses());
+  }, [dispatch]);
+
+  if(status==="loading"){
+    return(<LoadingScreen/>)
   }
 
   return (
@@ -59,25 +75,23 @@ const MainHeader = () => {
             <Select
               name="camera"
               placeholder="Camera"
-              options={selectOptions}
+              options={cameras.map(camera => ({ id: camera.id, label: camera.model_name }))}
               selected={formData.camera}
-              onSelect={(option) => handleSelectChange("camera", option)}
+              onSelect={optionId => handleSelectChange("camera", optionId)}
             />
             <Select
-              name="lensmanufacturer"
-              placeholder="Lens manufacturer"
-              options={selectOptions}
-              selected={formData.lensmanufacturer}
-              onSelect={(option) =>
-                handleSelectChange("lensmanufacturer", option)
-              }
+              name="lens"
+              placeholder="Lens"
+              options={lenses.map(lens => ({ id: lens.id, label: `${lens.brand} ${lens.model_name}` }))}
+              selected={formData.lens}
+              onSelect={optionId => handleSelectChange("lens", optionId)}
             />
             <Select
-              name="lensmodel"
-              placeholder="Lens model"
-              options={selectOptions}
-              selected={formData.lensmodel}
-              onSelect={(option) => handleSelectChange("lensmodel", option)}
+              name="format"
+              placeholder="Format"
+              options={formats.map(format => ({ id: format.id, label: format.format_type }))}
+              selected={formData.format}
+              onSelect={optionId => handleSelectChange("format", optionId)}
             />
             <div className={styles.formbtn}>
               <Button
@@ -103,7 +117,6 @@ const MainHeader = () => {
           </button>
         </div>
       </div>
-      
     </section>
   );
 };

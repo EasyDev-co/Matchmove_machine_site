@@ -21,13 +21,7 @@
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;
-    gap: 10px;
-}
-
-.assets>* {
-    flex: 1 1 calc(25% - 10px);
-    box-sizing: border-box;
-    width: 223px
+    gap: 20px;
 }
 
 .mobileview {
@@ -89,16 +83,16 @@
     white-space: nowrap;
 }
 
+.message{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
 
 @media (max-width: 1200px) {
     .filterwrap {
         display: none;
-    }
-
-    .assets>* {
-        flex: 1 1 calc(33.3333% - 20px);
-        width: calc(33.3333% - 20px);
-        min-width: 167px;
     }
 
     .main {
@@ -107,11 +101,7 @@
 }
 
 @media (max-width: 729px) {
-    .assets>* {
-        flex: 1 1 calc(50% - 10px);
-        width: calc(50% - 10px);
-        min-width: 0;
-    }
+
 
     .mobileview {
         display: flex;

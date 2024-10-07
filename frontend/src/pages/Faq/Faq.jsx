@@ -107,14 +107,14 @@ const Faq = () => {
         </div>
         <div className={styles.body}>
           <section id="tech-specs" className={styles.spoilerSection}>
-            <div className={styles.spoilerBanner}>
+            <div className={`${styles.spoilerBanner} ${styles.techspecs}`}>
               <h2 className="h2-bold">Tech specs</h2>
             </div>
             <div className={styles.spoilerCont}>
-              {questions.howToUse.map((item, i) => (
+              {questions.techSpecs.map((item, i) => (
                 <div key={i}>
                   <FaqSpoiler spoiler={item} />
-                  {i !== questions.howToUse.length - 1 && (
+                  {i !== questions.techSpecs.length - 1 && (
                     <div className={styles.underline} />
                   )}
                 </div>
@@ -123,14 +123,14 @@ const Faq = () => {
           </section>
 
           <section id="pricing" className={styles.spoilerSection}>
-            <div className={styles.spoilerBanner}>
+            <div className={`${styles.spoilerBanner} ${styles.pricing}`}>
               <h2 className="h2-bold">Pricing</h2>
             </div>
             <div className={styles.spoilerCont}>
-              {questions.howToUse.map((item, i) => (
+              {questions.pricing.map((item, i) => (
                 <div key={i}>
                   <FaqSpoiler spoiler={item} />
-                  {i !== questions.howToUse.length - 1 && (
+                  {i !== questions.pricing.length - 1 && (
                     <div className={styles.underline} />
                   )}
                 </div>
@@ -139,14 +139,14 @@ const Faq = () => {
           </section>
 
           <section id="payment" className={styles.spoilerSection}>
-            <div className={styles.spoilerBanner}>
+            <div className={`${styles.spoilerBanner} ${styles.payment}`}>
               <h2 className="h2-bold">Payment</h2>
             </div>
             <div className={styles.spoilerCont}>
-              {questions.howToUse.map((item, i) => (
+              {questions.payment.map((item, i) => (
                 <div key={i}>
                   <FaqSpoiler spoiler={item} />
-                  {i !== questions.howToUse.length - 1 && (
+                  {i !== questions.payment.length - 1 && (
                     <div className={styles.underline} />
                   )}
                 </div>
@@ -155,7 +155,7 @@ const Faq = () => {
           </section>
 
           <section id="howToUse" className={styles.spoilerSection}>
-            <div className={styles.spoilerBanner}>
+            <div className={`${styles.spoilerBanner} ${styles.howtouse}`}>
               <h2 className="h2-bold">How to use the website</h2>
             </div>
             <div className={styles.spoilerCont}>
@@ -171,14 +171,14 @@ const Faq = () => {
           </section>
 
           <section id="personalAccount" className={styles.spoilerSection}>
-            <div className={styles.spoilerBanner}>
+            <div className={`${styles.spoilerBanner} ${styles.personalaccount}`}>
               <h2 className="h2-bold">Personal account</h2>
             </div>
             <div className={styles.spoilerCont}>
-              {questions.howToUse.map((item, i) => (
+              {questions.personalAccount.map((item, i) => (
                 <div key={i}>
                   <FaqSpoiler spoiler={item} />
-                  {i !== questions.howToUse.length - 1 && (
+                  {i !== questions.personalAccount.length - 1 && (
                     <div className={styles.underline} />
                   )}
                 </div>
@@ -187,14 +187,14 @@ const Faq = () => {
           </section>
 
           <section id="license" className={styles.spoilerSection}>
-            <div className={styles.spoilerBanner}>
+            <div className={`${styles.spoilerBanner} ${styles.license}`}>
               <h2 className="h2-bold">License</h2>
             </div>
             <div className={styles.spoilerCont}>
-              {questions.howToUse.map((item, i) => (
+              {questions.license.map((item, i) => (
                 <div key={i}>
                   <FaqSpoiler spoiler={item} />
-                  {i !== questions.howToUse.length - 1 && (
+                  {i !== questions.license.length - 1 && (
                     <div className={styles.underline} />
                   )}
                 </div>

@@ -42,15 +42,20 @@
     max-height: 165px;
     overflow-y: auto;
     border: 1px solid #ccc;
-    border-radius: 4px;
     background-color: white;
     z-index: 1;
+    padding: 10px;
+    box-sizing: border-box;
+    margin-top: -2px;
 }
 
-.option {
+.optionsContainer .option {
     padding: 10px;
     cursor: pointer;
+    text-align: left;
 }
+
+.option
 
 .option:hover {
     background-color: #f0f0f0;
@@ -72,4 +77,13 @@
   
   .optionsContainer::-webkit-scrollbar-thumb:hover {
     background: #555; 
+  }
+
+  .occupationCont .selectContainer{
+    background-color: #F8F8F8;
+    font-weight: 400;
+    font-size: 17px;
+    line-height: 26px;
+    width: 100%;
+    color: #282828;
   }

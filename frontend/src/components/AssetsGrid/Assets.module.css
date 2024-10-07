@@ -82,7 +82,7 @@ font-size: 15px;
 
 }
 
-@media (max-width: 1200px) {
+@media (max-width: 1400px) {
     .asset {
         width: calc(25% - 30px);
         /* 4 items per row */

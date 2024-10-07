@@ -6,14 +6,21 @@ import { warningsvg, eyesvg, closedeyesvg } from "../../assets/svg/svgimages"
 
 import styles from "./EditProfileForm.module.css"
 
-const PasswordForm = () => {
+import { useDispatch } from "react-redux"
+import { changePassword } from "../../store/slices/profileSlice"
+
+const PasswordForm = ({status}) => {
+    const dispatch = useDispatch();
+
     const [formData, setFormData] = useState({
-        password: '',
-        confirmPassword: '',
+        old_password: '',
+        new_password: '',
     });
 
     const [errors, setErrors] = useState({});
-    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+    const [showNewPassword, setShowNewPassword] = useState(false);
+
+    const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/; // New password requirements
 
     const handleChange = (event) => {
         const { name, value } = event.target;
@@ -22,93 +29,95 @@ const PasswordForm = () => {
             [name]: value,
         }));
 
-
         setErrors((prevErrors) => ({
             ...prevErrors,
             [name]: '',
         }));
     };
 
-    const toggleConfirmPasswordVisibility = () => {
-        setShowConfirmPassword(!showConfirmPassword);
+    const toggleNewPasswordVisibility = () => {
+        setShowNewPassword(!showNewPassword);
     };
 
     const handleSubmit = (event) => {
         event.preventDefault();
         const newErrors = {};
 
-        if (formData.password !== formData.confirmPassword) {
-            newErrors.confirmPassword = 'Passwords do not match';
+        // Check if new password meets the requirements
+        if (!passwordRegex.test(formData.new_password)) {
+            newErrors.new_password = 'Password must be at least 8 characters long and contain both letters and numbers.';
         }
 
         if (Object.keys(newErrors).length > 0) {
             setErrors(newErrors);
         } else {
-
+            dispatch(changePassword({
+                new_password: formData.new_password,
+                old_password: formData.old_password
+            }));
             console.log('Form submitted:', formData);
-
         }
     };
 
     return (
-        <div className={styles.formcontainer}>
-            <hr className={styles.hr} />
-            <form onSubmit={handleSubmit}>
-                <div className={`form-group ${styles.forms}`}>
-                    <label htmlFor="password">
-                        <p>New password</p>
-                        <Password
-                            formData={formData}
-                            setFormData={setFormData}
-                            errors={errors}
-                            setErrors={setErrors}
-                        />
-                    </label>
+      <div className={styles.formcontainer}>
+        <hr className={styles.hr} />
+        <form onSubmit={handleSubmit}>
+          <div className={`form-group ${styles.forms}`}>
+            <label htmlFor="old_password">
+              <p>Old Password</p>
+              <Password
+                formData={formData}
+                setFormData={setFormData}
+                errors={errors}
+                setErrors={setErrors}
+              />
+            </label>
 
-                    <label htmlFor="confirmPassword">
-                        <p>Confirm password</p>
-                        <div className="pass">
-                            <div
-                                className={`inputSvg ${errors.confirmPassword ? "error" : ""}`}
-                                onClick={toggleConfirmPasswordVisibility}
-                            >
-                                {showConfirmPassword ? closedeyesvg : eyesvg}
-                            </div>
-                            <input
-                                type={showConfirmPassword ? "text" : "password"}
-                                id="confirmPassword"
-                                name="confirmPassword"
-                                placeholder="Confirm password"
-                                value={formData.confirmPassword || ''}
-                                onChange={handleChange}
-                                className={errors.confirmPassword ? "error" : ""}
-                            />
-                        </div>
-                        {errors.confirmPassword && (
-                            <div className="error-message">
-                                {warningsvg} {errors.confirmPassword}
-                            </div>
-                        )}
-                    </label>
+            <label htmlFor="new_password">
+              <p>New Password</p>
+              <div className="pass">
+                <div
+                  className={`inputSvg ${errors.new_password ? "error" : ""}`}
+                  onClick={toggleNewPasswordVisibility}
+                >
+                  {showNewPassword ? closedeyesvg : eyesvg}
                 </div>
-                <hr className={styles.hr} />
-                <div className={styles.btncont}>
-                    <Button
-                        variant="outline-red"
-                        label="Close"
-                        labelPosition="left"
-                        iconType="crossbtn"
-                    />
-                    <Button
-                        variant="blue"
-                        label="Save changes"
-                        labelPosition="left"
-                        iconType="checkMark"
-                        type="submit"
-                    />
+                <input
+                  type={showNewPassword ? "text" : "password"}
+                  id="new_password"
+                  name="new_password"
+                  placeholder="Enter new password"
+                  value={formData.new_password || ""}
+                  onChange={handleChange}
+                  className={errors.new_password ? "error" : ""}
+                />
+              </div>
+              {errors.new_password && (
+                <div className="error-message">
+                  {warningsvg} {errors.new_password}
                 </div>
-            </form>
-        </div>
+              )}
+            </label>
+          </div>
+          <hr className={styles.hr} />
+          <div className={styles.btncont}>
+            <Button
+              variant="outline-red"
+              label="Close"
+              labelPosition="left"
+              iconType="crossbtn"
+            />
+            <Button
+              variant={status === "loading" ? "grey" : "blue"}
+              label={status === "loading" ? "Saving..." : "Save changes"}
+              labelPosition="left"
+              iconType="checkMark"
+              type="submit"
+            />
+          </div>
+        </form>
+      </div>
     );
 };
 

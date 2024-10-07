@@ -3,19 +3,25 @@ import { useNavigate } from "react-router-dom";
 import FormPopUpWrapper from "../Forms/FormPopUpWrapper";
 import AuthInfo from "./Registration/AuthInfo";
 import PersonalInfo from "./Registration/PersonalInfo";
+import ConfirmEmail from "./Registration/ConfirmEmail";
 import { registerArrowLeftSvg } from "../../assets/svg/svgimages";
+
 
 const Registration = () => {
   const [currentStep, setCurrentStep] = useState("auth")
   const navigate = useNavigate()
 
   const handleNext = () => {
-    setCurrentStep("personal")
+    setCurrentStep("confirmation")
   };
 
   const handlePrev = () => {
     setCurrentStep("auth")
   };
+
+  const handleConfirm =()=>{
+    setCurrentStep("confirmation")
+  }
 
   const handleGoBack =()=>{
     navigate(-1)
@@ -33,13 +39,14 @@ const Registration = () => {
               }`}
             ></div>
             <div
-              className={`bar ${currentStep === "personal" ? "active" : ""}`}
+              className={`bar ${currentStep === "confirmation" ? "active" : ""}`}
             ></div>
           </div>
           {currentStep === "auth" && <AuthInfo handleNext={handleNext} />}
-          {currentStep === "personal" && (
-            <PersonalInfo handlePrev={handlePrev} />
-          )}
+          {/* {currentStep === "personal" && (
+            <PersonalInfo handlePrev={handlePrev} handleConfirm={handleConfirm} />
+          )} */}
+          {currentStep === "confirmation" && <ConfirmEmail/>}
         </div>
       </div>
     </FormPopUpWrapper>

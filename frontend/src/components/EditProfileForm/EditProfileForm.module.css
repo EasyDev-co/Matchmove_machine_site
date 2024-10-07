@@ -65,6 +65,28 @@
     margin: 40px 0;
 }
 
+.socialtoggle {
+    max-height: 37vh;
+    overflow: auto;
+}
+
+
+.socialtoggle::-webkit-scrollbar {
+    width: 5px; 
+  }
+  
+  .socialtoggle::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+  }
+  
+  .socialtoggle::-webkit-scrollbar-thumb {
+    background: #2F57BF; 
+    border-radius: 3px; 
+  }
+  
+  .socialtoggle::-webkit-scrollbar-thumb:hover {
+    background: #555; 
+  }
 
 @media screen and (max-width: 1400px) {
     .fieldbtn {

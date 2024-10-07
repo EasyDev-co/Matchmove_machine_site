@@ -4,9 +4,14 @@ import { useState } from "react";
 import Email from "../../Forms/Email";
 import Button from "../../Button";
 
+import { useDispatch } from "react-redux";
+import { resetPassword } from "../../../store/userSlice";
+
 const ResetPasswordForm = ({handlePasswordReset}) => {
-    const [formData, setFormData] = useState({ email: '' });
+  const dispatch = useDispatch();
+  const [formData, setFormData] = useState({ email: '' });
   const [errors, setErrors] = useState({ email: '' });
+
   const validateEmail = (email) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
@@ -18,37 +23,45 @@ const ResetPasswordForm = ({handlePasswordReset}) => {
       ...formData,
       [name]: value,
     });
-
-    setErrors({
-      ...errors,
-      [name]: '',
-    });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    let valid = true;
-    let newErrors = {};
-
-    // validat email
-    if (!formData.email) {
+    const email = formData.email;
+    let newErrors = { email: '' };
+  
+    // Validate email only on submit
+    if (!email) {
       newErrors.email = 'Email is required';
-      valid = false;
-    } else if (!validateEmail(formData.email)) {
+    } else if (!validateEmail(email)) {
       newErrors.email = 'Invalid email format';
-      valid = false;
     }
-
+  
     setErrors(newErrors);
-
-    if (valid) {
-      console.log('Form data submitted:', formData);
-      handlePasswordReset()
-      // form submist
+  
+    // If valid, dispatch the reset password action
+    if (!newErrors.email) {
+      try {
+        await dispatch(resetPassword(email)).unwrap(); // Use unwrap for error handling
+        handlePasswordReset()
+      } catch (error) {
+        // Assuming error structure comes from the backend
+        const backendErrors = error; 
+        let apiErrors = {};
+  
+        // Check for specific backend errors
+        if (backendErrors.email) {
+          apiErrors.email = backendErrors.email[0]; // Adjust based on actual backend response
+        }
+  
+        // Update local errors state
+        setErrors(prevErrors => ({
+          ...prevErrors,
+          ...apiErrors,
+        }));
+      }
     }
   };
-
-
   return (
           <form onSubmit={handleSubmit}>
             <div className="form-group">
@@ -62,7 +75,7 @@ const ResetPasswordForm = ({handlePasswordReset}) => {
                 errors={errors}
                 validateEmail={validateEmail}
               />
-              <Button variant="blue" iconType="arrowRight" label="Reset" />
+              <Button variant="blue" iconType="arrowRight" label="Reset" type="submit" />
             </div>
           </form>
   );

@@ -4,9 +4,12 @@ function useSmoothScroll() {
   const scrollToSection = useCallback((sectionId) => {
     const section = document.getElementById(sectionId);
     if (section) {
-      section.scrollIntoView({
+      const yOffset = -90; // offset by 90px
+      const yPosition = section.getBoundingClientRect().top + window.pageYOffset + yOffset;
+      
+      window.scrollTo({
+        top: yPosition,
         behavior: "smooth",
-        block: "start",
       });
     }
   }, []);

@@ -4,7 +4,7 @@ import FileBlock from "./FileBlock";
 import Description from "./Description";
 import HowToUse from "./HowToUse";
 
-const ProductField =()=>{
+const ProductField =({singleProduct})=>{
     const [activeButton, setActiveButton] = useState('Assets');
 
     const handleButtonClick = (buttonName) => {
@@ -34,7 +34,7 @@ const ProductField =()=>{
                 </button>
             </div>
             {activeButton==="Assets" && <FileBlock/>}
-            {activeButton==="Description" && <Description/>}
+            {activeButton==="Description" && <Description description={singleProduct.description}/>}
             {activeButton === "How to use" && <HowToUse/>}
         </section>
     );

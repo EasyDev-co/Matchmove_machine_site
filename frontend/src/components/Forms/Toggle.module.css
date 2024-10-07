@@ -27,3 +27,7 @@
 .on .toggleButton {
     transform: translateX(60px);
 }
+
+.on.toggleSwitch {
+    background: #2F57BF;
+}

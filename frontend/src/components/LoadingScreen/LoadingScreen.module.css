@@ -1,0 +1,64 @@
+.main {
+    color: white;
+    position: fixed;
+    z-index: 10000;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0px;
+    gap: 50px;
+    background-color: rgba(93, 93, 93, 0.8);
+}
+
+.main::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url("../../assets/images/loading.png") center center / cover no-repeat; 
+    opacity: 0.4;
+    z-index: -1;
+}
+
+.conent {
+    z-index: 3;
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+}
+
+.dots::after {
+    content: '';
+    display: inline-block;
+    width: 1em;
+    text-align: left;
+    color: #2b2b2b;
+    width: 60px;
+    animation: dots 1.5s steps(4, end) infinite;
+}
+
+@keyframes dots {
+    0% {
+        content: '';
+    }
+    25% {
+        content: '.   '; /* One dot, spaced */
+    }
+    50% {
+        content: '.  .  '; /* Two dots, spaced */
+    }
+    75% {
+        content: '.  .  .  '; /* Three dots, spaced */
+    }
+    100% {
+        content: '';
+    }
+}

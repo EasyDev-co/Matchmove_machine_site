@@ -2,38 +2,37 @@ import styles from "./NavigationTop.module.css"
 import { Link } from "react-router-dom"
 import { breadcrumbsvg } from "../../assets/svg/svgimages"
 
-const NavigationTop =({title, text})=>{
+const NavigationTop =({title, text, singleProduct})=>{
     
     
     return (
       <section className={`height ${styles.main}`}>
         {title === "Distortion Grids Database" ? (
           <div className={styles.breadcrumbs}>
-            <Link>Home {breadcrumbsvg}</Link>
+            <Link  to="/">Home {breadcrumbsvg}</Link>
             <p>Full library</p>
           </div>
-        ) : title === "Distortion grids pack for Canon EF" ? (
+        ) : singleProduct ? (
           <div className={styles.breadcrumbs}>
-            <Link>Home {breadcrumbsvg}</Link>
-            <Link>Full library {breadcrumbsvg}</Link>
-            <Link>ARRI ALEXA 65 {breadcrumbsvg}</Link>
-            <Link>Canon {breadcrumbsvg}</Link>
-            <Link>Canon EF 100-200mm f/4.5A {breadcrumbsvg}</Link>
-            <p>Distortion grid pack for Canon EF</p>
+            <Link to="/">Home {breadcrumbsvg}</Link>
+            <Link to="/library?page=1&page_size=24">Full library {breadcrumbsvg}</Link>
+            <Link to={`/library?page=1&page_size=24&camera=${singleProduct.camera.id}`}>{singleProduct.camera.model_name} {breadcrumbsvg}</Link>
+            <Link to={`/library?page=1&page_size=24&lens=${singleProduct.lens.id}`}>{singleProduct.lens.brand} {singleProduct.lens.model_name} {breadcrumbsvg}</Link>
+            <p>Distortion grid pack for {singleProduct.camera.model_name} {singleProduct.lens.model_name}</p>
           </div>
         ) : title === "Affiliate program" ? (
           <div className={styles.breadcrumbs}>
-            <Link>Home {breadcrumbsvg}</Link>
+            <Link  to="/">Home {breadcrumbsvg}</Link>
             <p>Affiliate program</p>
           </div>
         ) : title === "FAQ" ? (
           <div className={styles.breadcrumbs}>
-            <Link>Home {breadcrumbsvg}</Link>
+            <Link to="/">Home {breadcrumbsvg}</Link>
             <p>FAQ</p>
           </div>
         ) : title === "Error" ? (
           <div className={styles.breadcrumbs}>
-            <Link>Home {breadcrumbsvg}</Link>
+            <Link  to="/" >Home {breadcrumbsvg}</Link>
             <p>Error</p>
           </div>
         ) : (

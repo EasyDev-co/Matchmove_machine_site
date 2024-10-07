@@ -12,6 +12,7 @@
     top: 60px;
     left: 0;
     background-color: #EBEFF9;
+    z-index: 10;
 }
 
 .btn {

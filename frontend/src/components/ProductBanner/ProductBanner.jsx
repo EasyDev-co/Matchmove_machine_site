@@ -8,8 +8,8 @@ import useSmoothScroll from "../../hooks/useSmoothScroll"
 
 const svg =(
     <svg width="61" height="61" viewBox="0 0 61 61" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M30.5 55.5C44.3075 55.5 55.5 44.3075 55.5 30.5C55.5 16.6925 44.3075 5.5 30.5 5.5C16.6925 5.5 5.5 16.6925 5.5 30.5C5.5 44.3075 16.6925 55.5 30.5 55.5Z" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M43.4925 23C43.2425 22.57 42.975 22.15 42.685 21.75M45.0275 34.25C44.3555 36.8444 43.0018 39.2118 41.1068 41.1068C39.2118 43.0018 36.8444 44.3555 34.25 45.0275" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M30.5 55.5C44.3075 55.5 55.5 44.3075 55.5 30.5C55.5 16.6925 44.3075 5.5 30.5 5.5C16.6925 5.5 5.5 16.6925 5.5 30.5C5.5 44.3075 16.6925 55.5 30.5 55.5Z" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+<path d="M43.4925 23C43.2425 22.57 42.975 22.15 42.685 21.75M45.0275 34.25C44.3555 36.8444 43.0018 39.2118 41.1068 41.1068C39.2118 43.0018 36.8444 44.3555 34.25 45.0275" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
 </svg>
 )
 
@@ -20,7 +20,7 @@ const camerasvg =(
 
 )
 
-const ProductBanner = () => {
+const ProductBanner = ({singleProduct}) => {
   const [variant, setVariant] = useState(null); 
   const scrollToSection = useSmoothScroll(); 
 
@@ -53,7 +53,7 @@ const ProductBanner = () => {
           <div className={styles.sectionTitle}>
             {svg} <h3 className="h3-medium">Lens model</h3>
           </div>
-          <p className="h4-medium">EF</p>
+          <p className="h4-medium">{singleProduct.lens.model_name}</p>
         </div>
         <div 
           className={`${styles.camerasection} ${styles.right} ${variant === 'camera' ? styles.selected : ''}`} 
@@ -63,7 +63,7 @@ const ProductBanner = () => {
           <div className={styles.sectionTitle}>
             {camerasvg} <h3 className="h3-medium">Camera model</h3>
           </div>
-          <p className="h4-medium">ARRI ALEXA 65</p>
+          <p className="h4-medium">{singleProduct.camera.model_name}</p>
         </div>
         <img className={styles.image} src={imageToDisplay} alt="display" />
       </div>

@@ -1,8 +1,25 @@
 import styles from "./ProductDescription.module.css"
 import Button from "../Button"
+import { Link } from "react-router-dom";
 import { companysvg } from "../../assets/svg/svgimages";
 
-const ProductDescription =()=>{
+import { useDispatch, useSelector } from "react-redux";
+import { postCartItem } from "../../store/slices/cartSlice";
+import { downloadProductFile } from "../../store/slices/singleProductSlice";
+
+const ProductDescription =({singleProduct})=>{
+
+  const dispatch = useDispatch()
+  const { postCartItemStatus} = useSelector(state => state.cart)
+
+  const addToCart =()=>{
+    dispatch(postCartItem(singleProduct.id))
+  }
+
+  const downloadAsset = ()=>{
+    dispatch(downloadProductFile(singleProduct.id))
+  }
+
     return (
       <section className="height" id="description">
         <div className={styles.main}>
@@ -10,19 +27,43 @@ const ProductDescription =()=>{
             <h2 className="h2-medium">Price</h2>
             <div className={styles.pricecont}>
               <div className={styles.priceBtn}>
-                <Button variant="blue" label="100$" iconType="cart"/>
+                {singleProduct.access_type == "free" ? (
+                  <Button variant="grey" label="Free" />
+                ) : (
+                  <Button
+                    variant={postCartItemStatus==="loading"? "grey": "blue"}
+                    label={`${postCartItemStatus==="loading"?"Adding...":singleProduct.price+"$"}`}
+                    iconType="cart"
+                    onClick={addToCart}
+                  />
+                )}
               </div>
               <div className={styles.priceBtn}>
-                <Button label="FREE ASSET" iconType="download" variant="outline-blue" />
+                <Button
+                  label="FREE ASSET"
+                  iconType="download"
+                  variant="outline-blue"
+                  onClick={downloadAsset}
+                />
               </div>
-              <p>File size: <span className={styles.assetSize}>126 MB</span></p>
+              <p>
+                File size: <span className={styles.assetSize}>126 MB</span>
+              </p>
               <a href="/">See all options</a>
             </div>
           </div>
 
           <div className={styles.container}>
             <h2 className="h2-medium">Author</h2>
-            <a href="/" className={styles.authorInfo}>{companysvg} Matchmove machine</a>
+            {singleProduct.author.username ? (
+              <Link className={styles.authorInfo}>
+                {singleProduct.author.username}
+              </Link>
+            ) : (
+              <a href="/" className={styles.authorInfo}>
+                {companysvg} Matchmove machine
+              </a>
+            )}
           </div>
 
           <div className={`${styles.container} ${styles.license}`}>

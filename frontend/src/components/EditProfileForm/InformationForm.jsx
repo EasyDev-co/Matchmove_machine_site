@@ -5,27 +5,30 @@ import Occupation from "../Forms/Occupation";
 import Email from "../Forms/Email";
 import Website from "../Forms/Website";
 import Portfolio from "../Forms/Portfolio";
-import Button from "../Button";
+import Button from "../Button";import { warningsvg } from "../../assets/svg/svgimages";
+
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { updateUserProfile } from "../../store/slices/profileSlice";
 
-const InformationForm = () => {
-
-  const navigate = useNavigate()
+const InformationForm = ({ profile, status, picture }) => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const [formData, setFormData] = useState({
-    name: 'Greg',
-    email: 'greg-grids@machine.com',
-    occupation: 'editor',
-    website: '', 
-    portfolio: '', 
+    name: profile.username || '',
+    email: profile.email || '',
+    occupation: profile.occupation|| '',
+    website: profile.website || '',
+    portfolio: profile.portfolio || '',
   });
 
   const [errors, setErrors] = useState({
     name: '',
     email: '',
     occupation: '',
-    website: '', // Add website error field
-    portfolio: '', // Add portfolio error field
+    website: '',
+    portfolio: '',
   });
 
   const handleChange = (e) => {
@@ -46,21 +49,18 @@ const InformationForm = () => {
     return emailRegex.test(email);
   };
 
-  const validateURL = (url) => {
-    const urlRegex = /^(https?:\/\/)?([\w-]+\.)+[\w-]{2,4}\/?$/;
-    return urlRegex.test(url);
-  };
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     let valid = true;
     let newErrors = {};
 
+    // Name validation
     if (!formData.name) {
       newErrors.name = 'Name is required';
       valid = false;
     }
 
+    // Email validation
     if (!formData.email) {
       newErrors.email = 'Email is required';
       valid = false;
@@ -69,36 +69,40 @@ const InformationForm = () => {
       valid = false;
     }
 
-    if (!formData.occupation) {
-      newErrors.occupation = 'Occupation is required';
-      valid = false;
-    }
-
-    if (formData.website && !validateURL(formData.website)) {
-      newErrors.website = 'Invalid website URL';
-      valid = false;
-    }
-
-    if (formData.portfolio && !validateURL(formData.portfolio)) {
-      newErrors.portfolio = 'Invalid portfolio URL';
-      valid = false;
-    }
-
     setErrors(newErrors);
 
     if (valid) {
-      console.log('Form data submitted:', formData);
+      const userProfileUpdate = {
+        username: formData.name,
+        email: formData.email,
+        website: formData.website,
+        portfolio: formData.portfolio,
+        occupation: formData.occupation,
+        profile_picture:picture
+      };
+
+      try {
+        await dispatch(updateUserProfile(userProfileUpdate)).unwrap();
+      } catch (error) {
+        // Handle error (e.g., show an error message)
+        console.log('Update profile failed:', error);
+      }
     }
   };
 
-  const goBack =()=>{
-    navigate("/profile/1")
-  }
+  const goBack = () => {
+    navigate('/profile/1');
+  };
 
   return (
     <div className={styles.formcontainer}>
-      <hr className={styles.hr}/>
+      <hr className={styles.hr} />
       <form onSubmit={handleSubmit}>
+        {status === 'failed' && (
+          <div className="error-message">
+            {warningsvg} Something went wrong
+          </div>
+        )}
         <div className={`form-group ${styles.forms}`}>
           <label htmlFor="name">
             <p>Name</p>
@@ -128,7 +132,7 @@ const InformationForm = () => {
           </label>
 
           <label htmlFor="portfolio">
-            <p>Portg</p>
+            <p>Portfolio</p>
             <Portfolio
               formData={{ portfolio: formData.portfolio }}
               handleChange={handleChange}
@@ -144,7 +148,7 @@ const InformationForm = () => {
             />
           </label>
         </div>
-        <hr className={styles.hr}/>
+        <hr className={styles.hr} />
         <div className={styles.btncont}>
           <Button
             variant="outline-red"
@@ -154,8 +158,8 @@ const InformationForm = () => {
             onClick={goBack}
           />
           <Button
-            variant="blue"
-            label="Save changes"
+            variant={status === "loading" ? "grey" : "blue"}
+            label={status === "loading" ? "Saving..." : "Save changes"}
             labelPosition="left"
             iconType="checkMark"
             type="submit"

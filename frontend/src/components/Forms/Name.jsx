@@ -1,6 +1,4 @@
-import React, { useState } from 'react';
-import { eyesvg, warningsvg, closedeyesvg } from "../../assets/svg/svgimages";
-
+import { warningsvg} from "../../assets/svg/svgimages";
 
 const Name = ({ formData, handleChange, errors }) => {
     return (
@@ -10,6 +8,7 @@ const Name = ({ formData, handleChange, errors }) => {
           id="name"
           name="name"
           placeholder="Name"
+          autoComplete="username"
           value={formData.name}
           onChange={handleChange}
           className={errors.name ? "error" : ""}

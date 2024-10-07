@@ -5,7 +5,9 @@ import AboutMeForm from "./AboutMeForm";
 import SocialsForm from "./SocialsForm";
 import PasswordForm from "./PasswordForm";
 
-const EditProfileForm = () => {
+
+const EditProfileForm = ({profile, picture, status}) => {
+
     const [activeButton, setActiveButton] = useState('Information');
 
     const handleButtonClick = (buttonName) => {
@@ -42,10 +44,10 @@ const EditProfileForm = () => {
                     </button>
                 </div>
             </div>
-            {activeButton === 'Information' && <InformationForm />}
-            {activeButton === 'About me' && <AboutMeForm />}
-            {activeButton === 'Socials' && <SocialsForm />}
-            {activeButton === 'Password' && <PasswordForm />}
+            {activeButton === 'Information' && <InformationForm profile={profile} picture={picture} status={status.updateUserProfileStatus} />}
+            {activeButton === 'About me' && <AboutMeForm about={profile.about_me} picture={picture} status={status.updateUserProfileStatus} />}
+            {activeButton === 'Socials' && <SocialsForm profile={ profile} picture={picture} status={status.updateUserProfileStatus} />}
+            {activeButton === 'Password' && <PasswordForm email={profile.email} picture={picture} status={status.changePasswordStatus} />}
         </div>
     );
 };
