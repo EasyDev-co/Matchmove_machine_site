@@ -17,6 +17,13 @@ const CheckOut =()=>{
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const {cart, fetchCartStatus} = useSelector(state=> state.cart)
+  const {profile} = useSelector(state=> state.profile)
+
+  const navigateMainPage = ()=>{
+    console.log("clicked");
+    
+    navigate("/")
+  }
 
   const handleProceed = async () => {
     try {
@@ -56,13 +63,13 @@ if(cart.items.length>0){
   return (
     <div className={styles.main}>
       <div className={styles.header}>
-        <div className={styles.logocont}>
+        <div className={styles.logocont} onClick={navigateMainPage}>
           <img src={logo} alt="logo" />
         </div>
-        <div className={styles.emailcont}>
+        {profile.email&&<div className={styles.emailcont}>
           <p className={styles.email}>Email:</p>
-          <p>grids@matchmovemachine.com</p>
-        </div>
+          <p>{profile.email}</p>
+        </div>}
       </div>
       <div className={styles.body}>
         <div className={styles.orderInfo}>
@@ -97,6 +104,12 @@ if(cart.items.length>0){
       </div>
     </div>
   );
+}
+if(cart.items.length<=0){
+  return <section className="width">
+  <h2 className="h2-medium">Your cart is empty or an error occurred</h2>
+  <p className="h4-medium">Please add items to your cart and try again. If the issue persists, contact support.</p>
+</section>
 }
 }
 

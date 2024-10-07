@@ -73,7 +73,7 @@
     padding: 0px 20px;
     width: 100%;
     height: 310px;
-    background: linear-gradient(110.35deg, rgba(40, 40, 40, 0.75) 0%, rgba(0, 8, 30, 0.75) 100%);
+    background: linear-gradient(110.35deg, rgba(40, 40, 40, 1) 0%, rgba(0, 8, 30, 1) 100%);
     border-radius: 10px;
     box-sizing: border-box;
     color: white;
@@ -87,11 +87,41 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: url("../../assets/images/about.png") no-repeat center center;
     opacity: 20%;
-    background-size: cover;
     z-index: 0;
 }
+
+.techspecs::after {
+    background: url("../../assets/images/tech-specs.png") no-repeat center center;
+    background-size: cover;
+}
+
+.pricing::after{
+    background: url("../../assets/images/pricing.png") no-repeat center center;
+    background-size: cover;
+}
+
+.payment::after{
+    background: url("../../assets/images/payment.jfif") no-repeat center center;
+    background-size: cover;
+}
+
+.howtouse::after{
+    background: url("../../assets/images/howtouse.png") no-repeat center center;
+    background-size: cover;
+}
+
+.personalaccount::after {
+    background: url("../../assets/images/personalaccount.png") no-repeat center center;
+    background-size: cover;
+}
+
+.license::after {
+    background: url("../../assets/images/license.jfif") no-repeat center center;
+    background-size: cover;
+}
+
+
 
 .bannerCont h2,
 .spoilerBanner h2 {

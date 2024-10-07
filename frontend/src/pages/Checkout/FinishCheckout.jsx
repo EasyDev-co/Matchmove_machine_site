@@ -11,9 +11,7 @@ const FinishCheckout =()=>{
 
   const dispatch = useDispatch()
   const {order, status} = useSelector(state=> state.order)
-
-  console.log(order);
-  
+  const {profile} = useSelector(state=> state.profile)
   
   useEffect(()=>{
     const fetchOrderData = async () => {
@@ -38,10 +36,10 @@ if(status.fetchOrderStatus === "succeeded"&&order.order.items){
         <div className={styles.logocont}>
           <img src={logo} alt="logo" />
         </div>
-        <div className={styles.emailcont}>
+        {profile.email&&<div className={styles.emailcont}>
           <p className={styles.email}>Email:</p>
-          <p>grids@matchmovemachine.com</p>
-        </div>
+          <p>{profile.email}</p>
+        </div>}
       </div>
       <div className={styles.body}>
         <div className={styles.orderInfo}>

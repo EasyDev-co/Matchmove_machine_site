@@ -115,7 +115,7 @@ const cartSlice = createSlice({
     .addCase(deleteCartItem.fulfilled, (state, action) => {
       state.deleteCartItemStatus = 'succeeded';
       const deletingItem = state.cart.items.find(item => item.id === action.payload);
-      state.cart.total_price = state.cart.total_price - deletingItem.total_price;
+      state.cart.total_price = state.cart.total_price - deletingItem.price;
       state.cart.items = state.cart.items.filter(item => item.id !== action.payload);
       
     })

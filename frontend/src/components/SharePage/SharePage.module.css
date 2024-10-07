@@ -114,6 +114,13 @@
 }
 
 
+.qr img {
+    width: 250px;
+    border: 5px solid #2F57BF; 
+    border-radius: 10px; 
+    padding: 5px; 
+}
+
 
 @media (max-width: 920px) {
     .socialbtn{

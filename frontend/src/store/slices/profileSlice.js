@@ -41,8 +41,6 @@ export const fetchUserProfile = createAsyncThunk(
 export const updateUserProfile = createAsyncThunk(
   'profile/updateUserProfile',
   async (profileData, { rejectWithValue }) => {
-
-    console.log(profileData);
     
     try {
       const response = await fetchWithAuth(`${BASE_URL}/users/v1/user/`, {
@@ -68,7 +66,6 @@ export const updateUserProfile = createAsyncThunk(
 export const changePassword = createAsyncThunk(
   'profile/changePassword',
   async (passwordData, { rejectWithValue }) => {
-    console.log(passwordData);
     
     try {
       const response = await fetchWithAuth(`${BASE_URL}/users/v1/parent/change_password/`, {

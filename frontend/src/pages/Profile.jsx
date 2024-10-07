@@ -15,9 +15,6 @@ const Profile=()=>{
   const dispatch = useDispatch()
   const {profile, status} = useSelector(state=> state.profile)
 
-  console.log(profile);
-  
-
   useEffect(()=>{
     dispatch(fetchUserProfile())
   },[dispatch])

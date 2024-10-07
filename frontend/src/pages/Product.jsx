@@ -16,9 +16,6 @@ const Product = ()=>{
   const { singleProduct, status} = useSelector(state => state.singleProduct)
   const dispatch = useDispatch()
   const { productId } = useParams();
-
-  console.log(singleProduct);
-  
   
   useEffect(()=>{
     dispatch(fetchSingleProduct(productId))
@@ -30,7 +27,7 @@ const Product = ()=>{
     )
   }
 
-  if(singleProduct){
+  if(singleProduct &&status.fetchProductStatus==="succeeded"){
     return (
       <>
         <NavigationTop title={`Distortion grids pack for ${singleProduct.camera.model_name} ${singleProduct.lens.model_name}`} singleProduct={singleProduct}/>
@@ -38,7 +35,7 @@ const Product = ()=>{
         <ProductDescription singleProduct={singleProduct}/>
         <ProductField singleProduct={singleProduct}/>
         <JoinCommunity/>
-        <SharePage/>
+        <SharePage profileId={singleProduct.author.id} profileQR={singleProduct.author.qr_code}/>
       </>
     );
   } 

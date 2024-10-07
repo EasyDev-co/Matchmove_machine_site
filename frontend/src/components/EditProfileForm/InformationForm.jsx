@@ -11,7 +11,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { updateUserProfile } from "../../store/slices/profileSlice";
 
-const InformationForm = ({ profile, status }) => {
+const InformationForm = ({ profile, status, picture }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -77,7 +77,8 @@ const InformationForm = ({ profile, status }) => {
         email: formData.email,
         website: formData.website,
         portfolio: formData.portfolio,
-        occupation: formData.occupation
+        occupation: formData.occupation,
+        profile_picture:picture
       };
 
       try {

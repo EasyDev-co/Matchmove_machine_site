@@ -16,13 +16,13 @@ const Footer = () => {
             <div className={styles.column}>
               <p className="h5-extra-bold">Menu</p>
               <ul>
-                <li>Full library</li>
-                <li>How it works</li>
-                <li>Affiliate program</li>
+                <li><a href="/library">Full library</a></li>
+                <li><a href="/">How it works</a></li>
+                <li><a href="/affiliate-program">Affiliate program</a></li>
                 <li>Tutorials</li>
                 <li>Guide</li>
                 <li>Magnetic grid</li>
-                <li>FAQ</li>
+                <li><a href="faq">FAQ</a></li>
               </ul>
             </div>
           </div>

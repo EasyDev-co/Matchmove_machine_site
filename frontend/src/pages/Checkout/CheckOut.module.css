@@ -131,6 +131,7 @@ p.email {
 
 .logocont {
     height: 90px;
+    cursor: pointer;
 }
 
 .logocont img {
