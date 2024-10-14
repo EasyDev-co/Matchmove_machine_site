@@ -30,6 +30,11 @@ const NavigationTop =({title, text, singleProduct})=>{
             <Link to="/">Home {breadcrumbsvg}</Link>
             <p>FAQ</p>
           </div>
+        )  : title === "How it works" ?(
+          <div className={styles.breadcrumbs}>
+          <Link to="/">Home {breadcrumbsvg}</Link>
+          <p>How it works</p>
+        </div>
         ) : title === "Error" ? (
           <div className={styles.breadcrumbs}>
             <Link  to="/" >Home {breadcrumbsvg}</Link>
@@ -39,7 +44,7 @@ const NavigationTop =({title, text, singleProduct})=>{
           "Error"
         )}
         <h2 className="h2-bold">{title} </h2>
-        {text && <p className="h4-light">{text}</p>}
+        {text && <p className={`h4-light ${styles.text}`}>{text}</p>}
       </section>
     );
 }

@@ -1,0 +1,64 @@
+.sectioncont {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+  }
+  
+  .sectioncont p {
+    font-weight: 300;
+    font-size: 17px;
+    line-height: 26px;
+    color: #545353;
+  }
+  
+  .textpiccont {
+    position: relative;
+    display: block;
+  }
+  
+  .piccont {
+    float: right;
+    margin-left: 20px;
+    width: 723px;
+    height: auto;
+  }
+
+  .piccont.left {
+    float: left;
+    margin-right: 20px;
+    margin-left: 0px;
+  }
+  
+  .piccont img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+  }
+
+  .sectioncont p {
+    font-weight: 300;
+    font-size: 17px;
+    line-height: 26px;
+    color: #545353;
+    margin-bottom: 20px; /* Add this line for spacing */
+}
+
+/* To remove the margin from the last paragraph in each section */
+.sectioncont p:last-child {
+    margin-bottom: 0; /* Prevent extra space after the last paragraph */
+}
+  
+  @media (max-width: 1100px) {
+    .piccont {
+      float: none;
+      width: 100%;
+      margin-left: 0;
+      margin-bottom: 20px;
+    }
+  
+    .textpiccont {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+  

@@ -18,16 +18,10 @@ const HeaderLinks =({isMenuOpen, handleCloseMenu})=>{
             <Link to="library" onClick={handleClose}>Full library</Link>
           </li>
           <li>
-            <Link>How it works</Link>
+            <Link to="how-it-works">How it works</Link>
           </li>
           <li onClick={handleClose}>
             <Link to="/affiliate-program">Affiliate program</Link>
-          </li>
-          <li>
-            <Link>Tutorials</Link>
-          </li>
-          <li>
-            <Link>Guide</Link>
           </li>
           <li>
             <Link>Magnetic grid</Link>
