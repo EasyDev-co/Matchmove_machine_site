@@ -20,11 +20,11 @@ export const refreshAuthToken = async (refreshToken) => {
     const data = await response.json();
     
     // Set the new access token in cookies
-    Cookies.set('access_token', data.access, { expires: 7, secure: true, sameSite: 'Strict' });
+    Cookies.set('access_token', data.access, { expires: 7, secure: false, sameSite: 'Strict' });
 
     // Optionally update refresh token if returned
     if (data.refresh) {
-      Cookies.set('refresh_token', data.refresh, { expires: 7, secure: true, sameSite: 'Strict' });
+      Cookies.set('refresh_token', data.refresh, { expires: 7, secure: false, sameSite: 'Strict' });
     }
 
     // Return the new access token

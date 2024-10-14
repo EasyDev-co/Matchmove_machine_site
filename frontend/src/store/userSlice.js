@@ -175,12 +175,12 @@ const userSlice = createSlice({
         state.user = action.payload.user
         Cookies.set("access_token", action.payload.access, {
           expires: 7,
-          secure: true,
+          secure: false,
           sameSite: "Strict",
         });
         Cookies.set("refresh_token", action.payload.refresh, {
           expires: 7,
-          secure: true,
+          secure: false,
           sameSite: "Strict",
         });
         state.status.loginStatus = "succeeded";
@@ -219,12 +219,12 @@ const userSlice = createSlice({
         // Save tokens to cookies
         Cookies.set("access_token", action.payload.access, {
           expires: 7,
-          secure: true,
+          secure: false,
           sameSite: "Strict",
         });
         Cookies.set("refresh_token", action.payload.refresh, {
           expires: 7,
-          secure: true,
+          secure: false,
           sameSite: "Strict",
         });
 
