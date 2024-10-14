@@ -17,7 +17,7 @@ const Footer = () => {
               <p className="h5-extra-bold">Menu</p>
               <ul>
                 <li><a href="/library">Full library</a></li>
-                <li><a href="/">How it works</a></li>
+                <li><a href="/how-it-works">How it works</a></li>
                 <li><a href="/affiliate-program">Affiliate program</a></li>
                 <li>Tutorials</li>
                 <li>Guide</li>

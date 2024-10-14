@@ -14,6 +14,7 @@ import CheckOut from './pages/Checkout/CheckOut';
 import AffiliateProgram from './pages/AffiliateProgram/AffiliateProgram';
 import NotFound from './pages/NotFound/NotFound';
 import Faq from './pages/Faq/Faq';
+import HowTo from './pages/HowTo/HowTo';
 import FinishCheckout from './pages/Checkout/FinishCheckout';
 import ScrollToTop from './hooks/ScrollToTop';
 
@@ -74,6 +75,7 @@ function App() {
                   }
                 />
                 <Route path="faq" element={<Faq />} />
+                <Route path="how-it-works" element={<HowTo />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </Layout>
