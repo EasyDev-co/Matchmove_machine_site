@@ -8,7 +8,6 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.hashers import make_password
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.views import TokenObtainPairView
-from django.db.models import Q 
 
 from apps.users.api.v1.serializers import (
     EmailAndCodeSerializer,
@@ -101,11 +100,10 @@ class UserRegisterView(APIView):
 
     def post(self, request):
         # Извлекаем данные из запроса
-        username = request.data.get('username')
         email = request.data.get('email')
 
-        # Проверка существования пользователя с таким именем или электронной почтой
-        user = User.objects.filter(Q(username=username) | Q(email=email)).first()
+        # Проверка существования пользователя с такой электронной почтой
+        user = User.objects.filter(email=email).first()
 
         if user:
             if not user.is_verified:
