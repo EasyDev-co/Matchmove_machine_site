@@ -99,36 +99,6 @@ class UserRegisterView(APIView):
     permission_classes = [AllowAny]
     serializer_class = UserRegistrationSerializer
 
-#     def post(self, request):
-#         serializer = self.serializer_class(data=request.data)
-#         if serializer.is_valid():
-#             validate_data = serializer.validated_data
-#             password = validate_data.pop("password")
-#             user = User.objects.create_user(
-#                 password=password,
-#                 **validate_data,
-#             )
-#             user.save()
-
-#             # Генерация QR-кода после сохранения пользователя
-#             user.generate_qr_code()
-#             user.save()
-
-#             # Отправляем email с кодом подтверждения
-#             send_confirm_code.delay(
-#                 user_id=user.pk, code_purpose=CodePurpose.CONFIRM_EMAIL
-#             )
-
-#             return Response(
-#                 {
-#                     "message": "Пользователь успешно зарегистрирован!",
-#                     "qr_code_url": user.qr_code.url,  # Возвращаем ссылку на QR-код
-#                 },
-#                 status=status.HTTP_201_CREATED,
-#             )
-#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
     def post(self, request):
         # Извлекаем данные из запроса
         username = request.data.get('username')
