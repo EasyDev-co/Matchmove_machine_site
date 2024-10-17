@@ -31,11 +31,12 @@ class SendConfirmCodeTask(BaseTask):
         else:
             raise ValueError("Unknown code_purpose.")
 
+        # Удаляем старые коды подтверждения перед созданием нового
         ConfirmCode.objects.filter(
             user=user,
             purpose=code_purpose,
             is_used=False
-        ).update(is_used=True)
+        ).delete()
 
         confirm_code = ConfirmCode.objects.create(
             user=user,

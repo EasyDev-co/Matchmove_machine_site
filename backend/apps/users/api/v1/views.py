@@ -8,6 +8,8 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.hashers import make_password
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.views import TokenObtainPairView
+from django.db.models import Q 
+
 from apps.users.api.v1.serializers import (
     EmailAndCodeSerializer,
     EmailSerializer,
@@ -97,16 +99,64 @@ class UserRegisterView(APIView):
     permission_classes = [AllowAny]
     serializer_class = UserRegistrationSerializer
 
+#     def post(self, request):
+#         serializer = self.serializer_class(data=request.data)
+#         if serializer.is_valid():
+#             validate_data = serializer.validated_data
+#             password = validate_data.pop("password")
+#             user = User.objects.create_user(
+#                 password=password,
+#                 **validate_data,
+#             )
+#             user.save()
+
+#             # Генерация QR-кода после сохранения пользователя
+#             user.generate_qr_code()
+#             user.save()
+
+#             # Отправляем email с кодом подтверждения
+#             send_confirm_code.delay(
+#                 user_id=user.pk, code_purpose=CodePurpose.CONFIRM_EMAIL
+#             )
+
+#             return Response(
+#                 {
+#                     "message": "Пользователь успешно зарегистрирован!",
+#                     "qr_code_url": user.qr_code.url,  # Возвращаем ссылку на QR-код
+#                 },
+#                 status=status.HTTP_201_CREATED,
+#             )
+#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
     def post(self, request):
+        # Извлекаем данные из запроса
+        username = request.data.get('username')
+        email = request.data.get('email')
+
+        # Проверка существования пользователя с таким именем или электронной почтой
+        user = User.objects.filter(Q(username=username) | Q(email=email)).first()
+
+        if user:
+            if not user.is_verified:
+                # Отправляем email с кодом подтверждения
+                send_confirm_code.delay(
+                    user_id=user.pk, code_purpose=CodePurpose.CONFIRM_EMAIL
+                )
+                return Response(
+                    {"message": "A confirmation code has been sent to your email."},
+                    status=status.HTTP_200_OK,
+                )
+            else:
+                return Response(
+                    {"message": "User is already verified."},
+                    status=status.HTTP_400_BAD_REQUEST,
+                )
+
+        # Если пользователь не существует, создаем нового пользователя
         serializer = self.serializer_class(data=request.data)
         if serializer.is_valid():
-            validate_data = serializer.validated_data
-            password = validate_data.pop("password")
-            user = User.objects.create_user(
-                password=password,
-                **validate_data,
-            )
-            user.save()
+            user = serializer.save()
 
             # Генерация QR-кода после сохранения пользователя
             user.generate_qr_code()
@@ -124,6 +174,7 @@ class UserRegisterView(APIView):
                 },
                 status=status.HTTP_201_CREATED,
             )
+
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 

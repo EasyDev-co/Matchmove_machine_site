@@ -84,6 +84,8 @@ services:
       - ./backend/:/opt/backend/:rw
       - static_dir:/opt/backend/static/
       - media_dir:/opt/backend/media/
+    depends_on:
+      - web
     
   redis:
     image: redis:latest
