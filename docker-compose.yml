@@ -86,14 +86,17 @@ services:
       - media_dir:/opt/backend/media/
     depends_on:
       - web
-    
+
   redis:
     image: redis:latest
     container_name: ${PROJECT_SLUG}_redis
-    volumes:
-      - redis_data:/data
+    command: redis-server --requirepass ${REDIS_PASSWORD} --save 60 1 --loglevel warning
+    environment:
+      - REDIS_PASSWORD=${REDIS_PASSWORD}
     ports:
       - "${REDIS_PORT}:${REDIS_PORT}"
+    volumes:
+      - redis_data:/data
     networks:
       - nginx_network
 
