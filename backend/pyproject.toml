@@ -24,6 +24,7 @@ drf-yasg = "^1.21.7"
 django-file-form = "^3.8.0"
 qrcode = "^7.4.2"
 paddle-python-sdk = "^0.2.2"
+requests = "^2.32.3"
 
 [build-system]
 requires = ["poetry-core"]
