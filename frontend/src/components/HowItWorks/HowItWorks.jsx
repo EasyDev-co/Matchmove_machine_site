@@ -2,7 +2,16 @@ import styles from "./HowItWorks.module.css"
 import image from "../../assets/images/howItWorks.png" 
 import Button from "../Button";
 
+import { useNavigate } from "react-router-dom";
+
 const HowItWorks =()=>{
+
+  const navigate = useNavigate()
+
+  const goToPage = ()=>{
+    navigate("/how-it-works")
+  }
+
     return (
       <section className={`height ${styles.main}`}>
         <div className={styles.content}>
@@ -24,7 +33,7 @@ const HowItWorks =()=>{
             our process for preparing and testing distortion grids and presets.
           </p>
           <div className={styles.btn}>
-            <Button label="See more" iconType="arrowRight" />
+            <Button label="See more" iconType="arrowRight" onClick={goToPage} />
           </div>
         </div>
       </section>

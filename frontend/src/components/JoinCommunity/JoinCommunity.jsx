@@ -8,7 +8,7 @@ const JoinCommunity =()=>{
   const navigate = useNavigate()
 
   const handleClick = ()=>{
-    navigate("affiliate-program")
+    navigate("/affiliate-program")
   }
     return (
       <section className={styles.main}>
