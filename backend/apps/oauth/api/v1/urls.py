@@ -1,5 +1,6 @@
 from django.urls import path
 # from apps.oauth.api.v1.providers import google, yandex, mailru
+from apps.oauth.api.v1.providers import twitter
 from apps.oauth.api.v1 import views
 
 urlpatterns = [
@@ -14,6 +15,9 @@ urlpatterns = [
     # # Mail.ru URLs
     # path('login/mailru/', mailru.mailru_login, name='oauth_mailru_login'),
     # path('callback/mailru/', mailru.mailru_callback, name='oauth_mailru_callback'),
+
+    path('login/twitter/', twitter.twitter_login, name='oauth_twitter_login'),
+    path('callback/twitter/', twitter.twitter_callback, name='oauth_twitter_callback'),
 
     # Login
     path('login/oauth_token/', views.oauth_token_login, name='oauth_token_login'),

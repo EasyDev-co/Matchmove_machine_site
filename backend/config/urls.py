@@ -12,6 +12,7 @@ urlpatterns = [
     path("api/cart/", include("apps.cart.api.urls")),
     path("api/payments/", include("apps.payments.api.urls")),
     path("api/orders/", include("apps.orders.api.urls")),
+    path("api/oauth/", include("apps.oauth.api.urls")),
     path(
         "swagger/",
         schema_view.with_ui("swagger", cache_timeout=0),

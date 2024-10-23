@@ -204,3 +204,7 @@ CORS_ALLOW_HEADERS = [
     'authorization',
     'x-csrftoken'
 ]
+
+TWITTER_CLIENT_ID = os.getenv('TWITTER_CLIENT_ID')
+TWITTER_CLIENT_SECRET = os.getenv('TWITTER_CLIENT_SECRET')
+TWITTER_CALLBACK_URI = os.getenv('TWITTER_CALLBACK_URI')
