@@ -204,3 +204,13 @@ CORS_ALLOW_HEADERS = [
     'authorization',
     'x-csrftoken'
 ]
+
+FRONTEND_URL = os.environ.get('FRONTEND_URL')
+
+GOOGLE_CLIENT_ID = os.environ.get('GOOGLE_CLIENT_ID')
+GOOGLE_CLIENT_SECRET = os.environ.get('GOOGLE_CLIENT_SECRET')
+GOOGLE_REDIRECT_URI = os.environ.get('GOOGLE_REDIRECT_URI')
+
+FACEBOOK_CLIENT_ID = os.environ.get('FACEBOOK_CLIENT_ID')
+FACEBOOK_CLIENT_SECRET = os.environ.get('FACEBOOK_CLIENT_SECRET')
+FACEBOOK_REDIRECT_URI= os.environ.get('FACEBOOK_REDIRECT_URI')

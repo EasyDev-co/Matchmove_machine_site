@@ -13,15 +13,15 @@ from apps.oauth.api.v1.utils import create_or_get_user
 
 @api_view(["GET"])
 @permission_classes([AllowAny])
-def google_login(request):
-    """Логин через Google"""
+def facebook_login(request):
+    """Логин через Facebook"""
     try:
-        callback_url = settings.GOOGLE_REDIRECT_URI
+        callback_url = settings.FACEBOOK_REDIRECT_URI
         authorization_url = (
-            "https://accounts.google.com/o/oauth2/v2/auth?response_type=code"
-            f"&client_id={settings.GOOGLE_CLIENT_ID}"
+            "https://www.facebook.com/v21.0/dialog/oauth?response_type=code"
+            f"&client_id={settings.FACEBOOK_CLIENT_ID}"
             f"&redirect_uri={callback_url}"
-            f"&scope=email%20profile"
+            f"&scope=email,public_profile"
         )
         return redirect(authorization_url)
     except Exception as e:
@@ -30,8 +30,8 @@ def google_login(request):
 
 @api_view(["GET"])
 @permission_classes([AllowAny])
-def google_callback(request):
-    """Обработка callback после авторизации через Google"""
+def facebook_callback(request):
+    """Обработка callback после авторизации через Facebook"""
     code = request.GET.get("code")
     if not code:
         return Response(
@@ -40,30 +40,35 @@ def google_callback(request):
 
     data = {
         "code": code,
-        "client_id": settings.GOOGLE_CLIENT_ID,
-        "client_secret": settings.GOOGLE_CLIENT_SECRET,
-        "redirect_uri": settings.GOOGLE_REDIRECT_URI,
+        "client_id": settings.FACEBOOK_CLIENT_ID,
+        "client_secret": settings.FACEBOOK_CLIENT_SECRET,
+        "redirect_uri": settings.FACEBOOK_REDIRECT_URI,
         "grant_type": "authorization_code",
     }
 
     try:
         # Получение access_token
-        token_response = requests.post("https://oauth2.googleapis.com/token", data=data)
+        token_response = requests.get(
+            "https://graph.facebook.com/v21.0/oauth/access_token", params=data
+        )
         token_response.raise_for_status()
         token_data = token_response.json()
         access_token = token_data.get("access_token")
 
         # Получение информации о пользователе
         user_info_response = requests.get(
-            "https://www.googleapis.com/oauth2/v1/userinfo",
-            params={"access_token": access_token},
+            "https://graph.facebook.com/me",
+            params={
+                "access_token": access_token,
+                "fields": "email,first_name,last_name",
+            },
         )
         user_info_response.raise_for_status()
         user_info = user_info_response.json()
 
         email = user_info.get("email")
-        first_name = user_info.get("given_name")
-        last_name = user_info.get("family_name")
+        first_name = user_info.get("first_name")
+        last_name = user_info.get("last_name")
 
         # Создание или получение пользователя
         user, created = create_or_get_user(email, first_name, last_name)
