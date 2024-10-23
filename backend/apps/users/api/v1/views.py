@@ -229,6 +229,7 @@ class PasswordChangeAPIView(ConfirmCodeMixin, APIView):
     """Представление для смены пароля пользователя."""
 
     password_change_serializer = PasswordChangeSerializer
+    permission_classes = [AllowAny]
 
     def post(self, request, *args, **kwargs):
         serializer = self.password_change_serializer(data=request.data)
