@@ -1,5 +1,6 @@
 import requests
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework import status
 from django.contrib.auth import logout
@@ -11,12 +12,13 @@ from django.conf import settings
 
 
 @api_view(['POST'])
+@permission_classes([AllowAny])  # Разрешаем доступ без аутентификации
 def oauth_token_login(request):
     """
     Вход через OAuth access_token.
     Ожидаемые данные POST:
     {
-        'provider': 'google' или 'yandex' или 'mailru',
+        'provider': 'google' или 'facebook',
         'access_token': 'строка access_token'
     }
     """
@@ -53,37 +55,10 @@ def oauth_token_login(request):
         except RequestException as e:
             return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
-    elif provider == 'yandex':
-        # Проверка токена с Яндекс
-        user_info_url = 'https://login.yandex.ru/info'
-        headers = {'Authorization': f'OAuth {access_token}'}
-        try:
-            user_info_response = requests.get(user_info_url, headers=headers)
-            user_info_response.raise_for_status()
-            user_info = user_info_response.json()
-
-            email = user_info.get('default_email') or (user_info.get('emails') and user_info.get('emails')[0])
-            first_name = user_info.get('first_name')
-            last_name = user_info.get('last_name')
-
-            if not email:
-                return Response({"error": "No email provided by Yandex"}, status=status.HTTP_400_BAD_REQUEST)
-
-            user, created = create_or_get_user(email, first_name, last_name)
-
-            refresh = RefreshToken.for_user(user)
-
-            return Response({
-                'refresh': str(refresh),
-                'access': str(refresh.access_token),
-            }, status=status.HTTP_200_OK)
-        except RequestException as e:
-            return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
-
-    elif provider == 'mailru':
-        # Проверка токена с Mail.ru
-        user_info_url = 'https://oauth.mail.ru/userinfo'
-        params = {'access_token': access_token}
+    elif provider == 'facebook':
+        # Проверка токена с Facebook
+        user_info_url = 'https://graph.facebook.com/me'
+        params = {'access_token': access_token, 'fields': 'email,first_name,last_name'}
         try:
             user_info_response = requests.get(user_info_url, params=params)
             user_info_response.raise_for_status()
@@ -94,10 +69,12 @@ def oauth_token_login(request):
             last_name = user_info.get('last_name')
 
             if not email:
-                return Response({"error": "No email provided by Mail.ru"}, status=status.HTTP_400_BAD_REQUEST)
+                return Response({"error": "No email provided by Facebook"}, status=status.HTTP_400_BAD_REQUEST)
 
+            # Создание или получение пользователя
             user, created = create_or_get_user(email, first_name, last_name)
 
+            # Генерация JWT токенов
             refresh = RefreshToken.for_user(user)
 
             return Response({
