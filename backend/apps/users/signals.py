@@ -8,6 +8,16 @@ from django.contrib.auth import get_user_model
 User = get_user_model()
 
 
+def send_notification_email(subject, message, recipient_email):
+    send_mail(
+        subject=subject,
+        message=message,
+        from_email=settings.EMAIL_HOST_USER,
+        recipient_list=[recipient_email],
+        fail_silently=False,
+    )
+
+
 @receiver(pre_save, sender=User)
 def notify_user_on_email_or_password_change(sender, instance, **kwargs):
     # Получаем старого пользователя, если он существует
@@ -24,13 +34,7 @@ def notify_user_on_email_or_password_change(sender, instance, **kwargs):
             f"Your email address has been changed from {old_user.email} to {instance.email}. "
             "If this was not you, please contact support."
         )
-        send_mail(
-            subject=subject,
-            message=message,
-            from_email=settings.EMAIL_HOST_USER,
-            recipient_list=[old_user.email],  # Отправляем на старый email
-            fail_silently=False,
-        )
+        send_notification_email(subject, message, old_user.email)
 
     # Проверяем, изменился ли пароль
     if old_user.password != instance.password:
@@ -39,10 +43,4 @@ def notify_user_on_email_or_password_change(sender, instance, **kwargs):
             f"Hello, {old_user.username}!\n\n"
             "Your password has been changed. If this was not you, please contact support."
         )
-        send_mail(
-            subject=subject,
-            message=message,
-            from_email=settings.EMAIL_HOST_USER,
-            recipient_list=[old_user.email],  # Отправляем на старый email
-            fail_silently=False,
-        )
+        send_notification_email(subject, message, old_user.email)
