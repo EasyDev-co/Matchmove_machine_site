@@ -8,6 +8,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.hashers import make_password
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.views import TokenObtainPairView
+
 from apps.users.api.v1.serializers import (
     EmailAndCodeSerializer,
     EmailSerializer,
@@ -98,15 +99,32 @@ class UserRegisterView(APIView):
     serializer_class = UserRegistrationSerializer
 
     def post(self, request):
+        # Извлекаем данные из запроса
+        email = request.data.get('email')
+
+        # Проверка существования пользователя с такой электронной почтой
+        user = User.objects.filter(email=email).first()
+
+        if user:
+            if not user.is_verified:
+                # Отправляем email с кодом подтверждения
+                send_confirm_code.delay(
+                    user_id=user.pk, code_purpose=CodePurpose.CONFIRM_EMAIL
+                )
+                return Response(
+                    {"message": "A confirmation code has been sent to your email."},
+                    status=status.HTTP_200_OK,
+                )
+            else:
+                return Response(
+                    {"message": "User is already verified."},
+                    status=status.HTTP_400_BAD_REQUEST,
+                )
+
+        # Если пользователь не существует, создаем нового пользователя
         serializer = self.serializer_class(data=request.data)
         if serializer.is_valid():
-            validate_data = serializer.validated_data
-            password = validate_data.pop("password")
-            user = User.objects.create_user(
-                password=password,
-                **validate_data,
-            )
-            user.save()
+            user = serializer.save()
 
             # Генерация QR-кода после сохранения пользователя
             user.generate_qr_code()
@@ -124,6 +142,7 @@ class UserRegisterView(APIView):
                 },
                 status=status.HTTP_201_CREATED,
             )
+
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
@@ -210,6 +229,7 @@ class PasswordChangeAPIView(ConfirmCodeMixin, APIView):
     """Представление для смены пароля пользователя."""
 
     password_change_serializer = PasswordChangeSerializer
+    permission_classes = [AllowAny]
 
     def post(self, request, *args, **kwargs):
         serializer = self.password_change_serializer(data=request.data)
