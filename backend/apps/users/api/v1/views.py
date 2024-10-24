@@ -25,6 +25,27 @@ from apps.users.models.code import CodePurpose, ConfirmCode
 User = get_user_model()
 
 
+class UserDetailViewSet(viewsets.ReadOnlyModelViewSet):
+    """Предоставление информации о пользователе по ID"""
+
+    queryset = User.objects.all()
+    serializer_class = UserDetailSerializer
+    permission_classes = [AllowAny]
+
+    def retrieve(self, request, *args, **kwargs):
+        user_id = kwargs.get("pk")
+        try:
+            user = User.objects.get(pk=user_id)
+        except User.DoesNotExist:
+            return Response(
+                {"detail": "User not found"}, 
+                status=status.HTTP_404_NOT_FOUND
+            )
+
+        serializer = self.get_serializer(user)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+
 class UserViewSet(viewsets.GenericViewSet):
     """Обновление данных пользователя"""
 
