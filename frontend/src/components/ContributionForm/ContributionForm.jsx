@@ -2,12 +2,16 @@ import styles from "./ContributionForm.module.css";
 import { useState, useRef } from "react";
 import Button from "../Button";
 import { selectFilesvg } from "../../assets/svg/svgimages";
-import LoadingScreen from "../LoadingScreen/LoadingScreen";
+import ThankYouMessage from "./ThankYouMessage";
 
 import { useDispatch, useSelector } from "react-redux";
 import { uploadProductFile } from "../../store/slices/singleProductSlice";
 
 const ContributionForm = () => {
+
+  const dispatch = useDispatch()
+  const {status} = useSelector(state=> state.singleProduct)
+
   const [formValues, setFormValues] = useState({
     camera: "",
     lensManufacturer: "",
@@ -16,8 +20,7 @@ const ContributionForm = () => {
   });
   const [file, setFile] = useState(null);
   const [dragActive, setDragActive] = useState(false);
-  const dispatch = useDispatch()
-  const {status} = useSelector(state=> state.singleProduct)
+  const [submitted, setSubmitted] = useState(false);
 
   // Reference for the file input
   const fileInputRef = useRef(null);
@@ -53,7 +56,16 @@ const ContributionForm = () => {
       return;
     }
 
-    dispatch(uploadProductFile({ formData: formValues, file }));
+    dispatch(uploadProductFile({ formData: formValues, file }))
+      .unwrap()
+      .then(() => {
+        // On success, show ThankYouMessage
+        setSubmitted(true);
+      })
+      .catch((error) => {
+        console.error("File upload failed: ", error);
+      });
+
 
     // Reset the form and file input after submission
     setFormValues({
@@ -84,6 +96,10 @@ const ContributionForm = () => {
       setFile(e.dataTransfer.files[0]);
     }
   };
+
+  if (submitted) {
+    return <ThankYouMessage/>
+  }
 
   return (
     <form onSubmit={handleSubmit}>
