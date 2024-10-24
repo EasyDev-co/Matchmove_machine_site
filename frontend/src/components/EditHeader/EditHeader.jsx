@@ -6,7 +6,7 @@ const EditHeader = () => {
   const navigate = useNavigate();
 
   const handleClose = () => {
-    navigate("/profile/1");
+    navigate("/profile");
   };
   return (
     <div className={styles.container}>
