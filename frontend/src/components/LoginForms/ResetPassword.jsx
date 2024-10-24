@@ -4,6 +4,7 @@ import FormPopUpWrapper from "../Forms/FormPopUpWrapper";
 import { registerArrowLeftSvg } from "../../assets/svg/svgimages";
 import ResetComplete from "./ResetPassword/ResetComplete";
 import ResetPasswordForm from "./ResetPassword/ResetPasswordForm";
+import FinishReset from "./ResetPassword/FinishReset";
 
 const ResetPassword = () => {
     const [passwordIsReset, setPasswordIsReset] = useState(false)
@@ -24,7 +25,7 @@ const ResetPassword = () => {
           {registerArrowLeftSvg}
         </button>
         <div className="login-wrap register">
-            {passwordIsReset ? <ResetComplete/>: <ResetPasswordForm handlePasswordReset={handlePasswordReset}/>}
+            {passwordIsReset ? <FinishReset/>: <ResetPasswordForm handlePasswordReset={handlePasswordReset}/>}
         </div>
       </div>
     </FormPopUpWrapper>

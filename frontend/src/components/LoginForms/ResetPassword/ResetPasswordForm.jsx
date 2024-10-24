@@ -4,6 +4,7 @@ import { useState } from "react";
 import Email from "../../Forms/Email";
 import Button from "../../Button";
 
+import { setEmail } from "../../../store/userSlice";
 import { useDispatch } from "react-redux";
 import { resetPassword } from "../../../store/userSlice";
 
@@ -43,6 +44,7 @@ const ResetPasswordForm = ({handlePasswordReset}) => {
     if (!newErrors.email) {
       try {
         await dispatch(resetPassword(email)).unwrap(); // Use unwrap for error handling
+        dispatch(setEmail(formData.email))
         handlePasswordReset()
       } catch (error) {
         // Assuming error structure comes from the backend
