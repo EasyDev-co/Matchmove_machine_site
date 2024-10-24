@@ -8,7 +8,7 @@ const User =({user})=>{
 
 
     const handleGoToProfile =()=>{
-        navigate("/profile/1")
+        navigate("/profile")
       }
 
 if(user){

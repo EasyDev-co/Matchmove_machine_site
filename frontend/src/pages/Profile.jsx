@@ -5,13 +5,11 @@ import SharePage from "../components/SharePage/SharePage";
 import LoadingScreen from "../components/LoadingScreen/LoadingScreen";
 
 import { useEffect } from "react";
-import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchUserProfile } from "../store/slices/profileSlice";
 
 const Profile=()=>{
 
-  const { id } = useParams();
   const dispatch = useDispatch()
   const {profile, status} = useSelector(state=> state.profile)
 
@@ -36,10 +34,10 @@ const Profile=()=>{
   if(profile){
     return (
       <>
-        <ProfileTop profile={profile} status={status} profileId={id} />
+        <ProfileTop profile={profile} status={status} />
         <ProfileAssets />
         <AboutAuthor about={profile.about_me}/>
-        <SharePage profileId={id} profileQR={profile.qr_code}/>
+        <SharePage profileId={1} profile={profile}/>
       </>
     );
   }

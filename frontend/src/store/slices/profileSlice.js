@@ -119,9 +119,9 @@ const profileSlice = createSlice({
         state.status.updateUserProfileStatus = 'loading';
         state.errors.updateUserProfileError = null;
       })
-      .addCase(updateUserProfile.fulfilled, (state) => {
+      .addCase(updateUserProfile.fulfilled, (state, action) => {
         state.status.updateUserProfileStatus = 'succeeded';
-        // Optionally update the profile here
+        state.profile = action.payload;
       })
       .addCase(updateUserProfile.rejected, (state, action) => {
         state.status.updateUserProfileStatus = 'failed';

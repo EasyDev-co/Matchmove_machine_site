@@ -22,7 +22,7 @@ const userlinks = [
   { name: "youtube", svg: youtube },
 ];
 
-const ProfileTop = ({ profile, profileId }) => {
+const ProfileTop = ({ profile}) => {
 
   const navigate = useNavigate();
   const dispatch=useDispatch()
@@ -57,7 +57,6 @@ const ProfileTop = ({ profile, profileId }) => {
             />
           </div>
           <p className="h2-bold">
-            <span className={styles.rating}>#{profileId}/</span>{" "}
             <span>{profile.username}</span>
           </p>
         </div>

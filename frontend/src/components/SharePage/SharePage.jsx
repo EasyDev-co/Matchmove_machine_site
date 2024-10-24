@@ -1,43 +1,58 @@
-import styles from "./SharePage.module.css"
-import qrimg from "../../assets/images/QR.svg"
+import styles from "./SharePage.module.css";
 import { linksvg, copylinksvg } from "../../assets/svg/svgimages";
 import { socials } from "../../assets/svg/socialicons";
 
-const SharePage =({profileId, profileQR})=>{
+const SharePage = ({ profileId, profile }) => {
+  const linkToCopy = `https://grids.matchmovemachine.com/profile/${profileId}`;
 
-    const linkToCopy = `https://grids.matchmovemachine.com/profile/${profileId}`;
+  const copyToClipboard = async () => {
+    try {
+      await navigator.clipboard.writeText(linkToCopy);
+      console.log("copied");
+    } catch (err) {
+      console.error("Failed to copy:", err);
+    }
+  };
 
-    const copyToClipboard = async () => {
-        try {
-            await navigator.clipboard.writeText(linkToCopy);
-            console.log("copied");
-            
-        } catch (err) {
-            console.error('Failed to copy:', err);
-        }
-    };
-
-
-    return (
-      <section className={` width ${styles.bottom}`}>
-        <h2 className="h2-medium">Share this page</h2>
-        <div className={styles.container}>
-          <div className={styles.qr}>
-            <img src={`${profileQR}`} alt="qr" />
-          </div>
-          <div className={styles.content}>
-            <h4 className="h4-medium">{linksvg} Link</h4>
-            <div className={styles.link}>
-              <div className={styles.inputcont}>
-                <button className={styles.copybtn} onClick={copyToClipboard}>{copylinksvg}</button>
-                <div className={styles.input}>{linkToCopy}</div>
-              </div>
+  return (
+    <section className={` width ${styles.bottom}`}>
+      <h2 className="h2-medium">Share this page</h2>
+      <div className={styles.container}>
+        <div className={styles.qr}>
+          <img src={`${profile.qr}`} alt="qr" />
+        </div>
+        <div className={styles.content}>
+          <h4 className="h4-medium">{linksvg} Link</h4>
+          <div className={styles.link}>
+            <div className={styles.inputcont}>
+              <button className={styles.copybtn} onClick={copyToClipboard}>
+                {copylinksvg}
+              </button>
+              <div className={styles.input}>{linkToCopy}</div>
             </div>
-            <div className={styles.socials}>{socials.map((item)=><button key={item.id} className={styles.socialbtn}>{item.icon} <p>{item.name}</p></button>)}</div>
+          </div>
+          <div className={styles.socials}>
+            {socials.map((item) => {
+              const link = profile[item.key] || "/";
+
+              return (
+                <a
+                  key={item.id}
+                  href={link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <button className={styles.socialbtn}>
+                    {item.icon} <p>{item.name}</p>
+                  </button>
+                </a>
+              );
+            })}
           </div>
         </div>
-      </section>
-    );
-}
+      </div>
+    </section>
+  );
+};
 
 export default SharePage;

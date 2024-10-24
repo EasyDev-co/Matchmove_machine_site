@@ -2,6 +2,7 @@ export const socials = [
   {
     id: 1,
     name: "Facebook",
+    key:"facebook",
     icon: (
         <svg
             viewBox="0 0 83 82"
@@ -31,6 +32,7 @@ export const socials = [
 {
   id: 2,
   name: "Twitter",
+  key:"twitter",
   icon: (
       <svg
           viewBox="0 0 83 82"
@@ -49,6 +51,7 @@ export const socials = [
     {
       id: 3,
       name: "LinkedIn",
+      key:"linkedin",
       icon: (
         <svg
           viewBox="0 0 83 82"
@@ -69,6 +72,7 @@ export const socials = [
 {
   id: 4,
   name: "Instagram",
+  key:"instagram",
   icon: (
     <svg
       viewBox="0 0 83 82"
@@ -89,6 +93,7 @@ export const socials = [
 {
   id: 5,
   name: "Reddit",
+  key:"reddit",
   icon: (
     <svg
       viewBox="0 0 83 82"

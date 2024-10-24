@@ -59,7 +59,7 @@ function App() {
                 <Route path="registration" element={<Authorization />} />
                 <Route path="reset-password" element={<Authorization />} />
                 <Route
-                  path="profile/:id"
+                  path="profile"
                   element={
                     <ProtectedRoute>
                       <Profile />
