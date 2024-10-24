@@ -135,11 +135,13 @@ export const changeResetPassword = createAsyncThunk(
   async (data, {rejectWithValue}) => {
     const response = await fetch(`${BASE_URL}/users/v1/change_password/`, {
       method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
       body: JSON.stringify(data)
     })
 
     console.log(JSON.stringify(data));
-    
 
     if (!response.ok){
       const errorDetails = await response.json();
