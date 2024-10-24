@@ -5,6 +5,7 @@ import { fetchWithAuth } from '../utils/authUtils';
 
 const initialState = {
   user: null,
+  email: null,
   isAuthenticated: !!Cookies.get('access_token'),
   accessToken: Cookies.get('access_token') || null,
   refreshToken: Cookies.get('refresh_token') || null,
@@ -14,6 +15,7 @@ const initialState = {
     logoutStatus: 'idle',
     emailVerificationStatus: 'idle',
     resetPasswordStatus: 'idle',
+    passwordChangeStatus: 'idle',
   },
   errors: {
     loginError: null,
@@ -21,6 +23,7 @@ const initialState = {
     emailVerificationError: null,
     logoutError: null,
     resetPasswordError: null,
+    passwordChangeError: null,
   },
 };
 
@@ -123,9 +126,32 @@ export const resetPassword = createAsyncThunk(
       }
 
       return await response.json(); 
-    
+
   }
 );
+
+export const changeResetPassword = createAsyncThunk(
+  'user/hangeResetPassword',
+  async (data, {rejectWithValue}) => {
+    const response = await fetch(`${BASE_URL}/users/v1/change_password/`, {
+      method: 'POST',
+      body: JSON.stringify(data)
+    })
+
+    console.log(JSON.stringify(data));
+    
+
+    if (!response.ok){
+      const errorDetails = await response.json();
+      return rejectWithValue(errorDetails)
+    }
+
+    const res = await response.json()
+    console.log(res);
+    
+    return res
+  }
+)
 
 export const logoutUserThunk = createAsyncThunk(
   'user/logoutUserThunk',
@@ -159,6 +185,9 @@ const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
+    setEmail(state, action) {
+      state.email = action.payload; 
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -174,13 +203,9 @@ const userSlice = createSlice({
         state.refreshToken = action.payload.refresh;
         state.user = action.payload.user
         Cookies.set("access_token", action.payload.access, {
-          expires: 7,
-          secure: true,
           sameSite: "Strict",
         });
         Cookies.set("refresh_token", action.payload.refresh, {
-          expires: 7,
-          secure: true,
           sameSite: "Strict",
         });
         state.status.loginStatus = "succeeded";
@@ -218,13 +243,9 @@ const userSlice = createSlice({
 
         // Save tokens to cookies
         Cookies.set("access_token", action.payload.access, {
-          expires: 7,
-          secure: true,
           sameSite: "Strict",
         });
         Cookies.set("refresh_token", action.payload.refresh, {
-          expires: 7,
-          secure: true,
           sameSite: "Strict",
         });
 
@@ -249,6 +270,20 @@ const userSlice = createSlice({
         state.errors.resetPasswordError = action.payload
       })
 
+       
+       .addCase(changeResetPassword.pending, (state) => {
+        state.status.passwordChangeStatus = "loading"
+        state.errors.passwordChangeError = null
+       })
+       .addCase(changeResetPassword.fulfilled, (state, action) => {
+        state.status.passwordChangeStatus = "succeeded"
+        state.errors.passwordChangeError = null
+       })
+       .addCase(changeResetPassword.rejected, (state, action) => {
+        state.status.passwordChangeStatus = "failed"
+        state.errors.passwordChangeError = action.payload
+       })
+
       // Handling logout actions
       .addCase(logoutUserThunk.pending, (state) => {
         state.status.logoutStatus = "loading";
@@ -270,4 +305,5 @@ const userSlice = createSlice({
   },
 });
 
+export const { setEmail} = userSlice.actions;
 export default userSlice.reducer;

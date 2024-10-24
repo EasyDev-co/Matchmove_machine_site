@@ -1,4 +1,4 @@
-import {jwtDecode} from 'jwt-decode';
+import { jwtDecode } from 'jwt-decode';
 import Cookies from 'js-cookie';
 import BASE_URL from '../config';
 
@@ -20,11 +20,11 @@ export const refreshAuthToken = async (refreshToken) => {
     const data = await response.json();
     
     // Set the new access token in cookies
-    Cookies.set('access_token', data.access, { expires: 7, secure: true, sameSite: 'Strict' });
+    Cookies.set('access_token', data.access, { sameSite: 'Strict' });
 
     // Optionally update refresh token if returned
     if (data.refresh) {
-      Cookies.set('refresh_token', data.refresh, { expires: 7, secure: true, sameSite: 'Strict' });
+      Cookies.set('refresh_token', data.refresh, { sameSite: 'Strict' });
     }
 
     // Return the new access token
@@ -46,7 +46,9 @@ const isExpiringSoon = (token) => {
   const currentTime = Date.now();
   const timeLeft = expirationTime - currentTime;
 
-  return timeLeft < 1 * 60 * 1000; // Expiring within 1 minute
+  console.log(timeLeft);
+  
+  return timeLeft <= 0 || timeLeft < 1 * 60 * 1000; // Expired or expiring within 1 minute
 };
 
 // Function to fetch data with automatic token refresh if needed
@@ -69,8 +71,9 @@ export const fetchWithAuth = async (url, options = {}) => {
   }
 
   // Proceed with the fetch request using the (new or existing) access token
+  let response;
   try {
-    const response = await fetch(url, {
+    response = await fetch(url, {
       ...options,
       headers: {
         ...options.headers,
@@ -78,11 +81,26 @@ export const fetchWithAuth = async (url, options = {}) => {
       },
     });
 
+    // Check if the response is 401 and try to refresh the token
+    if (response.status === 401) {
+      // Refresh the access token
+      accessToken = await refreshAuthToken(refreshToken);
+
+      // Retry the fetch request with the new access token
+      response = await fetch(url, {
+        ...options,
+        headers: {
+          ...options.headers,
+          'Authorization': `Bearer ${accessToken}`,
+        },
+      });
+    }
+
     if (!response.ok) {
       throw new Error(`Request failed with status ${response.status}`);
     }
 
-    return response;
+    return response; // Return the response if successful
   } catch (error) {
     throw new Error(`Fetch request error: ${error.message}`);
   }
