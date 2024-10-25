@@ -4,15 +4,10 @@ import FileBlock from "./FileBlock";
 import Description from "./Description";
 import HowToUse from "./HowToUse";
 
-const ProductField =({singleProduct})=>{
-    const [activeButton, setActiveButton] = useState('Assets');
-
-    const handleButtonClick = (buttonName) => {
-        setActiveButton(buttonName);
-    };
+const ProductField =({singleProduct, handleButtonClick, activeButton})=>{
 
     return (
-        <section className={styles.main}>
+        <section className={styles.main} id="assets">
             <div className={styles.toggleCont}>
                 <button
                     onClick={() => handleButtonClick('Assets')}
