@@ -2,8 +2,8 @@ import styles from "./SharePage.module.css";
 import { linksvg, copylinksvg } from "../../assets/svg/svgimages";
 import { socials } from "../../assets/svg/socialicons";
 
-const SharePage = ({ profile }) => {
-  const linkToCopy = `https://grids.matchmovemachine.com/profile/${profile.id}`;
+const SharePage = ({ profile, profileId }) => {
+  const linkToCopy = `https://grids.matchmovemachine.com/profile/${profile.id || profileId}`;
 
   const copyToClipboard = async () => {
     try {

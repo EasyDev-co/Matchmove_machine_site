@@ -17,7 +17,7 @@ import Faq from './pages/Faq/Faq';
 import HowTo from './pages/HowTo/HowTo';
 import FinishCheckout from './pages/Checkout/FinishCheckout';
 import ScrollToTop from './hooks/ScrollToTop';
-
+import CreatorProfile from './pages/CreatorProfile';
 
 function App() {
   return (
@@ -58,6 +58,7 @@ function App() {
                 <Route path="authorization" element={<Authorization />} />
                 <Route path="registration" element={<Authorization />} />
                 <Route path="reset-password" element={<Authorization />} />
+                <Route path="profile/:profileId" element={<CreatorProfile />} />
                 <Route
                   path="profile"
                   element={

@@ -2,6 +2,7 @@ import styles from "./ProductDescription.module.css"
 import Button from "../Button"
 import { Link } from "react-router-dom";
 import { companysvg } from "../../assets/svg/svgimages";
+import pfp  from "../../assets/images/iconplaceholder.png";
 
 import { useDispatch, useSelector } from "react-redux";
 import { postCartItem } from "../../store/slices/cartSlice";
@@ -70,8 +71,8 @@ const ProductDescription =({singleProduct, handleButtonClick})=>{
           <div className={styles.container}>
             <h2 className="h2-medium">Author</h2>
             {singleProduct.author.username ? (
-              <Link className={styles.authorInfo}>
-                {singleProduct.author.username}
+              <Link className={styles.authorInfo} to={`/profile/${singleProduct.author.id}`}>
+                <img src={singleProduct.author.profile_picture? singleProduct.author.profile_picture:pfp} alt="icon" />{singleProduct.author.username}
               </Link>
             ) : (
               <a href="/" className={styles.authorInfo}>
