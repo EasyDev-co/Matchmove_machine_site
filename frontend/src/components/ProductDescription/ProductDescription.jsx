@@ -7,10 +7,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { postCartItem } from "../../store/slices/cartSlice";
 import { downloadProductFile } from "../../store/slices/singleProductSlice";
 
-const ProductDescription =({singleProduct})=>{
+import useSmoothScroll from "../../hooks/useSmoothScroll";
+
+const ProductDescription =({singleProduct, handleButtonClick})=>{
 
   const dispatch = useDispatch()
   const { postCartItemStatus} = useSelector(state => state.cart)
+
+  const scrollToSection = useSmoothScroll();
 
   const addToCart =()=>{
     dispatch(postCartItem(singleProduct.id))
@@ -19,6 +23,16 @@ const ProductDescription =({singleProduct})=>{
   const downloadAsset = ()=>{
     dispatch(downloadProductFile(singleProduct.id))
   }
+
+  const handleSeeAllOptionsClick = () => {
+    scrollToSection("assets"); 
+    handleButtonClick("Assets")
+  };
+
+  const handleEmailClick = () => {
+    const recipient = 'grids@matchmovemachine.com'; 
+    window.location.href = `mailto:${recipient}`;
+  };
 
     return (
       <section className="height" id="description">
@@ -49,7 +63,7 @@ const ProductDescription =({singleProduct})=>{
               <p>
                 File size: <span className={styles.assetSize}>126 MB</span>
               </p>
-              <a href="/">See all options</a>
+              <button className={styles.button} onClick={handleSeeAllOptionsClick}>See all options</button>
             </div>
           </div>
 
@@ -73,7 +87,7 @@ const ProductDescription =({singleProduct})=>{
               pricing plan. Get in touch with our manager to acquire the
               necessary asset for your studio.
             </p>
-            <a href="/">Contact us</a>
+            <button className={styles.button} onClick={handleEmailClick}>Contact us</button>
           </div>
         </div>
       </section>

@@ -2,8 +2,8 @@ import styles from "./SharePage.module.css";
 import { linksvg, copylinksvg } from "../../assets/svg/svgimages";
 import { socials } from "../../assets/svg/socialicons";
 
-const SharePage = ({ profileId, profile }) => {
-  const linkToCopy = `https://grids.matchmovemachine.com/profile/${profileId}`;
+const SharePage = ({ profile }) => {
+  const linkToCopy = `https://grids.matchmovemachine.com/profile/${profile.id}`;
 
   const copyToClipboard = async () => {
     try {
@@ -19,7 +19,7 @@ const SharePage = ({ profileId, profile }) => {
       <h2 className="h2-medium">Share this page</h2>
       <div className={styles.container}>
         <div className={styles.qr}>
-          <img src={`${profile.qr}`} alt="qr" />
+        {profile.qr_code&&<img src={`${profile.qr}`} alt="qr" />}
         </div>
         <div className={styles.content}>
           <h4 className="h4-medium">{linksvg} Link</h4>
@@ -33,7 +33,7 @@ const SharePage = ({ profileId, profile }) => {
           </div>
           <div className={styles.socials}>
             {socials.map((item) => {
-              const link = profile[item.key] || "/";
+              const link = profile[item.key] || "";
 
               return (
                 <a

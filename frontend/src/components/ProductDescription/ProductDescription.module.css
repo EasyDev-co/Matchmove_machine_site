@@ -9,9 +9,14 @@
     font-weight: 600;
 }
 
-.main a {
+.button {
     font-weight: 600;
     color: #2F57BF;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 15px;
 }
 
 .assetSize {

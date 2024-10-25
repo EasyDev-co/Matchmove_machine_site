@@ -6,6 +6,8 @@ import ProductDescription from "../components/ProductDescription/ProductDescript
 import ProductField from "../components/ProductField/ProductField";
 import LoadingScreen from "../components/LoadingScreen/LoadingScreen";
 
+import { useState } from "react";
+
 import { useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -16,10 +18,17 @@ const Product = ()=>{
   const { singleProduct, status} = useSelector(state => state.singleProduct)
   const dispatch = useDispatch()
   const { productId } = useParams();
+
+  const [activeButton, setActiveButton] = useState('Assets');
   
   useEffect(()=>{
     dispatch(fetchSingleProduct(productId))
   },[dispatch, productId])
+
+  const handleButtonClick = (buttonName) => {
+      setActiveButton(buttonName);
+  };
+
 
   if(status.fetchProductStatus==="loading"){
     return(
@@ -32,10 +41,10 @@ const Product = ()=>{
       <>
         <NavigationTop title={`Distortion grids pack for ${singleProduct.camera.model_name} ${singleProduct.lens.model_name}`} singleProduct={singleProduct}/>
         <ProductBanner singleProduct={singleProduct}/>
-        <ProductDescription singleProduct={singleProduct}/>
-        <ProductField singleProduct={singleProduct}/>
+        <ProductDescription singleProduct={singleProduct} handleButtonClick={handleButtonClick}/>
+        <ProductField singleProduct={singleProduct} handleButtonClick={handleButtonClick} activeButton={activeButton}/>
         <JoinCommunity/>
-        <SharePage profileId={singleProduct.author.id} profileQR={singleProduct.author.qr_code}/>
+        <SharePage profile={singleProduct.author} />
       </>
     );
   } 
