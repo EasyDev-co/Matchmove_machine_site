@@ -12,10 +12,12 @@ import { useNavigate } from "react-router-dom";
 
 const FinishReset = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const [showNewPassword, setShowNewPassword] = useState(false);
+
   const email = useSelector((state) => state.user.email);
+  const { passwordChangeStatus } = useSelector((state) => state.user.status);
 
   const [formData, setFormData] = useState({
     old_password: "",
@@ -80,7 +82,25 @@ const FinishReset = () => {
         ).unwrap();
         navigate("/");
       } catch (error) {
-        console.log(error.detail);
+        
+        const backendErrors = error;
+        let apiErrors = {};
+
+        if (backendErrors.detail) {
+          apiErrors.code = backendErrors.detail;
+        }
+        if (backendErrors.new_password) {
+          apiErrors.old_password = backendErrors.new_password;
+        }
+        if (backendErrors.confirm_password) {
+          apiErrors.confirm_password = backendErrors.confirm_password;
+        }
+
+        // Update local errors state
+        setErrors((prevErrors) => ({
+          ...prevErrors,
+          ...apiErrors,
+        }));
       }
     }
   };
@@ -143,10 +163,12 @@ const FinishReset = () => {
           )}
         </label>
         <Button
-          variant="blue"
+          variant={`${passwordChangeStatus === "loading" ? "grey" : "blue"}`}
           iconType="checkMark"
-          label="Apply"
-          type="submit"
+          label={`${
+            passwordChangeStatus === "loading" ? "Applying..." : "Apply"
+          }`}
+          type={`${passwordChangeStatus === "loading" ? "button" : "submit"}`}
         />
       </form>
     </div>

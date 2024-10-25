@@ -5,11 +5,14 @@ import Email from "../../Forms/Email";
 import Button from "../../Button";
 
 import { setEmail } from "../../../store/userSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { resetPassword } from "../../../store/userSlice";
 
 const ResetPasswordForm = ({handlePasswordReset}) => {
+
   const dispatch = useDispatch();
+  const {resetPasswordStatus} = useSelector((state)=> state.user.status)
+  
   const [formData, setFormData] = useState({ email: '' });
   const [errors, setErrors] = useState({ email: '' });
 
@@ -47,6 +50,8 @@ const ResetPasswordForm = ({handlePasswordReset}) => {
         dispatch(setEmail(formData.email))
         handlePasswordReset()
       } catch (error) {
+        console.log(error);
+        
         // Assuming error structure comes from the backend
         const backendErrors = error; 
         let apiErrors = {};
@@ -54,8 +59,10 @@ const ResetPasswordForm = ({handlePasswordReset}) => {
         // Check for specific backend errors
         if (backendErrors.email) {
           apiErrors.email = backendErrors.email[0]; // Adjust based on actual backend response
+        } else {
+          apiErrors.email = "Something went wrong, try again later"
         }
-  
+
         // Update local errors state
         setErrors(prevErrors => ({
           ...prevErrors,
@@ -77,7 +84,7 @@ const ResetPasswordForm = ({handlePasswordReset}) => {
                 errors={errors}
                 validateEmail={validateEmail}
               />
-              <Button variant="blue" iconType="arrowRight" label="Reset" type="submit" />
+              <Button variant={`${resetPasswordStatus==="loading"?"grey":"blue"}`} iconType="arrowRight" label={`${resetPasswordStatus==="loading"?"Resetting...":"Reset"}`} type={`${resetPasswordStatus==="loading"? "button":"submit"}`} />
             </div>
           </form>
   );
