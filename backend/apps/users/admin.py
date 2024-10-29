@@ -35,6 +35,11 @@ class UserAdmin(BaseUserAdmin):
             _("Social Media"),
             {
                 "fields": (
+                    "whatsapp",
+                    "messenger",
+                    "twitter",
+                    "telegram",
+                    "reddit",
                     "linkedin",
                     "instagram",
                     "youtube",
@@ -92,8 +97,6 @@ class UserAdmin(BaseUserAdmin):
         "id",
         "email",
         "username",
-        "linkedin",
-        "instagram",
         "is_verified",
         "occupation",
         "qr_code",
@@ -101,7 +104,6 @@ class UserAdmin(BaseUserAdmin):
     search_fields = (
         "email",
         "username",
-        "linkedin",
     )
     list_filter = ("is_staff", "is_superuser")
     ordering = ("email", "username")
@@ -110,7 +112,7 @@ class UserAdmin(BaseUserAdmin):
 
 @admin.register(EmailErrorLog)
 class EmailErrorLogAdmin(admin.ModelAdmin):
-    list_display = ("confirm_code", "message", "is_sent", "created_at", "user")
+    list_display = ("user", "user__email", "confirm_code", "message", "is_sent", "created_at")
     search_fields = ("user__email",)
     ordering = ("created_at",)
 
@@ -128,6 +130,7 @@ class EmailErrorLogAdmin(admin.ModelAdmin):
 class ConfirmCodeAdmin(admin.ModelAdmin):
     list_display = (
         "user",
+        "user__email",
         "code",
         "created_at",
         "purpose",
