@@ -2,7 +2,6 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import FormPopUpWrapper from "../Forms/FormPopUpWrapper";
 import { registerArrowLeftSvg } from "../../assets/svg/svgimages";
-import ResetComplete from "./ResetPassword/ResetComplete";
 import ResetPasswordForm from "./ResetPassword/ResetPasswordForm";
 import FinishReset from "./ResetPassword/FinishReset";
 

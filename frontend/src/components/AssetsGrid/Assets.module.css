@@ -79,7 +79,7 @@ font-size: 15px;
     width: 30px;
     height: 30px;
     border-radius: 5px;
-
+    object-fit: cover;
 }
 
 @media (max-width: 1400px) {

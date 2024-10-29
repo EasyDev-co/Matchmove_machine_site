@@ -149,6 +149,7 @@
     line-height: 26px;
     width: 100%;
     color: #282828;
+    margin-left: 1px;
 }
 
 .textarea label{
