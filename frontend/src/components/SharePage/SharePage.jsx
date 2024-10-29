@@ -19,7 +19,7 @@ const SharePage = ({ profile, profileId }) => {
       <h2 className="h2-medium">Share this page</h2>
       <div className={styles.container}>
         <div className={styles.qr}>
-        {profile.qr_code&&<img src={`${profile.qr}`} alt="qr" />}
+        {profile.qr_code&&<img src={`${profile.qr_code}`} alt="qr" />}
         </div>
         <div className={styles.content}>
           <h4 className="h4-medium">{linksvg} Link</h4>
