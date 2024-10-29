@@ -46,9 +46,15 @@ class User(UUIDMixin, TimeStampedMixin, AbstractUser):
         verbose_name=_("Фото пользователя"),
     )
 
-    groups = models.ManyToManyField(Group, related_name="custom_user_groups")
+    groups = models.ManyToManyField(
+        Group,
+        related_name="custom_user_groups",
+        blank=True
+    )
     user_permissions = models.ManyToManyField(
-        Permission, related_name="custom_user_permissions"
+        Permission,
+        related_name="custom_user_permissions",
+        blank=True
     )
     is_verified = models.BooleanField(
         default=False,

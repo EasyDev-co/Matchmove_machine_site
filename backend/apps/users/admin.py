@@ -52,6 +52,8 @@ class UserAdmin(BaseUserAdmin):
             _("Permissions"),
             {
                 "fields": (
+                    "groups",
+                    "user_permissions",
                     "is_superuser",
                     "is_staff",
                 ),
