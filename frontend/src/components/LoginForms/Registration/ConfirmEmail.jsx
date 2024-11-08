@@ -8,8 +8,9 @@ import { useNavigate } from "react-router-dom";
 const ConfirmEmail = () => {
 
   const {status} = useSelector(state=> state.user)
+  const email = useSelector((state) => state.user.email);
 
-    const [formData, setFormData] = useState({ email: '', code: '' });
+    const [formData, setFormData] = useState({ email: email, code: '' });
     const [error, setError] = useState(null)
     const dispatch = useDispatch();
     const navigate = useNavigate()
@@ -45,13 +46,6 @@ const ConfirmEmail = () => {
               {warningsvg} {error.message}
             </div>
           )}
-          <input
-            type="email"
-            id="email"
-            placeholder="Email"
-            value={formData.email}
-            onChange={handleChange}
-          />
           <input
             type="text"
             id="code"

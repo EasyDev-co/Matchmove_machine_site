@@ -29,33 +29,25 @@ const SocialsForm = ({ profile, status }) => {
     const [errors, setErrors] = useState({});
 
     const handleChange = (event) => {
-        const { name, value } = event.target;
+      const { name, value } = event.target;
+    
+      // Check if the value is a social URL and add "https://" if missing
+      if (value && !/^https?:\/\//.test(value)) {
         setFormData((prevData) => ({
-            ...prevData,
-            [name]: value,
+          ...prevData,
+          [name]: `https://${value}`,
         }));
-        // Clear error for the field being changed
-        setErrors((prevErrors) => ({
-            ...prevErrors,
-            [name]: '',
+      } else {
+        setFormData((prevData) => ({
+          ...prevData,
+          [name]: value,
         }));
-    };
-
-    const validateURL = (url) => {
-        const regex = /^(https?:\/\/[^\s/$.?#].[^\s]*)$/; 
-        return regex.test(url);
+      }
     };
 
     const handleSubmit = (event) => {
         event.preventDefault();
         const newErrors = {};
-
-        // Validate each URL field
-        Object.keys(formData).forEach((key) => {
-            if (formData[key] && !validateURL(formData[key])) {
-                newErrors[key] = 'Please use a valid URL format (http:// or https://)';
-            }
-        });
 
         // If there are errors, set them in state
         if (Object.keys(newErrors).length > 0) {

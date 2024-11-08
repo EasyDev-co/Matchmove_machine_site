@@ -8,9 +8,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { uploadProductFile } from "../../store/slices/singleProductSlice";
 
 const ContributionForm = () => {
-
-  const dispatch = useDispatch()
-  const {status} = useSelector(state=> state.singleProduct)
+  const dispatch = useDispatch();
+  const { status } = useSelector((state) => state.singleProduct);
 
   const [formValues, setFormValues] = useState({
     camera: "",
@@ -21,6 +20,8 @@ const ContributionForm = () => {
   const [file, setFile] = useState(null);
   const [dragActive, setDragActive] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [isFileAttached, setIsFileAttached] = useState(false); // New state for file attachment status
+  const [isUploading, setIsUploading] = useState(false); // New state for file uploading status
 
   // Reference for the file input
   const fileInputRef = useRef(null);
@@ -34,10 +35,22 @@ const ContributionForm = () => {
     }));
   };
 
-  // Handling file change (from input or drag-drop)
   const handleFileChange = (e) => {
     const selectedFile = e.target.files[0];
+
+    if (!selectedFile) {
+      // If no file is selected (user cancels the dialog), do nothing
+      return;
+    }
+
     setFile(selectedFile);
+    setIsFileAttached(true); // Set the file as attached
+    setIsUploading(true); // Start uploading state
+
+    // Simulating a delay for file processing (e.g., waiting for upload to start)
+    setTimeout(() => {
+      setIsUploading(false); // File has been fully attached and ready for submission
+    }, 1000); // Simulate a 1-second file processing time
   };
 
   // Triggering the file input when the Import button is clicked
@@ -66,7 +79,6 @@ const ContributionForm = () => {
         console.error("File upload failed: ", error);
       });
 
-
     // Reset the form and file input after submission
     setFormValues({
       camera: "",
@@ -75,6 +87,7 @@ const ContributionForm = () => {
       description: "",
     });
     setFile(null);
+    setIsFileAttached(false); 
   };
 
   // Drag and Drop Handlers
@@ -94,15 +107,23 @@ const ContributionForm = () => {
     setDragActive(false);
     if (e.dataTransfer.files && e.dataTransfer.files[0]) {
       setFile(e.dataTransfer.files[0]);
+      setIsFileAttached(true); 
+      setIsUploading(true); 
+
+      // Simulating a delay for file processing (e.g., waiting for upload to start)
+      setTimeout(() => {
+        setIsUploading(false); 
+      }, 1000); 
     }
   };
 
   if (submitted) {
-    return <ThankYouMessage/>
+    return <ThankYouMessage />;
   }
 
   return (
     <form onSubmit={handleSubmit}>
+      {status.uploadProductStatus === "failed" &&<p className="error-message " style={{marginBottom: '10px'}}>Something went wrong, please try again later.</p>}
       <div className={styles.formCont}>
         <div className={styles.form}>
           <input
@@ -150,15 +171,17 @@ const ContributionForm = () => {
           />
 
           <Button
-            variant={status.uploadProductStatus==="loading"?"grey":"blue"}
-            label={status.uploadProductStatus==="loading"?"Sending...":"Send"}
+            variant={status.uploadProductStatus === "loading" ? "grey" : "blue"}
+            label={
+              status.uploadProductStatus === "loading" ? "Sending..." : "Send"
+            }
             iconType="arrowRight"
             onClick={handleSubmit}
           />
         </div>
 
         <div
-          className={styles.atachment}
+          className={` ${styles.atachment} ${dragActive && styles.atachmentActive}`}
           onDragEnter={handleDrag}
           onDragOver={handleDrag}
           onDragLeave={handleDrag}
@@ -169,6 +192,20 @@ const ContributionForm = () => {
             <p className={styles.selectmessage}>
               Select a file from local drive or <span>drag it here</span>
             </p>
+
+            {/* Indication when file is attached and uploading */}
+            {isFileAttached && !isUploading && (
+              <div className={styles.fileAttached}>
+                <p>File attached: {file.name}</p>
+              </div>
+            )}
+
+            {isUploading && (
+              <div className={styles.fileUploading}>
+                <p>Uploading file...</p>
+                <div className={styles.loader}></div> {/* Loader or spinner */}
+              </div>
+            )}
             <p className={styles.caution}>
               (The download file cannot be larger than 15 MB)
             </p>

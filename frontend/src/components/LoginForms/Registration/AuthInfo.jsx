@@ -5,7 +5,7 @@ import Email from "../../Forms/Email";
 import Password from "../../Forms/Password";
 import Name from "../../Forms/Name";
 import Occupation from "../../Forms/Occupation";
-
+import { setEmail } from "../../../store/userSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { registerUser } from "../../../store/userSlice";
 
@@ -86,6 +86,7 @@ const AuthInfo = ({ handleNext }) => {
           email: formData.email, 
           password: formData.old_password 
         })).unwrap();
+        dispatch(setEmail(formData.email))
         handleNext(); // Call handleNext after successful registration
       } catch (error) {
   
