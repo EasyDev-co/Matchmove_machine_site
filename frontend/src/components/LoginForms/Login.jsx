@@ -173,25 +173,6 @@ const Login = ({ onModalClose }) => {
           </form>
         </div>
       </div>
-      <div className="login-form auth">
-        <div className="login-wrap">
-          <h2 className="h2-medium">Sign in with</h2>
-          <div className="auth-buttons">
-            <button className="auth-button">
-              {googleIconsvg} Sign in with Google
-            </button>
-            <button className="auth-button">
-              {facebooksvg} Sign in with Facebook
-            </button>
-            <button className="auth-button">
-              {applesvg} Sign in with Apple
-            </button>
-            <button className="auth-button">
-              {microsoftsvg}Sign in with Microsoft
-            </button>
-          </div>
-        </div>
-      </div>
     </div>
   );
 };

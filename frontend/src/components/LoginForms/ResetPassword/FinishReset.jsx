@@ -10,7 +10,7 @@ import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-const FinishReset = () => {
+const FinishReset = ({handlePasswordReset}) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -80,7 +80,7 @@ const FinishReset = () => {
             code: formData.code,
           })
         ).unwrap();
-        navigate("/");
+        handlePasswordReset("finished")
       } catch (error) {
         
         const backendErrors = error;

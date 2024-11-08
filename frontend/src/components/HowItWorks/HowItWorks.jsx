@@ -1,5 +1,6 @@
 import styles from "./HowItWorks.module.css"
-import image from "../../assets/images/howItWorks.png" 
+import image from "../../assets/images/sharebackground.png" 
+import howitworksimg from "../../assets/images/howitworks.svg" 
 import Button from "../Button";
 
 import { useNavigate } from "react-router-dom";
@@ -15,7 +16,10 @@ const HowItWorks =()=>{
     return (
       <section className={`height ${styles.main}`}>
         <div className={styles.content}>
-          <img src={image} alt="how-it-works" />
+          <div className={styles.imgCont}>
+          <img className={styles.imgbg} src={image} alt="how-it-works" />
+          <img className={styles.img} src={howitworksimg} alt="sign" />
+          </div>
           <h2 className="h2-bold">How it works</h2>
           <p className="h4-medium">
             We film distortion grids following the guide and then we create

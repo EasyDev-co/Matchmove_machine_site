@@ -48,7 +48,7 @@ const ResetPasswordForm = ({handlePasswordReset}) => {
       try {
         await dispatch(resetPassword(email)).unwrap(); // Use unwrap for error handling
         dispatch(setEmail(formData.email))
-        handlePasswordReset()
+        handlePasswordReset("resetting")
       } catch (error) {
         console.log(error);
         

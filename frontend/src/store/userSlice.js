@@ -141,15 +141,12 @@ export const changeResetPassword = createAsyncThunk(
       body: JSON.stringify(data)
     })
 
-    console.log(JSON.stringify(data));
-
     if (!response.ok){
       const errorDetails = await response.json();
       return rejectWithValue(errorDetails)
     }
 
     const res = await response.json()
-    console.log(res);
     
     return res
   }
