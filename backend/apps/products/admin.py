@@ -115,17 +115,19 @@ class CameraAdmin(admin.ModelAdmin):
 class FileAdmin(admin.ModelAdmin):
     form = FileUploadForm
 
-    list_display = ("id", "file_link", "delete_ftp_button")
+    list_display = ("id", "author", "file_link", "delete_ftp_button")
     search_fields = ("id",)
     ordering = ("id",)
     fields = ("file",)
     actions = ("upload_to_ftp_action", "delete_from_ftp")
-
+    
     def save_model(self, request, obj, form, change):
         """
-        При сохранении объекта загружаем файлы на FTP, не сохраняя их локально.
+        При сохранении объекта загружаем файлы на FTP, не сохраняя их локально,
+        и устанавливаем текущего пользователя автором файла.
         """
         uploaded_files = form.cleaned_data.get("file")
+        
         if uploaded_files:
             for uploaded_file in uploaded_files:
                 # Читаем содержимое файла
@@ -133,8 +135,8 @@ class FileAdmin(admin.ModelAdmin):
                 file_name = uploaded_file.name
                 file_extension = os.path.splitext(file_name)[1]
 
-                # Создаём новый объект для каждого файла
-                new_obj = File()
+                # Создаём новый объект для каждого файла и устанавливаем автора
+                new_obj = File(author=request.user)
                 new_obj.file.name = f"{str(new_obj.id)}{file_extension}"
                 new_obj.save()
 

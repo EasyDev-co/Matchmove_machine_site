@@ -3,7 +3,7 @@ import logging
 
 from django_filters.rest_framework import DjangoFilterBackend
 from django.conf import settings
-from rest_framework import generics, filters, status, viewsets
+from rest_framework import generics, filters, status, viewsets, serializers
 from rest_framework.generics import ListAPIView
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
@@ -11,7 +11,6 @@ from rest_framework.pagination import PageNumberPagination
 from apps.utils.pagination import StandardPagination
 
 from apps.products.models import Camera, Format, Lens, Product, File
-
 from apps.products.tasks import (
     download_file_from_ftp_api,
     upload_file_to_ftp_api,
@@ -26,6 +25,7 @@ from .serializers import (
     ProductSerializer,
     FileSerializer,
 )
+
 
 logger = logging.getLogger(__name__)
 
@@ -42,6 +42,11 @@ class ProductCreateView(generics.CreateAPIView):
     serializer_class = ProductCreateSerializer
 
     def perform_create(self, serializer):
+        file = serializer.validated_data.get("file")
+        if file and file.author != self.request.user:
+            raise serializers.ValidationError(
+                {"error": "You can only associate your own files with products."}
+            )
         # Сохраняем продукт с текущим пользователем как автором
         product = serializer.save(author=self.request.user)
 
@@ -143,7 +148,7 @@ class FileViewSet(viewsets.ViewSet):
                 destination.write(chunk)
 
         # Создание записи о файле в базе данных с использованием сериализатора
-        file_data = {"file": file, "name": file.name}
+        file_data = {"file": file, "name": file.name, "author": request.user.id}
         serializer = FileSerializer(data=file_data)
         if serializer.is_valid():
             file_instance = serializer.save()
@@ -176,17 +181,12 @@ class FileViewSet(viewsets.ViewSet):
     def delete(self, request, file_id):
         """Эндпоинт для удаления файла с FTP."""
         try:
-            # Поиск продукта, который использует файл с данным ID и проверка автора
-            Product.objects.get(file__id=file_id, author=request.user)
-            file_instance = File.objects.get(id=file_id)
-        except Product.DoesNotExist:
+            # Retrieve the file and check if the request user is the author
+            file_instance = File.objects.get(id=file_id, author=request.user)
+        except File.DoesNotExist:
             return Response(
                 {"error": "File not found or you don't have permission to delete it."},
                 status=status.HTTP_404_NOT_FOUND,
-            )
-        except File.DoesNotExist:
-            return Response(
-                {"error": "File not found."}, status=status.HTTP_404_NOT_FOUND
             )
 
         # Удаление файла с FTP

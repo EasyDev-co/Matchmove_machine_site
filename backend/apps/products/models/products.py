@@ -3,15 +3,18 @@ from io import BytesIO
 from django.core.files.base import ContentFile
 from django.db import models
 from django.utils import timezone
+from django.contrib.auth import get_user_model
 from datetime import timedelta
 from django.utils.translation import gettext_lazy as _
 from apps.utils.models_mixins.models_mixins import UUIDMixin, TimeStampedMixin
 from apps.products.models.cameras import Camera
 from apps.products.models.lens import Lens
 from apps.products.models.file_formats import Format
-from apps.users.models.users import User
 from apps.products.models.files import File
 from apps.utils.models_mixins.models_mixins import DjangoAdaptedEnumMixin
+
+
+User = get_user_model()
 
 
 class AccessType(DjangoAdaptedEnumMixin):

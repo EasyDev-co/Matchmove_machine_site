@@ -1,7 +1,11 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+from django.contrib.auth import get_user_model
 from apps.utils.models_mixins.models_mixins import UUIDMixin
 import os
+
+
+User = get_user_model()
 
 
 def upload_to(instance, filename):
@@ -12,6 +16,14 @@ def upload_to(instance, filename):
 class File(UUIDMixin):
     """Модель файла для синхронизации с сервером."""
 
+    author = models.ForeignKey(
+        User,
+        on_delete=models.PROTECT,
+        blank=True,
+        null=True,
+        related_name="files",
+        verbose_name=_("Автор")
+    )
     file = models.FileField(
         upload_to=upload_to, verbose_name=_("Файл"), null=True, blank=True
     )
