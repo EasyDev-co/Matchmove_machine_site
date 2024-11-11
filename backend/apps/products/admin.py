@@ -1,9 +1,11 @@
 import os
 import logging
+from django.conf import settings
+from django.http import HttpResponse
 from django.contrib import admin
 from django.utils.translation import gettext_lazy as _
 from django.utils.html import format_html
-from django.urls import reverse
+from django.urls import reverse, path
 from django.shortcuts import redirect
 from apps.products.models.cameras import Camera
 from apps.products.models.file_formats import Format
@@ -36,6 +38,7 @@ class ProductAdmin(admin.ModelAdmin):
                     "description",
                     "price",
                     "file",
+                    "qr_code",
                 )
             },
         ),
@@ -62,6 +65,7 @@ class ProductAdmin(admin.ModelAdmin):
         "author",
         "description",
         "price",
+        "qr_code",
     )
 
     search_fields = (
@@ -192,32 +196,36 @@ class FileAdmin(admin.ModelAdmin):
             file_extension = os.path.splitext(file_name)[1]
             remote_file_name = f"{obj_id}{file_extension}"
 
-            # Получаем содержимое файла с FTP
+            # Получаем содержимое файла с FTP (в памяти)
             ftp_service = get_ftp_service()
-            file_content = ftp_service.download_file_content(
-                str(obj_id), file_extension
-            )
+            file_content = ftp_service.download_file_content(str(obj_id), file_extension)
 
-            if file_content is not None:
-                from django.http import HttpResponse
+            if file_content is None:
+                # Если не удалось загрузить в память, пытаемся скачать на диск
+                file_path = os.path.join(settings.MEDIA_ROOT, remote_file_name)
+                ftp_service.download_file_api(file_path, str(obj_id))
 
-                response = HttpResponse(
-                    file_content, content_type="application/octet-stream"
-                )
-                response["Content-Disposition"] = (
-                    f'attachment; filename="{remote_file_name}"'
-                )
-                return response
-            else:
-                self.message_user(request, f"Файл с ID {obj_id} не найден на FTP.")
+                # Проверяем, существует ли файл после загрузки на диск
+                if os.path.exists(file_path):
+                    with open(file_path, 'rb') as f:
+                        file_content = f.read()
+
+                    # Удаляем временный файл после передачи содержимого
+                    os.remove(file_path)
+                else:
+                    self.message_user(request, f"Файл с ID {obj_id} не найден на FTP.")
+                    return redirect(reverse("admin:products_file_changelist"))
+            # Если удалось получить содержимое файла
+            response = HttpResponse(file_content, content_type="application/octet-stream")
+            response["Content-Disposition"] = f'attachment; filename="{remote_file_name}"'
+            return response
+
         except File.DoesNotExist:
             self.message_user(request, f"Файл с ID {obj_id} не найден.")
-        return redirect(reverse("admin:products_file_changelist"))
+            return redirect(reverse("admin:products_file_changelist"))
 
     def get_urls(self):
         """Добавляем кастомные URL для операций с файлами."""
-        from django.urls import path
-
         urls = super().get_urls()
         custom_urls = [
             path(

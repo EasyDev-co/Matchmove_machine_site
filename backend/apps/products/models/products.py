@@ -1,3 +1,6 @@
+import qrcode
+from io import BytesIO
+from django.core.files.base import ContentFile
 from django.db import models
 from django.utils import timezone
 from datetime import timedelta
@@ -90,9 +93,28 @@ class Product(UUIDMixin, TimeStampedMixin):
         related_name="products",
         verbose_name=_("Файл")
     )
+    qr_code = models.ImageField(upload_to='product_qr_codes/', blank=True, null=True)
 
     def __str__(self):
         return f"{self.access_type} {self.category} {self.camera} {self.lens}"
+
+    def generate_qr_code(self):
+        """
+        Метод для генерации QR-кода для продукта.
+        """
+        url = f"https://grids.matchmovemachine.com/product/{self.id}"  # Генерация URL с ID продукта
+        qr_img = qrcode.make(url)  # Генерация QR-кода
+        buffer = BytesIO()
+        qr_img.save(buffer, format="PNG")
+        file_name = f"product_{self.id}_qr.png"
+        self.qr_code.save(file_name, ContentFile(buffer.getvalue()), save=False)
+
+    def save(self, *args, **kwargs):
+        is_new = self.pk is None
+        super().save(*args, **kwargs)
+        if is_new and not self.qr_code:  # Генерация QR-кода только для нового продукта
+            self.generate_qr_code()
+            super().save(*args, **kwargs)  # Повторное сохранение для QR-кода
 
     @classmethod
     def added_today(cls):

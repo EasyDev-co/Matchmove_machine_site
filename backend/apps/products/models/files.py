@@ -15,6 +15,12 @@ class File(UUIDMixin):
     file = models.FileField(
         upload_to=upload_to, verbose_name=_("Файл"), null=True, blank=True
     )
+    name = models.CharField(
+        max_length=255,
+        verbose_name=_("Идентификатор Файла"),
+        blank=True,
+        null=True
+    )
 
     def __str__(self):
         return f"File {self.id}"

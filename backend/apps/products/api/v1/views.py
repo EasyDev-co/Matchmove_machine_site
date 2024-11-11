@@ -5,7 +5,7 @@ from django_filters.rest_framework import DjangoFilterBackend
 from django.conf import settings
 from rest_framework import generics, filters, status, viewsets
 from rest_framework.generics import ListAPIView
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from rest_framework.pagination import PageNumberPagination
 from apps.utils.pagination import StandardPagination
@@ -13,12 +13,13 @@ from apps.utils.pagination import StandardPagination
 from apps.products.models import Camera, Format, Lens, Product, File
 
 from apps.products.tasks import (
-    download_file_from_ftp,
-    upload_file_to_ftp,
-    delete_file_from_ftp,
+    download_file_from_ftp_api,
+    upload_file_to_ftp_api,
+    delete_file_from_ftp_api,
 )
 from .serializers import (
     ProductDetailSerializer,
+    ProductCreateSerializer,
     CameraSerializer,
     FormatSerializer,
     LensSerializer,
@@ -29,22 +30,61 @@ from .serializers import (
 logger = logging.getLogger(__name__)
 
 
+class ProductCreateView(generics.CreateAPIView):
+    permission_classes = [IsAuthenticated]
+    queryset = Product.objects.all().select_related(
+        'camera',
+        'lens',
+        'file_format',
+        'file',
+        'author',
+    )
+    serializer_class = ProductCreateSerializer
+
+    def perform_create(self, serializer):
+        # Сохраняем продукт с текущим пользователем как автором
+        product = serializer.save(author=self.request.user)
+
+        # Генерация QR-кода после сохранения продукта
+        product.generate_qr_code()
+        product.save()
+
+        response_data = {
+            "message": "Product successfully created!",
+            "product_id": product.id,
+            "qr_code_url": product.qr_code.url if product.qr_code else None,
+            "access_type": product.access_type,
+            "category": product.category,
+            "camera": product.camera.model_name if product.camera else None,
+            "lens": product.lens.model_name if product.lens else None,
+            "file_format": product.file_format.format_type if product.file_format else None,
+            "price": product.price,
+            "description": product.description,
+        }
+
+        return Response(response_data, status=status.HTTP_201_CREATED)
+
+
 class ProductDetailView(generics.RetrieveAPIView):
+    permission_classes = [AllowAny]
     queryset = Product.objects.all()
     serializer_class = ProductDetailSerializer
 
 
 class CameraListView(ListAPIView):
+    permission_classes = [AllowAny]
     queryset = Camera.objects.all()
     serializer_class = CameraSerializer
 
 
 class FormatListView(ListAPIView):
+    permission_classes = [AllowAny]
     queryset = Format.objects.all()
     serializer_class = FormatSerializer
 
 
 class LensListView(ListAPIView):
+    permission_classes = [AllowAny]
     queryset = Lens.objects.all()
     serializer_class = LensSerializer
 
@@ -56,6 +96,7 @@ class ProductPagination(PageNumberPagination):
 
 
 class ProductListView(generics.ListAPIView):
+    permission_classes = [AllowAny]
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
     pagination_class = ProductPagination
@@ -85,6 +126,7 @@ class ProductListView(generics.ListAPIView):
 
 
 class FileViewSet(viewsets.ViewSet):
+    permission_classes = [IsAuthenticated]
 
     def upload(self, request):
         """Эндпоинт для загрузки файла на FTP."""
@@ -101,13 +143,14 @@ class FileViewSet(viewsets.ViewSet):
                 destination.write(chunk)
 
         # Создание записи о файле в базе данных с использованием сериализатора
-        file_data = {"file": file.name}
+        # file_data = {"name": file.name}
+        file_data = {"file": file, "name": file.name}
         serializer = FileSerializer(data=file_data)
         if serializer.is_valid():
             file_instance = serializer.save()
 
             # Отправляем задачу на загрузку файла в Celery
-            upload_file_to_ftp.delay(file_path, str(file_instance.id))
+            upload_file_to_ftp_api.delay(file_path, str(file_instance.id))
             return Response({"id": file_instance.id}, status=status.HTTP_201_CREATED)
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -125,7 +168,7 @@ class FileViewSet(viewsets.ViewSet):
         # Путь для сохранения
         file_path = os.path.join(settings.MEDIA_ROOT, f"{file_id}")
         # Отправляем задачу на скачивание файла в Celery
-        download_file_from_ftp.delay(file_path, file_id)
+        download_file_from_ftp_api.delay(file_path, file_id)
 
         return Response(
             {"message": f"File downloaded to {file_path}"}, status=status.HTTP_200_OK
@@ -148,7 +191,7 @@ class FileViewSet(viewsets.ViewSet):
             )
 
         # Удаление файла с FTP
-        delete_file_from_ftp.delay(file_id)
+        delete_file_from_ftp_api.delay(file_id)
 
         # Удаление файла из базы данных
         file_instance.delete()
@@ -165,7 +208,7 @@ class ApprovedProductsAPIView(ListAPIView):
     queryset = Product.objects.filter(is_approved=True)
     serializer_class = ProductSerializer
     pagination_class = StandardPagination
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
 
 
 class UserProductsAPIView(ListAPIView):
