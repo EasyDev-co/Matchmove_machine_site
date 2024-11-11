@@ -143,7 +143,6 @@ class FileViewSet(viewsets.ViewSet):
                 destination.write(chunk)
 
         # Создание записи о файле в базе данных с использованием сериализатора
-        # file_data = {"name": file.name}
         file_data = {"file": file, "name": file.name}
         serializer = FileSerializer(data=file_data)
         if serializer.is_valid():

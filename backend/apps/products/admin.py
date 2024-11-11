@@ -66,6 +66,7 @@ class ProductAdmin(admin.ModelAdmin):
         "description",
         "price",
         "qr_code",
+        "file",
     )
 
     search_fields = (
@@ -213,15 +214,19 @@ class FileAdmin(admin.ModelAdmin):
                     # Удаляем временный файл после передачи содержимого
                     os.remove(file_path)
                 else:
+                    # Если файл не найден, выводим только сообщение в админке
                     self.message_user(request, f"Файл с ID {obj_id} не найден на FTP.")
                     return redirect(reverse("admin:products_file_changelist"))
-            # Если удалось получить содержимое файла
-            response = HttpResponse(file_content, content_type="application/octet-stream")
-            response["Content-Disposition"] = f'attachment; filename="{remote_file_name}"'
-            return response
+
+            # Если файл был найден, создаем и возвращаем ответ
+            if file_content:
+                response = HttpResponse(file_content, content_type="application/octet-stream")
+                response["Content-Disposition"] = f'attachment; filename="{remote_file_name}"'
+                return response
 
         except File.DoesNotExist:
-            self.message_user(request, f"Файл с ID {obj_id} не найден.")
+            # Если файл не найден в базе данных, выводим сообщение
+            self.message_user(request, f"Файл с ID {obj_id} не существует в базе данных.")
             return redirect(reverse("admin:products_file_changelist"))
 
     def get_urls(self):

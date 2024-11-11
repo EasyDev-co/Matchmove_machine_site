@@ -78,7 +78,6 @@ class FTPDownloadUploadService:
                 bio.seek(0)
                 return bio.read()
             except Exception as e:
-                logger.error(f"Ошибка при получении файла {remote_file_path}: {str(e)}")
                 return None
 
     def delete_file(self, file_id: str, file_extension: str) -> None:
@@ -103,7 +102,7 @@ class FTPDownloadUploadService:
         with self.ftp_manager.connect_and_login(self.host, self.username, self.password, self.port) as ftp:
             with open(file_path, "rb") as local_file:
                 ftp.storbinary(f"STOR {remote_file_path}", local_file)
-        self.delete_local_file(file_path)
+        self.delete_local_file_api(file_path)
 
     def download_file_api(self, file_path: str, file_id: str) -> None:
         """Скачивание файла с FTP по его ID."""
