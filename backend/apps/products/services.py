@@ -78,7 +78,6 @@ class FTPDownloadUploadService:
                 bio.seek(0)
                 return bio.read()
             except Exception as e:
-                logger.error(f"Ошибка при получении файла {remote_file_path}: {str(e)}")
                 return None
 
     def delete_file(self, file_id: str, file_extension: str) -> None:
@@ -95,6 +94,41 @@ class FTPDownloadUploadService:
             except Exception as e:
                 logger.error(f"Ошибка при удалении файла {remote_file_path}: {str(e)}")
                 raise
+
+    def upload_file_api(self, file_path: str, file_id: str) -> None:
+        """Загрузка файла на FTP с именем по ID."""
+        remote_file_path = f"{file_id}"
+
+        with self.ftp_manager.connect_and_login(self.host, self.username, self.password, self.port) as ftp:
+            with open(file_path, "rb") as local_file:
+                ftp.storbinary(f"STOR {remote_file_path}", local_file)
+        self.delete_local_file_api(file_path)
+
+    def download_file_api(self, file_path: str, file_id: str) -> None:
+        """Скачивание файла с FTP по его ID."""
+        remote_file_path = f"{file_id}"
+
+        with self.ftp_manager.connect_and_login(self.host, self.username, self.password, self.port) as ftp:
+            with open(file_path, "wb") as local_file:
+                ftp.retrbinary(f"RETR {remote_file_path}", local_file.write)
+
+    def delete_file_api(self, file_id: str) -> None:
+        """Удаление файла с FTP по его ID."""
+        remote_file_path = f"{file_id}"
+
+        with self.ftp_manager.connect_and_login(self.host, self.username, self.password, self.port) as ftp:
+            ftp.delete(remote_file_path)
+
+    def delete_local_file_api(self, file_path: str) -> None:
+        """Удаляет файл с локального сервера."""
+        if os.path.exists(file_path):
+            try:
+                os.remove(file_path)
+                logger.info(f"File {file_path} was successfully deleted from the local server.")
+            except Exception as e:
+                logger.error(f"Error deleting file {file_path}: {str(e)}")
+        else:
+            logger.warning(f"File {file_path} was not found on the local server.")
 
 
 def get_ftp_service():

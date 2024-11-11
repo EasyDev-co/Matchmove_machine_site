@@ -8,12 +8,14 @@ from apps.products.api.v1.views import (
     FileViewSet,
     UserProductsAPIView,
     ApprovedProductsAPIView,
+    ProductCreateView,
 )
 
 urlpatterns = [
     path("cameras/", CameraListView.as_view(), name="camera-list"),
     path("formats/", FormatListView.as_view(), name="format-list"),
     path("lenses/", LensListView.as_view(), name="lens-list"),
+    path("products/create/", ProductCreateView.as_view(), name="product-create"),
     path("products/", ProductListView.as_view(), name="product-list"),
     path("products/<uuid:pk>/", ProductDetailView.as_view(), name="product-detail"),
     path(

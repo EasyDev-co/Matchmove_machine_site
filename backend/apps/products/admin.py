@@ -1,9 +1,11 @@
 import os
 import logging
+from django.conf import settings
+from django.http import HttpResponse
 from django.contrib import admin
 from django.utils.translation import gettext_lazy as _
 from django.utils.html import format_html
-from django.urls import reverse
+from django.urls import reverse, path
 from django.shortcuts import redirect
 from apps.products.models.cameras import Camera
 from apps.products.models.file_formats import Format
@@ -36,6 +38,7 @@ class ProductAdmin(admin.ModelAdmin):
                     "description",
                     "price",
                     "file",
+                    "qr_code",
                 )
             },
         ),
@@ -62,6 +65,8 @@ class ProductAdmin(admin.ModelAdmin):
         "author",
         "description",
         "price",
+        "qr_code",
+        "file",
     )
 
     search_fields = (
@@ -110,17 +115,19 @@ class CameraAdmin(admin.ModelAdmin):
 class FileAdmin(admin.ModelAdmin):
     form = FileUploadForm
 
-    list_display = ("id", "file_link", "delete_ftp_button")
+    list_display = ("id", "author", "file_link", "delete_ftp_button")
     search_fields = ("id",)
     ordering = ("id",)
     fields = ("file",)
     actions = ("upload_to_ftp_action", "delete_from_ftp")
-
+    
     def save_model(self, request, obj, form, change):
         """
-        При сохранении объекта загружаем файлы на FTP, не сохраняя их локально.
+        При сохранении объекта загружаем файлы на FTP, не сохраняя их локально,
+        и устанавливаем текущего пользователя автором файла.
         """
         uploaded_files = form.cleaned_data.get("file")
+        
         if uploaded_files:
             for uploaded_file in uploaded_files:
                 # Читаем содержимое файла
@@ -128,8 +135,8 @@ class FileAdmin(admin.ModelAdmin):
                 file_name = uploaded_file.name
                 file_extension = os.path.splitext(file_name)[1]
 
-                # Создаём новый объект для каждого файла
-                new_obj = File()
+                # Создаём новый объект для каждого файла и устанавливаем автора
+                new_obj = File(author=request.user)
                 new_obj.file.name = f"{str(new_obj.id)}{file_extension}"
                 new_obj.save()
 
@@ -192,32 +199,40 @@ class FileAdmin(admin.ModelAdmin):
             file_extension = os.path.splitext(file_name)[1]
             remote_file_name = f"{obj_id}{file_extension}"
 
-            # Получаем содержимое файла с FTP
+            # Получаем содержимое файла с FTP (в памяти)
             ftp_service = get_ftp_service()
-            file_content = ftp_service.download_file_content(
-                str(obj_id), file_extension
-            )
+            file_content = ftp_service.download_file_content(str(obj_id), file_extension)
 
-            if file_content is not None:
-                from django.http import HttpResponse
+            if file_content is None:
+                # Если не удалось загрузить в память, пытаемся скачать на диск
+                file_path = os.path.join(settings.MEDIA_ROOT, remote_file_name)
+                ftp_service.download_file_api(file_path, str(obj_id))
 
-                response = HttpResponse(
-                    file_content, content_type="application/octet-stream"
-                )
-                response["Content-Disposition"] = (
-                    f'attachment; filename="{remote_file_name}"'
-                )
+                # Проверяем, существует ли файл после загрузки на диск
+                if os.path.exists(file_path):
+                    with open(file_path, 'rb') as f:
+                        file_content = f.read()
+
+                    # Удаляем временный файл после передачи содержимого
+                    os.remove(file_path)
+                else:
+                    # Если файл не найден, выводим только сообщение в админке
+                    self.message_user(request, f"Файл с ID {obj_id} не найден на FTP.")
+                    return redirect(reverse("admin:products_file_changelist"))
+
+            # Если файл был найден, создаем и возвращаем ответ
+            if file_content:
+                response = HttpResponse(file_content, content_type="application/octet-stream")
+                response["Content-Disposition"] = f'attachment; filename="{remote_file_name}"'
                 return response
-            else:
-                self.message_user(request, f"Файл с ID {obj_id} не найден на FTP.")
+
         except File.DoesNotExist:
-            self.message_user(request, f"Файл с ID {obj_id} не найден.")
-        return redirect(reverse("admin:products_file_changelist"))
+            # Если файл не найден в базе данных, выводим сообщение
+            self.message_user(request, f"Файл с ID {obj_id} не существует в базе данных.")
+            return redirect(reverse("admin:products_file_changelist"))
 
     def get_urls(self):
         """Добавляем кастомные URL для операций с файлами."""
-        from django.urls import path
-
         urls = super().get_urls()
         custom_urls = [
             path(

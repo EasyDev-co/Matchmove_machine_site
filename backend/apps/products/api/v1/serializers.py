@@ -59,6 +59,18 @@ class ProductSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
+class ProductCreateSerializer(serializers.ModelSerializer):
+    camera = serializers.PrimaryKeyRelatedField(queryset=Camera.objects.all(), required=False)
+    lens = serializers.PrimaryKeyRelatedField(queryset=Lens.objects.all(), required=False)
+    file_format = serializers.PrimaryKeyRelatedField(queryset=Format.objects.all(), required=False)
+    file = serializers.PrimaryKeyRelatedField(queryset=File.objects.all(), required=False)
+    author = serializers.PrimaryKeyRelatedField(queryset=User.objects.all(), required=False)
+
+    class Meta:
+        model = Product
+        fields = "__all__"
+
+
 class ProductDetailSerializer(serializers.ModelSerializer):
     camera = CameraSerializer()
     lens = LensSerializer()
