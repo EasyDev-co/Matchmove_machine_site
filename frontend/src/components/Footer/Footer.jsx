@@ -19,8 +19,6 @@ const Footer = () => {
                 <li><a href="/library">Full library</a></li>
                 <li><a href="/how-it-works">How it works</a></li>
                 <li><a href="/affiliate-program">Affiliate program</a></li>
-                <li>Tutorials</li>
-                <li>Guide</li>
                 <li>Magnetic grid</li>
                 <li><a href="faq">FAQ</a></li>
               </ul>
@@ -36,9 +34,9 @@ const Footer = () => {
               <div className={styles.column}>
                 <p className="h5-extra-bold">Links</p>
                 <ul>
-                  <li>Privacy policy</li>
-                  <li>Terms of use</li>
-                  <li>Our studio</li>
+                  <li><a href="/Privacy-Policy.pdf"  target="_blank">Privacy policy</a></li>
+                  <li><a href="/Terms-of-Use.pdf" target="_blank">Terms of use</a></li>
+                  <li><a href="https://matchmovemachine.com/" target="_blank">Our studio</a></li>
                 </ul>
               </div>
             </div>
@@ -84,19 +82,19 @@ const Footer = () => {
                 <p className="h5-extra-bold">Contacts</p>
                 <ul>
                   <li>
-                    <button>{facebook}</button>
+                  <a href="https://www.facebook.com/matchmovemachine" target="_blank"><button>{facebook}</button> </a>
                   </li>
                   <li>
-                    <button>{vimeo}</button>
+                  <a href="https://vimeo.com/matchmovemachine" target="_blank"><button>{vimeo}</button></a>
                   </li>
                   <li>
-                    <button>{instagram}</button>
+                  <a href="https://www.instagram.com/matchmovemachine" target="_blank"><button>{instagram}</button></a>
                   </li>
                   <li>
-                    <button>{linkedin}</button>
+                  <a href="https://www.linkedin.com/company/matchmovemachine/" target="_blank"><button>{linkedin}</button></a>
                   </li>
                   <li>
-                    <button>{youtube}</button>
+                  <a href="https://www.youtube.com/@matchmovemachine" target="_blank"><button> {youtube}</button></a>
                   </li>
                 </ul>
               </div>
