@@ -74,7 +74,7 @@ class ProductCreateView(generics.CreateAPIView):
 class ProductDetailView(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = [IsAuthorOrReadOnly]
     queryset = Product.objects.all()
-    serializer_class = ProductSerializer
+    serializer_class = ProductDetailSerializer
 
 
 class CameraListView(ListAPIView):
