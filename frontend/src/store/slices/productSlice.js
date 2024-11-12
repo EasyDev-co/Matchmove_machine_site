@@ -1,6 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import BASE_URL from '../../config';
-import { fetchWithAuth } from '../../utils/authUtils';
 
 const initialState = {
   products: [],
@@ -39,7 +38,7 @@ export const fetchProducts = createAsyncThunk(
       // Convert query parameters to string
       const queryString = queryParams.toString();
 
-      const response = await fetchWithAuth(`${BASE_URL}/products/v1/products/?${queryString}`, {
+      const response = await fetch(`${BASE_URL}/products/v1/approved-products/?${queryString}`, {
         method: 'GET',
       });
 

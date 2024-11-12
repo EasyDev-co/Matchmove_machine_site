@@ -3,12 +3,18 @@ import Button from "../Button";
 import { companysvg } from "../../assets/svg/svgimages";
 import pfp  from "../../assets/images/iconplaceholder.png";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const Asset = ({asset})=>{
   const navigate =useNavigate()
+  const {isAuthenticated} = useSelector(state=> state.user)
   
   const handleNavigation = () => {
-    navigate(`/library/product/${asset.id}`);
+    if(isAuthenticated){
+    navigate(`/library/product/${asset.id}`)
+  } else {
+    navigate("/authorization")
+  }
   };
 
   const user = <div className={styles.user}><p>{asset.author.username}</p> <img src={asset.author.profile_picture? asset.author.profile_picture:pfp} alt="icon" /></div>

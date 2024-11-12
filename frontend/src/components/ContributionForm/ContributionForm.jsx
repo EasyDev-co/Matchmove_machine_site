@@ -5,11 +5,14 @@ import { selectFilesvg } from "../../assets/svg/svgimages";
 import ThankYouMessage from "./ThankYouMessage";
 
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { uploadProductFile } from "../../store/slices/singleProductSlice";
 
 const ContributionForm = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate()
   const { status } = useSelector((state) => state.singleProduct);
+  const {isAuthenticated} = useSelector(state=> state.user)
 
   const [formValues, setFormValues] = useState({
     camera: "",
@@ -62,6 +65,11 @@ const ContributionForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    if(!isAuthenticated) {
+      navigate("/authorization")
+      return
+    }
 
     // Ensure a file is selected
     if (!file) {
