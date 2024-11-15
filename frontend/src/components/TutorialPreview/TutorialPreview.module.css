@@ -68,11 +68,12 @@
 }
 
 
-.tutorial:hover h3 {
+.tutorial h3:hover {
 color: #537EEF;
+cursor: pointer;
 }
 
-.tutorial:hover .tutorialImg::before {
+.topCont:hover .tutorialImg::before {
     opacity: 80%;
 }
 
@@ -86,7 +87,7 @@ color: #537EEF;
     transition: transform 0.3s ease; /* Apply smooth transition */
 }
 
-.tutorial:hover .readmorebtn {
+.topCont:hover .readmorebtn {
     transform: scale(1); /* Grow to full size on hover */
 }
 

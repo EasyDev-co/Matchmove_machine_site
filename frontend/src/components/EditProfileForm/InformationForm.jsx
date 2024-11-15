@@ -31,9 +31,6 @@ const InformationForm = ({ profile, status, picture }) => {
     portfolio: '',
   });
 
-  console.log(formData);
-  
-
   const handleChange = (e) => {
     const { name, value } = e.target;
   
@@ -103,7 +100,7 @@ const InformationForm = ({ profile, status, picture }) => {
   };
 
   const goBack = () => {
-    navigate('/profile/1');
+    navigate('/profile/');
   };
 
   return (

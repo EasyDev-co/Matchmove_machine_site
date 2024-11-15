@@ -68,64 +68,66 @@ const SocialsForm = ({ profile, status }) => {
     };
 
     const goBack = () => {
-        navigate("/profile/1")
+        navigate("/profile/")
     };
 
     return (
       <div className={`${styles.formcontainer} `}>
-        <hr className={styles.hr} />
-        <form onSubmit={handleSubmit}>
-          {status === "failed" && (
-            <div className="error-message">
-              {warningsvg} Something went wrong
-            </div>
-          )}
-          <div className={`form-group ${styles.forms} ${styles.socialtoggle}`}>
-            {[
-              "facebook",
-              "twitter",
-              "whatsapp",
-              "telegram",
-              "messenger",
-              "linkedin",
-              "reddit",
-              "instagram",
-              "youtube",
-              "vimeo",
-            ].map((social) => (
+      <hr className={styles.hr} />
+      <form onSubmit={handleSubmit}>
+        {status === "failed" && (
+          <div className="error-message">
+            {warningsvg} Something went wrong
+          </div>
+        )}
+        <div className={`form-group ${styles.forms} ${styles.socialtoggle}`}>
+          {[
+            "facebook",
+            "telegram",
+            "instagram",
+            "whatsapp",
+            "linkedin",
+            "messenger",
+            "youtube",
+            "twitter",
+            "reddit",
+            "vimeo",
+          ].map((social) => {
+            const websiteExample = `https://www.${social}.com/yourprofile`;
+            return (
               <label key={social} htmlFor={social}>
                 <p>{social.charAt(0).toUpperCase() + social.slice(1)}</p>
                 <Input
                   name={social}
-                  placeholder={`${
-                    social.charAt(0).toUpperCase() + social.slice(1)
-                  }`}
+                  placeholder={`${websiteExample}`}
                   value={formData[social]}
                   onChange={handleChange}
                   errors={errors}
                 />
               </label>
-            ))}
-          </div>
-          <hr className={styles.hr} />
-          <div className={styles.btncont}>
-            <Button
-              variant="outline-red"
-              label="Close"
-              labelPosition="left"
-              iconType="crossbtn"
-              onClick={goBack}
-            />
-            <Button
-              variant={status === "loading" ? "grey" : "blue"}
-              label={status === "loading" ? "Saving..." : "Save changes"}
-              labelPosition="left"
-              iconType="checkMark"
-              type="submit"
-            />
-          </div>
-        </form>
-      </div>
+            );
+          })}
+        </div>
+        <hr className={styles.hr} />
+        <div className={styles.btncont}>
+          <Button
+            variant="outline-red"
+            label="Close"
+            labelPosition="left"
+            iconType="crossbtn"
+            onClick={goBack}
+          />
+          <Button
+            variant={status === "loading" ? "grey" : "blue"}
+            label={status === "loading" ? "Saving..." : "Save changes"}
+            labelPosition="left"
+            iconType="checkMark"
+            type="submit"
+          />
+        </div>
+      </form>
+    </div>
+    
     );
 };
 

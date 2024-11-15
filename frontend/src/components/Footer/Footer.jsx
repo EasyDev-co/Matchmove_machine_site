@@ -1,15 +1,22 @@
 
 import styles from "./Footer.module.css"
 import logo from "../../assets/images/logo.svg"
+import { useNavigate } from "react-router-dom";
 import { visaIcon, masercardIcon, paypalIcon, americanExpressIcon, googlePayIcon, applePay } from "../../assets/svg/paymenticons";
 import { facebook, vimeo, instagram, linkedin, youtube } from "../../assets/svg/footerbtnhs";
 
 const Footer = () => {
+
+  const navigate = useNavigate()
+
+  const handleLogoPath = ()=>{
+    navigate("/")
+  }
     return (
       <footer className={styles.container}>
         <div className={styles.content}>
           <div className={styles.logoCont}>
-            <img src={logo} alt="footer-logo" />
+            <img src={logo} alt="footer-logo" onClick={handleLogoPath} />
           </div>
 
           <div className={styles.menu}>
@@ -19,7 +26,6 @@ const Footer = () => {
                 <li><a href="/library">Full library</a></li>
                 <li><a href="/how-it-works">How it works</a></li>
                 <li><a href="/affiliate-program">Affiliate program</a></li>
-                <li>Magnetic grid</li>
                 <li><a href="faq">FAQ</a></li>
               </ul>
             </div>

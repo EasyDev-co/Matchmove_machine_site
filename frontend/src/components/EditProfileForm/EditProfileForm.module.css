@@ -7,17 +7,6 @@
     background-color: white;
 }
 
-.scrollableToggle {
-    overflow-x: auto; 
-    white-space: nowrap; 
-    -webkit-overflow-scrolling: touch; 
-    margin-bottom: 10px; 
-}
-
-.scrollableToggle::-webkit-scrollbar {
-    display: none; /* Hide scrollbar for WebKit browsers */
-}
-
 .toggle {
     display: flex;
     flex-direction: row;
@@ -58,7 +47,8 @@
     width: calc(50% - 20px);
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 0px;
+    font-size: 15px;
 }
 
 .hr {
@@ -66,27 +56,9 @@
 }
 
 .socialtoggle {
-    max-height: 37vh;
-    overflow: auto;
+    height: auto;
 }
 
-
-.socialtoggle::-webkit-scrollbar {
-    width: 5px; 
-  }
-  
-  .socialtoggle::-webkit-scrollbar-track {
-    background: #f1f1f1; 
-  }
-  
-  .socialtoggle::-webkit-scrollbar-thumb {
-    background: #2F57BF; 
-    border-radius: 3px; 
-  }
-  
-  .socialtoggle::-webkit-scrollbar-thumb:hover {
-    background: #555; 
-  }
 
 @media screen and (max-width: 1400px) {
     .fieldbtn {
@@ -167,6 +139,14 @@
     flex-direction: row;
     flex-wrap: wrap;
     gap: 20px;
+    row-gap: 10px;
     width: 100%;
 }
 
+.socialtoggle input {
+    height: 42px;
+}
+
+.socialtoggle input::placeholder {
+    font-size: 13px;
+}

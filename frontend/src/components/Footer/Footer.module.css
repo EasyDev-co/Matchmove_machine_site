@@ -44,6 +44,10 @@
     box-sizing: border-box;
 }
 
+.logoCont {
+    cursor: pointer;
+}
+
 .menu,
 .payments,
 .links,
