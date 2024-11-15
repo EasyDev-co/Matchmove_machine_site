@@ -5,7 +5,6 @@ import Select from "../Forms/Select";
 import { scrollArrowsvg } from "../../assets/svg/svgimages";
 import useSmoothScroll from "../../hooks/useSmoothScroll";
 import { useNavigate } from "react-router-dom";
-import LoadingScreen from "../LoadingScreen/LoadingScreen";
 
 import { useSelector, useDispatch } from "react-redux";
 import { fetchCameras } from "../../store/slices/optionsSlice";
@@ -14,7 +13,7 @@ import { fetchLenses } from "../../store/slices/optionsSlice";
 
 const MainHeader = () => {
   const dispatch = useDispatch();
-  const { cameras, lenses, formats, status } = useSelector(state => state.options);
+  const { cameras, lenses, formats} = useSelector(state => state.options);
 
   const [formData, setFormData] = useState({
     camera: "",
@@ -55,9 +54,6 @@ const MainHeader = () => {
     dispatch(fetchLenses());
   }, [dispatch]);
 
-  if(status==="loading"){
-    return(<LoadingScreen/>)
-  }
 
   return (
     <section className={styles.main}>

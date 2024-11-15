@@ -37,7 +37,7 @@ const AboutMeForm = ({about, status}) => {
     };
 
     const goBack = () => {
-        navigate("/profile/1")
+        navigate("/profile/")
     };
 
     return (

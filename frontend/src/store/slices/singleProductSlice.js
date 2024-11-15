@@ -21,7 +21,7 @@ export const fetchSingleProduct = createAsyncThunk(
   "singleProduct/fetchSingleProduct",
   async (id, { rejectWithValue }) => {
     try {
-      const response = await fetchWithAuth(`${BASE_URL}/products/v1/products/${id}/`, {
+      const response = await fetch(`${BASE_URL}/products/v1/products/${id}/`, {
         method: "GET",
       });
 

@@ -39,20 +39,34 @@ export const warningsvg = (
 );
 
 export const closesvg = (
-<svg width="26" height="26" viewBox="0 0 26 26" xmlns="http://www.w3.org/2000/svg">
-  <path
-    d="M13 0C5.811 0 0 5.811 0 13C0 20.189 5.811 26 13 26C20.189 26 26 20.189 26 13C26 5.811 20.189 0 13 0Z"
-    stroke="white"
-    strokeWidth="2"
-    fill="none"
-  />
-  <path
-    d="M17.667 6.5L13 11.167L8.333 6.5L6.5 8.333L11.167 13L6.5 17.667L8.333 19.5L13 14.833L17.667 19.5L19.5 17.667L14.833 13L19.5 8.333L17.667 6.5Z"
-    stroke="white"
-    strokeWidth="2"
-    fill="none"
-  />
+(<svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <g clipPath="url(#clip0_751_59708)">
+    <mask
+      id="mask0_751_59708"
+      style={{ maskType: "alpha" }} // Corrected style prop
+      maskUnits="userSpaceOnUse"
+      x="0"
+      y="0"
+      width="26"
+      height="26"
+    >
+      <path
+        d="M13 0C5.811 0 0 5.811 0 13C0 20.189 5.811 26 13 26C20.189 26 26 20.189 26 13C26 5.811 20.189 0 13 0ZM13 23.4C7.267 23.4 2.6 18.733 2.6 13C2.6 7.267 7.267 2.6 13 2.6C18.733 2.6 23.4 7.267 23.4 13C23.4 18.733 18.733 23.4 13 23.4ZM17.667 6.5L13 11.167L8.333 6.5L6.5 8.333L11.167 13L6.5 17.667L8.333 19.5L13 14.833L17.667 19.5L19.5 17.667L14.833 13L19.5 8.333L17.667 6.5Z"
+        fill="#BF3636"
+      />
+    </mask>
+    <g mask="url(#mask0_751_59708)">
+      <rect x="-3" y="-5" width="32" height="36" fill="white" />
+    </g>
+  </g>
+  <defs>
+    <clipPath id="clip0_751_59708">
+      <rect width="26" height="26" fill="white" />
+    </clipPath>
+  </defs>
 </svg>
+
+  )
 
 
 

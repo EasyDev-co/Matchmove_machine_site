@@ -13,8 +13,7 @@ const ResetComplete= () => {
     <div className="form-group">
         <div className="reseted">{bigCheckMark}</div>
       <h3 className="h3-medium">
-        We’ve sent a password reset link to your email address. Please check
-        your inbox and follow the instructions
+      Your password has been successfully changed.
       </h3>
       <Button variant="blue" iconType="crossbtn" label="Close" onClick={handleClose}/>
     </div>

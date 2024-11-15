@@ -291,9 +291,24 @@ li {
 }
 
 
-.button-outline-grey:hover {}
+.button-outline-grey:hover {
+  border-color: #537EEF;
+  color: #537EEF;
+}
 
-.button-outline-grey:active {}
+.button-outline-grey:active {
+  border-color: #083098;
+  color: #083098;
+}
+
+.button-grey:hover {
+  background-color: #537EEF;
+}
+
+.button-grey:active {
+  background-color: #083098;
+}
+
 
 
 .authorization-popup {
@@ -307,7 +322,6 @@ li {
   align-items: center;
   z-index: 1000;
   overflow-y: auto;
-  animation: allowScroll 0.5s ease-out forwards;
 }
 
 .closebtn{
@@ -337,7 +351,7 @@ li {
 
 .popup-content {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
   position: relative;
   min-height: 100%;
   max-height: calc(100vh - 40px);
@@ -631,6 +645,11 @@ select.error {
 
 .white-text {
   color: #FFFFFF;
+}
+
+.pass-message{
+  color: #adadad;
+  font-weight: 300;
 }
 
 @media (max-width: 768px) {

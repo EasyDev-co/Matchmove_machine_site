@@ -45,8 +45,6 @@ const isExpiringSoon = (token) => {
   const expirationTime = getTokenExpiration(token);
   const currentTime = Date.now();
   const timeLeft = expirationTime - currentTime;
-
-  console.log(timeLeft);
   
   return timeLeft <= 0 || timeLeft < 1 * 60 * 1000; // Expired or expiring within 1 minute
 };

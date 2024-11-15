@@ -14,6 +14,12 @@ const SharePage = ({ profile, profileId }) => {
     }
   };
 
+  const handleSocialClick = (event, link) => {
+    if (!link) {
+      event.preventDefault();
+    }
+  };
+
   return (
     <section className={` width ${styles.bottom}`}>
       <h2 className="h2-medium">Share this page</h2>
@@ -41,6 +47,7 @@ const SharePage = ({ profile, profileId }) => {
                   href={link}
                   target="_blank"
                   rel="noopener noreferrer"
+                  onClick={(e) => handleSocialClick(e, link)} 
                 >
                   <button className={styles.socialbtn}>
                     {item.icon} <p>{item.name}</p>

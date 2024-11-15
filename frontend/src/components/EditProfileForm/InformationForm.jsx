@@ -33,11 +33,20 @@ const InformationForm = ({ profile, status, picture }) => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
-
+  
+    // Check if the field is website or portfolio and add "https://" if missing
+    if ((name === "website" || name === "portfolio") && value && !/^https?:\/\//.test(value)) {
+      setFormData({
+        ...formData,
+        [name]: `https://${value}`,
+      });
+    } else {
+      setFormData({
+        ...formData,
+        [name]: value,
+      });
+    }
+  
     setErrors({
       ...errors,
       [name]: '',
@@ -91,7 +100,7 @@ const InformationForm = ({ profile, status, picture }) => {
   };
 
   const goBack = () => {
-    navigate('/profile/1');
+    navigate('/profile/');
   };
 
   return (

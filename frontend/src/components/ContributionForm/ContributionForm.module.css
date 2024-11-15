@@ -72,6 +72,12 @@ select {
     padding: 20px;
 }
 
+.atachmentActive {
+    background: linear-gradient(110.35deg, rgba(80, 121, 255, 0.7) 0%, rgba(0, 8, 30, 0.9) 100%), url("../../assets/images/asset-bg.png") no-repeat;
+    backdrop-filter: blur(5px);
+    background-size: cover;
+}
+
 .attachCont {
     display: flex;
     flex-direction: column;
@@ -143,6 +149,34 @@ select {
     font-size: 18px;
     line-height: 31px;
 }
+
+.fileAttached {
+    margin-top: 10px;
+    font-size: 14px;
+    color: white;
+  }
+  
+  .fileUploading {
+    margin-top: 10px;
+    font-size: 14px;
+    color: white; /* You can choose a different color for uploading */
+  }
+  
+  .loader {
+    margin-top: 5px;
+    width: 24px;
+    height: 24px;
+    border: 4px solid transparent;
+    border-top: 4px solid  #537EEF;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    place-self: center;
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
 
 @media (max-width: 700px) {
 

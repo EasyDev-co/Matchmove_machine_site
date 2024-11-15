@@ -55,6 +55,26 @@
     gap: 25px;
 }
 
+.linkslist a{
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+    transition: color 0.2s ease-in-out;
+}
+
+.linkslist img{
+    opacity: 0;
+    transition: opacity 0.4s ease-in-out;
+}
+
+.linkslist a:hover img{
+    opacity: 1;
+}
+
+.linkslist a:hover {
+    color: #2F57BF;
+}
+
 .mobilebtn {
     display: none;
 }
@@ -112,10 +132,12 @@
         right: 0;
         left: 0;
         top: 0px;
+        height: 100vh;
         z-index: 20;
         flex-direction: column;
+        justify-content: center;
         align-items: center;
-        padding: 90px 0;
+        padding:0;
         background: linear-gradient(110.35deg, rgba(40, 40, 40, 0.85) 0%, rgba(0, 8, 30, 0.85) 100%), url("../../assets/images/formbackground.png"), rgba(0, 0, 0, 0.95);
     }
 

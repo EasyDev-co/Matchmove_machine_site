@@ -1,6 +1,7 @@
 import styles from "./ProductDescription.module.css"
+import { useState } from "react";
 import Button from "../Button"
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { companysvg } from "../../assets/svg/svgimages";
 import pfp  from "../../assets/images/iconplaceholder.png";
 
@@ -11,18 +12,29 @@ import { downloadProductFile } from "../../store/slices/singleProductSlice";
 import useSmoothScroll from "../../hooks/useSmoothScroll";
 
 const ProductDescription =({singleProduct, handleButtonClick})=>{
-
+  const navigate =useNavigate()
   const dispatch = useDispatch()
+  const {isAuthenticated} = useSelector(state=> state.user)
   const { postCartItemStatus} = useSelector(state => state.cart)
 
   const scrollToSection = useSmoothScroll();
 
   const addToCart =()=>{
+
+    if(isAuthenticated){
     dispatch(postCartItem(singleProduct.id))
+  } else {
+    navigate("/authorization")
+  }
   }
 
   const downloadAsset = ()=>{
-    dispatch(downloadProductFile(singleProduct.id))
+    
+    if(isAuthenticated){
+      dispatch(downloadProductFile(singleProduct.id))
+    } else {
+      navigate("/authorization")
+    }
   }
 
   const handleSeeAllOptionsClick = () => {
