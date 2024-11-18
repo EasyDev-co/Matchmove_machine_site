@@ -9,6 +9,7 @@ from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from rest_framework.pagination import PageNumberPagination
 from apps.utils.pagination import StandardPagination
+from apps.utils.permissions import IsAuthorOrReadOnly
 
 from apps.products.models import Camera, Format, Lens, Product, File
 from apps.products.tasks import (
@@ -70,8 +71,8 @@ class ProductCreateView(generics.CreateAPIView):
         return Response(response_data, status=status.HTTP_201_CREATED)
 
 
-class ProductDetailView(generics.RetrieveAPIView):
-    permission_classes = [AllowAny]
+class ProductDetailView(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = [IsAuthorOrReadOnly]
     queryset = Product.objects.all()
     serializer_class = ProductDetailSerializer
 
