@@ -6,7 +6,7 @@ import { fetchWithAuth } from '../utils/authUtils';
 const initialState = {
   user: null,
   email: null,
-  isAuthenticated: !!Cookies.get('access_token'),
+  isAuthenticated: false,
   accessToken: Cookies.get('access_token') || null,
   refreshToken: Cookies.get('refresh_token') || null,
   status: {

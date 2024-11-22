@@ -36,10 +36,11 @@ const ProfileTop = ({ profile}) => {
       .unwrap()
       .then(() => {
         dispatch(resetProfile())
-        navigate("/"); // Navigate to the main screen after successful logout
+        navigate("/");
+        window.location.reload();
       })
       .catch((error) => {
-        console.log("Logout failed", error); // Handle any errors
+        console.log("Logout failed", error); 
       });
   };
 

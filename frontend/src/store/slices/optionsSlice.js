@@ -13,15 +13,10 @@ const initialState = {
 export const fetchCameras = createAsyncThunk(
   'options/fetchCameras',
   async (_, { rejectWithValue }) => {
-    const accessToken = Cookies.get('access_token');
 
     try {
       const response = await fetch(`${BASE_URL}/products/v1/cameras/`, {
         method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${accessToken}`, 
-        }
       });
 
       if (!response.ok) {
@@ -41,15 +36,10 @@ export const fetchCameras = createAsyncThunk(
 export const fetchFormats = createAsyncThunk(
   'options/fetchFormats',
   async (_, { rejectWithValue }) => {
-    const accessToken = Cookies.get('access_token');
 
     try {
       const response = await fetch(`${BASE_URL}/products/v1/formats/`, {
         method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${accessToken}`, 
-        }
       });
 
       if (!response.ok) {
@@ -69,15 +59,10 @@ export const fetchFormats = createAsyncThunk(
 export const fetchLenses = createAsyncThunk(
   'options/fetchLenses',
   async (_, { rejectWithValue }) => {
-    const accessToken = Cookies.get('access_token');
 
     try {
       const response = await fetch(`${BASE_URL}/products/v1/lenses/`, {
         method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${accessToken}`,
-        }
       });
 
       if (!response.ok) {
