@@ -1,16 +1,21 @@
 
 import styles from "./Footer.module.css"
 import logo from "../../assets/images/logo.svg"
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { visaIcon, masercardIcon, paypalIcon, americanExpressIcon, googlePayIcon, applePay } from "../../assets/svg/paymenticons";
 import { facebook, vimeo, instagram, linkedin, youtube } from "../../assets/svg/footerbtnhs";
 
 const Footer = () => {
 
   const navigate = useNavigate()
+  const location = useLocation();
 
   const handleLogoPath = ()=>{
-    navigate("/")
+    if (location.pathname !== '/') {
+      navigate('/');
+    } else {
+      window.scrollTo({ top: 0, behavior: 'smooth' }); // Scroll to the top
+    }
   }
     return (
       <footer className={styles.container}>
