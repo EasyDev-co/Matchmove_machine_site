@@ -105,7 +105,7 @@ class Product(UUIDMixin, TimeStampedMixin):
         """
         Метод для генерации QR-кода для продукта.
         """
-        url = f"https://grids.matchmovemachine.com/product/{self.id}"  # Генерация URL с ID продукта
+        url = f"http://89.58.57.91:8083/product/{self.id}"  # Генерация URL с ID продукта
         qr_img = qrcode.make(url)  # Генерация QR-кода
         buffer = BytesIO()
         qr_img.save(buffer, format="PNG")
