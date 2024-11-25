@@ -209,6 +209,29 @@ class ApprovedProductsAPIView(ListAPIView):
     serializer_class = ProductSerializer
     pagination_class = StandardPagination
     permission_classes = [AllowAny]
+    filter_backends = [DjangoFilterBackend, filters.SearchFilter]
+    search_fields = [
+        "author__username",
+        "category",
+        "file_format__format_type",
+        "camera__model_name",
+        "lens__brand",
+        "lens__model_name",
+    ]
+    filterset_fields = {
+        "camera": ["exact"],
+        "lens": ["exact"],
+        "file_format": ["exact"],
+        "access_type": ["exact"],
+        "price": ["gte", "lte"],
+    }
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        access_type = self.request.query_params.get("access_type")
+        if access_type:
+            queryset = queryset.filter(access_type=access_type)
+        return queryset
 
 
 class UserProductsAPIView(ListAPIView):

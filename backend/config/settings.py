@@ -186,7 +186,14 @@ SIMPLE_JWT = {
 }
 
 CORS_ALLOWED_ORIGINS = [
-    'http://89.58.57.91:8083',  
+    'http://89.58.57.91:8083',
+    'http://0.0.0.0:8083',
+    'http://0.0.0.0:3000'
+]
+
+CSRF_TRUSTED_ORIGINS = [
+    "http://0.0.0.0:8083",
+    'http://0.0.0.0:3000'
 ]
 
 CORS_ALLOW_METHODS = [
