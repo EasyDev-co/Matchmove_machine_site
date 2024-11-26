@@ -81,17 +81,29 @@ export const fetchWithAuth = async (url, options = {}) => {
 
     // Check if the response is 401 and try to refresh the token
     if (response.status === 401) {
-      // Refresh the access token
-      accessToken = await refreshAuthToken(refreshToken);
-
-      // Retry the fetch request with the new access token
-      response = await fetch(url, {
-        ...options,
-        headers: {
-          ...options.headers,
-          'Authorization': `Bearer ${accessToken}`,
-        },
-      });
+      try {
+        // Attempt to refresh the access token
+        accessToken = await refreshAuthToken(refreshToken);
+    
+        // Retry the fetch request with the new access token
+        response = await fetch(url, {
+          ...options,
+          headers: {
+            ...options.headers,
+            'Authorization': `Bearer ${accessToken}`,
+          },
+        });
+    
+        // Check if the retry request also fails with 401
+        if (response.status === 401) {
+          throw new Error('Retry after token refresh failed.');
+        }
+      } catch (error) {
+        // Clear cookies and notify the caller of the failure
+        Cookies.remove('access_token');
+        Cookies.remove('refresh_token');
+        throw new Error('Failed to refetch after token refresh. Please log in again.');
+      }
     }
 
     if (!response.ok) {
