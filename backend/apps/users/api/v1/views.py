@@ -22,6 +22,8 @@ from apps.users.tasks import send_confirm_code
 from apps.exeptions.api_exeptions import InvalidCode
 from apps.users.models.code import CodePurpose, ConfirmCode
 
+from loguru import logger
+
 User = get_user_model()
 
 
@@ -34,14 +36,16 @@ class UserDetailViewSet(viewsets.ReadOnlyModelViewSet):
 
     def retrieve(self, request, *args, **kwargs):
         user_id = kwargs.get("pk")
+        logger.info(f"userId: {user_id}")
         try:
             user = User.objects.get(pk=user_id)
+            logger.info(f"user: {user}")
         except User.DoesNotExist:
             return Response(
                 {"detail": "User not found"}, 
                 status=status.HTTP_404_NOT_FOUND
             )
-
+        logger.info(f"user: {user.id} {user.username}")
         serializer = self.get_serializer(user)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
