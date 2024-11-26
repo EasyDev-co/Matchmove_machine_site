@@ -91,14 +91,8 @@ class UserAPIView(APIView):
     def get(self, request, *args, **kwargs):
         """Получение детальной информации о пользователе."""
         instance = request.user
-        logger.info(f"User: {instance}")
-        logger.info(f"Instance_id: {instance.pk}")
-        logger.info(f"Username: {instance.username}")
         user_data = User.objects.get(pk=instance.pk)
-        logger.info(f"User: {user_data}")
         user_serializer = UserDetailSerializer(user_data)
-        user_data_ser = user_serializer.data
-        logger.info(f"User_data_ser: {user_data_ser}")
         return Response(user_serializer.data)
 
     def patch(self, request, *args, **kwargs):
