@@ -106,6 +106,23 @@ const Faq = () => {
           </div>
         </div>
         <div className={styles.body}>
+
+        <section id="howToUse" className={styles.spoilerSection}>
+            <div className={`${styles.spoilerBanner} ${styles.howtouse}`}>
+              <h2 className="h2-bold">How to use the website</h2>
+            </div>
+            <div className={styles.spoilerCont}>
+              {questions.howToUse.map((item, i) => (
+                <div key={i}>
+                  <FaqSpoiler spoiler={item} />
+                  {i !== questions.howToUse.length - 1 && (
+                    <div className={styles.underline} />
+                  )}
+                </div>
+              ))}
+            </div>
+          </section>
+
           <section id="tech-specs" className={styles.spoilerSection}>
             <div className={`${styles.spoilerBanner} ${styles.techspecs}`}>
               <h2 className="h2-bold">Tech specs</h2>
@@ -115,6 +132,22 @@ const Faq = () => {
                 <div key={i}>
                   <FaqSpoiler spoiler={item} />
                   {i !== questions.techSpecs.length - 1 && (
+                    <div className={styles.underline} />
+                  )}
+                </div>
+              ))}
+            </div>
+          </section>
+
+          <section id="personalAccount" className={styles.spoilerSection}>
+            <div className={`${styles.spoilerBanner} ${styles.personalaccount}`}>
+              <h2 className="h2-bold">Personal account</h2>
+            </div>
+            <div className={styles.spoilerCont}>
+              {questions.personalAccount.map((item, i) => (
+                <div key={i}>
+                  <FaqSpoiler spoiler={item} />
+                  {i !== questions.personalAccount.length - 1 && (
                     <div className={styles.underline} />
                   )}
                 </div>
@@ -147,38 +180,6 @@ const Faq = () => {
                 <div key={i}>
                   <FaqSpoiler spoiler={item} />
                   {i !== questions.payment.length - 1 && (
-                    <div className={styles.underline} />
-                  )}
-                </div>
-              ))}
-            </div>
-          </section>
-
-          <section id="howToUse" className={styles.spoilerSection}>
-            <div className={`${styles.spoilerBanner} ${styles.howtouse}`}>
-              <h2 className="h2-bold">How to use the website</h2>
-            </div>
-            <div className={styles.spoilerCont}>
-              {questions.howToUse.map((item, i) => (
-                <div key={i}>
-                  <FaqSpoiler spoiler={item} />
-                  {i !== questions.howToUse.length - 1 && (
-                    <div className={styles.underline} />
-                  )}
-                </div>
-              ))}
-            </div>
-          </section>
-
-          <section id="personalAccount" className={styles.spoilerSection}>
-            <div className={`${styles.spoilerBanner} ${styles.personalaccount}`}>
-              <h2 className="h2-bold">Personal account</h2>
-            </div>
-            <div className={styles.spoilerCont}>
-              {questions.personalAccount.map((item, i) => (
-                <div key={i}>
-                  <FaqSpoiler spoiler={item} />
-                  {i !== questions.personalAccount.length - 1 && (
                     <div className={styles.underline} />
                   )}
                 </div>
