@@ -87,7 +87,6 @@ const InformationForm = ({ profile, status, picture }) => {
         website: formData.website,
         portfolio: formData.portfolio,
         occupation: formData.occupation,
-        profile_picture:picture
       };
 
       try {

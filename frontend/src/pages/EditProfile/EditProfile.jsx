@@ -14,6 +14,7 @@ const EditProfile = () => {
   const { profile, status } = useSelector((state) => state.profile);
   const dispatch = useDispatch();
   const [picture, setPicture] = useState(null);
+  const BACKEND_PHOTO_URL = 'http://89.58.57.91:8084';
 
   useEffect(() => {
     dispatch(fetchUserProfile());
@@ -44,20 +45,28 @@ const EditProfile = () => {
           <div className={styles.body}>
             <div className={styles.pictureField}>
               <div className={styles.pictureCont}>
-                <img src={picture || profile.profile_picture || iconimg} alt="Profile"/>
+                <img
+                    src={
+                        picture ||
+                        (profile.profile_picture
+                            ? `${BACKEND_PHOTO_URL}${profile.profile_picture}`
+                            : iconimg)
+                    }
+                    alt="Profile"
+                />
                 <button className={styles.editpicture} onClick={handlePictureChange}>
                   {camerasvg}
                 </button>
                 <input
-                  id="fileInput"
-                  type="file"
-                  accept="image/*"
-                  style={{ display: "none" }}
-                  onChange={handleFileChange}
+                    id="fileInput"
+                    type="file"
+                    accept="image/*"
+                    style={{display: "none"}}
+                    onChange={handleFileChange}
                 />
               </div>
             </div>
-            <EditProfileForm profile={profile} picture={picture} status={status} />
+            <EditProfileForm profile={profile} picture={picture} status={status}/>
           </div>
         </div>
       </ModalWrap>
