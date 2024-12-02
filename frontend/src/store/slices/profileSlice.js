@@ -63,6 +63,30 @@ export const updateUserProfile = createAsyncThunk(
   }
 );
 
+export const updateProfilePicture = createAsyncThunk(
+  'profile/updateProfilePicture',
+  async (file, { rejectWithValue }) => {
+    const formData = new FormData();
+    formData.append('profile_picture', file);
+
+    try {
+      const response = await fetchWithAuth(`${BASE_URL}/users/v1/user/`, {
+        method: 'PATCH',
+        body: formData,
+      });
+
+      if (!response.ok) {
+        const errorDetails = await response.json();
+        return rejectWithValue(errorDetails);
+      }
+
+      return response.json();
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
 export const changePassword = createAsyncThunk(
   'profile/changePassword',
   async (passwordData, { rejectWithValue }) => {

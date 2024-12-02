@@ -5,17 +5,16 @@ import EditProfileForm from "../../components/EditProfileForm/EditProfileForm"
 import iconimg from "../../assets/images/iconplaceholder.png";
 import { camerasvg } from "../../assets/svg/svgimages"
 
-import { fetchUserProfile } from "../../store/slices/profileSlice"
+import {fetchUserProfile, updateProfilePicture} from "../../store/slices/profileSlice"
 
 import { useSelector, useDispatch } from "react-redux"
 import { useEffect, useState } from "react"
 
 const EditProfile = () => {
-  const { profile, status } = useSelector(state => state.profile);
+  const { profile, status } = useSelector((state) => state.profile);
   const dispatch = useDispatch();
   const [picture, setPicture] = useState(null);
 
-  
   useEffect(() => {
     dispatch(fetchUserProfile());
   }, [dispatch]);
@@ -25,14 +24,16 @@ const EditProfile = () => {
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        setPicture(reader.result); // Save the base64 encoded string
+        setPicture(reader.result);
       };
-      reader.readAsDataURL(file); // Convert the file to base64
+      reader.readAsDataURL(file);
+
+      dispatch(updateProfilePicture(file));
     }
   };
 
   const handlePictureChange = () => {
-    document.getElementById('fileInput').click();
+    document.getElementById("fileInput").click();
   };
 
   if (profile) {
@@ -43,7 +44,7 @@ const EditProfile = () => {
           <div className={styles.body}>
             <div className={styles.pictureField}>
               <div className={styles.pictureCont}>
-              <img src={picture || profile.profile_picture || iconimg} alt="Profile" />
+                <img src={picture || profile.profile_picture || iconimg} alt="Profile"/>
                 <button className={styles.editpicture} onClick={handlePictureChange}>
                   {camerasvg}
                 </button>
@@ -51,7 +52,7 @@ const EditProfile = () => {
                   id="fileInput"
                   type="file"
                   accept="image/*"
-                  style={{ display: 'none' }}
+                  style={{ display: "none" }}
                   onChange={handleFileChange}
                 />
               </div>
@@ -62,7 +63,7 @@ const EditProfile = () => {
       </ModalWrap>
     );
   }
-
+  return null;
 };
 
 export default EditProfile;
