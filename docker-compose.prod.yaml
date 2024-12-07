@@ -13,7 +13,7 @@ x-function: &base_web
 services:
 
   nginx:
-    build: ./nginx/local
+    build: ./nginx/prod
     container_name: ${PROJECT_SLUG}_nginx
     volumes:
       - static_dir:/opt/backend/static/
