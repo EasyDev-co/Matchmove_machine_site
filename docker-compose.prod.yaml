@@ -89,8 +89,6 @@ services:
   redis:
     image: redis:latest
     container_name: ${PROJECT_SLUG}_redis
-    environment:
-      - REDIS_PASSWORD=${REDIS_PASSWORD}
     ports:
       - "${REDIS_PORT}:${REDIS_PORT}"
     volumes:
