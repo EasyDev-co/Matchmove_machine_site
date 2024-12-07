@@ -119,7 +119,7 @@ class TransactionService:
             )
             customer_id = customer["id"]
             address_id = None
-
+        logger.info(f"customer_id: {customer_id}, address_id: {address_id}")
         items = []
 
         # Обрабатываем каждый элемент заказа
