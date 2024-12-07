@@ -138,7 +138,7 @@ REDIS_PORT = os.environ.get('REDIS_PORT')
 REDIS_DB_CELERY = os.environ.get('REDIS_DB_CELERY')
 REDIS_PASSWORD = os.environ.get('REDIS_PASSWORD')
 
-CELERY_BROKER_URL = f'redis://:{REDIS_PASSWORD}@{REDIS_HOST}:{REDIS_PORT}/{REDIS_DB_CELERY}'
+CELERY_BROKER_URL = f'redis://{REDIS_HOST}:{REDIS_PORT}/{REDIS_DB_CELERY}'
 CELERY_TIMEZONE = "Europe/Moscow"
 CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
 
