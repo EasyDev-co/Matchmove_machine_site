@@ -56,7 +56,7 @@ const Filters = ({
             <div className={`${styles.lensMenu} ${openBrand === model_name ? styles.show : ""}`}>
               {lenses.map(({ brand, model_name: lensModelName, id: lensId }) => {
                 const item = `${brand} ${lensModelName}`;
-                return (
+                return  (
                   <div key={lensId} className={styles.lensItem}>
                     <label className={styles.checkboxLabel}>
                       <div>

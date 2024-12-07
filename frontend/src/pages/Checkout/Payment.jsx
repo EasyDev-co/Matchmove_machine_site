@@ -31,6 +31,8 @@ const Payment = ({ orderId }) => {
 
   // Ensure errors are initialized as an empty object
   const [errors, setErrors] = useState({});
+  const [isChecked, setIsChecked] = useState(false);
+  const [labelClass, setLabelClass] = useState(styles.checkboxLabel);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -57,6 +59,11 @@ const Payment = ({ orderId }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    if (!isChecked) {
+      setLabelClass(styles.notActive); // Меняем класс, если чекбокс не отмечен
+      return;
+    }
+
     const newErrors = validateFields();
 
     if (Object.keys(newErrors).length > 0) {
@@ -75,6 +82,14 @@ const Payment = ({ orderId }) => {
     dispatch(postPayment(dataToSubmit));
     console.log(dataToSubmit);
   };
+
+  const handleCheckboxChange = (e) => {
+    setIsChecked(e.target.checked);
+    if (e.target.checked) {
+      setLabelClass(styles.checkboxLabel); // Возвращаем стандартный класс при активации чекбокса
+    }
+  };
+  
 
   return (
     <div className={styles.formcontainer}>
@@ -98,11 +113,29 @@ const Payment = ({ orderId }) => {
               errors={errors[name] || ""}
             />
           ))}
+          <div>
+            <p className={styles.agreement_text}>Terms and Conditions Agreement</p>
+            <p className={styles.agreement_text}>By proceeding with your purchase, you acknowledge that you have read, understood, and agree to the following:</p>
+            <p className={styles.agreement_text}>Our Terms & Conditions, which govern your use of this website and your purchase.</p>
+            <label className={labelClass}>
+              <input
+                type="checkbox"
+                checked={isChecked}
+                // onChange={(e) => setIsChecked(e.target.checked)}
+                onChange={handleCheckboxChange}
+                className={styles.checkboxInput}
+                style={{height: '20px', width: '20px'}}
+              />
+              I have read and agree to the <a href="/Terms-of-Use.pdf" target="_blank">Terms of use</a>
+            </label>
+          </div>
+            
           <Button
             variant={status === "loading" ? "grey" : "blue"}
             label={status === "loading" ? "Processing..." : "Pay"}
             iconType="arrowRight"
             type="submit"
+            // disabled={!isChecked}
           />
         </div>
       </form>

@@ -36,7 +36,7 @@ if(status.fetchOrderStatus === "succeeded"&&order.order.items){
         <div className={styles.logocont}>
           <img src={logo} alt="logo" />
         </div>
-        {profile.email&&<div className={styles.emailcont}>
+        {profile?.email &&<div className={styles.emailcont}>
           <p className={styles.email}>Email:</p>
           <p>{profile.email}</p>
         </div>}

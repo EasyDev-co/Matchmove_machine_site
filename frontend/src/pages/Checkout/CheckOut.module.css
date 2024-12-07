@@ -116,11 +116,35 @@ p.email {
     background: #2F57BF;
 
 }
-
+.checkboxLabel {
+    display: flex;
+    align-items: center;
+    gap: 8px; /* Расстояние между чекбоксом и текстом */
+    font-size: 14px; /* Размер текста */
+    cursor: pointer;
+}
+.notActive {
+    color: red;
+    display: flex;
+    align-items: center;
+    gap: 8px; /* Расстояние между чекбоксом и текстом */
+    font-size: 14px; /* Размер текста */
+    cursor: pointer;
+}
+.checkboxInput {
+    width: 5px; /* Размер чекбокса */
+    height: 1px;
+    cursor: pointer; /* Указатель меняется на руку при наведении */
+  }
 .advice {
     line-height: 26px;
     text-align: center;
     color: #505050;
+}
+.agreement_text {
+    color: #505050;
+    line-height: 26px;
+    margin-bottom: 10px
 }
 
 .line {
