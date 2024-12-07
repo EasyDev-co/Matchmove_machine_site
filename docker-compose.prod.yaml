@@ -57,7 +57,7 @@ services:
       - ./frontend:/usr/src/app
       - /usr/src/app/node_modules
     networks:
-      nginx_network:
+      - nginx_network
 
   db:
     image: postgres:latest
