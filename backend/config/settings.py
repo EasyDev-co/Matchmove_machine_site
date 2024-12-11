@@ -191,6 +191,8 @@ CORS_ALLOWED_ORIGINS = [
     'http://0.0.0.0:3000',
     'http://localhost:3000',
     'http://localhost:8083',
+    'https://grids.matchmovemachine.com',
+    'http://152.53.131.46:3000',
 ]
 
 CSRF_TRUSTED_ORIGINS = [
@@ -198,6 +200,8 @@ CSRF_TRUSTED_ORIGINS = [
     'http://0.0.0.0:3000',
     'http://localhost:3000',
     'http://localhost:8083',
+    'https://grids.matchmovemachine.com',
+    'http://152.53.131.46:3000',
 ]
 
 CORS_ALLOW_METHODS = [
