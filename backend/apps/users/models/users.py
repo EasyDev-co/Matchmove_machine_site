@@ -68,7 +68,7 @@ class User(UUIDMixin, TimeStampedMixin, AbstractUser):
         """
         Метод для генерации QR-кода и сохранения в поле qr_code
         """
-        url = f"http://89.58.57.91:8083/profile/{self.id}"  # Генерация URL с ID пользователя
+        url = f"https://grids.matchmovemachine.com/profile/{self.id}"  # Генерация URL с ID пользователя
         qr_img = qrcode.make(url)  # Генерация QR-кода
         buffer = BytesIO()
         qr_img.save(buffer, format="PNG")
