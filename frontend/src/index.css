@@ -652,6 +652,11 @@ select.error {
   font-weight: 300;
 }
 
+.inputSvg,
+.checkbox-group input{
+  cursor: pointer;
+}
+
 @media (max-width: 768px) {
   .popup-content {
     grid-template-columns: 1fr;
