@@ -1,5 +1,5 @@
 import styles from "./Faq.module.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import NavigationTop from "../../components/NavigationTop/NavigationTop";
 import FaqSpoiler from "../../components/FaqSpoiler/FaqSpoiler";
 import { questions } from "../../assets/dummyData";
@@ -23,6 +23,31 @@ const Faq = () => {
         setIsSidebarOpen(prevState => !prevState);
       };
 
+      useEffect(() => {
+
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                setClickedButton(entry.target.id);
+              }
+            });
+          },
+          { threshold: 0.5 }
+        );
+    
+        const sections = document.querySelectorAll("section[id]");
+        sections.forEach((section) => {
+          observer.observe(section);
+        });
+    
+        return () => {
+          sections.forEach((section) => {
+            observer.unobserve(section);
+          });
+        };
+      }, []);
+
   return (
     <div>
       <NavigationTop title="FAQ" />
@@ -33,7 +58,9 @@ const Faq = () => {
           </h2>
           <p className="h4-medium">
             Or contact us via email{" "}
-            <span className={styles.highLight}>grids@matchmovemachine.com</span>
+            <a href="mailto:grids@matchmovemachine.com" className={styles.highLight}>
+              grids@matchmovemachine.com
+            </a>
           </p>
         </div>
       </section>
@@ -46,6 +73,15 @@ const Faq = () => {
             }`}
           >
             <ul>
+            <li>
+                <button
+                  className={clickedButton === "howToUse" ? styles.clicked : ""}
+                  onClick={() => handleScroll("howToUse")}
+                >
+                  How to use the website
+                </button>
+              </li>
+
               <li>
                 <button
                   className={
@@ -56,30 +92,8 @@ const Faq = () => {
                   Tech specs
                 </button>
               </li>
-              <li>
-                <button
-                  className={clickedButton === "pricing" ? styles.clicked : ""}
-                  onClick={() => handleScroll("pricing")}
-                >
-                  Pricing
-                </button>
-              </li>
-              <li>
-                <button
-                  className={clickedButton === "payment" ? styles.clicked : ""}
-                  onClick={() => handleScroll("payment")}
-                >
-                  Payment
-                </button>
-              </li>
-              <li>
-                <button
-                  className={clickedButton === "howToUse" ? styles.clicked : ""}
-                  onClick={() => handleScroll("howToUse")}
-                >
-                  How to use the website
-                </button>
-              </li>
+
+
               <li>
                 <button
                   className={
@@ -90,6 +104,26 @@ const Faq = () => {
                   Personal account
                 </button>
               </li>
+
+              <li>
+                <button
+                  className={clickedButton === "pricing" ? styles.clicked : ""}
+                  onClick={() => handleScroll("pricing")}
+                >
+                  Pricing
+                </button>
+              </li>
+              
+              <li>
+                <button
+                  className={clickedButton === "payment" ? styles.clicked : ""}
+                  onClick={() => handleScroll("payment")}
+                >
+                  Payment
+                </button>
+              </li>
+
+
               <li>
                 <button
                   className={clickedButton === "license" ? styles.clicked : ""}

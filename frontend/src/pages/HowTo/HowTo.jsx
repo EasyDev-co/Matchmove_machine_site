@@ -7,7 +7,6 @@ import presetImg from "../../assets/images/presetProcess.png";
 import similiarityImg from "../../assets/images/similarity.png";
 import testImg from "../../assets/images/testexample.png";
 
-
 const HowTo = () => {
   return (
     <div>
@@ -17,7 +16,7 @@ const HowTo = () => {
           "Lorem ipsum dolor sit amet consectetur. Habitant quam eget mollis dui justo duis euismod sit quis. Velit ullamcorper arcu sit pellentesque dictum morbi leo cursus tortor. Facilisi sem neque convallis ultricies ullamcorper metus. Senectus quam interdum dictum consectetur vestibulum."
         }
       />
-      <MainShare/>
+      <MainShare />
       <section className={`width ${styles.sectioncont}`}>
         <h2 className="h2-bold">Distortion grid shooting technique</h2>
         <div className={styles.textpiccont}>
@@ -50,29 +49,29 @@ const HowTo = () => {
           </div>
         </div>
         <div className={styles.textcont}>
-            <p>
-              Lorem ipsum dolor sit amet consectetur. Habitant quam eget mollis
-              dui justo duis euismod sit quis. Velit ullamcorper arcu sit
-              pellentesque dictum morbi leo cursus tortor. Facilisi sem neque
-              convallis ultricies ullamcorper metus. Senectus quam interdum
-              dictum consectetur vestibulum. Lorem ipsum dolor sit amet
-              consectetur. Habitant quam eget mollis dui justo duis euismod sit
-              quis. Velit ullamcorper arcu sit pellentesque dictum morbi leo
-              cursus tortor. Facilisi sem neque convallis ultricies ullamcorper
-              metus. Senectus quam interdum dictum consectetur vestibulum. Lorem
-              ipsum dolor sit amet consectetur. Habitant quam eget mollis dui
-              justo duis euismod sit quis. Velit ullamcorper arcu sit
-              pellentesque dictum morbi leo cursus tortor.
-            </p>
-            <p>
-              Facilisi sem neque convallis ultricies ullamcorper metus. Senectus
-              quam interdum dictum consectetur vestibulum. Lorem ipsum dolor sit
-              amet consectetur. Habitant quam eget mollis dui justo duis euismod
-              sit quis. Velit ullamcorper arcu sit pellentesque dictum morbi leo
-              cursus tortor. Facilisi sem neque convallis ultricies ullamcorper
-              metus. Senectus quam interdum dictum consectetur vestibulum.
-            </p>
-          </div>
+          <p>
+            Lorem ipsum dolor sit amet consectetur. Habitant quam eget mollis
+            dui justo duis euismod sit quis. Velit ullamcorper arcu sit
+            pellentesque dictum morbi leo cursus tortor. Facilisi sem neque
+            convallis ultricies ullamcorper metus. Senectus quam interdum dictum
+            consectetur vestibulum. Lorem ipsum dolor sit amet consectetur.
+            Habitant quam eget mollis dui justo duis euismod sit quis. Velit
+            ullamcorper arcu sit pellentesque dictum morbi leo cursus tortor.
+            Facilisi sem neque convallis ultricies ullamcorper metus. Senectus
+            quam interdum dictum consectetur vestibulum. Lorem ipsum dolor sit
+            amet consectetur. Habitant quam eget mollis dui justo duis euismod
+            sit quis. Velit ullamcorper arcu sit pellentesque dictum morbi leo
+            cursus tortor.
+          </p>
+          <p>
+            Facilisi sem neque convallis ultricies ullamcorper metus. Senectus
+            quam interdum dictum consectetur vestibulum. Lorem ipsum dolor sit
+            amet consectetur. Habitant quam eget mollis dui justo duis euismod
+            sit quis. Velit ullamcorper arcu sit pellentesque dictum morbi leo
+            cursus tortor. Facilisi sem neque convallis ultricies ullamcorper
+            metus. Senectus quam interdum dictum consectetur vestibulum.
+          </p>
+        </div>
       </section>
 
       <section className={`width ${styles.sectioncont}`}>
@@ -132,27 +131,25 @@ const HowTo = () => {
               amet consectetur. Habitant quam eget mollis dui justo duis euismod
               sit quis. Velit ullamcorper arcu sit pellentesque dictum morbi leo
               cursus tortor. Facilisi sem neque convallis ultricies ullamcorper
-              metus. Senectus quam interdum dictum consectetur vestibulum.
+              metus. Senectus quam interdum dictum consectetur vestibulum. Lorem
+              ipsum dolor sit amet consectetur. Habitant quam eget mollis dui
+              justo duis euismod sit quis. Velit ullamcorper arcu sit
+              pellentesque dictum morbi leo cursus tortor. Facilisi sem neque
+              convallis ultricies ullamcorper metus. Senectus quam interdum
+              dictum consectetur vestibulum. Lorem ipsum dolor sit amet
+              consectetur. Habitant quam eget mollis dui justo duis euismod sit
+              quis. Velit ullamcorper arcu sit pellentesque dictum morbi leo
+              cursus tortor.
+            </p>
+
+            <p>
+              Facilisi sem neque convallis ultricies ullamcorper metus. Senectus
+              quam interdum dictum consectetur vestibulum. Lorem ipsum dolor sit
+              amet consectetur. Habitant quam eget mollis dui justo duis euismod
+              sit quis. Velit ullamcorper arcu sit pellentesque dictum morbi leo
+              cursus tortor.
             </p>
           </div>
-        </div>
-        <div className={styles.textcont}>
-          <p>
-            Lorem ipsum dolor sit amet consectetur. Habitant quam eget mollis
-            dui justo duis euismod sit quis. Velit ullamcorper arcu sit
-            pellentesque dictum morbi leo cursus tortor. Facilisi sem neque
-            convallis ultricies ullamcorper metus. Senectus quam interdum dictum
-            consectetur vestibulum. Lorem ipsum dolor sit amet consectetur.
-            Habitant quam eget mollis dui justo duis euismod sit quis. Velit
-            ullamcorper arcu sit pellentesque dictum morbi leo cursus tortor.
-          </p>
-          <p>
-            Facilisi sem neque convallis ultricies ullamcorper metus. Senectus
-            quam interdum dictum consectetur vestibulum. Lorem ipsum dolor sit
-            amet consectetur. Habitant quam eget mollis dui justo duis euismod
-            sit quis. Velit ullamcorper arcu sit pellentesque dictum morbi leo
-            cursus tortor.
-          </p>
         </div>
       </section>
 

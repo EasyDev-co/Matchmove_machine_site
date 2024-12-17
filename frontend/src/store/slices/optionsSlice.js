@@ -1,6 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import BASE_URL from "../../config";
-import Cookies from 'js-cookie';
 
 const initialState = {
   cameras: [],

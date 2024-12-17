@@ -1,10 +1,5 @@
 import { useState, useEffect } from "react";
-import {
-  googleIconsvg,
-  facebooksvg,
-  applesvg,
-  microsoftsvg,
-} from "../../assets/svg/svgimages";
+
 import Button from "../Button";
 import Password from "../Forms/Password";
 import Email from "../Forms/Email";
@@ -67,12 +62,12 @@ const Login = ({ onModalClose }) => {
       valid = false;
     }
 
-    setErrors(newErrors);
-
     if (valid) {
       dispatch(
         loginUser({ email: formData.email, password: formData.old_password })
       );
+    } else {
+      setErrors(newErrors)
     }
   };
 

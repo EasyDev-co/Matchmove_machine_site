@@ -42,9 +42,9 @@ const Password = ({ formData, setFormData, errors, setErrors }) => {
           className={errors.password ? "error" : ""}
         />
       </div>
-      {errors.password? (
+      {errors.old_password? (
         <div className="error-message">
-          {warningsvg} {errors.password}
+          {warningsvg} {errors.old_password}
         </div>
       ): location.pathname !== "/authorization"?<div className="pass-message">
         Password must be at least 8 characters, contain latin letters and numbers
