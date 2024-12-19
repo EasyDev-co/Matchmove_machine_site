@@ -1,30 +1,36 @@
-import { jwtDecode } from 'jwt-decode';
-import Cookies from 'js-cookie';
-import BASE_URL from '../config';
+import { jwtDecode } from "jwt-decode";
+import Cookies from "js-cookie";
+import BASE_URL from "../config";
 
 // Function to refresh the access token
 export const refreshAuthToken = async (refreshToken) => {
   try {
     const response = await fetch(`${BASE_URL}/users/token/refresh/`, {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({ refresh: refreshToken }),
     });
 
     if (!response.ok) {
-      throw new Error('Token refresh failed');
+      throw new Error("Token refresh failed");
     }
 
     const data = await response.json();
-    
+
     // Set the new access token in cookies
-    Cookies.set('access_token', data.access, { sameSite: 'Strict' });
+    Cookies.set("access_token", data.access, {
+      sameSite: "Strict",
+      secure: true,
+    });
 
     // Optionally update refresh token if returned
     if (data.refresh) {
-      Cookies.set('refresh_token', data.refresh, { sameSite: 'Strict' });
+      Cookies.set("refresh_token", data.refresh, {
+        sameSite: "Strict",
+        secure: true,
+      });
     }
 
     // Return the new access token
@@ -45,17 +51,17 @@ const isExpiringSoon = (token) => {
   const expirationTime = getTokenExpiration(token);
   const currentTime = Date.now();
   const timeLeft = expirationTime - currentTime;
-  
+
   return timeLeft <= 0 || timeLeft < 1 * 60 * 1000; // Expired or expiring within 1 minute
 };
 
 // Function to fetch data with automatic token refresh if needed
 export const fetchWithAuth = async (url, options = {}) => {
-  let accessToken = Cookies.get('access_token');
-  const refreshToken = Cookies.get('refresh_token');
+  let accessToken = Cookies.get("access_token");
+  const refreshToken = Cookies.get("refresh_token");
 
   if (!accessToken || !refreshToken) {
-    throw new Error('No access or refresh token available. Please log in.');
+    throw new Error("No access or refresh token available. Please log in.");
   }
 
   // Check if the access token is close to expiring
@@ -64,7 +70,7 @@ export const fetchWithAuth = async (url, options = {}) => {
       // Refresh the access token if it's close to expiring
       accessToken = await refreshAuthToken(refreshToken);
     } catch (error) {
-      throw new Error('Failed to refresh access token. Please log in again.');
+      throw new Error("Failed to refresh access token. Please log in again.");
     }
   }
 
@@ -75,7 +81,7 @@ export const fetchWithAuth = async (url, options = {}) => {
       ...options,
       headers: {
         ...options.headers,
-        'Authorization': `Bearer ${accessToken}`,
+        Authorization: `Bearer ${accessToken}`,
       },
     });
 
@@ -84,25 +90,27 @@ export const fetchWithAuth = async (url, options = {}) => {
       try {
         // Attempt to refresh the access token
         accessToken = await refreshAuthToken(refreshToken);
-    
+
         // Retry the fetch request with the new access token
         response = await fetch(url, {
           ...options,
           headers: {
             ...options.headers,
-            'Authorization': `Bearer ${accessToken}`,
+            Authorization: `Bearer ${accessToken}`,
           },
         });
-    
+
         // Check if the retry request also fails with 401
         if (response.status === 401) {
-          throw new Error('Retry after token refresh failed.');
+          throw new Error("Retry after token refresh failed.");
         }
       } catch (error) {
         // Clear cookies and notify the caller of the failure
-        Cookies.remove('access_token');
-        Cookies.remove('refresh_token');
-        throw new Error('Failed to refetch after token refresh. Please log in again.');
+        Cookies.remove("access_token");
+        Cookies.remove("refresh_token");
+        throw new Error(
+          "Failed to refetch after token refresh. Please log in again."
+        );
       }
     }
 
