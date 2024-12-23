@@ -65,12 +65,12 @@ const Footer = () => {
               <p className="h5-extra-bold">Links</p>
               <ul>
                 <li>
-                  <a href="/Privacy-Policy.pdf" target="_blank">
+                  <a href="/privacy-policy">
                     Privacy policy
                   </a>
                 </li>
                 <li>
-                  <a href="/Terms-of-Use.pdf" target="_blank">
+                  <a href="/terms-of-use">
                     Terms of use
                   </a>
                 </li>

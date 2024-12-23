@@ -1,29 +1,33 @@
-import './App.css';
+import "./App.css";
 
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import MainPage from './pages/MainPage';
-import Library from './pages/Library';
-import Product from './pages/Product';
-import Authorization from './pages/Authorization';
-import Profile from './pages/Profile';
-import ProtectedRoute from './pages/ProtectedRoute'; 
-import Layout from './components/Layout';
-import EditProfile from './pages/EditProfile/EditProfile';
-import CheckOut from './pages/Checkout/CheckOut';
-import AffiliateProgram from './pages/AffiliateProgram/AffiliateProgram';
-import NotFound from './pages/NotFound/NotFound';
-import Faq from './pages/Faq/Faq';
-import HowTo from './pages/HowTo/HowTo';
-import FinishCheckout from './pages/Checkout/FinishCheckout';
-import ScrollToTop from './hooks/ScrollToTop';
-import CreatorProfile from './pages/CreatorProfile';
+import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import MainPage from "./pages/MainPage";
+import Library from "./pages/Library";
+import Product from "./pages/Product";
+import Authorization from "./pages/Authorization";
+import Profile from "./pages/Profile";
+import ProtectedRoute from "./pages/ProtectedRoute";
+import Layout from "./components/Layout";
+import EditProfile from "./pages/EditProfile/EditProfile";
+import CheckOut from "./pages/Checkout/CheckOut";
+import AffiliateProgram from "./pages/AffiliateProgram/AffiliateProgram";
+import NotFound from "./pages/NotFound/NotFound";
+import Faq from "./pages/Faq/Faq";
+import HowTo from "./pages/HowTo/HowTo";
+import FinishCheckout from "./pages/Checkout/FinishCheckout";
+import ScrollToTop from "./hooks/ScrollToTop";
+import CreatorProfile from "./pages/CreatorProfile";
+import TermsOfUse from "./components/Footer/TermsOfUse";
+import PrivacyPolicy from "./components/Footer/PrivacyPolicy";
 
 function App() {
   return (
     <Router>
-      <ScrollToTop/>
+      <ScrollToTop />
       <Routes>
+        <Route path="/terms-of-use" element={<TermsOfUse />} />
+        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route
           path="checkout"
           element={
@@ -59,12 +63,7 @@ function App() {
                 <Route path="registration" element={<Authorization />} />
                 <Route path="reset-password" element={<Authorization />} />
                 <Route path="profile/:profileId" element={<CreatorProfile />} />
-                <Route
-                  path="profile"
-                  element={
-                      <Profile />
-                  }
-                />
+                <Route path="profile" element={<Profile />} />
                 <Route
                   path="profile/edit"
                   element={
