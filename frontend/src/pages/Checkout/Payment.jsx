@@ -126,7 +126,7 @@ const Payment = ({ orderId }) => {
                 className={styles.checkboxInput}
                 style={{height: '20px', width: '20px'}}
               />
-              I have read and agree to the <a href="/Terms-of-Use.pdf" target="_blank">Terms of use</a>
+              I have read and agree to the <a href="/terms-of-use" target="_blank">Terms of use</a> & <a href="/privacy-policy" target="_blank">privacy policy</a>
             </label>
           </div>
             
