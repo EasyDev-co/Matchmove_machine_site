@@ -58,9 +58,11 @@ class FTPDownloadUploadService:
         remote_file_path = f"{file_id}{file_extension}"
         logger.info(f"Загрузка файла на FTP: {remote_file_path}")
 
+        logger.info(f"Подключаемся к FTP с этими данными: {self.host} {self.username} {self.password} {self.port}")
         with self.ftp_manager.connect_and_login(
             self.host, self.username, self.password, self.port
         ) as ftp:
+            logger.info("Подключилис к FTP")
             bio = BytesIO(file_content)
             ftp.storbinary(f"STOR {remote_file_path}", bio)
 
