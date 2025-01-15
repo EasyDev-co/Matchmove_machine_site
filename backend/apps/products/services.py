@@ -39,7 +39,7 @@ class FTPDownloadUploadService:
         host: str,
         username: str,
         password: str,
-        port: int = 21,
+        port: int = 21021,
     ):
         self.ftp_manager = ftp_manager
         self.host = host
