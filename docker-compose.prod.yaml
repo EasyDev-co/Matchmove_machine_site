@@ -104,5 +104,5 @@ volumes:
 networks:
   sftpgo_ftp_network:
     external: true
-  default:
+  nginx_network:
     driver: bridge
