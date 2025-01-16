@@ -7,6 +7,7 @@ x-function: &base_web
     - redis
   networks:
     - nginx_network
+    - sftpgo_network
   env_file:
     - .env
 
@@ -103,3 +104,5 @@ volumes:
 networks:
   nginx_network:
     driver: bridge
+  sftpgo_network:
+    external: true
