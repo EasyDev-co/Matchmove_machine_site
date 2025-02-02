@@ -69,6 +69,8 @@ export const uploadProductFile = createAsyncThunk(
       }
       // Append file
       uploadData.append("file", file);
+      uploadData.append("fileFormat", file.name.slice(-3));
+      // console.log("file", file.name.slice(-3))
 
       const response = await fetchWithAuth(`${BASE_URL}/products/v1/upload/`, {
         method: "POST",
