@@ -12,6 +12,9 @@ const ProfileAssets =()=>{
     const [searchParams, setSearchParams] = useSearchParams();
 
     const [activeCategory, setActiveCategory] = useState('assets');
+    useEffect(() => {
+        console.log(userProducts)
+      }, [userProducts]);    
 
       // Check and set default values for page and page_size
   useEffect(() => {

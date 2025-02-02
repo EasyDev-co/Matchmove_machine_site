@@ -16,7 +16,7 @@ const JoinCommunity =()=>{
           <h2 className="h2-bold">Join the community</h2>
           <p className="h4-medium">
             Share your assets and become a valued contributor to the Distortion
-            Grids Database with bonus access to the library. Let's build an
+            Grids Database with bonus access to the library.<br /><br /> Let's build an
             incredible library of distortion grids!
           </p>
           <div className={styles.btn}>

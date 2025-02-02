@@ -114,11 +114,11 @@ const Payment = ({orderId}) => {
                         />
                     ))}
                     <div>
-                        <p className={styles.agreement_text}>Terms and Conditions Agreement</p>
+                        {/* <p className={styles.agreement_text}>Terms and Conditions Agreement</p> */}
                         <p className={styles.agreement_text}>By proceeding with your purchase, you acknowledge that you
                             have read, understood, and agree to the following:</p>
-                        <p className={styles.agreement_text}>Our Terms & Conditions, which govern your use of this
-                            website and your purchase.</p>
+                        {/* <p className={styles.agreement_text}>Our Terms & Conditions, which govern your use of this
+                            website and your purchase.</p> */}
                         <label className={labelClass}>
                             <input
                                 type="checkbox"

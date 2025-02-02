@@ -221,13 +221,21 @@ const LibraryItems = () => {
               />
             </div>
           ) : (
-            <div className={styles.message}>
-              <h2 className="h3-medium">No Items Found</h2>{" "}
-              <p className="h4-medium">
-                It looks like there are no items that match your selected
-                filters. Please try adjusting your filters to see if other
-                options are available.
-              </p>
+            <div className={styles.noitem}>
+              <div className={styles.message}>
+                <h2 className="h3-medium">No Items Found</h2>{" "}
+                <p className="h4-medium">
+                  It looks like there are no items that match your selected
+                  filters. Please try adjusting your filters to see if other
+                  options are available.
+                </p>
+              </div>
+              <div className={styles.toggleNoCont}>
+                <div className={styles.toggleNoCont_container}>
+                  <p>Free assets</p>
+                  <Toggle />
+                  </div>
+                </div>
             </div>
           )}
         </div>
