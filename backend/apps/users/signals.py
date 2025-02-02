@@ -18,28 +18,33 @@ def send_notification_email(subject, message, recipient_email):
     )
 
 
-@receiver(pre_save, sender=User)
-def notify_user_on_email_or_password_change(sender, instance, **kwargs):
-    if instance.pk:
-        try:
-            old_user = User.objects.get(pk=instance.pk)
-        except User.DoesNotExist:
-            old_user = None
-
-        if old_user:
-            if old_user.email != instance.email:
-                subject = "Email Change Notification"
-                message = (
-                    f"Hello, {old_user.username}!\n\n"
-                    f"Your email address has been changed from {old_user.email} to {instance.email}. "
-                    "If this was not you, please contact support."
-                )
-                send_notification_email(subject, message, old_user.email)
-
-            if old_user.password != instance.password:
-                subject = "Password Change Notification"
-                message = (
-                    f"Hello, {old_user.username}!\n\n"
-                    "Your password has been changed. If this was not you, please contact support."
-                )
-                send_notification_email(subject, message, old_user.email)
+# @receiver(pre_save, sender=User)
+# def notify_user_on_email_or_password_change(sender, instance, **kwargs):
+#     # Проверяем, существует ли пользователь в базе данных
+#     if instance.pk:
+#         try:
+#             old_user = User.objects.get(pk=instance.pk)
+#         except User.DoesNotExist:
+#             old_user = None
+#
+#         # Если пользователь существует, проверяем изменения
+#         if old_user:
+#             # Проверяем, изменился ли email
+#             if old_user.email != instance.email:
+#                 subject = "Email Change Notification"
+#                 message = (
+#                     f"Hello, {old_user.username}!\n\n"
+#                     f"Your email address has been changed from {old_user.email} to {instance.email}. "
+#                     "If this was not you, please contact support."
+#                 )
+#                 send_notification_email(subject, message, old_user.email)
+#
+#             if old_user.password != instance.password:
+#                 subject = "Password Change Notification"
+#                 message = (
+#                     f"Hello, {old_user.username}!\n\n"
+#                     "Your password has been changed. If this was not you, please contact support."
+#                 )
+#                 send_notification_email(subject, message, old_user.email)
+#     else:
+#         return

@@ -1,8 +1,10 @@
 import os
 import logging
 
+from django.db.models import Q
 from django_filters.rest_framework import DjangoFilterBackend
 from django.conf import settings
+from django.db import transaction
 from rest_framework import generics, filters, status, viewsets, serializers
 from rest_framework.generics import ListAPIView
 from rest_framework.permissions import IsAuthenticated, AllowAny
@@ -26,7 +28,7 @@ from .serializers import (
     ProductSerializer,
     FileSerializer,
 )
-
+from apps.products.models.products import AccessType, AssetCategory
 
 logger = logging.getLogger(__name__)
 
@@ -79,7 +81,7 @@ class ProductDetailView(generics.RetrieveUpdateDestroyAPIView):
 
 class CameraListView(ListAPIView):
     permission_classes = [AllowAny]
-    queryset = Camera.objects.all()
+    queryset = Camera.objects.filter(is_active=True)
     serializer_class = CameraSerializer
 
 
@@ -91,7 +93,7 @@ class FormatListView(ListAPIView):
 
 class LensListView(ListAPIView):
     permission_classes = [AllowAny]
-    queryset = Lens.objects.all()
+    queryset = Lens.objects.filter(is_active=True)
     serializer_class = LensSerializer
 
 
@@ -137,9 +139,21 @@ class FileViewSet(viewsets.ViewSet):
     def upload(self, request):
         """Эндпоинт для загрузки файла на FTP."""
         file = request.FILES.get("file")
+
+        camera = request.data.get("camera")
+        lens_manufacturer = request.data.get("lensManufacturer")
+        lens_model = request.data.get("lensModel")
+        description = request.data.get("description")
+        file_format = request.data.get("fileFormat")
+
         if not file:
             return Response(
                 {"error": "No file provided"}, status=status.HTTP_400_BAD_REQUEST
+            )
+
+        if not all([camera, lens_manufacturer, lens_model, description]):
+            return Response(
+                {"error": "Missing required fields"}, status=status.HTTP_400_BAD_REQUEST
             )
 
         # Сохраняем файл на локальном диске
@@ -154,8 +168,52 @@ class FileViewSet(viewsets.ViewSet):
         if serializer.is_valid():
             file_instance = serializer.save()
 
-            # Отправляем задачу на загрузку файла в Celery
             upload_file_to_ftp_api.delay(file_path, str(file_instance.id))
+
+            camera_model_lower = camera.lower()
+            lens_brand_lower = lens_manufacturer.lower()
+            lens_model_lower = lens_model.lower()
+
+            with transaction.atomic():
+                camera_instance = Camera.objects.filter(
+                    Q(model__icontains=camera_model_lower) | Q(model__iexact=camera_model_lower)
+                ).first()
+
+                if not camera_instance:
+                    camera_instance = Camera.objects.create(
+                        model=camera,
+                        is_active=False,
+                    )
+
+                lens_instance = Lens.objects.filter(
+                    Q(brand__icontains=lens_brand_lower) & Q(model__icontains=lens_model_lower)
+                ).first()
+
+                if not lens_instance:
+                    lens_instance = Lens.objects.create(
+                        brand=lens_manufacturer,
+                        model=lens_model,
+                        is_active=False,
+                    )
+
+                format_file = Format.objects.filter(format_type__icontains=file_format).first()
+                if not format_file:
+                    return Response(
+                        {"error": "Unsupported file format not found"},
+                        status=status.HTTP_400_BAD_REQUEST
+                    )
+
+                Product.objects.create(
+                    access_type=AccessType.FREE,
+                    category=AssetCategory.DISTORTION_GRIDS,
+                    is_approved=False,
+                    camera=camera_instance,
+                    lens=lens_instance,
+                    file_format=format_file,
+                    description=description,
+                    file=file_instance,
+                )
+
             return Response({"id": file_instance.id}, status=status.HTTP_201_CREATED)
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

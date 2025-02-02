@@ -9,6 +9,10 @@ class Camera(UUIDMixin):
         max_length=255,
         verbose_name=_("Модель")
     )
+    is_active = models.BooleanField(
+        default=True,
+        verbose_name="Активность"
+    )
 
     def __str__(self):
         return f"{self.model_name}"

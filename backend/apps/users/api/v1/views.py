@@ -18,6 +18,8 @@ from apps.users.api.v1.serializers import (
     UserDetailSerializer,
     UserUpdateSerializer,
 )
+
+from apps.users.utils import send_notification_email
 from apps.users.tasks import send_confirm_code
 from apps.exeptions.api_exeptions import InvalidCode
 from apps.users.models.code import CodePurpose, ConfirmCode
@@ -278,6 +280,13 @@ class PasswordChangeAPIView(ConfirmCodeMixin, APIView):
             user.password = make_password(new_password)
             user.save()
             ConfirmCode.objects.filter(code=code).update(is_used=True)
+
+        subject = "Password Change Notification"
+        message = (
+            f"Hello, {user.username}!\n\n"
+            "Your password has been changed. If this was not you, please contact support."
+        )
+        send_notification_email(subject, message, user.email)
         return Response(
             {"message": "Пароль успешно изменен."}, status=status.HTTP_200_OK
         )

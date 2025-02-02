@@ -222,7 +222,7 @@ const ContributionForm = () => {
             <input
               type="file"
               id="fileInput"
-              accept=".jpg,.jpeg,.png,.pdf" // Adjust file types accordingly
+              accept=".jpg,.jpeg,.png,.pdf,.zip" // Adjust file types accordingly
               ref={fileInputRef}
               style={{ display: "none" }} // Hiding the file input using CSS
               onChange={handleFileChange}

@@ -19,8 +19,4 @@ RUN mkdir -p /opt/src/static/ && \
 
 COPY . .
 
-COPY celery_start.sh /celery_start.sh
-
-RUN chmod +x /celery_start.sh
-
-ENTRYPOINT ["/celery_start.sh"]
+CMD ["bash"]

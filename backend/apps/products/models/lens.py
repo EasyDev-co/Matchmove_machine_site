@@ -13,6 +13,10 @@ class Lens(UUIDMixin):
         max_length=255,
         verbose_name=_("Модель")
     )
+    is_active = models.BooleanField(
+        default=True,
+        verbose_name="Активность"
+    )
 
     class Meta:
         verbose_name = _("Объектив")
