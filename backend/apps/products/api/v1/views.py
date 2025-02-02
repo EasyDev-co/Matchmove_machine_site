@@ -192,7 +192,7 @@ class FileViewSet(viewsets.ViewSet):
                 if not lens_instance:
                     lens_instance = Lens.objects.create(
                         brand=lens_manufacturer,
-                        model=lens_model,
+                        model_name=lens_model,
                         is_active=False,
                     )
 
