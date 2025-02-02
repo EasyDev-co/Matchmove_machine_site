@@ -212,6 +212,7 @@ class FileViewSet(viewsets.ViewSet):
                     file_format=format_file,
                     description=description,
                     file=file_instance,
+                    author=request.user,
                 )
 
             return Response({"id": file_instance.id}, status=status.HTTP_201_CREATED)
