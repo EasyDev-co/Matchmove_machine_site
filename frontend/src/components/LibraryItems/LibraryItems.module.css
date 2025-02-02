@@ -79,6 +79,22 @@
     color: #383838;
 }
 
+.toggleNoCont {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 20px;
+    font-weight: 500;
+    font-size: 18px;
+    color: #383838;
+    white-space: nowrap;
+    margin-top: 30px;
+}
+.toggleNoCont_container {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
 .toggleCont p{
     white-space: nowrap;
 }
@@ -87,6 +103,9 @@
     display: flex;
     flex-direction: column;
     gap: 20px;
+}
+.noitem {
+    display: flex;
 }
 
 
@@ -98,18 +117,26 @@
     .main {
         padding: 40px;
     }
+
+    .toggleNoCont {
+        display: none;
+        }
+    .toggleCont {
+        display: none;
+    }
+    
+    
 }
 
 @media (max-width: 729px) {
-
 
     .mobileview {
         display: flex;
     }
 
-    .toggleCont {
+    /* .toggleCont {
         display: none;
-    }
+    } */
 
     .main {
         padding: 20px;

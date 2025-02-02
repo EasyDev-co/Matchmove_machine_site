@@ -90,7 +90,7 @@ if(cart.items.length>0){
             </div>
             <div className={styles.line} />
             <p className={styles.advice}>
-              The price of all chosen assets includes VAT. You can apply promo
+              The price of all chosen assets includes VAT.<br /><br/> You can apply promo
               code and complete the payment during the checkout.
             </p>
           </div>

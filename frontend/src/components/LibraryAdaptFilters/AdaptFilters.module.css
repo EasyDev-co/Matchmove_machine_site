@@ -44,7 +44,7 @@ color: #282828;
 
 
 .togglewrap {
-    display: none;
+    /* display: none; */
     align-items: center;
     gap: 20px;
     font-weight: 500;
