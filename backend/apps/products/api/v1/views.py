@@ -175,18 +175,16 @@ class FileViewSet(viewsets.ViewSet):
             lens_model_lower = lens_model.lower()
 
             with transaction.atomic():
-                camera_instance = Camera.objects.filter(
-                    Q(model__icontains=camera_model_lower) | Q(model__iexact=camera_model_lower)
-                ).first()
+                camera_instance = Camera.objects.filter(model_name__icontains=camera_model_lower).first()
 
                 if not camera_instance:
                     camera_instance = Camera.objects.create(
-                        model=camera,
+                        model_name=camera,
                         is_active=False,
                     )
 
                 lens_instance = Lens.objects.filter(
-                    Q(brand__icontains=lens_brand_lower) & Q(model__icontains=lens_model_lower)
+                    Q(brand__icontains=lens_brand_lower) & Q(model_name__icontains=lens_model_lower)
                 ).first()
 
                 if not lens_instance:
