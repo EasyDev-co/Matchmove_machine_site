@@ -89,7 +89,7 @@ export const questions = {
       id: 5,
       title:
         'Do you support customization of distortion grids to meet specific requirements?',
-      text: 'Yes, you can customize all distortion grids with provided LDPK node and lens preset for Nuke, as well as with provided 3DEqualizer project. We believe it give you maximum flexibility in use, which is impossible to achieve, for example, with STMaps.'
+      text: 'We provide a comprehensive set of tools and resources, including the LDPK node with lens presets for Nuke and a 3DEqualizer project, enabling users to adjust distortion grids as needed. This approach offers maximum flexibility in use, surpassing what can be achieved with standard STMaps. The provided assets ensure seamless integration into various workflows without requiring additional customization services.'
     },
   ],
 
