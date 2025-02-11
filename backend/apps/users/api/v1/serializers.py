@@ -180,3 +180,11 @@ class PasswordChangeSerializer(EmailAndCodeSerializer):
             validate_password,
         ],
     )
+
+
+class UserRankingSerializer(serializers.ModelSerializer):
+    total_products = serializers.IntegerField(read_only=True)
+
+    class Meta:
+        model = User
+        fields = ('id', 'username', 'profile_picture', 'total_products')

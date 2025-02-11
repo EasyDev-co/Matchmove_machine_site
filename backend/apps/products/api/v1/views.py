@@ -300,3 +300,4 @@ class UserProductsAPIView(ListAPIView):
 
     def get_queryset(self):
         return Product.objects.filter(author=self.request.user)
+
