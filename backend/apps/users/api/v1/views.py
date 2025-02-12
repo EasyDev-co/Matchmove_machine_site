@@ -1,11 +1,12 @@
 from rest_framework import viewsets, status
+from rest_framework.generics import ListAPIView
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from django.db import transaction, IntegrityError
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from .serializers import UserSerializer
 from django.contrib.auth import get_user_model
 from django.contrib.auth.hashers import make_password
+from django.db.models import Q, Count
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.views import TokenObtainPairView
 
@@ -17,8 +18,9 @@ from apps.users.api.v1.serializers import (
     UserTokenObtainPairSerializer,
     UserDetailSerializer,
     UserUpdateSerializer,
+    UserRankingSerializer,
 )
-
+from apps.users.api.v1.pagination import CustomPagination
 from apps.users.utils import send_notification_email
 from apps.users.tasks import send_confirm_code
 from apps.exeptions.api_exeptions import InvalidCode
@@ -313,3 +315,14 @@ class UserLogoutView(APIView):
             )
         except Exception as e:
             return Response({"message": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
+
+class UserRankingListView(ListAPIView):
+    serializer_class = UserRankingSerializer
+    pagination_class = CustomPagination
+
+    def get_queryset(self):
+        queryset = User.objects.annotate(
+            total_products=Count('products', filter=Q(products__is_approved=True))
+        ).order_by('-total_products', 'username')
+        return queryset
