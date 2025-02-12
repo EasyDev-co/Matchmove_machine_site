@@ -340,6 +340,20 @@ argon2 = ["argon2-cffi (>=19.1.0)"]
 bcrypt = ["bcrypt"]
 
 [[package]]
+name = "django-admin-sortable2"
+version = "2.2.4"
+description = "Generic drag-and-drop sorting for the List, the Stacked- and the Tabular-Inlines Views in the Django Admin"
+optional = false
+python-versions = "*"
+files = [
+    {file = "django_admin_sortable2-2.2.4-py3-none-any.whl", hash = "sha256:406c5b6d6e84ad982cc6e53c3f34b5db5f0a3f34891126af90c9fb2c372f53d5"},
+    {file = "django_admin_sortable2-2.2.4.tar.gz", hash = "sha256:155e6114c7a931bceed9513af014f782ff1e643d99e81ddfef934f1daecd669d"},
+]
+
+[package.dependencies]
+Django = ">=4.2"
+
+[[package]]
 name = "django-celery-beat"
 version = "2.7.0"
 description = "Database-backed Periodic Tasks."
@@ -397,6 +411,20 @@ files = [
 
 [package.dependencies]
 Django = ">=3.2"
+
+[[package]]
+name = "django-polymorphic"
+version = "3.1.0"
+description = "Seamless polymorphic inheritance for Django models"
+optional = false
+python-versions = "*"
+files = [
+    {file = "django-polymorphic-3.1.0.tar.gz", hash = "sha256:d6955b5308bf6e41dcb22ba7c96f00b51dfa497a8a5ab1e9c06c7951bf417bf8"},
+    {file = "django_polymorphic-3.1.0-py3-none-any.whl", hash = "sha256:08bc4f4f4a773a19b2deced5a56deddd1ef56ebd15207bf4052e2901c25ef57e"},
+]
+
+[package.dependencies]
+Django = ">=2.1"
 
 [[package]]
 name = "django-timezone-field"
@@ -1300,4 +1328,4 @@ dev = ["black (>=19.3b0)", "pytest (>=4.6.2)"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "0f7746fdce3787fe43519562cff25bb374e47be28124628f28b533cb2045054a"
+content-hash = "77c77bf4890f9933ca8e7f52125284dfc7303a62b292090894ee871efff0e428"
