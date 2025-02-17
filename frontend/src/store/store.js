@@ -10,6 +10,7 @@ import paymentReducer from './slices/paymentSlice';
 import orderReducer from './slices/orderSlice';
 import qrReducer from './slices/qrSlice';
 import creatorProfileReducer from "./slices/creatorProfileSlice"
+import topContribiutorsSlice from "./slices/topContributorsSlice";
 
 const store = configureStore({
   reducer: {
@@ -23,7 +24,8 @@ const store = configureStore({
     payment: paymentReducer,
     order: orderReducer,
     qr:qrReducer,
-    creatorProfile:creatorProfileReducer
+    creatorProfile:creatorProfileReducer,
+    topContribiutors: topContribiutorsSlice,
   },
 });
 
