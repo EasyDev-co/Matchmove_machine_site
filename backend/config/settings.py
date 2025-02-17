@@ -17,6 +17,7 @@ ALLOWED_HOSTS = ["*"]
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
+    "polymorphic",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
@@ -31,12 +32,14 @@ INSTALLED_APPS = [
     "drf_yasg",
     "django_file_form",
     "django_file_form.ajaxuploader",
+    "adminsortable2",
     # Приложения
     "apps.users",
     "apps.products",
     "apps.cart",
     "apps.payments",
     "apps.orders",
+    "apps.tutorials",
 ]
 
 MIDDLEWARE = [
@@ -55,7 +58,7 @@ ROOT_URLCONF = "config.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": [os.path.join(BASE_DIR, "templates")],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -193,6 +196,7 @@ CORS_ALLOWED_ORIGINS = [
     'http://localhost:8083',
     'https://grids.matchmovemachine.com',
     'http://152.53.131.46:3000',
+    'http://0.0.0.0:8080',
 ]
 
 CSRF_TRUSTED_ORIGINS = [
@@ -202,6 +206,7 @@ CSRF_TRUSTED_ORIGINS = [
     'http://localhost:8083',
     'https://grids.matchmovemachine.com',
     'http://152.53.131.46:3000',
+    'http://0.0.0.0:8080',
 ]
 
 CORS_ALLOW_METHODS = [

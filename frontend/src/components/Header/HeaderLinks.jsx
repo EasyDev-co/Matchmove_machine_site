@@ -26,7 +26,7 @@ const HeaderLinks = ({ isMenuOpen, handleCloseMenu }) => {
           </Link>
         </li>
         <li>
-          <Link to="how-it-works">
+          <Link to="https://matchmovemachine.com/howto/">
             {" "}
             <img src={linkIng} alt="btn-icon" />
             How it works
