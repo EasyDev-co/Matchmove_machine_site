@@ -1,0 +1,62 @@
+.main {
+    /* display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    /* grid-template-rows: repeat(10, 1fr); */
+    /*gap: 20px; */
+    column-count: 3; /* Разделить на 3 колонки */
+    column-gap: 20px; /* Отступ между колонками */
+}
+
+.user {
+    break-inside: avoid; /* Предотвращает разрыв элементов между колонками */
+    margin-bottom: 20px;
+    border-bottom: 1px solid rgba(179, 179, 179, 1);
+    display: flex;
+    align-items: center;
+    width: 414px;
+    padding: 20px 0;
+}
+.number {
+    margin-right: 40px;
+    font-size: 24px;
+    font-weight: 300;
+    line-height: 30.77px;
+}
+.info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-left: 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    max-width: 100%; 
+}
+.countBlcok {
+    display: flex;
+    align-items: center;
+}
+.name {
+    color: rgba(47, 87, 191, 1);
+    font-size: 24px;
+    line-height: 30.77px;
+    font-weight: 450;
+}
+
+@media (max-width: 768px) {
+    .main {
+        column-count: 2;
+    }
+    .user {
+        width: 330px;
+    }
+  }
+  
+  /* Для мобильных (до 390px) - 1 колонка */
+  @media (max-width: 390px) {
+    .main {
+        column-count: 1;
+    }
+    .user {
+        width: 350px;
+    }
+  }

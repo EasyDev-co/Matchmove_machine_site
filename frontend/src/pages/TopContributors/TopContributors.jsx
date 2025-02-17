@@ -1,21 +1,42 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import NavigationTop from "../../components/NavigationTop/NavigationTop";
 import styles from "./TopContributors.module.css";
 import Pagination from "../../components/Pagination/Pagination";
 import testPhoto from "../../assets/images/testava.jpg";
+import countFiles from "../../assets/svg/countFiles.svg";
+import { useEffect } from "react";
+import { fetchTopContributors } from "../../store/slices/topContributorsSlice";
+import iconimg from "../../assets/images/iconplaceholder.png";
 
 const TopContributors = () => {
-  const { products, status } = useSelector((state) => state.products);
+  // const { products, status } = useSelector((state) => state.products);
+  const dispatch = useDispatch();
+  const { top, status, error } = useSelector((state) => state.topContribiutors);
+
+  useEffect(() => {
+    if (status === "idle") {
+      dispatch(fetchTopContributors());
+    }
+    console.log(top);
+  }, [status, dispatch]);
 
   const test = [
     {
-        photo: testPhoto,
-        name: 'Pidor Ivanov',
-        quantity: '666',
+      photo: testPhoto,
+      name: "Pidor Ivanov",
+      quantity: "1274",
+      number: "1",
     },
-  ]
+  ];
 
-//Сделай функцию для поиска в массиве
+  if (status === "loading") {
+    return <p>Загрузка...</p>;
+  }
+
+  if (status === "failed") {
+    return <p>Ошибка: {error}</p>;
+  }
+
   return (
     <div>
       <NavigationTop
@@ -25,24 +46,45 @@ const TopContributors = () => {
         assets that have passed moderation. Your contributions are vital in building 
         a fantastic resource for the community."
       />
-      <section className={`height`}>
-        <Pagination
+      <section className={`height`} style={{ paddingTop: "0" }}>
+        {top && (
+          <Pagination
           pagination={{
-            count: products.count,
-            next: products.next,
-            previous: products.previous,
+            count: top?.total_page || 1,  // Используем total_page
+            next: top?.next_page,
+            previous: top?.previus_page,
           }}
-        />
+        />       
+        )}
         <div className={styles.main}>
-          
+          {top?.data?.map((item, index) => (
+            <div className={styles.user}>
+              <p className={styles.number}>{item.position}.</p>
+              <img
+                style={{ width: "60px", height: "60px", borderRadius: "5px" }}
+                src={item.profile_picture ? item.profile_picture : iconimg}
+                alt="icon"
+              />
+              <div className={styles.info}>
+                <p className={styles.name}>{item.username}</p>
+                <div className={styles.countBlcok}>
+                  <img src={countFiles} alt="icon" />
+                  <p style={{ fontSize: "24px" }}>{item.total_products}</p>
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
-        <Pagination
+        {top && (
+          <Pagination
           pagination={{
-            count: products.count,
-            next: products.next,
-            previous: products.previous,
+            count: top?.total_page || 1,  // Используем total_page
+            next: top?.next_page,
+            previous: top?.previus_page,
           }}
         />
+        
+        )}
       </section>
     </div>
   );

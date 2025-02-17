@@ -26,6 +26,10 @@ const LibraryItems = () => {
 
   const navigate = useNavigate();
 
+  useEffect(() => {
+    console.log(products)
+  }, [products])
+
   // Set selected state based on URL parameters once cameras and lenses are fetched
   useEffect(() => {
     if (cameras.length > 0 && lenses.length > 0) {
