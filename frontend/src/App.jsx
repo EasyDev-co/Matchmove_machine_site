@@ -20,6 +20,7 @@ import ScrollToTop from "./hooks/ScrollToTop";
 import CreatorProfile from "./pages/CreatorProfile";
 import TermsOfUse from "./components/Footer/TermsOfUse";
 import PrivacyPolicy from "./components/Footer/PrivacyPolicy";
+import TopContributors from "./pages/TopContributors/TopContributors";
 
 function App() {
   return (
@@ -74,6 +75,7 @@ function App() {
                 />
                 <Route path="faq" element={<Faq />} />
                 <Route path="how-it-works" element={<HowTo />} />
+                <Route path="top-contribution" element={<TopContributors />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </Layout>

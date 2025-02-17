@@ -8,7 +8,9 @@ const ProductField =({singleProduct, handleButtonClick, activeButton})=>{
 
     return (
         <section className={styles.main} id="assets">
-            <div className={styles.toggleCont}>
+            <h2 className="h2-medium">Assets</h2>
+            <FileBlock/>
+            {/* <div className={styles.toggleCont}>
                 <button
                     onClick={() => handleButtonClick('Assets')}
                     className={activeButton === 'Assets' ? styles.active : ''}
@@ -30,7 +32,7 @@ const ProductField =({singleProduct, handleButtonClick, activeButton})=>{
             </div>
             {activeButton==="Assets" && <FileBlock/>}
             {activeButton==="Description" && <Description description={singleProduct.description}/>}
-            {activeButton === "How to use" && <HowToUse/>}
+            {activeButton === "How to use" && <HowToUse/>} */}
         </section>
     );
 };
