@@ -43,7 +43,7 @@ const Footer = () => {
                 <a href="/library">Full library</a>
               </li>
               <li>
-                <a href="/how-it-works">How it works</a>
+                <a href="https://matchmovemachine.com/howto/">How it works</a>
               </li>
               <li>
                 <a href="/affiliate-program">Affiliate program</a>

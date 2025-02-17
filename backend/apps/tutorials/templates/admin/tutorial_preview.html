@@ -1,0 +1,22 @@
+{% load static %}
+
+{% block content %}
+<div class="tutorial-preview">
+    <h1>{{ tutorial.title }}</h1>
+    <p>{{ tutorial.short_description }}</p>
+    <hr>
+    {% for block in blocks %}
+      {% if block.real_class_name == "TextBlock" %}
+        <div class="text-block" style="margin-bottom:20px;">
+            <p>{{ block.text }}</p>
+        </div>
+      {% elif block.real_class_name == "ImageBlock" %}
+        <div class="image-block" style="margin-bottom:20px;">
+          {% if block.image %}
+            <img src="{{ block.image.url }}" alt="Изображение блока" style="max-width:600px;">
+          {% endif %}
+        </div>
+      {% endif %}
+    {% endfor %}
+</div>
+{% endblock %}
