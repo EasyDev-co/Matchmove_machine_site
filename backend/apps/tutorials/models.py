@@ -2,7 +2,6 @@ from django.db import models
 from polymorphic.models import PolymorphicModel
 from apps.utils.models_mixins.models_mixins import UUIDMixin
 
-from loguru import logger
 
 class TutorialBlock(UUIDMixin, PolymorphicModel):
     tutorial = models.ForeignKey(
@@ -67,5 +66,4 @@ class Tutorial(UUIDMixin):
     @property
     def blocks(self):
         tutorial_blocks = TutorialBlock.objects.filter(tutorial_id=self.pk).order_by('order')
-        logger.info(tutorial_blocks)
         return tutorial_blocks
