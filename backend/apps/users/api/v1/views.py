@@ -19,12 +19,14 @@ from apps.users.api.v1.serializers import (
     UserDetailSerializer,
     UserUpdateSerializer,
     UserRankingSerializer,
+    ContactUsSerializer,
 )
 from apps.users.api.v1.pagination import CustomPagination
 from apps.users.utils import send_notification_email
-from apps.users.tasks import send_confirm_code
+from apps.users.tasks import send_confirm_code, send_contact_us_tasks
 from apps.exeptions.api_exeptions import InvalidCode
 from apps.users.models.code import CodePurpose, ConfirmCode
+from apps.users.models.users import AdminNotificationLogs
 
 from loguru import logger
 
@@ -326,3 +328,19 @@ class UserRankingListView(ListAPIView):
             total_products=Count('products', filter=Q(products__is_approved=True))
         ).order_by('-total_products', 'username')
         return queryset
+
+class ContactAsApiView(APIView):
+    permission_classes = [AllowAny]
+    contact_serializer = ContactUsSerializer
+
+    def post(self, request, *args, **kwargs):
+        serializer = self.contact_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        AdminNotificationLogs.objects.create(
+            email=serializer.validated_data["email"],
+            text=serializer.validated_data["text"],
+            type=AdminNotificationLogs.TypeNotification.CONTACT_US,
+        )
+
+        send_contact_us_tasks.delay(serializer.validated_data["email"], serializer.validated_data["text"])

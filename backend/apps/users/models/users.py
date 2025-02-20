@@ -96,3 +96,27 @@ class User(UUIDMixin, TimeStampedMixin, AbstractUser):
 
     def __str__(self):
         return self.username
+
+
+class AdminNotificationLogs(TimeStampedMixin,UUIDMixin):
+    """
+    Уведомления админу, поддерживает два типа:
+    1. Contact US
+    2. New product
+    """
+
+    class TypeNotification(models.IntegerChoices):
+        CONTACT_US = 1, "contact-us"
+        NEW_PRODUCT = 2, "new-product"
+
+    email = models.EmailField(max_length=256, verbose_name=_("Email"), null=True, blank=True)
+    text = models.TextField(verbose_name=_("Text"), null=True, blank=True)
+    type = models.PositiveSmallIntegerField(
+        verbose_name=_("Тип уведомления"),
+        choices=TypeNotification.choices,
+        default=TypeNotification.CONTACT_US,
+    )
+
+    class Meta:
+        verbose_name = "Уведомление админу"
+        verbose_name_plural = "Уведомления админу"

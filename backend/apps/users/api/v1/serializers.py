@@ -154,6 +154,12 @@ class EmailSerializer(serializers.Serializer):
             raise ValidationError("Нет такого пользователя.")
         return value
 
+class ContactUsSerializer(serializers.Serializer):
+    """Сериализатор для связи с администратопром"""
+
+    email = serializers.EmailField()
+    text = serializers.CharField()
+
 
 class EmailAndCodeSerializer(EmailSerializer):
     """Сериализатор для проверки кода."""
