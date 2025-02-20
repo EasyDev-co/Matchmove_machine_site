@@ -11,6 +11,7 @@ from apps.users.api.v1.views import (
     ResetPasswordAPIView,
     PasswordChangeAPIView,
     UserRankingListView,
+    ContactAsApiView,
 )
 
 
@@ -26,4 +27,5 @@ urlpatterns = [
     path("reset_password/", ResetPasswordAPIView.as_view(), name="reset_password"),
     path("change_password/", PasswordChangeAPIView.as_view(), name="change_password"),
     path("ranked/", UserRankingListView.as_view(), name="user_ranked"),
+    path("contact_us/", ContactAsApiView.as_view(), name="contact_us"),
 ]
