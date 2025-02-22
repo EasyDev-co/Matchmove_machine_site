@@ -3,6 +3,10 @@ from config.celery import BaseTask, app
 from apps.products.services import get_ftp_service
 import logging
 
+from django.core.mail import send_mail
+from config.settings import EMAIL_HOST_USER, CONTACT_US_EMAIL
+
+
 logger = logging.getLogger(__name__)
 
 
@@ -110,7 +114,25 @@ class DeleteFileFromFtpTask(BaseTask):
             raise e
 
 
+class NotificationAboutUploadProductTask(BaseTask):
+
+    product_url = "https://grids.matchmovemachine.com/admin/products/product/{product_id}/change/"
+
+    def process(self, product_id, *args, **kwargs):
+        text_to_send = f"Загружен новый продукт: {self.product_url.format(product_id=product_id)}"
+        try:
+            send_mail(
+                subject="New product",
+                message=text_to_send,
+                from_email=EMAIL_HOST_USER,
+                recipient_list=(CONTACT_US_EMAIL,),
+                fail_silently=False,
+            )
+        except Exception as e:
+            logger.error("Error send new product email", exc_info=e)
+
 # Регистрация задач в Celery
+send_notification_about_new_product = app.register_task(NotificationAboutUploadProductTask())
 upload_file_to_ftp = app.register_task(UploadFileToFtpTask())
 download_file_from_ftp = app.register_task(DownloadFileFromFtpTask())
 delete_file_from_ftp = app.register_task(DeleteFileFromFtpTask())

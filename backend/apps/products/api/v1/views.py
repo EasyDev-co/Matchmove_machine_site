@@ -18,6 +18,7 @@ from apps.products.tasks import (
     download_file_from_ftp_api,
     upload_file_to_ftp_api,
     delete_file_from_ftp_api,
+    send_notification_about_new_product,
 )
 from .serializers import (
     ProductDetailSerializer,
@@ -28,6 +29,7 @@ from .serializers import (
     ProductSerializer,
     FileSerializer,
 )
+from apps.users.models.users import AdminNotificationLogs
 from apps.products.models.products import AccessType, AssetCategory
 
 logger = logging.getLogger(__name__)
@@ -136,6 +138,8 @@ class ProductListView(generics.ListAPIView):
 class FileViewSet(viewsets.ViewSet):
     permission_classes = [IsAuthenticated]
 
+    product_url = "https://grids.matchmovemachine.com/admin/products/product/{product_id}/change/"
+
     def upload(self, request):
         """Эндпоинт для загрузки файла на FTP."""
         file = request.FILES.get("file")
@@ -201,7 +205,7 @@ class FileViewSet(viewsets.ViewSet):
                         status=status.HTTP_400_BAD_REQUEST
                     )
 
-                Product.objects.create(
+                product = Product.objects.create(
                     access_type=AccessType.FREE,
                     category=AssetCategory.DISTORTION_GRIDS,
                     is_approved=False,
@@ -212,7 +216,11 @@ class FileViewSet(viewsets.ViewSet):
                     file=file_instance,
                     author=request.user,
                 )
-
+                AdminNotificationLogs.objects.create(
+                    text=f"Загружен новый продукт: {self.product_url.format(product_id=product.id)}",
+                    type=AdminNotificationLogs.TypeNotification.NEW_PRODUCT,
+                )
+                send_notification_about_new_product.delay(product.id)
             return Response({"id": file_instance.id}, status=status.HTTP_201_CREATED)
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

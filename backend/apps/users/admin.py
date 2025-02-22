@@ -4,6 +4,7 @@ from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.utils.translation import gettext_lazy as _
 
 from apps.users.models import ConfirmCode
+from apps.users.models.users import AdminNotificationLogs
 from apps.users.models.email_error_log import EmailErrorLog
 
 
@@ -136,3 +137,9 @@ class ConfirmCodeAdmin(admin.ModelAdmin):
         "purpose",
         "is_used",
     )
+
+@admin.register(AdminNotificationLogs)
+class AdminNotificationLogsAdmin(admin.ModelAdmin):
+    list_display = ("email", "text", "type")
+    list_filter = ("type", )
+    search_fields = ("email", "text")

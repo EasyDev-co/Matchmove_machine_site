@@ -329,6 +329,7 @@ class UserRankingListView(ListAPIView):
         ).order_by('-total_products', 'username')
         return queryset
 
+
 class ContactAsApiView(APIView):
     permission_classes = [AllowAny]
     contact_serializer = ContactUsSerializer
