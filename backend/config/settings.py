@@ -130,6 +130,7 @@ EMAIL_HOST = os.environ.get('EMAIL_HOST', 'smtp.yandex.ru')
 EMAIL_PORT = os.environ.get('EMAIL_PORT', 587)
 EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
+CONTACT_US_EMAIL = os.environ.get('CONTACT_US_EMAIL')
 EMAIL_USE_TLS = True
 
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER

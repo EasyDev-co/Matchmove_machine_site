@@ -2,14 +2,15 @@ import random
 import traceback
 from django.core.mail import send_mail
 from django.contrib.auth import get_user_model
-from django.db import transaction
 
 from apps.users.models import ConfirmCode
 from apps.users.models.code import CodePurpose
 from apps.users.models.email_error_log import EmailErrorLog
 
 from config.celery import BaseTask, app
-from config.settings import EMAIL_HOST_USER
+from config.settings import EMAIL_HOST_USER, CONTACT_US_EMAIL
+
+from loguru import logger
 
 User = get_user_model()
 
@@ -70,6 +71,7 @@ class SendConfirmCodeTask(BaseTask):
         )
         super().on_failure(exc, task_id, args, kwargs, einfo)
 
+
 class ResendConfirmCodeTask(BaseTask):
     def process(self, *args, **kwargs):
         email_error_logs = EmailErrorLog.objects.filter(
@@ -83,5 +85,26 @@ class ResendConfirmCodeTask(BaseTask):
             )
         email_error_logs.update(is_sent=True)
 
+
+class SendContactUsTask(BaseTask):
+
+    def process(self, user_email, text, *args, **kwargs):
+        text_to_send = f"""
+        {text}
+        Client email: {user_email}
+        """
+        try:
+            send_mail(
+                subject="New message from client",
+                message=text_to_send,
+                from_email=EMAIL_HOST_USER,
+                recipient_list=(CONTACT_US_EMAIL,),
+                fail_silently=False,
+            )
+        except Exception as e:
+            logger.error("Error send contact us email", exc_info=e)
+
+
 send_confirm_code = app.register_task(SendConfirmCodeTask)
+send_contact_us_tasks = app.register_task(SendContactUsTask)
 app.register_task(ResendConfirmCodeTask)
