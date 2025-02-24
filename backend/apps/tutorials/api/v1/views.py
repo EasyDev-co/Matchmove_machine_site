@@ -1,4 +1,5 @@
 from rest_framework import generics
+from rest_framework.permissions import AllowAny
 
 from apps.tutorials.models import Tutorial
 from apps.tutorials.api.v1.serializers import TutorialListSerializer, TutorialDetailSerializer
@@ -13,6 +14,8 @@ class TutorialListAPIView(generics.ListAPIView):
     serializer_class = TutorialListSerializer
     pagination_class = TutorialPagination
 
+    permission_classes = (AllowAny,)
+
 
 class TutorialRetrieveAPIView(generics.RetrieveAPIView):
     """
@@ -21,3 +24,5 @@ class TutorialRetrieveAPIView(generics.RetrieveAPIView):
     queryset = Tutorial.objects.all()
     serializer_class = TutorialDetailSerializer
     lookup_field = 'id'
+
+    permission_classes = (AllowAny,)
