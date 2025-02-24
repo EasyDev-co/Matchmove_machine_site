@@ -320,6 +320,7 @@ class UserLogoutView(APIView):
 
 
 class UserRankingListView(ListAPIView):
+    permission_classes = (AllowAny, )
     serializer_class = UserRankingSerializer
     pagination_class = CustomPagination
 
@@ -331,7 +332,7 @@ class UserRankingListView(ListAPIView):
 
 
 class ContactAsApiView(APIView):
-    permission_classes = [AllowAny]
+    permission_classes = (AllowAny, )
     contact_serializer = ContactUsSerializer
 
     def post(self, request, *args, **kwargs):
