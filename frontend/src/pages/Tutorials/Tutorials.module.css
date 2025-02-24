@@ -19,6 +19,7 @@
     display: flex;
     justify-content: space-between;
     gap: 20px;
+    align-items: flex-start;
 }
 .title {
     font-size: 32px;
