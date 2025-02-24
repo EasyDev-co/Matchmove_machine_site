@@ -9,25 +9,15 @@ import { fetchTopContributors } from "../../store/slices/topContributorsSlice";
 import iconimg from "../../assets/images/iconplaceholder.png";
 
 const TopContributors = () => {
-  // const { products, status } = useSelector((state) => state.products);
   const dispatch = useDispatch();
   const { top, status, error } = useSelector((state) => state.topContribiutors);
-
+  
   useEffect(() => {
     if (status === "idle") {
       dispatch(fetchTopContributors());
     }
     console.log(top);
   }, [status, dispatch]);
-
-  const test = [
-    {
-      photo: testPhoto,
-      name: "Pidor Ivanov",
-      quantity: "1274",
-      number: "1",
-    },
-  ];
 
   if (status === "loading") {
     return <p>Загрузка...</p>;
@@ -58,7 +48,7 @@ const TopContributors = () => {
         )}
         <div className={styles.main}>
           {top?.data?.map((item, index) => (
-            <div className={styles.user}>
+            <div key={index} className={styles.user}>
               <p className={styles.number}>{item.position}.</p>
               <img
                 style={{ width: "60px", height: "60px", borderRadius: "5px" }}

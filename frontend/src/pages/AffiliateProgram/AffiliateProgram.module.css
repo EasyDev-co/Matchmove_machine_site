@@ -17,3 +17,15 @@
     flex-direction: column;
     gap: 40px;
 }
+
+@media (max-width: 768px) {
+    .user {
+        width: 330px;
+    }
+  }
+  
+  @media (max-width: 390px) {
+    .user {
+        width: 350px;
+    }
+  }

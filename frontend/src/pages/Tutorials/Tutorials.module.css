@@ -1,0 +1,57 @@
+
+.container {
+    max-width: 413px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+.element {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.image {
+    width: 413px;
+    height: 233px;
+    object-fit: contain;
+}
+.nameCont {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+}
+.title {
+    font-size: 32px;
+    font-weight: 450;
+    line-height: 41px;
+    color: rgba(40, 40, 40, 1);
+}
+.descriprion {
+    color: rgba(40, 40, 40, 1);
+    font-size: 20px;
+    font-weight: 300;
+    line-height: 26px;
+}
+
+@media (max-width: 768px) {
+    .container {
+        max-width: 334px;
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .image {
+        width: 334px;
+        height: 233px;
+    }
+  }
+  
+  /* Для мобильных (до 390px) - 1 колонка */
+  @media (max-width: 390px) {
+    .container {
+        max-width: 350px;
+        grid-template-columns: repeat(1, 1fr);
+    }
+    .image {
+        width: 350  px;
+        height: 233px;
+    }
+  }

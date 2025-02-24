@@ -7,6 +7,7 @@ import { useDispatch } from "react-redux";
 import { fetchProducts } from "../store/slices/productSlice";
 import { useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
+import MiniTopContributors from "../components/MiniTopContributors/MiniTopContributors";
 
 const Library = () => {
 
@@ -46,6 +47,9 @@ const Library = () => {
       <DatabaseBanner/>
       <LibraryItems/>
       <JoinCommunity/>
+      <div style={{padding: '0 80px 80px 80px'}}>
+        <MiniTopContributors />
+      </div>
     </>
   );
 };
