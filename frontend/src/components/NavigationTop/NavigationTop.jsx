@@ -35,7 +35,13 @@ const NavigationTop =({title, text, singleProduct})=>{
             <Link to="/">Home {breadcrumbsvg}</Link>
             <p>Top Contribution</p>
           </div>
-        ) : title === "How it works" ?(
+        ) : title === "Tutorials" ? (
+          <div className={styles.breadcrumbs}>
+            <Link to="/">Home {breadcrumbsvg}</Link>
+            <p>Tutorials</p>
+          </div>
+        )  
+        : title === "How it works" ?(
           <div className={styles.breadcrumbs}>
           <Link to="/">Home {breadcrumbsvg}</Link>
           <p>How it works</p>

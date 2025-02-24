@@ -39,6 +39,13 @@ const HeaderLinks = ({ isMenuOpen, handleCloseMenu }) => {
             Affiliate program
           </Link>
         </li>
+        <li onClick={handleClose}>
+          <Link to="/tutorials">
+            {" "}
+            <img src={linkIng} alt="btn-icon" />
+            Tutorials
+          </Link>
+        </li>
         <li>
           <Link to="/faq" onClick={handleClose}>
             {" "}

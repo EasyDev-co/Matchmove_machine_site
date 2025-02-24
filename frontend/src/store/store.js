@@ -11,6 +11,7 @@ import orderReducer from './slices/orderSlice';
 import qrReducer from './slices/qrSlice';
 import creatorProfileReducer from "./slices/creatorProfileSlice"
 import topContribiutorsSlice from "./slices/topContributorsSlice";
+import tutorialsSlice from "./slices/tutorialsSlice";
 
 const store = configureStore({
   reducer: {
@@ -26,6 +27,7 @@ const store = configureStore({
     qr:qrReducer,
     creatorProfile:creatorProfileReducer,
     topContribiutors: topContribiutorsSlice,
+    tutorials: tutorialsSlice,
   },
 });
 
