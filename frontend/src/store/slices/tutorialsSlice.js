@@ -13,7 +13,7 @@ export const fetchTutorials = createAsyncThunk(
   'tutorials/fetchTutorials',
   async (_, { rejectWithValue }) => {
     try {
-      const response = await fetchWithAuth(`${BASE_URL}/v1/tutorials/`, {
+      const response = await fetch(`${BASE_URL}/v1/tutorials/`, {
         method: 'GET',
       });
 
