@@ -13,6 +13,7 @@ from apps.users.api.v1.views import (
     UserRankingListView,
     ContactAsApiView,
 )
+from apps.users.api.v1.social_network.views import GoogleAuthCodeView
 
 
 urlpatterns = [
@@ -28,4 +29,5 @@ urlpatterns = [
     path("change_password/", PasswordChangeAPIView.as_view(), name="change_password"),
     path("ranked/", UserRankingListView.as_view(), name="user_ranked"),
     path("contact_us/", ContactAsApiView.as_view(), name="contact_us"),
+    path("auth/google/", GoogleAuthCodeView.as_view(), name="google_auth"),
 ]
