@@ -13,23 +13,26 @@ export const fetchTopContributors = createAsyncThunk(
   'topContributors/fetchTopContributors',
   async (_, { rejectWithValue }) => {
     try {
-      const response = await fetchWithAuth(`${BASE_URL}/users/v1/ranked/`, {
+      console.log("fetch");
+      const response = await fetch(`${BASE_URL}/users/v1/ranked/`, {
         method: 'GET',
       });
 
       if (!response.ok) {
         const errorDetails = await response.json();
+        console.log("errors detail", errorDetails);
         return rejectWithValue(errorDetails);
       }
 
-      return response.json();
+      return await response.json();
     } catch (error) {
       return rejectWithValue(error.message);
     }
   }
 );
 
-const topContribiutorsSlice = createSlice({
+
+const topContributorsSlice = createSlice({
   name: 'topContributors',
   initialState,
   reducers: {
@@ -52,4 +55,4 @@ const topContribiutorsSlice = createSlice({
   },
 });
 
-export default topContribiutorsSlice.reducer;
+export default topContributorsSlice.reducer;

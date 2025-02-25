@@ -10,9 +10,10 @@ import iconimg from "../../assets/images/iconplaceholder.png";
 
 const TopContributors = () => {
   const dispatch = useDispatch();
-  const { top, status, error } = useSelector((state) => state.topContribiutors);
+  const { top, status, error } = useSelector((state) => state.topContributors);
   
   useEffect(() => {
+    console.log("status", status)
     if (status === "idle") {
       dispatch(fetchTopContributors());
     }
@@ -24,6 +25,7 @@ const TopContributors = () => {
   }
 
   if (status === "failed") {
+    console.log("ошибка")
     return <p>Ошибка: {error}</p>;
   }
 

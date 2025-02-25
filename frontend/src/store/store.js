@@ -10,7 +10,7 @@ import paymentReducer from './slices/paymentSlice';
 import orderReducer from './slices/orderSlice';
 import qrReducer from './slices/qrSlice';
 import creatorProfileReducer from "./slices/creatorProfileSlice"
-import topContribiutorsSlice from "./slices/topContributorsSlice";
+import topContributorsSlice from "./slices/topContributorsSlice";
 import tutorialsSlice from "./slices/tutorialsSlice";
 
 const store = configureStore({
@@ -26,9 +26,10 @@ const store = configureStore({
     order: orderReducer,
     qr:qrReducer,
     creatorProfile:creatorProfileReducer,
-    topContribiutors: topContribiutorsSlice,
+    topContributors: topContributorsSlice,
     tutorials: tutorialsSlice,
   },
 });
+
 
 export default store;

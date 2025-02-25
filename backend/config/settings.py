@@ -151,6 +151,10 @@ PADDLE_NOTIFICATION_KEY = os.environ.get('PADDLE_NOTIFICATION_KEY')
 PADDLE_API_MODE = os.getenv('PADDLE_API_MODE', 'sandbox-api')
 PADDLE_API_BASE_URL = f'https://{PADDLE_API_MODE}.paddle.com'
 
+GOOGLE_OAUTH_CLIENT_ID = os.environ.get('GOOGLE_OAUTH_CLIENT_ID')
+GOOGLE_OAUTH_SECRET = os.environ.get('GOOGLE_OAUTH_SECRET')
+GOOGLE_OAUTH_REDIRECT_URI = os.environ.get('GOOGLE_OAUTH_REDIRECT_URI')
+
 LANGUAGE_CODE = "en-us"
 
 TIME_ZONE = "UTC"
@@ -224,3 +228,5 @@ CORS_ALLOW_HEADERS = [
     'authorization',
     'x-csrftoken'
 ]
+
+SITE_ID = 1
