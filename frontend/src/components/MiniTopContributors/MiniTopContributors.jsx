@@ -10,7 +10,7 @@ import { useNavigate } from "react-router-dom";
 const MiniTopContributors = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { top, status, error } = useSelector((state) => state.topContribiutors);
+  const { top, status, error } = useSelector((state) => state.topContributors);
 
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
 
