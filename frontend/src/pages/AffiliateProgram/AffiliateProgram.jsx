@@ -1,26 +1,9 @@
 import styles from "./AffiliateProgram.module.css";
 import NavigationTop from "../../components/NavigationTop/NavigationTop";
 import ContributionForm from "../../components/ContributionForm/ContributionForm";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchTopContributors } from "../../store/slices/topContributorsSlice";
-import { useEffect } from "react";
-import iconimg from "../../assets/images/iconplaceholder.png";
-import countFiles from "../../assets/svg/countFiles.svg";
-import arrowbtn from "../../assets/svg/arrowbtn.svg";
-import { useNavigate } from "react-router-dom";
 import MiniTopContributors from "../../components/MiniTopContributors/MiniTopContributors";
 
 const AffiliateProgram = () => {
-  const navigate =useNavigate()
-  const dispatch = useDispatch();
-  const { top, status, error } = useSelector((state) => state.topContribiutors);
-
-  useEffect(() => {
-    if (status === "idle") {
-      dispatch(fetchTopContributors());
-    }
-    console.log(top);
-  }, [status, dispatch]);
   return (
     <>
       <NavigationTop title="Affiliate program" />
