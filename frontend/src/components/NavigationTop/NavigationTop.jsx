@@ -2,7 +2,7 @@ import styles from "./NavigationTop.module.css"
 import { Link } from "react-router-dom"
 import { breadcrumbsvg } from "../../assets/svg/svgimages"
 
-const NavigationTop =({title, text, singleProduct})=>{
+const NavigationTop =({title, text, singleProduct, singleTutorial})=>{
     
     
     return (
@@ -19,6 +19,12 @@ const NavigationTop =({title, text, singleProduct})=>{
             <Link to={`/library?page=1&page_size=24&camera=${singleProduct.camera.id}`}>{singleProduct.camera.model_name} {breadcrumbsvg}</Link>
             <Link to={`/library?page=1&page_size=24&lens=${singleProduct.lens.id}`}>{singleProduct.lens.brand} {singleProduct.lens.model_name} {breadcrumbsvg}</Link>
             <p>Distortion grid pack for {singleProduct.camera.model_name} {singleProduct.lens.model_name}</p>
+          </div>
+        ) : singleTutorial ? (
+          <div className={styles.breadcrumbs}>
+            <Link to="/">Home {breadcrumbsvg}</Link>
+            <Link to="/tutorials">Tutorials {breadcrumbsvg}</Link>
+            <p>{singleTutorial}</p>
           </div>
         ) : title === "Affiliate program" ? (
           <div className={styles.breadcrumbs}>

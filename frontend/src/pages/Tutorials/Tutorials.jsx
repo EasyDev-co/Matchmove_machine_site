@@ -4,7 +4,7 @@ import styles from "./Tutorials.module.css";
 import testPhoto from "../../assets/images/testava.jpg";
 import Pagination from "../../components/Pagination/Pagination";
 import { useEffect } from "react";
-import { fetchTopContributors } from "../../store/slices/topContributorsSlice";
+import { Link } from 'react-router-dom';
 import downoloadSvg from "../../assets/svg/Download.svg";
 import testPhoto2 from '../../assets/images/tutorial1.png'
 import { fetchTutorials } from "../../store/slices/tutorialsSlice";
@@ -86,7 +86,7 @@ const Tutorials = () => {
         )}
         <div className={styles.container}>
             {tutorials?.data?.map((item, index) => (
-                <div key={index} className={styles.element}>
+                <Link to={`/tutorials/${item.id}`} key={index} className={styles.element}>
                     <img className={styles.image} src={item.cover} alt="tutorial image" />
                     <div className={styles.nameCont}>
                         <p className={styles.title}>{item.title}</p>
@@ -100,11 +100,11 @@ const Tutorials = () => {
                                   console.log("Файл отсутствует"); // Можно добавить уведомление пользователю
                               }
                           }} 
-                            style={{ cursor: 'pointer' }} // Добавляем курсор-указатель для лучшего UX
+                            style={{ cursor: 'pointer', position: 'relative', zIndex: '10', pointerEvents: 'none' }} // Добавляем курсор-указатель для лучшего UX
                         />
                     </div>
                     <p className={styles.descriprion}>{item.short_description}</p>
-                </div>
+                </Link>
             ))}
         </div>
         {tutorials && (

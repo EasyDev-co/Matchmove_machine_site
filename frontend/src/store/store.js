@@ -10,6 +10,7 @@ import paymentReducer from './slices/paymentSlice';
 import orderReducer from './slices/orderSlice';
 import qrReducer from './slices/qrSlice';
 import creatorProfileReducer from "./slices/creatorProfileSlice"
+import detailTutorialSlice from "./slices/detailTutorialSlice"
 import topContributorsSlice from "./slices/topContributorsSlice";
 import tutorialsSlice from "./slices/tutorialsSlice";
 
@@ -28,6 +29,7 @@ const store = configureStore({
     creatorProfile:creatorProfileReducer,
     topContributors: topContributorsSlice,
     tutorials: tutorialsSlice,
+    detailTutorial: detailTutorialSlice,
   },
 });
 

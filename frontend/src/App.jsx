@@ -22,6 +22,8 @@ import TermsOfUse from "./components/Footer/TermsOfUse";
 import PrivacyPolicy from "./components/Footer/PrivacyPolicy";
 import TopContributors from "./pages/TopContributors/TopContributors";
 import Tutorials from "./pages/Tutorials/Tutorials";
+import OneTutorial from "./pages/Tutorials/DetailTutorial/DetailTutorial";
+import DetailTutorial from "./pages/Tutorials/DetailTutorial/DetailTutorial";
 
 function App() {
   return (
@@ -77,6 +79,7 @@ function App() {
                 <Route path="faq" element={<Faq />} />
                 <Route path="how-it-works" element={<HowTo />} />
                 <Route path="top-contributors" element={<TopContributors />} />
+                <Route path="tutorials/:id" element={<DetailTutorial />} />
                 <Route path="tutorials" element={<Tutorials />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>

@@ -6,6 +6,8 @@
     gap: 20px;
 }
 .element {
+    position: relative;
+    z-index: 1;
     display: flex;
     flex-direction: column;
     gap: 20px;
@@ -33,6 +35,30 @@
     font-weight: 300;
     line-height: 26px;
 }
+.downloadButton {
+    width: 180px;
+    height: 60px;
+    background-color: rgba(47, 87, 191, 1);
+    color: rgba(255, 255, 255, 1);
+    font-size: 18px;
+    font-weight: 450;
+    line-height: 23px;
+    border: none;
+    font-family: 'Montserrat', sans-serif;
+    /* font-family: inherit; */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.blockDetail {
+    padding: 80px;
+    display: flex; 
+    flex-direction: column; 
+    gap: 20px;
+}
 
 @media (max-width: 768px) {
     .container {
@@ -42,6 +68,9 @@
     .image {
         width: 334px;
         height: 233px;
+    }
+    .blockDetail {
+        padding: 40px;
     }
   }
   
