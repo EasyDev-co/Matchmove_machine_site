@@ -1,52 +1,42 @@
 import { useDispatch, useSelector } from "react-redux";
 import NavigationTop from "../../components/NavigationTop/NavigationTop";
 import styles from "./Tutorials.module.css";
-import testPhoto from "../../assets/images/testava.jpg";
+// import testPhoto from "../../assets/images/testava.jpg";
 import Pagination from "../../components/Pagination/Pagination";
 import { useEffect } from "react";
 import { Link } from 'react-router-dom';
 import downoloadSvg from "../../assets/svg/Download.svg";
-import testPhoto2 from '../../assets/images/tutorial1.png'
 import { fetchTutorials } from "../../store/slices/tutorialsSlice";
+import Slider from "../../components/Slider/Slider";
+import testPhoto from '../../assets/images/howTo.png'
 
 const Tutorials = () => {
-    // const { top, status, error } = useSelector((state) => state.topContribiutors);
     const dispatch = useDispatch();
 
     const { tutorials, status, error } = useSelector((state) => state.tutorials);
-
-    const test = [
-        {
-          photo: testPhoto,
-          name: "Pidor Ivanov",
-          descriprion: "Welcome to an in-depth exploration of Multi-Camera Geometry Tracking Technology! In this video, we'll unlock the mysteries behind this cutting-edge innovation and its incredible applications.",
-          pdf: '',
-        },
-        {
-            photo: testPhoto2,
-            name: "Pidor Ivanov",
-            descriprion: "jgrhefjik hriuefjkm hgutrkej hgurnj hgurefjk grefjnc grhruefj huegrknj",
-            pdf: 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf',
-          },
-          {
-            photo: testPhoto,
-            name: "Pidor Ivanov",
-            descriprion: "jgrhefjik hriuefjkm hgutrkej hgurnj hgurefjk grefjnc grhruefj huegrknj",
-            pdf: 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf',
-          },
-          {
-            photo: testPhoto,
-            name: "Pidor Ivanov",
-            descriprion: "jgrhefjik hriuefjkm hgutrkej hgurnj hgurefjk grefjnc grhruefj huegrknj",
-            pdf: 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf',
-          },
-          {
-            photo: testPhoto,
-            name: "Pidor Ivanov",
-            descriprion: "jgrhefjik hriuefjkm hgutrkej hgurnj hgurefjk grefjnc grhruefj huegrknj",
-            pdf: 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf',
-          },
-      ];
+    // const items = tutorials?.data?.map((item) => (
+    //   <Link to={`/tutorials/${item.id}`} key={item.id} className={styles.element}>
+    //     <img className={styles.image} src={testPhoto} alt="tutorial image" />
+    //     <div className={styles.nameCont}>
+    //       <p className={styles.title}>{item.title}</p>
+    //       <img
+    //         src={downoloadSvg}
+    //         alt="download"
+    //         onClick={(e) => {
+    //           e.preventDefault(); // Предотвращаем переход по ссылке
+    //           e.stopPropagation(); // Останавливаем всплытие события
+    //           if (item.pdf) {
+    //             handleDownload(item.pdf);
+    //           } else {
+    //             console.log('Файл отсутствует');
+    //           }
+    //         }}
+    //         style={{ cursor: 'pointer', position: 'relative', zIndex: '10' }}
+    //       />
+    //     </div>
+    //     <p className={styles.description}>{item.short_description}</p>
+    //   </Link>
+    // ));
 
       const handleDownload = (pdfLink) => {
         const link = document.createElement('a');
@@ -116,6 +106,7 @@ const Tutorials = () => {
             }}
           />
         )}
+        {/* <Slider items={items}/> */}
       </section>
     </div>
   );

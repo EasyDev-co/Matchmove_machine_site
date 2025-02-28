@@ -7,13 +7,14 @@ import countFiles from "../../assets/svg/countFiles.svg";
 import { useEffect } from "react";
 import { fetchTopContributors } from "../../store/slices/topContributorsSlice";
 import iconimg from "../../assets/images/iconplaceholder.png";
+import Slider from "../../components/Slider/Slider";
 
 const TopContributors = () => {
   const dispatch = useDispatch();
   const { top, status, error } = useSelector((state) => state.topContributors);
-  
+
   useEffect(() => {
-    console.log("status", status)
+    console.log("status", status);
     if (status === "idle") {
       dispatch(fetchTopContributors());
     }
@@ -25,7 +26,7 @@ const TopContributors = () => {
   }
 
   if (status === "failed") {
-    console.log("ошибка")
+    console.log("ошибка");
     return <p>Ошибка: {error}</p>;
   }
 
@@ -41,12 +42,12 @@ const TopContributors = () => {
       <section className={`height`} style={{ paddingTop: "0" }}>
         {top && (
           <Pagination
-          pagination={{
-            count: top?.total_page || 1,  // Используем total_page
-            next: top?.next_page,
-            previous: top?.previus_page,
-          }}
-        />       
+            pagination={{
+              count: top?.total_page || 1, // Используем total_page
+              next: top?.next_page,
+              previous: top?.previus_page,
+            }}
+          />
         )}
         <div className={styles.main}>
           {top?.data?.map((item, index) => (
@@ -69,13 +70,12 @@ const TopContributors = () => {
         </div>
         {top && (
           <Pagination
-          pagination={{
-            count: top?.total_page || 1,  // Используем total_page
-            next: top?.next_page,
-            previous: top?.previus_page,
-          }}
-        />
-        
+            pagination={{
+              count: top?.total_page || 1, // Используем total_page
+              next: top?.next_page,
+              previous: top?.previus_page,
+            }}
+          />
         )}
       </section>
     </div>

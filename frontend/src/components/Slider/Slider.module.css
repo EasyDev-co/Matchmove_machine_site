@@ -1,0 +1,70 @@
+.slider {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+    width: 100%;
+    margin: 0 auto;
+  }
+  .sliderControls {
+    display: flex;
+    align-items: center;
+  }
+  .sliderContent {
+    display: flex;
+    justify-content: center;
+    overflow: hidden;
+    width: 100%;
+    gap: 10px; /* Добавляем отступ между слайдами */
+  }
+  
+  .slide {
+    flex: 0 0 calc((100% - (10px * (var(--visible-slides) - 1))) / var(--visible-slides));
+    transition: transform 0.5s ease;
+    box-sizing: border-box;
+  }
+  
+  .sliderButton {
+    background: none;
+    border: none;
+    font-size: 2rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+  }
+  
+  .sliderDots {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+  }
+  
+  .dot {
+    height: 5px;
+    width: 50px;
+    margin: 0 5px;
+    background-color: rgba(217, 217, 217, 1);
+    border-radius: 5px;
+    display: inline-block;
+    cursor: pointer;
+  }
+  
+  .dot.active {
+    height: 10px;
+    width: 100px;
+    background-color: rgba(47, 87, 191, 1);
+  }
+
+  @media (max-width: 768px) {
+    .dot {
+        width: 28px;
+      }
+      
+    .dot.active {
+        width: 30px;
+    }
+  }
+  
