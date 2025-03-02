@@ -4,8 +4,20 @@ import { closesvg } from "../../assets/svg/svgimages";
 import linkIng from "../../assets/images/menu-link-icon.svg";
 
 import styles from "./Header.module.css";
+import Modal from "../Modal/Modal";
+import { useState } from "react";
+import ContacUs from "../ContacUs/ContacUs";
 
 const HeaderLinks = ({ isMenuOpen, handleCloseMenu }) => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const handleOpen = () => {
+    setIsOpen(true);
+  };
+
+  const modalClose = () => {
+    setIsOpen(false);
+  };
   const handleClose = () => {
     handleCloseMenu();
   };
@@ -53,7 +65,17 @@ const HeaderLinks = ({ isMenuOpen, handleCloseMenu }) => {
             FAQ
           </Link>
         </li>
+        <li>
+          <button className={`${styles.contactUs}`} onClick={handleOpen}>
+            {" "}
+            <img className={styles.img} src={linkIng} alt="btn-icon" />
+            Contact Us
+          </button>
+        </li>
       </ul>
+      <Modal isOpen={isOpen} onClose={modalClose}>
+        <ContacUs />
+      </Modal>
     </div>
   );
 };

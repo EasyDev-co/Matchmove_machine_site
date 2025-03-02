@@ -16,10 +16,15 @@ import {
   linkedin,
   youtube,
 } from "../../assets/svg/footerbtnhs";
+import Modal from "../Modal/Modal";
+import { useState } from "react";
+import ContacUs from "../ContacUs/ContacUs";
 
 const Footer = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const [isOpen, setIsOpen] = useState(false);
+
 
   const handleLogoPath = () => {
     if (location.pathname !== "/") {
@@ -27,6 +32,13 @@ const Footer = () => {
     } else {
       window.scrollTo({ top: 0, behavior: "smooth" }); // Scroll to the top
     }
+  };
+  const handleOpen = () => {
+    setIsOpen(true);
+  };
+
+  const handleClose = () => {
+    setIsOpen(false);
   };
   return (
     <footer className={styles.container}>
@@ -165,17 +177,24 @@ const Footer = () => {
 
             <div className={styles.email}>
               <p className="h5-extra-bold">Email</p>
-              <a
-                href="mailto:grids@matchmovemachine.com"
+              {/* <button onClick={handleOpen}>
+                grids@matchmovemachine.com
+              </button> */}
+              <p
+                onClick={handleOpen}
                 className={styles.highLight}
+                style={{cursor: 'pointer'}}
               >
                 grids@matchmovemachine.com
-              </a>
+              </p>
             </div>
           </div>
         </div>
       </div>
       <p className="h2-light">&copy; Matchmove machine, 2024</p>
+      <Modal isOpen={isOpen} onClose={handleClose}>
+        <ContacUs />
+      </Modal>
     </footer>
   );
 };
