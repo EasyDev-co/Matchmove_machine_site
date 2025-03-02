@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import NavigationTop from "../../../components/NavigationTop/NavigationTop";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { fetchDetailTutorials } from "../../../store/slices/detailTutorialSlice";
 import styles from "../Tutorials.module.css";
 import downloadIcon from "../../../assets/svg/iconDownload.svg";
@@ -11,15 +11,32 @@ import testPhoto from "../../../assets/images/howTo.png";
 import downoloadSvg from "../../../assets/svg/Download.svg";
 
 const DetailTutorial = () => {
+  const [visibleSlides, setVisibleSlides] = useState(3); // По умолчанию 3 слайда
   const { id } = useParams();
   const dispatch = useDispatch();
   const { detailTutorials, status, error } = useSelector(
     (state) => state.detailTutorial // Исправлено: правильный ключ (без "s" на конце)
   );
 
+  const updateVisibleSlides = () => {
+    if (window.innerWidth < 690) {
+      setVisibleSlides(1); // Если ширина экрана меньше 690px, показываем 1 слайд
+    } else if (window.innerWidth < 1268) {
+      setVisibleSlides(2); // Если ширина экрана меньше 769px, показываем 2 слайда
+    } else {
+      setVisibleSlides(3); // Иначе показываем 3 слайда
+    }
+  };
+
+  // Используем useEffect для обработки изменения размера окна
   useEffect(() => {
-    console.log()
-  })
+    updateVisibleSlides(); // Вызываем при первом рендере
+    window.addEventListener('resize', updateVisibleSlides); // Добавляем обработчик изменения размера окна
+
+    return () => {
+      window.removeEventListener('resize', updateVisibleSlides); // Убираем обработчик при размонтировании
+    };
+  }, []);
 
   useEffect(() => {
     if (status === "idle") {
@@ -87,12 +104,7 @@ const DetailTutorial = () => {
   return (
     <section>
       <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          paddingRight: "80px",
-        }}
+        className={styles.titleBlock}
       >
         {detailTutorials && (
           <NavigationTop
@@ -123,7 +135,7 @@ const DetailTutorial = () => {
         {detailTutorials?.blocks?.map((block, index) => (
           <div key={index}>
             {block.type == "ImageBlock" ? (
-              <img style={{ borderRadius: "10px" }} src={block.image}></img>
+              <img style={{ borderRadius: "10px", maxWidth: "100%", height: "auto" }} src={block.image}></img>
             ) : (
               <p>{block.text}</p>
             )}
@@ -131,9 +143,9 @@ const DetailTutorial = () => {
         ))}
       </div>
       <div className={styles.otherTutorials}>
-      <h2 className={`h2-medium`} style={{color: "white", fontWeight: "450"}}>Other tutorials</h2>
+      <h2 className={`h2-medium ${styles.titleOtherTutorials}`} style={{color: "white", fontWeight: "450"}}>Other tutorials</h2>
         {tutorials?.data ? ( // Если данные есть
-          <Slider items={items} />
+          <Slider items={items} visibleSlides={visibleSlides}/>
         ) : (
           <div>Загрузка данных...</div> // Если данных нет
         )}

@@ -1,4 +1,9 @@
-
+.titleBlock {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-right: 80px;
+}
 .container {
     max-width: 413px;
     display: grid;
@@ -31,12 +36,17 @@
 }
 .titleOther {
     color: rgba(255, 255, 255, 1);
+    width: 326px;
+    white-space: nowrap; /* Запрет переноса текста на новую строку */
+    overflow: visible;
 }
 .description {
     color: rgba(40, 40, 40, 1);
     font-size: 20px;
     font-weight: 300;
     line-height: 26px;
+    white-space: normal;
+    width: 413px;
 }
 .descriptionOther {
     color: rgba(255, 255, 255, 1);
@@ -74,7 +84,9 @@
     align-items: center;
 }
 
-@media (max-width: 768px) {
+
+
+@media (max-width: 858px) {
     .container {
         max-width: 334px;
         grid-template-columns: repeat(2, 1fr);
@@ -85,6 +97,22 @@
     }
     .blockDetail {
         padding: 40px;
+    }   
+    .titleOther {
+        width: 247px;
+        white-space: normal;
+        /* overflow-wrap: break-word;
+        word-wrap: break-word; */
+    }
+    .otherTutorials {
+        padding: 10px;
+    }
+    .element {
+        width: 334px;
+    }
+    .description {
+        width: 334px;
+        overflow-wrap: break-word;
     }
   }
   
@@ -97,5 +125,19 @@
     .image {
         width: 350  px;
         height: 233px;
+    }
+    .titleOther {
+        font-size: 24px;
+    }
+    .descriptionOther {
+        font-size: 18px;
+    }
+    .titleBlock {
+        flex-direction: column;
+        padding-right: 20px;
+        align-items: flex-start;
+    }
+    .downloadButton {
+        margin-left: 20px;
     }
   }

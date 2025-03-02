@@ -22,6 +22,9 @@
     font-family: 'Montserrat', sans-serif;
     cursor: pointer;
 }
+.allButtonMobile {
+    margin: 20px auto 0;
+}
 .user {
     break-inside: avoid; /* Предотвращает разрыв элементов между колонками */
     margin-bottom: 20px;
@@ -37,6 +40,9 @@
     font-weight: 300;
     line-height: 30.77px;
 }
+.numberMobile {
+    margin-right: 20px;
+}
 .info {
     display: flex;
     flex-direction: column;
@@ -50,15 +56,32 @@
     display: flex;
     align-items: center;
 }
+.element {
+    display: flex;
+    align-items: center;
+    margin-right: 10px;
+}
 .name {
     color: rgba(47, 87, 191, 1);
     font-size: 24px;
     line-height: 30.77px;
     font-weight: 450;
 }
+.nameMobile {
+    width: 172px;
+    overflow: hidden;
+}
 .headerTop {
     display: flex;
     justify-content: space-between;
+}
+.imgMobile {
+    width: 172px;
+    height: 172px;
+    border-radius: 5px;
+}
+.total_products {
+    font-size: 24px;
 }
 
 @media (max-width: 768px) {
@@ -70,5 +93,18 @@
   @media (max-width: 390px) {
     .topContribiutors {
         margin-top: 34px;
+    }
+    .imgMobile {
+        width: 150px;
+        height: 150px;
+    }
+    .nameMobile {
+        font-size: 20px;
+    }
+    .total_products {
+        font-size: 20px;
+    }
+    .numberMobile {
+        font-size: 20px;
     }
   }

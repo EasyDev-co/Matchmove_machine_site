@@ -5,14 +5,36 @@ import { useEffect, useState } from "react";
 import iconimg from "../../assets/images/iconplaceholder.png";
 import countFiles from "../../assets/svg/countFiles.svg";
 import arrowbtn from "../../assets/svg/arrowbtn.svg";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import Slider from "../Slider/Slider";
 
 const MiniTopContributors = () => {
+  const [visibleSlides, setVisibleSlides] = useState(3); // По умолчанию 3 слайда
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { top, status, error } = useSelector((state) => state.topContributors);
 
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+
+  const updateVisibleSlides = () => {
+    if (window.innerWidth < 450) {
+      setVisibleSlides(1); // Если ширина экрана меньше 690px, показываем 1 слайд
+    } else if (window.innerWidth < 690) {
+      setVisibleSlides(2); // Если ширина экрана меньше 769px, показываем 2 слайда
+    } else {
+      setVisibleSlides(3); // Иначе показываем 3 слайда
+    }
+  };
+
+  // Используем useEffect для обработки изменения размера окна
+  useEffect(() => {
+    updateVisibleSlides(); // Вызываем при первом рендере
+    window.addEventListener("resize", updateVisibleSlides); // Добавляем обработчик изменения размера окна
+
+    return () => {
+      window.removeEventListener("resize", updateVisibleSlides); // Убираем обработчик при размонтировании
+    };
+  }, []);
 
   useEffect(() => {
     const handleResize = () => {
@@ -32,6 +54,27 @@ const MiniTopContributors = () => {
     }
     console.log(top);
   }, [status, dispatch]);
+
+  const items = top?.data?.slice(0, 15).map((item, index) => (
+    <Link to={`/profile/${item.id}`} key={index} className={styles.element}>
+      <p className={`${styles.number} ${styles.numberMobile}`}>
+        {item.position}.
+      </p>
+      <div>
+        <img
+          className={styles.imgMobile}
+          src={item.profile_picture ? item.profile_picture : iconimg}
+          alt="icon"
+        />
+        <p className={`${styles.name} ${styles.nameMobile}`}>{item.username}</p>
+        <div className={styles.countBlcok}>
+          <img src={countFiles} alt="icon" />
+          <p className={styles.total_products}>{item.total_products}</p>
+        </div>
+      </div>
+    </Link>
+  ));
+
   return (
     <>
       {status === "loading" && <p>Загрузка...</p>}
@@ -39,7 +82,19 @@ const MiniTopContributors = () => {
       {status === "succeeded" && (
         <div className={styles.topContribiutors}>
           {isMobile ? (
-            <div>mobile versions</div>
+            <>
+              <div className={styles.headerTop}>
+                <h2 className="h2-bold">Top Contributors</h2>
+              </div>
+              <Slider items={items} visibleSlides={visibleSlides} />
+              <button
+                onClick={() => navigate("/top-contributors")}
+                className={`${styles.allButton} ${styles.allButtonMobile}`}
+              >
+                <span className={styles.allText}>See all</span>
+                <img src={arrowbtn} alt="icon" />
+              </button>
+            </>
           ) : (
             <>
               <div className={styles.headerTop}>
@@ -54,7 +109,11 @@ const MiniTopContributors = () => {
               </div>
               <div className={styles.topContainer}>
                 {top?.data?.slice(0, 15).map((item, index) => (
-                  <div key={index} className={styles.user}>
+                  <Link
+                    to={`/profile/${item.id}`}
+                    key={index}
+                    className={styles.user}
+                  >
                     <p className={styles.number}>{item.position}.</p>
                     <img
                       style={{
@@ -76,7 +135,7 @@ const MiniTopContributors = () => {
                         </p>
                       </div>
                     </div>
-                  </div>
+                  </Link>
                 ))}
               </div>
             </>
