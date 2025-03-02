@@ -1,0 +1,87 @@
+.block {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.text {
+    font-weight: 300;
+    font-size: 18px;
+    line-height: 23px;
+    color: #B3B3B3;
+}
+.title {
+    font-weight: 450;
+    font-size: 24px;
+    line-height: 31px;
+}
+/* Базовые стили для формы */
+/* .form_container {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+  } */
+  
+    .form_group {
+        margin-bottom: 20px;
+    }
+  
+  .form_input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    box-sizing: border-box;
+    border-radius: 10px;
+    padding: 20px;
+  }
+  .form_input::placeholder {
+    font-weight: 300;
+    font-size: 18px;
+    line-height: 23px;
+  }
+  
+  .form_input:focus {
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+  }
+  
+  /* Стили для текстового поля */
+  .textarea_field {
+    width: 333px;
+    height: 142px;
+    resize: none;
+    overflow-y: auto;
+    border-radius: 10px;
+    padding: 20px;
+  }
+  .textarea_field::placeholder {
+    font-weight: 300;
+    font-size: 18px;
+    line-height: 23px;
+  }
+  
+  .submit_button {
+    width: 100%;
+    padding: 20px;
+    background-color: #2F57BF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 18px;
+    line-height: 23px;
+    font-weight: 450;
+    font-family: 'Montserrat', sans-serif;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .submit_button:hover {
+    background-color: #0056b3;
+  }

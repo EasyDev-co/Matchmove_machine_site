@@ -8,6 +8,7 @@ import { useEffect } from "react";
 import { fetchTopContributors } from "../../store/slices/topContributorsSlice";
 import iconimg from "../../assets/images/iconplaceholder.png";
 import Slider from "../../components/Slider/Slider";
+import { Link } from "react-router-dom";
 
 const TopContributors = () => {
   const dispatch = useDispatch();
@@ -51,7 +52,7 @@ const TopContributors = () => {
         )}
         <div className={styles.main}>
           {top?.data?.map((item, index) => (
-            <div key={index} className={styles.user}>
+            <Link to={`/profile/${item.id}`} key={index} className={styles.user}>
               <p className={styles.number}>{item.position}.</p>
               <img
                 style={{ width: "60px", height: "60px", borderRadius: "5px" }}
@@ -65,7 +66,7 @@ const TopContributors = () => {
                   <p style={{ fontSize: "24px" }}>{item.total_products}</p>
                 </div>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
         {top && (

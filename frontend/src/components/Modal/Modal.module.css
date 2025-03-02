@@ -1,0 +1,44 @@
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: none;
+  justify-content: center; /* Центрирование по горизонтали */
+  align-items: center; /* Центрирование по вертикали */
+}
+
+.modal_open {
+  display: flex; /* Используем flexbox для центрирования */
+}
+
+.modal_overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: transparent;
+}
+
+.modal_content {
+  position: relative;
+  background: linear-gradient(to right, #282828, #00081E);
+  width: 413px;
+  padding: 40px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  z-index: 10; /* Убедимся, что контент поверх overlay */
+}
+
+.modal_close {
+  position: absolute;
+  top: 40px;
+  right: 40px;
+  font-size: 24px;
+  cursor: pointer;
+  background: none;
+  border: none;
+}

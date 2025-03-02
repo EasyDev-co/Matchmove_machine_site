@@ -5,12 +5,22 @@ import FaqSpoiler from "../../components/FaqSpoiler/FaqSpoiler";
 import { questions } from "../../assets/dummyData";
 import useSmoothScroll from "../../hooks/useSmoothScroll";
 import { burgersvg, closesvg } from "../../assets/svg/svgimages";
+import Modal from "../../components/Modal/Modal";
+import ContacUs from "../../components/ContacUs/ContacUs";
 
 const Faq = () => {
 
     const [clickedButton, setClickedButton] = useState(null);
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+    const [isOpen, setIsOpen] = useState(false);
 
+    const handleOpen = () => {
+      setIsOpen(true);
+    };
+  
+    const handleClose = () => {
+      setIsOpen(false);
+    }
     const scrollTo = useSmoothScroll()
 
     const handleScroll = (sectionId) => {
@@ -58,9 +68,9 @@ const Faq = () => {
           </h2>
           <p className="h4-medium">
             Or contact us via email{" "}
-            <a href="mailto:grids@matchmovemachine.com" className={styles.highLight}>
+            <p onClick={handleOpen} style={{cursor: 'pointer'}} className={styles.highLight}>
               grids@matchmovemachine.com
-            </a>
+            </p>
           </p>
         </div>
       </section>
@@ -238,6 +248,11 @@ const Faq = () => {
           </section>
         </div>
       </section>
+      <div style={{position: 'relative', zIndex: '10', color: 'white'}}>
+      <Modal isOpen={isOpen} onClose={handleClose}>
+        <ContacUs />
+      </Modal>
+      </div>
     </div>
   );
 };
