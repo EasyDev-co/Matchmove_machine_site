@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import BASE_URL from '../../config';
+import Cookies from 'js-cookie';
 // import { useSearchParams } from 'react-router-dom';  // или другой способ парсинга query
 // import { API_GOOGLE_AUTH_ENDPOINT } from '../config';
 
