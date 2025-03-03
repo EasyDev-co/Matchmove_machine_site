@@ -16,6 +16,7 @@ const initialState = {
     emailVerificationStatus: 'idle',
     resetPasswordStatus: 'idle',
     passwordChangeStatus: 'idle',
+    deleteAccountStatus: 'idle',
   },
   errors: {
     loginError: null,
@@ -24,6 +25,7 @@ const initialState = {
     logoutError: null,
     resetPasswordError: null,
     passwordChangeError: null,
+    deleteAccountError: null,
   },
 };
 
@@ -180,6 +182,34 @@ export const logoutUserThunk = createAsyncThunk(
   }
 );
 
+export const deleteUserAccount = createAsyncThunk(
+  'user/deleteUserAccount',
+  async (_, { getState, rejectWithValue }) => {
+    const { accessToken } = getState().user;
+
+    try {
+      const response = await fetchWithAuth(`${BASE_URL}/v1/users/delete/`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${accessToken}`,
+        },
+      });
+
+      if (!response.ok) {
+        const errorDetails = await response.json();
+        console.error('Account deletion failed:', errorDetails);
+        return rejectWithValue(errorDetails);
+      }
+
+      return 'Account deleted successfully';
+    } catch (error) {
+      console.error('Error deleting account:', error);
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
 const userSlice = createSlice({
   name: 'user',
   initialState,
@@ -300,6 +330,24 @@ const userSlice = createSlice({
       .addCase(logoutUserThunk.rejected, (state, action) => {
         state.status.logoutStatus = "failed";
         state.errors.logoutError = action.payload || action.error.message;
+      })
+
+      .addCase(deleteUserAccount.pending, (state) => {
+        state.status.deleteAccountStatus = "loading";
+        state.errors.deleteAccountError = null;
+      })
+      .addCase(deleteUserAccount.fulfilled, (state) => {
+        state.user = null;
+        state.isAuthenticated = false;
+        state.accessToken = null;
+        state.refreshToken = null;
+        Cookies.remove("access_token");
+        Cookies.remove("refresh_token");
+        state.status.deleteAccountStatus = "succeeded";
+      })
+      .addCase(deleteUserAccount.rejected, (state, action) => {
+        state.status.deleteAccountStatus = "failed";
+        state.errors.deleteAccountError = action.payload || action.error.message;
       });
   },
 });
