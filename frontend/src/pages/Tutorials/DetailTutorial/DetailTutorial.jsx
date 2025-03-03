@@ -55,7 +55,7 @@ const DetailTutorial = () => {
         key={item.id}
         className={styles.element}
       >
-        <img className={styles.image} src={testPhoto} alt="tutorial image" />
+        <img className={styles.image} src={item.cover} alt="tutorial image" />
         <div className={styles.nameCont}>
           <p className={`${styles.title} ${styles.titleOther}`}>{item.title}</p>
           <img
