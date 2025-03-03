@@ -21,13 +21,12 @@ class GoogleAuthCodeView(APIView):
 
     def post(self, request):
         code = request.data.get('code')
-
+        logger.info(f"code: {code}")
         if not code:
             return Response(
                 {"error": "Authorization code не передан."}, status=status.HTTP_400_BAD_REQUEST
             )
 
-        # Обмен authorization code на токены
         token_url = "https://oauth2.googleapis.com/token"
         data = {
             "code": code,
@@ -48,8 +47,6 @@ class GoogleAuthCodeView(APIView):
         access_token = token_data.get("access_token")
         id_token = token_data.get("id_token")
 
-        logger.info(f"token_data: {token_data}")
-
         if not access_token or not id_token:
             return Response(
                 {"error": "Не удалось получить необходимые токены."},
@@ -64,9 +61,6 @@ class GoogleAuthCodeView(APIView):
                 {"error": "Не удалось получить данные пользователя."}, status=status.HTTP_400_BAD_REQUEST)
 
         userinfo_data = userinfo_response.json()
-
-        logger.info(f"userinfo_data: {userinfo_data}")
-
         email = userinfo_data.get("email")
 
         if not email:
@@ -75,11 +69,9 @@ class GoogleAuthCodeView(APIView):
                 status=status.HTTP_400_BAD_REQUEST
             )
 
-        # Поиск или создание пользователя в базе
         user, created = User.objects.get_or_create(email=email, defaults={
-            "username": email.split('@')[0],
-            "first_name": userinfo_data.get("given_name", ""),
-            "last_name": userinfo_data.get("family_name", "")
+            "username": userinfo_data.get("name"),
+            "is_verified": True,
         })
         if created:
             user.set_unusable_password()
@@ -89,5 +81,5 @@ class GoogleAuthCodeView(APIView):
         return Response({
             "refresh": str(refresh),
             "access": str(refresh.access_token),
-            "user_info": userinfo_data  # вы можете вернуть часть данных или всю информацию о пользователе
+            "user_info": userinfo_data
         }, status=status.HTTP_200_OK)

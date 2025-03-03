@@ -202,6 +202,7 @@ CORS_ALLOWED_ORIGINS = [
     'https://grids.matchmovemachine.com',
     'http://152.53.131.46:3000',
     'http://0.0.0.0:8080',
+    'http://localhost:3000',
 ]
 
 CSRF_TRUSTED_ORIGINS = [
@@ -212,21 +213,7 @@ CSRF_TRUSTED_ORIGINS = [
     'https://grids.matchmovemachine.com',
     'http://152.53.131.46:3000',
     'http://0.0.0.0:8080',
-]
-
-CORS_ALLOW_METHODS = [
-    'GET',
-    'POST',
-    'PUT',
-    'PATCH',
-    'DELETE',
-    'OPTIONS',
-]
-
-CORS_ALLOW_HEADERS = [
-    'content-type',
-    'authorization',
-    'x-csrftoken'
+    'http://localhost:3000',
 ]
 
 SITE_ID = 1

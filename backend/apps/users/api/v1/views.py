@@ -325,7 +325,7 @@ class UserRankingListView(ListAPIView):
     pagination_class = CustomPagination
 
     def get_queryset(self):
-        queryset = User.objects.annotate(
+        queryset = User.objects.filter(is_superuser=False, is_staff=False).annotate(
             total_products=Count('products', filter=Q(products__is_approved=True))
         ).order_by('-total_products', 'username')
         return queryset
