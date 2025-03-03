@@ -43,6 +43,11 @@
     width: 100%;
 }
 
+.btncontBig {
+    display: flex;
+    justify-content: space-between;
+}
+
 .formcontainer label {
     width: calc(50% - 20px);
     display: flex;

@@ -6,14 +6,17 @@ import Email from "../Forms/Email";
 import Website from "../Forms/Website";
 import Portfolio from "../Forms/Portfolio";
 import Button from "../Button";import { warningsvg } from "../../assets/svg/svgimages";
+import {deleteUserAccount} from "../../store/userSlice.js";
 
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector  } from "react-redux";
 import { updateUserProfile } from "../../store/slices/profileSlice";
 
 const InformationForm = ({ profile, status, picture }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { deleteAccountStatus, deleteAccountError } = useSelector((state) => state.user.status);
+
 
   const [formData, setFormData] = useState({
     name: profile.username || '',
@@ -102,6 +105,33 @@ const InformationForm = ({ profile, status, picture }) => {
     navigate('/profile/');
   };
 
+  const handleDeleteAccount = async () => {
+    const confirmation = window.confirm('Вы уверены, что хотите удалить аккаунт? Это действие нельзя отменить.');
+    if (confirmation) {
+      try {
+        await dispatch(deleteUserAccount()).unwrap();
+        alert('Аккаунт успешно удален!');
+        navigate('/'); // Перенаправляем на главную страницу
+      } catch (error) {
+        console.error('Ошибка при удалении аккаунта:', error);
+        alert('Не удалось удалить аккаунт. Пожалуйста, попробуйте снова.');
+      }
+    }
+  };
+
+  // const handleDeleteAccount = () => {
+  //   dispatch(deleteUserAccount())
+  //     .unwrap()
+  //     .then(() => {
+  //       // dispatch(resetProfile())
+  //       navigate("/");
+  //       window.location.reload();
+  //     })
+  //     .catch((error) => {
+  //       console.log("Logout failed", error); 
+  //     });
+  // };
+
   return (
     <div className={styles.formcontainer}>
       <hr className={styles.hr} />
@@ -157,6 +187,7 @@ const InformationForm = ({ profile, status, picture }) => {
           </label>
         </div>
         <hr className={styles.hr} />
+        <div className={styles.btncontBig}>
         <div className={styles.btncont}>
           <Button
             variant="outline-red"
@@ -172,6 +203,16 @@ const InformationForm = ({ profile, status, picture }) => {
             iconType="checkMark"
             type="submit"
           />
+        </div>
+        <div>
+        <Button
+            variant="outline-red"
+            label={deleteAccountStatus  === "loading" ? "deleted..." : "Delete account"}
+            labelPosition="left"
+            iconType="crossbtn"
+            onClick={handleDeleteAccount}
+          />
+        </div>
         </div>
       </form>
     </div>
