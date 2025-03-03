@@ -10,54 +10,54 @@ const ContacUs = () => {
   const [score, setScore] = useState(null); // Оценка reCAPTCHA
 
   // Обработчик изменения токена reCAPTCHA
-  const handleVerify = (token) => {
-    setCaptchaToken(token);
-    console.log("Captcha Token:", token);
-  };
+  // const handleVerify = (token) => {
+  //   setCaptchaToken(token);
+  //   console.log("Captcha Token:", token);
+  // };
 
   // Обработчик отправки формы
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
 
-    // Проверка наличия токена
-    if (!captchaToken) {
-      alert("Пожалуйста, подождите, пока reCAPTCHA загрузится.");
-      return;
-    }
+  //   // Проверка наличия токена
+  //   if (!captchaToken) {
+  //     alert("Пожалуйста, подождите, пока reCAPTCHA загрузится.");
+  //     return;
+  //   }
 
-    // Отправка данных на сервер
-    try {
-      const response = await fetch("/your-server-endpoint", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email,
-          message,
-          captchaToken,
-        }),
-      });
+  //   // Отправка данных на сервер
+  //   try {
+  //     const response = await fetch("/your-server-endpoint", {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify({
+  //         email,
+  //         message,
+  //         captchaToken,
+  //       }),
+  //     });
 
-      const result = await response.json();
-      console.log("Server Response:", result);
+  //     const result = await response.json();
+  //     console.log("Server Response:", result);
 
-      // Проверка оценки reCAPTCHA
-      if (result.score) {
-        setScore(result.score);
-        if (result.score < 0.5) {
-          alert("Ваш запрос выглядит подозрительно. Пожалуйста, попробуйте снова.");
-        } else {
-          alert("Форма успешно отправлена!");
-        }
-      }
-    } catch (error) {
-      console.error("Ошибка при отправке формы:", error);
-    }
-  };
+  //     // Проверка оценки reCAPTCHA
+  //     if (result.score) {
+  //       setScore(result.score);
+  //       if (result.score < 0.5) {
+  //         alert("Ваш запрос выглядит подозрительно. Пожалуйста, попробуйте снова.");
+  //       } else {
+  //         alert("Форма успешно отправлена!");
+  //       }
+  //     }
+  //   } catch (error) {
+  //     console.error("Ошибка при отправке формы:", error);
+  //   }
+  // };
 
   return (
-    <GoogleReCaptchaProvider reCaptchaKey="6Lch9OcqAAAAAE2dMEu69YahTitEpt1ON28Mymgo">
+    // <GoogleReCaptchaProvider reCaptchaKey="6Lch9OcqAAAAAE2dMEu69YahTitEpt1ON28Mymgo">
       <div className={styles.block}>
         <h2 className={styles.title}>We’d love to hear from you!</h2>
         <p className={styles.text}>
@@ -89,7 +89,7 @@ const ContacUs = () => {
           </div>
 
           {/* Компонент reCAPTCHA v3 */}
-          <GoogleReCaptcha onVerify={handleVerify} />
+          {/* <GoogleReCaptcha onVerify={handleVerify} /> */}
 
           <button type="submit" className={styles.submit_button}>
             <p>Submit</p>
@@ -98,9 +98,9 @@ const ContacUs = () => {
         </form>
 
         {/* Отображение оценки reCAPTCHA (опционально) */}
-        {score && <p>Оценка reCAPTCHA: {score}</p>}
+        {/* {score && <p>Оценка reCAPTCHA: {score}</p>} */}
       </div>
-    </GoogleReCaptchaProvider>
+    // </GoogleReCaptchaProvider>
   );
 };
 
