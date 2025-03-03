@@ -64,7 +64,8 @@ const ContacUs = () => {
           Have feedback, a question, or just want to get in touch? Let us know by
           filling out the form below.
         </p>
-        <form onSubmit={handleSubmit} className={styles.form_container}>
+        {/* <form onSubmit={handleSubmit} className={styles.form_container}> */}
+        <form className={styles.form_container}> 
           <div className={styles.form_group}>
             <input
               type="email"
