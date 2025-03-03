@@ -4,6 +4,7 @@ import Button from "../Button";
 import Password from "../Forms/Password";
 import Email from "../Forms/Email";
 import { useNavigate } from "react-router-dom";
+import Oauth from '../Oauth/Oauth'
 
 import { loginUser } from "../../store/userSlice";
 import { useDispatch, useSelector } from "react-redux";
@@ -130,6 +131,7 @@ const Login = ({ onModalClose }) => {
                 errors={errors}
                 setErrors={setErrors}
               />
+              <Oauth />
               <div className="underform">
                 <div className="checkbox-group">
                   <input
