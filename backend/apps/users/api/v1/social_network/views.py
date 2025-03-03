@@ -21,7 +21,7 @@ class GoogleAuthCodeView(APIView):
 
     def post(self, request):
         code = request.data.get('code')
-
+        logger.info(f"code: {code}")
         if not code:
             return Response(
                 {"error": "Authorization code не передан."}, status=status.HTTP_400_BAD_REQUEST
@@ -49,6 +49,8 @@ class GoogleAuthCodeView(APIView):
         id_token = token_data.get("id_token")
 
         logger.info(f"token_data: {token_data}")
+        logger.info(f"access_token: {access_token}")
+        logger.info(f"id_token: {id_token}")
 
         if not access_token or not id_token:
             return Response(
@@ -75,7 +77,6 @@ class GoogleAuthCodeView(APIView):
                 status=status.HTTP_400_BAD_REQUEST
             )
 
-        # Поиск или создание пользователя в базе
         user, created = User.objects.get_or_create(email=email, defaults={
             "username": email.split('@')[0],
             "first_name": userinfo_data.get("given_name", ""),
