@@ -150,7 +150,7 @@ class FacebookAuthCodeView(APIView):
         if not email:
             facebook_id = userinfo_data.get("id")
 
-            # defaults["user_without_email"] = True
+            defaults["user_without_email"] = True
 
             if not facebook_id:
                 return Response(
