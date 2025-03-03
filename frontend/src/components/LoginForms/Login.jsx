@@ -4,16 +4,21 @@ import Button from "../Button";
 import Password from "../Forms/Password";
 import Email from "../Forms/Email";
 import { useNavigate } from "react-router-dom";
-import Oauth from '../Oauth/Oauth'
+import Oauth from "../Oauth/Oauth";
+import {
+  googleIconsvg,
+  facebooksvg,
+  applesvg,
+  microsoftsvg,
+} from "../../assets/svg/svgimages";
 
 import { loginUser } from "../../store/userSlice";
 import { useDispatch, useSelector } from "react-redux";
 
 const Login = ({ onModalClose }) => {
-
   const dispatch = useDispatch();
-  const {status} = useSelector(state=> state.user)
-  const apiError =useSelector(state=> state.user.errors.loginError)
+  const { status } = useSelector((state) => state.user);
+  const apiError = useSelector((state) => state.user.errors.loginError);
 
   const [formData, setFormData] = useState({
     email: "",
@@ -68,7 +73,7 @@ const Login = ({ onModalClose }) => {
         loginUser({ email: formData.email, password: formData.old_password })
       );
     } else {
-      setErrors(newErrors)
+      setErrors(newErrors);
     }
   };
 
@@ -79,7 +84,7 @@ const Login = ({ onModalClose }) => {
   const handleForgotPassword = () => {
     navigate("/reset-password");
   };
-  
+
   useEffect(() => {
     if (apiError && apiError.non_field_errors) {
       setErrors({
@@ -94,15 +99,15 @@ const Login = ({ onModalClose }) => {
     }
   }, [apiError]);
 
-  useEffect(()=>{
-    if(status.loginStatus==="succeeded"){
+  useEffect(() => {
+    if (status.loginStatus === "succeeded") {
       setErrors({
         email: "",
         old_password: "",
-      })
-      navigate(-1)
+      });
+      navigate(-1);
     }
-  }, [status, navigate])
+  }, [status, navigate]);
 
   return (
     <div className="popup-content">
@@ -153,9 +158,13 @@ const Login = ({ onModalClose }) => {
               </div>
               <div className="form-button-cont">
                 <Button
-                  label={status.loginStatus==="loading"?"Signing in...":"Sign In"}
+                  label={
+                    status.loginStatus === "loading"
+                      ? "Signing in..."
+                      : "Sign In"
+                  }
                   iconType="arrowRight"
-                  variant={status.loginStatus==="loading"? "grey":"blue"}
+                  variant={status.loginStatus === "loading" ? "grey" : "blue"}
                   type="submit"
                 />
                 <Button
@@ -168,6 +177,20 @@ const Login = ({ onModalClose }) => {
               </div>
             </div>
           </form>
+        </div>
+      </div>
+      <div className="login-form auth">
+        <div className="login-wrap">
+          <h2 className="h2-medium">Sign in with</h2>
+          <div className="auth-buttons">
+            <Oauth icon={googleIconsvg} name={"Sign in with Google"} />
+            {/* <button className="auth-button">
+              {googleIconsvg} Sign in with Google
+            </button>
+            <button className="auth-button">
+              {facebooksvg} Sign in with Facebook
+            </button> */}
+          </div>
         </div>
       </div>
     </div>

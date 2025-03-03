@@ -2,7 +2,7 @@
 import React from 'react';
 // import { GOOGLE_CLIENT_ID, GOOGLE_REDIRECT_URI } from '../config';
 
-const Oauth = () => {
+const Oauth = ({name, icon}) => {
     const GOOGLE_CLIENT_ID = '723039007874-1f5fgudgr46vl81old3h5qndhoihai0i.apps.googleusercontent.com'
     const GOOGLE_REDIRECT_URI = 'https://grids.matchmovemachine.com/google/oauth/callback/'
   const handleGoogleLogin = () => {
@@ -22,7 +22,9 @@ const Oauth = () => {
 
   return (
     <div>
-      <button onClick={handleGoogleLogin}>Войти через Google</button>
+      <button className='auth-button' onClick={handleGoogleLogin}>
+        {icon} {name}
+      </button>
     </div>
   );
 }
