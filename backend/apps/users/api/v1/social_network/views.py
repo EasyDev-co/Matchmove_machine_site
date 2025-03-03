@@ -83,3 +83,91 @@ class GoogleAuthCodeView(APIView):
             "access": str(refresh.access_token),
             "user_info": userinfo_data
         }, status=status.HTTP_200_OK)
+
+class FacebookAuthCodeView(APIView):
+    """
+    Обработчик авторизации через Facebook по Authorization Code Flow.
+    Ожидается, что фронтенд отправит параметр 'code'.
+    """
+    permission_classes = (AllowAny,)
+
+    def post(self, request):
+        code = request.data.get('code')
+
+        if not code:
+            return Response(
+                {"error": "Authorization code не передан."},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        token_url = "https://graph.facebook.com/v12.0/oauth/access_token"
+
+        params = {
+            "client_id": settings.FACEBOOK_OAUTH_CLIENT_ID,
+            "redirect_uri": settings.FACEBOOK_OAUTH_REDIRECT_URI,
+            "client_secret": settings.FACEBOOK_OAUTH_SECRET,
+            "code": code,
+        }
+
+        token_response = requests.get(token_url, params=params)
+        if token_response.status_code != 200:
+            return Response(
+                {"error": "Не удалось обменять код на токен.", "details": token_response.json()},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        token_data = token_response.json()
+        access_token = token_data.get("access_token")
+
+        if not access_token:
+            return Response(
+                {"error": "access_token не получен."},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        userinfo_url = "https://graph.facebook.com/me"
+        userinfo_params = {
+            "fields": "id,name,email,picture",
+            "access_token": access_token,
+        }
+        userinfo_response = requests.get(userinfo_url, params=userinfo_params)
+
+        if userinfo_response.status_code != 200:
+            return Response(
+                {"error": "Не удалось получить данные пользователя."},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        userinfo_data = userinfo_response.json()
+
+        email = userinfo_data.get("email")
+        name = userinfo_data.get("name")
+
+        defaults = {
+            "username": name or email,
+            "is_verified": True,
+        }
+
+        if not email:
+            facebook_id = userinfo_data.get("id")
+
+            # defaults["user_without_email"] = True
+
+            if not facebook_id:
+                return Response(
+                    {"error": "Ни email, ни id не получены из профиля Facebook."},
+                    status=status.HTTP_400_BAD_REQUEST
+                )
+            email = f"fb_{facebook_id}@example.com"
+
+        user, created = User.objects.get_or_create(email=email, defaults=defaults)
+        if created:
+            user.set_unusable_password()
+            user.save()
+
+        refresh = RefreshToken.for_user(user)
+
+        return Response({
+            "refresh": str(refresh),
+            "access": str(refresh.access_token),
+            "user_info": userinfo_data
+        }, status=status.HTTP_200_OK)

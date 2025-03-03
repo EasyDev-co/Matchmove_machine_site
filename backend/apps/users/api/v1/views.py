@@ -346,3 +346,11 @@ class ContactAsApiView(APIView):
         )
 
         send_contact_us_tasks.delay(serializer.validated_data["email"], serializer.validated_data["text"])
+
+class UserAccountDeleteAPIView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def delete(self, request):
+        user = request.user
+        user.delete()
+        return Response({"detail": "Аккаунт удалён"}, status=status.HTTP_204_NO_CONTENT)
