@@ -83,14 +83,16 @@ const Tutorials = () => {
                         <img 
                             src={downoloadSvg} 
                             alt="downoload" 
-                            onClick={() => {
+                            onClick={(e) => {
+                              e.preventDefault();
+                              e.stopPropagation();
                               if (item.pdf) { // Проверяем, что ссылка на PDF существует
                                   handleDownload(item.pdf);
                               } else {
                                   console.log("Файл отсутствует"); // Можно добавить уведомление пользователю
                               }
                           }} 
-                            style={{ cursor: 'pointer', position: 'relative', zIndex: '10', pointerEvents: 'none' }} // Добавляем курсор-указатель для лучшего UX
+                            style={{ cursor: "pointer", position: "relative", zIndex: "10" }} // Добавляем курсор-указатель для лучшего UX
                         />
                     </div>
                     <p className={styles.descriprion}>{item.short_description}</p>
