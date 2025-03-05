@@ -13,6 +13,7 @@ import creatorProfileReducer from "./slices/creatorProfileSlice"
 import detailTutorialSlice from "./slices/detailTutorialSlice"
 import topContributorsSlice from "./slices/topContributorsSlice";
 import tutorialsSlice from "./slices/tutorialsSlice";
+import sendContactUsSlice from './slices/sendContactUsSlice';
 
 const store = configureStore({
   reducer: {
@@ -30,6 +31,7 @@ const store = configureStore({
     topContributors: topContributorsSlice,
     tutorials: tutorialsSlice,
     detailTutorial: detailTutorialSlice,
+    contactUs: sendContactUsSlice,
   },
 });
 
