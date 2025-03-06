@@ -73,6 +73,13 @@ if(cart.items.length>0){
       </div>
       <div className={styles.body}>
         <div className={styles.orderInfo}>
+          <div style={{alignSelf: "flex-start"}}>
+          <Button
+              variant="outline-red"
+              label="Cancel"
+              onClick={() => navigate("/library")}
+            />
+            </div>
           {cart.items.length > 0 && (
             <div className={`${styles.cart}`}>
               <CartItems cart={cart.items} />

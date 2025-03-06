@@ -85,13 +85,18 @@
     align-items: center;
 }
 
-
-
-@media (max-width: 858px) {
+@media (max-width: 1360px) {
     .container {
         max-width: 334px;
         grid-template-columns: repeat(2, 1fr);
     }
+}
+
+@media (max-width: 858px) {
+    /* .container {
+        max-width: 334px;
+        grid-template-columns: repeat(2, 1fr);
+    } */
     .image {
         width: 334px;
         height: 233px;
@@ -116,13 +121,20 @@
         overflow-wrap: break-word;
     }
   }
-  
-  /* Для мобильных (до 390px) - 1 колонка */
-  @media (max-width: 390px) {
+
+  @media (max-width: 740px) {
     .container {
         max-width: 350px;
         grid-template-columns: repeat(1, 1fr);
     }
+  }
+  
+  /* Для мобильных (до 390px) - 1 колонка */
+  @media (max-width: 390px) {
+    /* .container {
+        max-width: 350px;
+        grid-template-columns: repeat(1, 1fr);
+    } */
     .image {
         width: 350  px;
         height: 233px;

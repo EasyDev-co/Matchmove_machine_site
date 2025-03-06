@@ -40,7 +40,7 @@ const Product = ()=>{
     return (
       <>
         <NavigationTop title={`Distortion grids pack for ${singleProduct.camera.model_name} ${singleProduct.lens.model_name}`} singleProduct={singleProduct}/>
-        <ProductBanner singleProduct={singleProduct}/>
+        {/* <ProductBanner singleProduct={singleProduct}/> */}
         <ProductDescription singleProduct={singleProduct} handleButtonClick={handleButtonClick}/>
         <ProductField singleProduct={singleProduct} handleButtonClick={handleButtonClick} activeButton={activeButton}/>
         <JoinCommunity/>

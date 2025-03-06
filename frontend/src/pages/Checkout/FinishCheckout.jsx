@@ -6,10 +6,13 @@ import LoadingScreen from "../../components/LoadingScreen/LoadingScreen";
 
 import { useDispatch, useSelector } from "react-redux";
 import { fetchOrder } from "../../store/slices/orderSlice";
+import { useNavigate } from "react-router-dom";
+import Button from "../../components/Button";
 
 const FinishCheckout =()=>{
 
   const dispatch = useDispatch()
+  const navigate = useNavigate()
   const {order, status} = useSelector(state=> state.order)
   const {profile} = useSelector(state=> state.profile)
   
@@ -43,6 +46,13 @@ if(status.fetchOrderStatus === "succeeded"&&order.order.items){
       </div>
       <div className={styles.body}>
         <div className={styles.orderInfo}>
+        <div style={{alignSelf: "flex-start"}}>
+          <Button
+              variant="outline-red"
+              label="Cancel"
+              onClick={() => navigate("/library")}
+            />
+            </div>
           <div className={`${styles.check} h5-light`}>
             
               {order.order.items.map((item)=><div key={item.id} className={styles.checkField}><p>{item.product.lens.brand} {item.product.lens.model_name}</p> <p>${item.product.price}</p></div>)}
