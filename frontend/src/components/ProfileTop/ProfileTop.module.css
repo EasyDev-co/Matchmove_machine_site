@@ -62,7 +62,7 @@ opacity: 80%;
 
 .perofileinfo {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     gap: 20px;
     box-sizing: border-box;
 }

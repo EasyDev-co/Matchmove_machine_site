@@ -100,22 +100,28 @@ const ProfileTop = ({ profile}) => {
         </div>
 
         <div className={styles.perofileinfo}>
-          <h3 className={`h3-medium ${styles.socialmobile}`}>Contacts: </h3>
-          <div className={styles.socialsbtns}>
-            {userlinks.map(({name, svg}, index) => {
-              const linkValue = profile[name];
-              return linkValue ? (
-                <a
-                  href={linkValue}
-                  key={index}
-                >
-                  <button className={styles.userlink}>
-                    {svg}
-                  </button>
-                </a>
-              ) : null;
-            })}
+          <div>
+            <h3 className="h3-medium">Email:</h3>{" "}
+            <a href={`mailto:${profile.email}`}>{profile.email}</a>
           </div>
+          <div>
+            <h3 className={`h3-medium ${styles.socialmobile}`}>Contacts: </h3>
+            <div className={styles.socialsbtns}>
+              {userlinks.map(({name, svg}, index) => {
+                const linkValue = profile[name];
+                return linkValue ? (
+                  <a
+                    href={linkValue}
+                    key={index}
+                  >
+                    <button className={styles.userlink}>
+                      {svg}
+                    </button>
+                  </a>
+                ) : null;
+              })}
+            </div>
+            </div>
         </div>
       </div>
     </section>

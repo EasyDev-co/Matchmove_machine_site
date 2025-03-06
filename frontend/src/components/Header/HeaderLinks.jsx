@@ -66,11 +66,13 @@ const HeaderLinks = ({ isMenuOpen, handleCloseMenu }) => {
           </Link>
         </li>
         <li>
-          <button className={`${styles.contactUs}`} onClick={handleOpen}>
+          <Link onClick={handleOpen}>
+          {/* <button  onClick={handleOpen}> */}
             {" "}
             <img className={styles.img} src={linkIng} alt="btn-icon" />
             Contact Us
-          </button>
+          {/* </button> */}
+          </Link>
         </li>
       </ul>
       <Modal isOpen={isOpen} onClose={modalClose}>

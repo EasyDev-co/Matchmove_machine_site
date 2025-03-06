@@ -37,7 +37,6 @@ const Profile=()=>{
         <ProfileTop profile={profile} status={status} />
         <ProfileAssets />
         <AboutAuthor about={profile.about_me}/>
-        <SharePage profileId={1} profile={profile}/>
       </>
     );
   }
