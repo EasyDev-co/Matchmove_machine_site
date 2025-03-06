@@ -13,6 +13,7 @@ from apps.users.api.v1.views import (
     UserRankingListView,
     ContactAsApiView,
     UserAccountDeleteAPIView,
+    FacebookDataDeletionView,
 )
 from apps.users.api.v1.social_network.views import GoogleAuthCodeView
 
@@ -32,4 +33,5 @@ urlpatterns = [
     path("contact_us/", ContactAsApiView.as_view(), name="contact_us"),
     path("auth/google/", GoogleAuthCodeView.as_view(), name="google_auth"),
     path("delete/", UserAccountDeleteAPIView.as_view(), name="delete_user"),
+    path('facebook/data-deletion/', FacebookDataDeletionView.as_view(), name='fb_data_deletion'),
 ]

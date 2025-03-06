@@ -103,9 +103,9 @@ class FacebookAuthCodeView(APIView):
         token_url = "https://graph.facebook.com/v12.0/oauth/access_token"
 
         params = {
-            "client_id": settings.FACEBOOK_OAUTH_CLIENT_ID,
-            "redirect_uri": settings.FACEBOOK_OAUTH_REDIRECT_URI,
-            "client_secret": settings.FACEBOOK_OAUTH_SECRET,
+            "client_id": settings.FB_APP_ID,
+            "redirect_uri": settings.FB_OAUTH_REDIRECT_URI,
+            "client_secret": settings.FB_APP_SECRET,
             "code": code,
         }
 
@@ -141,10 +141,12 @@ class FacebookAuthCodeView(APIView):
 
         email = userinfo_data.get("email")
         name = userinfo_data.get("name")
+        facebook_id = userinfo_data.get("id")
 
         defaults = {
             "username": name or email,
             "is_verified": True,
+            "fb_user_id": facebook_id,
         }
 
         if not email:
