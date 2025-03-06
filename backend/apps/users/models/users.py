@@ -63,6 +63,7 @@ class User(UUIDMixin, TimeStampedMixin, AbstractUser):
     qr_code = models.ImageField(
         upload_to="qr_codes/", blank=True, null=True, verbose_name=_("QR код")
     )
+    fb_user_id = models.CharField(verbose_name="ID Facebook", blank=True, null=True, max_length=512)
     user_without_email = models.BooleanField(default=False, verbose_name="Пользователь не имеет email")
 
     def generate_qr_code(self):
