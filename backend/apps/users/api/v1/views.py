@@ -371,6 +371,7 @@ class FacebookDataDeletionView(APIView):
       3) Удаляет (или помечает) данные пользователя.
       4) Возвращает JSON с 'url' и 'confirmation_code'.
     """
+    permission_classes = (AllowAny, )
 
     def post(self, request, *args, **kwargs):
         # Facebook по документации отправляет POST с полем 'signed_request'.
