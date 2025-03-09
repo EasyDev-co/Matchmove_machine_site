@@ -118,13 +118,24 @@ const PasswordForm = ({ status }) => {
             iconType="crossbtn"
             onClick={goBack}
           />
-          <Button
-            variant={status === "loading" ? "grey" : "blue"}
-            label={status === "loading" ? "Saving..." : "Save changes"}
-            labelPosition="left"
-            iconType="checkMark"
-            type="submit"
-          />
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
+          >
+            <Button
+              variant={status === "loading" ? "grey" : "blue"}
+              label={status === "loading" ? "Saving..." : "Save changes"}
+              labelPosition="left"
+              iconType="checkMark"
+              type="submit"
+            />
+            {status.updateUserProfileStatus === 'succeeded' && (
+            <p style={{ color: "green", fontSize: "16px" }}>Profile updated</p>
+            )}
+          </div>
         </div>
       </form>
     </div>

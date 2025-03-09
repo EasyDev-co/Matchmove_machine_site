@@ -1,44 +1,50 @@
 import { useState } from "react";
-import styles from "./EditProfileForm.module.css"
-import Name from "../Forms/Name"
+import styles from "./EditProfileForm.module.css";
+import Name from "../Forms/Name";
 import Occupation from "../Forms/Occupation";
 import Email from "../Forms/Email";
 import Website from "../Forms/Website";
 import Portfolio from "../Forms/Portfolio";
-import Button from "../Button";import { warningsvg } from "../../assets/svg/svgimages";
-import {deleteUserAccount} from "../../store/userSlice.js";
+import Button from "../Button";
+import { warningsvg } from "../../assets/svg/svgimages";
+import { deleteUserAccount } from "../../store/userSlice.js";
 
 import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector  } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { updateUserProfile } from "../../store/slices/profileSlice";
 
 const InformationForm = ({ profile, status, picture }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { deleteAccountStatus, deleteAccountError } = useSelector((state) => state.user.status);
-
+  const { deleteAccountStatus, deleteAccountError } = useSelector(
+    (state) => state.user.status
+  );
 
   const [formData, setFormData] = useState({
-    name: profile.username || '',
-    email: profile.email || '',
-    occupation: profile.occupation|| '',
-    website: profile.website || '',
-    portfolio: profile.portfolio || '',
+    name: profile.username || "",
+    email: profile.email || "",
+    occupation: profile.occupation || "",
+    website: profile.website || "",
+    portfolio: profile.portfolio || "",
   });
 
   const [errors, setErrors] = useState({
-    name: '',
-    email: '',
-    occupation: '',
-    website: '',
-    portfolio: '',
+    name: "",
+    email: "",
+    occupation: "",
+    website: "",
+    portfolio: "",
   });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-  
+
     // Check if the field is website or portfolio and add "https://" if missing
-    if ((name === "website" || name === "portfolio") && value && !/^https?:\/\//.test(value)) {
+    if (
+      (name === "website" || name === "portfolio") &&
+      value &&
+      !/^https?:\/\//.test(value)
+    ) {
       setFormData({
         ...formData,
         [name]: `https://${value}`,
@@ -49,10 +55,10 @@ const InformationForm = ({ profile, status, picture }) => {
         [name]: value,
       });
     }
-  
+
     setErrors({
       ...errors,
-      [name]: '',
+      [name]: "",
     });
   };
 
@@ -68,16 +74,16 @@ const InformationForm = ({ profile, status, picture }) => {
 
     // Name validation
     if (!formData.name) {
-      newErrors.name = 'Name is required';
+      newErrors.name = "Name is required";
       valid = false;
     }
 
     // Email validation
     if (!formData.email) {
-      newErrors.email = 'Email is required';
+      newErrors.email = "Email is required";
       valid = false;
     } else if (!validateEmail(formData.email)) {
-      newErrors.email = 'Invalid email format';
+      newErrors.email = "Invalid email format";
       valid = false;
     }
 
@@ -96,25 +102,27 @@ const InformationForm = ({ profile, status, picture }) => {
         await dispatch(updateUserProfile(userProfileUpdate)).unwrap();
       } catch (error) {
         // Handle error (e.g., show an error message)
-        console.log('Update profile failed:', error);
+        console.log("Update profile failed:", error);
       }
     }
   };
 
   const goBack = () => {
-    navigate('/profile/');
+    navigate("/profile/");
   };
 
   const handleDeleteAccount = async () => {
-    const confirmation = window.confirm('Вы уверены, что хотите удалить аккаунт? Это действие нельзя отменить.');
+    const confirmation = window.confirm(
+      "Вы уверены, что хотите удалить аккаунт? Это действие нельзя отменить."
+    );
     if (confirmation) {
       try {
         await dispatch(deleteUserAccount()).unwrap();
-        alert('Аккаунт успешно удален!');
-        navigate('/'); // Перенаправляем на главную страницу
+        alert("Аккаунт успешно удален!");
+        navigate("/"); // Перенаправляем на главную страницу
       } catch (error) {
-        console.error('Ошибка при удалении аккаунта:', error);
-        alert('Не удалось удалить аккаунт. Пожалуйста, попробуйте снова.');
+        console.error("Ошибка при удалении аккаунта:", error);
+        alert("Не удалось удалить аккаунт. Пожалуйста, попробуйте снова.");
       }
     }
   };
@@ -128,7 +136,7 @@ const InformationForm = ({ profile, status, picture }) => {
   //       window.location.reload();
   //     })
   //     .catch((error) => {
-  //       console.log("Logout failed", error); 
+  //       console.log("Logout failed", error);
   //     });
   // };
 
@@ -136,10 +144,8 @@ const InformationForm = ({ profile, status, picture }) => {
     <div className={styles.formcontainer}>
       <hr className={styles.hr} />
       <form onSubmit={handleSubmit}>
-        {status === 'failed' && (
-          <div className="error-message">
-            {warningsvg} Something went wrong
-          </div>
+        {status === "failed" && (
+          <div className="error-message">{warningsvg} Something went wrong</div>
         )}
         <div className={`form-group ${styles.forms}`}>
           <label htmlFor="name">
@@ -188,31 +194,48 @@ const InformationForm = ({ profile, status, picture }) => {
         </div>
         <hr className={styles.hr} />
         <div className={styles.btncontBig}>
-        <div className={styles.btncont}>
-          <Button
-            variant="outline-red"
-            label="Close"
-            labelPosition="left"
-            iconType="crossbtn"
-            onClick={goBack}
-          />
-          <Button
-            variant={status === "loading" ? "grey" : "blue"}
-            label={status === "loading" ? "Saving..." : "Save changes"}
-            labelPosition="left"
-            iconType="checkMark"
-            type="submit"
-          />
-        </div>
-        <div>
-        <Button
-            variant="outline-red"
-            label={deleteAccountStatus  === "loading" ? "deleted..." : "Delete account"}
-            labelPosition="left"
-            iconType="crossbtn"
-            onClick={handleDeleteAccount}
-          />
-        </div>
+          <div className={styles.btncont}>
+            <Button
+              variant="outline-red"
+              label="Close"
+              labelPosition="left"
+              iconType="crossbtn"
+              onClick={goBack}
+            />
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+              }}
+            >
+              <Button
+                variant={status === "loading" ? "grey" : "blue"}
+                label={status === "loading" ? "Saving..." : "Save changes"}
+                labelPosition="left"
+                iconType="checkMark"
+                type="submit"
+              />
+              {status.updateUserProfileStatus === 'succeeded' && (
+              <p style={{ color: "green", fontSize: "16px" }}>
+                Profile updated
+              </p>
+              )}
+            </div>
+          </div>
+          <div>
+            <Button
+              variant="outline-red"
+              label={
+                deleteAccountStatus === "loading"
+                  ? "deleted..."
+                  : "Delete account"
+              }
+              labelPosition="left"
+              iconType="crossbtn"
+              onClick={handleDeleteAccount}
+            />
+          </div>
         </div>
       </form>
     </div>
