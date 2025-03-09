@@ -1,3 +1,9 @@
+import base64
+import hashlib
+import hmac
+import json
+import requests
+
 from rest_framework import viewsets, status
 from rest_framework.generics import ListAPIView
 from rest_framework.permissions import IsAuthenticated, AllowAny
@@ -20,7 +26,9 @@ from apps.users.api.v1.serializers import (
     UserUpdateSerializer,
     UserRankingSerializer,
     ContactUsSerializer,
+    RecaptchaSerializer,
 )
+from config import settings
 from apps.users.api.v1.pagination import CustomPagination
 from apps.users.utils import send_notification_email
 from apps.users.tasks import send_confirm_code, send_contact_us_tasks
@@ -346,3 +354,142 @@ class ContactAsApiView(APIView):
         )
 
         send_contact_us_tasks.delay(serializer.validated_data["email"], serializer.validated_data["text"])
+        return Response({"message": "Сообщение отправлено"})
+
+
+class UserAccountDeleteAPIView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def delete(self, request):
+        user = request.user
+        user.delete()
+        return Response({"detail": "Аккаунт удалён"}, status=status.HTTP_204_NO_CONTENT)
+
+
+class FacebookDataDeletionView(APIView):
+    """
+    Обработчик Data Deletion Callback от Facebook.
+    Удовлетворяет требованиям:
+      1) Принимает POST с 'signed_request'.
+      2) Проверяет подпись.
+      3) Удаляет (или помечает) данные пользователя.
+      4) Возвращает JSON с 'url' и 'confirmation_code'.
+    """
+    permission_classes = (AllowAny, )
+
+    def post(self, request, *args, **kwargs):
+        # Facebook по документации отправляет POST с полем 'signed_request'.
+        signed_request = request.data.get('signed_request')
+
+        if not signed_request:
+            return Response(
+                {"error": "Missing signed_request"},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        # Разбор и проверка подписи
+        parsed_data = self.parse_signed_request(signed_request, settings.FB_APP_SECRET)
+        logger.info(f"parsed_data: {parsed_data}")
+
+        if parsed_data is None:
+            return Response(
+                {"error": "Invalid signed_request signature"},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        # В ответе Facebook всегда приходит "user_id" — это ID пользователя внутри вашего приложения.
+        fb_user_id = parsed_data.get('user_id')
+        if not fb_user_id:
+            return Response(
+                {"error": "No user_id found in signed_request payload"},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        user_qs = User.objects.filter(username=fb_user_id)
+
+        if user_qs.exists():
+            user_qs.delete()
+            confirmation_code = f"user_{fb_user_id}_deleted"
+        else:
+            confirmation_code = f"user_{fb_user_id}_not_found"
+
+        response_data = {
+            "url": "https://grids.matchmovemachine.com/deletion-status",
+            "confirmation_code": confirmation_code
+        }
+        return Response(response_data, status=status.HTTP_200_OK)
+
+    def parse_signed_request(self, signed_request: str, app_secret: str) -> dict | None:
+        """
+        Разбирает и проверяет 'signed_request' от Facebook.
+        Возвращает данные payload, если подпись верна, иначе None.
+        """
+        try:
+            encoded_sig, payload = signed_request.split('.', 1)
+            logger.info(f"encoded_sig: {encoded_sig}")
+            logger.info(f"payload: {payload}")
+        except ValueError:
+            return None
+
+        # Декодируем сигнатуру и полезную нагрузку
+        sig = self.base64_url_decode(encoded_sig)
+        data_str = self.base64_url_decode(payload)
+
+        try:
+            data = json.loads(data_str)
+        except json.JSONDecodeError:
+            return None
+
+        # Проверяем, что алгоритм HMAC-SHA256
+        if data.get('algorithm', '').upper() != 'HMAC-SHA256':
+            return None
+
+        # Формируем подпись, которую ожидаем
+        expected_sig = hmac.new(
+            key=app_secret.encode('utf-8'),
+            msg=payload.encode('utf-8'),
+            digestmod=hashlib.sha256
+        ).digest()
+
+        # Сравниваем подписи
+        if not hmac.compare_digest(sig, expected_sig):
+            return None
+
+        return data
+
+    @staticmethod
+    def base64_url_decode(input_str: str) -> bytes:
+        """
+        Декодирует Base64 (URL-safe).
+        Меняем '-' на '+', '_' на '/', восстанавливаем '=' для выравнивания.
+        """
+        input_str = input_str.replace('-', '+').replace('_', '/')
+        padding = 4 - (len(input_str) % 4)
+        if padding < 4:
+            input_str += '=' * padding
+        return base64.b64decode(input_str)
+
+
+class RecaptchaView(APIView):
+    permission_classes = (AllowAny, )
+
+    def post(self, request, *args, **kwargs):
+        serializer = RecaptchaSerializer(data=request.data)
+        if serializer.is_valid():
+            recaptcha_token = serializer.validated_data['recaptcha_token']
+
+            response = requests.post(
+                settings.GOOGLE_RECAPTCHA_VERIFY_URL,
+                data={
+                    'secret': settings.GOOGLE_RECAPTCHA_SECRET_KEY,
+                    'response': recaptcha_token
+                }
+            )
+
+            result = response.json()
+
+            if result.get('success') and result.get('score', 0) >= 0.5:  # Порог можно настроить
+                return Response({'message': 'Recaptcha validation passed'}, status=status.HTTP_200_OK)
+            return Response({'error': 'Recaptcha validation failed'}, status=status.HTTP_400_BAD_REQUEST)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
