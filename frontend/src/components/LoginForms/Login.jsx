@@ -14,6 +14,7 @@ import {
 
 import { loginUser } from "../../store/userSlice";
 import { useDispatch, useSelector } from "react-redux";
+import FacebookOauth from "../Oauth/FacebookOauth";
 
 const Login = ({ onModalClose }) => {
   const dispatch = useDispatch();
@@ -184,6 +185,7 @@ const Login = ({ onModalClose }) => {
           <h2 className="h2-medium">Sign in with</h2>
           <div className="auth-buttons">
             <Oauth icon={googleIconsvg} name={"Sign in with Google"} />
+            <FacebookOauth icon={facebooksvg} name={"Sign in with Facebook"}/>
             {/* <button className="auth-button">
               {googleIconsvg} Sign in with Google
             </button>

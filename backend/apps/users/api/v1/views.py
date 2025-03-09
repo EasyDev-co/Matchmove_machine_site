@@ -2,6 +2,7 @@ import base64
 import hashlib
 import hmac
 import json
+import requests
 
 from rest_framework import viewsets, status
 from rest_framework.generics import ListAPIView
@@ -25,6 +26,7 @@ from apps.users.api.v1.serializers import (
     UserUpdateSerializer,
     UserRankingSerializer,
     ContactUsSerializer,
+    RecaptchaSerializer,
 )
 from config import settings
 from apps.users.api.v1.pagination import CustomPagination
@@ -466,3 +468,27 @@ class FacebookDataDeletionView(APIView):
         if padding < 4:
             input_str += '=' * padding
         return base64.b64decode(input_str)
+
+
+class RecaptchaView(APIView):
+
+    def post(self, request, *args, **kwargs):
+        serializer = RecaptchaSerializer(data=request.data)
+        if serializer.is_valid():
+            recaptcha_token = serializer.validated_data['recaptcha_token']
+
+            response = requests.post(
+                settings.GOOGLE_RECAPTCHA_VERIFY_URL,
+                data={
+                    'secret': settings.GOOGLE_RECAPTCHA_SECRET_KEY,
+                    'response': recaptcha_token
+                }
+            )
+
+            result = response.json()
+
+            if result.get('success') and result.get('score', 0) >= 0.5:  # Порог можно настроить
+                return Response({'message': 'Recaptcha validation passed'}, status=status.HTTP_200_OK)
+            return Response({'error': 'Recaptcha validation failed'}, status=status.HTTP_400_BAD_REQUEST)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
