@@ -354,6 +354,7 @@ class ContactAsApiView(APIView):
         send_contact_us_tasks.delay(serializer.validated_data["email"], serializer.validated_data["text"])
         return Response({"message": "Сообщение отправлено"})
 
+
 class UserAccountDeleteAPIView(APIView):
     permission_classes = [IsAuthenticated]
 
@@ -376,8 +377,6 @@ class FacebookDataDeletionView(APIView):
 
     def post(self, request, *args, **kwargs):
         # Facebook по документации отправляет POST с полем 'signed_request'.
-        logger.info(f"request_data: {request.data}")
-
         signed_request = request.data.get('signed_request')
 
         if not signed_request:
