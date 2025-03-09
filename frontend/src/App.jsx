@@ -25,6 +25,7 @@ import Tutorials from "./pages/Tutorials/Tutorials";
 import OneTutorial from "./pages/Tutorials/DetailTutorial/DetailTutorial";
 import DetailTutorial from "./pages/Tutorials/DetailTutorial/DetailTutorial";
 import GoogleServicePage from "./pages/ServicePage/GoogleServicePage";
+import FaceBookServicePage from "./pages/ServicePage/FaceBookServicePage";
 
 function App() {
   return (
@@ -83,6 +84,7 @@ function App() {
                 <Route path="tutorials/:id" element={<DetailTutorial />} />
                 <Route path="tutorials" element={<Tutorials />} />
                 <Route path="/google/oauth/callback/" element={<GoogleServicePage />} />
+                  <Route path="/google/oauth/callback/" element={<FaceBookServicePage /> }></Route>
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </Layout>

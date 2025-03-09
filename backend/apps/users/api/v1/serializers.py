@@ -194,3 +194,7 @@ class UserRankingSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('id', 'username', 'profile_picture', 'total_products')
+
+class RecaptchaSerializer(serializers.Serializer):
+    recaptcha_token = serializers.CharField(required=True)
+    # Добавь другие поля, если необходимо

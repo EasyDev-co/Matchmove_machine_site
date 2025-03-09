@@ -14,6 +14,7 @@ from apps.users.api.v1.views import (
     ContactAsApiView,
     UserAccountDeleteAPIView,
     FacebookDataDeletionView,
+    RecaptchaView,
 )
 from apps.users.api.v1.social_network.views import GoogleAuthCodeView
 
@@ -34,4 +35,5 @@ urlpatterns = [
     path("auth/google/", GoogleAuthCodeView.as_view(), name="google_auth"),
     path("delete/", UserAccountDeleteAPIView.as_view(), name="delete_user"),
     path('facebook/data-deletion/', FacebookDataDeletionView.as_view(), name='fb_data_deletion'),
+    path('verify_recaptcha/', RecaptchaView.as_view(), name='verify-recaptcha'),
 ]
