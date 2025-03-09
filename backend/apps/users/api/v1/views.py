@@ -471,6 +471,7 @@ class FacebookDataDeletionView(APIView):
 
 
 class RecaptchaView(APIView):
+    permission_classes = (IsAuthenticated, )
 
     def post(self, request, *args, **kwargs):
         serializer = RecaptchaSerializer(data=request.data)
