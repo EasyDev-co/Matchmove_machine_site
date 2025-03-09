@@ -352,6 +352,7 @@ class ContactAsApiView(APIView):
         )
 
         send_contact_us_tasks.delay(serializer.validated_data["email"], serializer.validated_data["text"])
+        return Response({"message": "Сообщение отправлено"})
 
 class UserAccountDeleteAPIView(APIView):
     permission_classes = [IsAuthenticated]
