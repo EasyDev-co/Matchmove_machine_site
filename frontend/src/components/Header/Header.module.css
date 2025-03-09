@@ -126,6 +126,20 @@
     cursor: pointer;
     z-index: 21;
 }
+.cartCount {
+    position: absolute;
+    background-color: white;
+    border-radius: 50%;
+    color: black;
+    top: 40px;
+    left: 7px;
+    width: 15px;
+    height: 15px;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 
 .menuTitle {
     display: none;

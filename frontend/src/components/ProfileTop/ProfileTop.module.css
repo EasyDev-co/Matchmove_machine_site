@@ -49,7 +49,8 @@ opacity: 80%;
 .iconCont {
     height: 204px;
     width: 204px;
-    overflow: hidden;
+    /* overflow: hidden; */
+    position: relative;
 }
 
 .iconCont img {
@@ -66,7 +67,18 @@ opacity: 80%;
     gap: 20px;
     box-sizing: border-box;
 }
-
+.editpicture {
+    position: absolute;
+    bottom: -30px;
+    left: 70px;
+    height: 60px;
+    width: 60px;
+    border: none;
+    background-color: #2F57BF;
+    border-radius: 50%;
+    cursor: pointer;
+    padding: 15px;
+}
 .perofileinfo ul {
     display: flex;
     flex-direction: column;
@@ -111,7 +123,7 @@ opacity: 80%;
     .iconCont {
         height: 100px;
         width: 100px;
-        overflow: hidden;
+        /* overflow: hidden; */
     }
 
     .container{
@@ -120,6 +132,16 @@ opacity: 80%;
 
     .socialmobile {
         display: none;
+    }
+}
+
+@media screen and (max-width: 760px) {
+    .editpicture {
+        height: 34px;
+        width: 34px;
+        padding: 7px;
+        left: 35px;
+        bottom: -17px;
     }
 }
 @media (max-width: 680px) {

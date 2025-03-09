@@ -14,6 +14,7 @@ import { fetchUserProfile } from "../../store/slices/profileSlice";
 const Header = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const {cart} = useSelector(state => state.cart)
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [showCart, setShowCart] = useState(false);
@@ -60,7 +61,7 @@ const Header = () => {
           handleCloseMenu={handleCloseMenu}
         />
         <div className={styles.btncont}>
-          <div>
+          <div style={{position: 'relative'}}>
             <Button
               labelPosition="none"
               variant={window.innerWidth > 1000 ? "transparent" : "grey"}
@@ -68,6 +69,9 @@ const Header = () => {
               iconType="cart"
               onClick={openCart}
             />
+            {cart?.items?.length > 0 && 
+            <p className={styles.cartCount}>{cart?.items?.length}</p>
+            }     
           </div>
           <div>
             {isAuthenticated ? (
