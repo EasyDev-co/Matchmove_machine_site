@@ -84,7 +84,7 @@ function App() {
                 <Route path="tutorials/:id" element={<DetailTutorial />} />
                 <Route path="tutorials" element={<Tutorials />} />
                 <Route path="/google/oauth/callback/" element={<GoogleServicePage />} />
-                  <Route path="/google/oauth/callback/" element={<FaceBookServicePage /> }></Route>
+                  <Route path="/facebook/oauth/callback/" element={<FaceBookServicePage /> }></Route>
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </Layout>
