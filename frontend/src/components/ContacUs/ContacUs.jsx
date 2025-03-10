@@ -8,36 +8,29 @@ import arrowbtn from "../../assets/svg/arrowbtn.svg";
 const ContacUs = () => {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
-  const [token, setToken] = useState(""); // Токен reCAPTCHA
-  const [isCaptchaVerified, setIsCaptchaVerified] = useState(false); // Флаг проверки капчи
+  const [recaptchaToken, setRecaptchaToken] = useState("");
   const dispatch = useDispatch();
-
-  // Обработчик для получения токена reCAPTCHA
-  // const handleVerify = (recaptchaToken) => {
-  //   setToken(recaptchaToken);
-  //   setIsCaptchaVerified(true); // Капча пройдена
-  // };
 
   // Обработчик отправки формы
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // if (!isCaptchaVerified) {
-    //   alert("Please verify that you are not a robot.");
-    //   return;
-    // }
-
     const formData = {
       email: email,
       text: message,
-      // recaptchaToken: token, // Добавляем токен reCAPTCHA в данные формы
+      recaptcha_token: recaptchaToken, // Добавляем токен reCAPTCHA в данные формы
     };
 
     dispatch(sendContactUs(formData));
   };
 
+  // Обработчик получения токена reCAPTCHA
+  const handleRecaptchaVerify = (token) => {
+    setRecaptchaToken(token);
+  };
+
   return (
-    // <GoogleReCaptchaProvider reCaptchaKey="6Lch9OcqAAAAAE2dMEu69YahTitEpt1ON28Mymgo"> {/* Замените на ваш ключ */}
+    <GoogleReCaptchaProvider reCaptchaKey="6Lch9OcqAAAAAE2dMEu69YahTitEpt1ON28Mymgo">
       <div className={styles.block}>
         <h2 className={styles.title}>We’d love to hear from you!</h2>
         <p className={styles.text}>
@@ -67,20 +60,19 @@ const ContacUs = () => {
             ></textarea>
           </div>
 
-          {/* reCAPTCHA v3 */}
-          {/* <GoogleReCaptcha onVerify={handleVerify} /> */}
+          {/* Добавляем reCAPTCHA над кнопкой отправки */}
+          <GoogleReCaptcha onVerify={handleRecaptchaVerify} />
 
           <button
             type="submit"
             className={styles.submit_button}
-            // disabled={!isCaptchaVerified} // Блокируем кнопку, если капча не пройдена
           >
             <p>Submit</p>
             <img style={{ opacity: "1" }} src={arrowbtn} alt="arrow"></img>
           </button>
         </form>
       </div>
-    // </GoogleReCaptchaProvider>
+    </GoogleReCaptchaProvider>
   );
 };
 

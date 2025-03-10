@@ -137,7 +137,6 @@ const Login = ({ onModalClose }) => {
                 errors={errors}
                 setErrors={setErrors}
               />
-              <Oauth />
               <div className="underform">
                 <div className="checkbox-group">
                   <input
