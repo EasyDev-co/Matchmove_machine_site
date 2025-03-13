@@ -4,6 +4,7 @@ import { GoogleReCaptchaProvider, GoogleReCaptcha } from "react-google-recaptcha
 import { sendContactUs } from "../../store/slices/sendContactUsSlice.js";
 import styles from "./ContacUs.module.css";
 import arrowbtn from "../../assets/svg/arrowbtn.svg";
+import { useEffect } from "react";
 
 const ContacUs = () => {
   const [email, setEmail] = useState("");
@@ -28,6 +29,11 @@ const ContacUs = () => {
   const handleRecaptchaVerify = (token) => {
     setRecaptchaToken(token);
   };
+
+  useEffect(() => {
+    // Генерация токена при первом рендере
+    handleRecaptchaVerify();
+  }, []);
 
   return (
     <GoogleReCaptchaProvider reCaptchaKey="6Lch9OcqAAAAAE2dMEu69YahTitEpt1ON28Mymgo">
