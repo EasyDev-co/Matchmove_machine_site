@@ -479,9 +479,9 @@ class RecaptchaView(APIView):
             recaptcha_token = serializer.validated_data['recaptcha_token']
 
             response = requests.post(
-                settings.GOOGLE_RECAPTCHA_VERIFY_URL,
+                "https://www.google.com/recaptcha/api/siteverify",
                 data={
-                    'secret': settings.GOOGLE_RECAPTCHA_SECRET_KEY,
+                    'secret': "6Lch9OcqAAAAAEX07pKinpEkse52BV_gYXW23I7Z",
                     'response': recaptcha_token
                 }
             )
