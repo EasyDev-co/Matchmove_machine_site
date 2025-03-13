@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { GoogleReCaptchaProvider, GoogleReCaptcha } from "react-google-recaptcha-v3";
+import { GoogleReCaptchaProvider, GoogleReCaptcha, useGoogleReCaptcha } from "react-google-recaptcha-v3";
 import { sendContactUs } from "../../store/slices/sendContactUsSlice.js";
 import styles from "./ContacUs.module.css";
 import arrowbtn from "../../assets/svg/arrowbtn.svg";
@@ -11,29 +11,64 @@ const ContacUs = () => {
   const [message, setMessage] = useState("");
   const [recaptchaToken, setRecaptchaToken] = useState("");
   const dispatch = useDispatch();
+  const { executeRecaptcha } = useGoogleReCaptcha();
 
-  // Обработчик отправки формы
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const formData = {
-      email: email,
-      text: message,
-      recaptcha_token: recaptchaToken, // Добавляем токен reCAPTCHA в данные формы
-    };
+    if (!executeRecaptcha) {
+      console.error("reCAPTCHA not available");
+      return;
+    }
 
-    dispatch(sendContactUs(formData));
-  };
+    try {
+      // Генерация токена перед отправкой формы
+      const token = await executeRecaptcha("submit");
+      setRecaptchaToken(token);
+
+      const formData = {
+        email: email,
+        text: message,
+        recaptcha_token: token, // Используем новый токен
+      };
+
+      dispatch(sendContactUs(formData));
+    } catch (error) {
+      console.error("Error generating reCAPTCHA token:", error);
+    }
+  }
+
+  // Обработчик отправки формы
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+
+  //   if (!executeRecaptcha) {
+  //     console.error("reCAPTCHA not available");
+  //     return;
+  //   }
+
+  //   // Генерация токена перед отправкой формы
+  //   const token = await executeRecaptcha("submit");
+  //   setRecaptchaToken(token);
+
+  //   const formData = {
+  //     email: email,
+  //     text: message,
+  //     recaptcha_token: recaptchaToken, // Добавляем токен reCAPTCHA в данные формы
+  //   };
+
+  //   dispatch(sendContactUs(formData));
+  // };
 
   // Обработчик получения токена reCAPTCHA
-  const handleRecaptchaVerify = (token) => {
-    setRecaptchaToken(token);
-  };
+  // const handleRecaptchaVerify = (token) => {
+  //   setRecaptchaToken(token);
+  // };
 
-  useEffect(() => {
-    // Генерация токена при первом рендере
-    handleRecaptchaVerify();
-  }, []);
+  // useEffect(() => {
+  //   // Генерация токена при первом рендере
+  //   handleRecaptchaVerify();
+  // }, []);
 
   return (
     <GoogleReCaptchaProvider reCaptchaKey="6Lch9OcqAAAAAE2dMEu69YahTitEpt1ON28Mymgo">
@@ -67,7 +102,7 @@ const ContacUs = () => {
           </div>
 
           {/* Добавляем reCAPTCHA над кнопкой отправки */}
-          <GoogleReCaptcha onVerify={handleRecaptchaVerify} />
+          {/* <GoogleReCaptcha onVerify={handleRecaptchaVerify} /> */}
 
           <button
             type="submit"
