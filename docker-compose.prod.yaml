@@ -7,7 +7,8 @@ x-function: &base_web
     - redis
   networks:
     - nginx_network
-    - sftpgo_ftp_network
+    - sftpgo-grids_ftp_network
+    - mm_network
   env_file:
     - .env
 
@@ -23,12 +24,13 @@ services:
       - ./certbot/www:/var/www/certbot
     ports:
       - "8080:8080"
-      - "443:443"
+#      - "443:443"
     depends_on:
       - web
       - frontend
     networks:
       - nginx_network
+      - mm_network
 
   web:
     <<: *base_web
@@ -136,6 +138,7 @@ services:
       - redis_data:/data
     networks:
       - nginx_network
+      - mm_network
 
 volumes:
   static_dir:
@@ -144,7 +147,9 @@ volumes:
   redis_data:
 
 networks:
-  sftpgo_ftp_network:
+  sftpgo-grids_ftp_network:
     external: true
   nginx_network:
     driver: bridge
+  mm_network:
+    external: true
