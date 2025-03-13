@@ -250,7 +250,7 @@ const Faq = () => {
       </section>
       <div style={{position: 'relative', zIndex: '10', color: 'white'}}>
       <Modal isOpen={isOpen} onClose={handleClose}>
-        <ContacUs />
+        <ContacUs onClose={handleClose}/>
       </Modal>
       </div>
     </div>
