@@ -46,7 +46,11 @@ const ContacUsForm = ({onClose}) => {
     if (status === "succeeded") {
       setEmail(""); // Очищаем поле email
       setMessage(""); // Очищаем поле message
-      onClose(); // Закрываем форму
+      if (typeof onClose === "function") {
+        onClose(); // Закрываем форму
+      } else {
+        console.error("onClose is not a function");
+      } // Закрываем форму
     }
   }, [status, onClose]);
 
