@@ -6,12 +6,13 @@ import styles from "./ContacUs.module.css";
 import arrowbtn from "../../assets/svg/arrowbtn.svg";
 
 // Основной компонент формы
-const ContacUsForm = ({onClose}) => {
+const ContacUsForm = () => {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
   const [recaptchaToken, setRecaptchaToken] = useState("");
   const dispatch = useDispatch();
   const { status } = useSelector(state => state.contactUs)
+  const [isSuccess, setIsSuccess] = useState(false)
 
   // Используем хук useGoogleReCaptcha
   const { executeRecaptcha } = useGoogleReCaptcha();
@@ -46,13 +47,10 @@ const ContacUsForm = ({onClose}) => {
     if (status === "succeeded") {
       setEmail(""); // Очищаем поле email
       setMessage(""); // Очищаем поле message
-      if (typeof onClose === "function") {
-        onClose(); // Закрываем форму
-      } else {
-        console.error("onClose is not a function");
-      } // Закрываем форму
+      setIsSuccess(true)
     }
-  }, [status, onClose]);
+  }, [status]);
+
 
   return (
     <div className={styles.block}>
@@ -83,7 +81,6 @@ const ContacUsForm = ({onClose}) => {
             required
           ></textarea>
         </div>
-
         <button
           type="submit"
           className={styles.submit_button}
@@ -91,16 +88,19 @@ const ContacUsForm = ({onClose}) => {
           <p>Submit</p>
           <img style={{ opacity: "1" }} src={arrowbtn} alt="arrow"></img>
         </button>
+        {isSuccess && (
+          <p className={styles.succes}>The form has been successfully submitted.</p>
+        )}
       </form>
     </div>
   );
 };
 
 // Компонент, обернутый в GoogleReCaptchaProvider
-const ContacUs = ({onClose}) => {
+const ContacUs = () => {
   return (
     <GoogleReCaptchaProvider reCaptchaKey="6Lch9OcqAAAAAE2dMEu69YahTitEpt1ON28Mymgo">
-      <ContacUsForm onClose={onClose}/>
+      <ContacUsForm />
     </GoogleReCaptchaProvider>
   );
 };
