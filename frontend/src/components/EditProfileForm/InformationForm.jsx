@@ -111,21 +111,21 @@ const InformationForm = ({ profile, status, picture }) => {
     navigate("/profile/");
   };
 
-  const handleDeleteAccount = async () => {
-    const confirmation = window.confirm(
-      "Вы уверены, что хотите удалить аккаунт? Это действие нельзя отменить."
-    );
-    if (confirmation) {
-      try {
-        await dispatch(deleteUserAccount()).unwrap();
-        alert("Аккаунт успешно удален!");
-        navigate("/"); // Перенаправляем на главную страницу
-      } catch (error) {
-        console.error("Ошибка при удалении аккаунта:", error);
-        alert("Не удалось удалить аккаунт. Пожалуйста, попробуйте снова.");
-      }
-    }
-  };
+  // const handleDeleteAccount = async () => {
+  //   const confirmation = window.confirm(
+  //     "Вы уверены, что хотите удалить аккаунт? Это действие нельзя отменить."
+  //   );
+  //   if (confirmation) {
+  //     try {
+  //       await dispatch(deleteUserAccount()).unwrap();
+  //       alert("Аккаунт успешно удален!");
+  //       navigate("/"); // Перенаправляем на главную страницу
+  //     } catch (error) {
+  //       console.error("Ошибка при удалении аккаунта:", error);
+  //       alert("Не удалось удалить аккаунт. Пожалуйста, попробуйте снова.");
+  //     }
+  //   }
+  // };
 
   // const handleDeleteAccount = () => {
   //   dispatch(deleteUserAccount())
@@ -224,7 +224,7 @@ const InformationForm = ({ profile, status, picture }) => {
             </div>
           </div>
           <div>
-            <Button
+            {/* <Button
               variant="outline-red"
               label={
                 deleteAccountStatus === "loading"
@@ -234,7 +234,7 @@ const InformationForm = ({ profile, status, picture }) => {
               labelPosition="left"
               iconType="crossbtn"
               onClick={handleDeleteAccount}
-            />
+            /> */}
           </div>
         </div>
       </form>
