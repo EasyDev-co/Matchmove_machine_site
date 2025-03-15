@@ -53,8 +53,10 @@ const ProfileTop = ({ profile }) => {
         const reader = new FileReader();
         reader.onloadend = () => {
           setPicture(reader.result);
+          console.log(reader.result)
         };
         reader.readAsDataURL(file);
+        console.log(file)
   
         dispatch(updateProfilePicture(file));
       }
