@@ -49,7 +49,7 @@ const EditProfile = () => {
                     src={
                         picture ||
                         (profile.profile_picture
-                            ? `${BACKEND_PHOTO_URL}${profile.profile_picture}`
+                            ? profile.profile_picture
                             : iconimg)
                     }
                     alt="Profile"
