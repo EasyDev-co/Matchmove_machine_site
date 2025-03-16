@@ -8,12 +8,13 @@ import { useEffect } from "react";
 import { fetchTopContributors } from "../../store/slices/topContributorsSlice";
 import iconimg from "../../assets/images/iconplaceholder.png";
 import Slider from "../../components/Slider/Slider";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const TopContributors = () => {
   const dispatch = useDispatch();
   const { top, status, error } = useSelector((state) => state.topContributors);
   const { isAuthenticated } = useSelector((state) => state.user);
+  const navigate = useNavigate();
 
   const handleNavigation = (id) => {
     if (isAuthenticated) {
