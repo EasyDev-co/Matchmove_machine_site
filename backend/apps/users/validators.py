@@ -6,7 +6,7 @@ from loguru import logger
 def validate_custom_password(value):
     """Дополнительная валидация пароля."""
 
-    if len(value) <= 8:
+    if len(value) < 8:
         logger.error("Error len")
         raise serializers.ValidationError(
             "Password must be at least 8 characters long."
