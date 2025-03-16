@@ -86,6 +86,12 @@
     font-size: 24px;
 }
 
+@media (max-width: 1180px) {
+    .topContainer {
+        column-count: 2;
+    }
+}
+
 @media (max-width: 768px) {
     .topContribiutors {
         margin-top: 46px;
