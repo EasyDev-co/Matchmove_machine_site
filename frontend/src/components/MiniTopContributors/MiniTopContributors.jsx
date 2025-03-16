@@ -13,6 +13,7 @@ const MiniTopContributors = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { top, status, error } = useSelector((state) => state.topContributors);
+  const { isAuthenticated } = useSelector((state) => state.user);
 
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
 
@@ -55,8 +56,16 @@ const MiniTopContributors = () => {
     console.log(top);
   }, [status, dispatch]);
 
+  const handleNavigation = (id) => {
+    if (isAuthenticated) {
+      navigate(`/profile/${id}`);
+    } else {
+      navigate("/authorization");
+    }
+  };
+
   const items = top?.data?.slice(0, 15).map((item, index) => (
-    <Link to={`/profile/${item.id}`} key={index} className={styles.element}>
+    <div onClick={handleNavigation(item.id)} key={index} className={styles.element}>
       <p className={`${styles.number} ${styles.numberMobile}`}>
         {item.position}.
       </p>
@@ -72,7 +81,7 @@ const MiniTopContributors = () => {
           <p className={styles.total_products}>{item.total_products}</p>
         </div>
       </div>
-    </Link>
+    </div>
   ));
 
   return (
@@ -109,8 +118,9 @@ const MiniTopContributors = () => {
               </div>
               <div className={styles.topContainer}>
                 {top?.data?.slice(0, 15).map((item, index) => (
-                  <Link
-                    to={`/profile/${item.id}`}
+                  <div
+                    onClick={handleNavigation(item.id)}
+                    // to={`/profile/${item.id}`}
                     key={index}
                     className={styles.user}
                   >
@@ -135,7 +145,7 @@ const MiniTopContributors = () => {
                         </p>
                       </div>
                     </div>
-                  </Link>
+                  </div>
                 ))}
               </div>
             </>
