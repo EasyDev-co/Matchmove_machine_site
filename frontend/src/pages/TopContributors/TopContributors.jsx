@@ -63,7 +63,7 @@ const TopContributors = () => {
         )}
         <div className={styles.main}>
           {top?.data?.map((item, index) => (
-            <div onClick={handleNavigation(item.id)} key={index} className={styles.user}>
+            <div onClick={() => handleNavigation(item.id)} key={index} className={styles.user}>
               <p className={styles.number}>{item.position}.</p>
               <img
                 style={{ width: "60px", height: "60px", borderRadius: "5px" }}

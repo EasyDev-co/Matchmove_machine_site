@@ -65,7 +65,7 @@ const MiniTopContributors = () => {
   };
 
   const items = top?.data?.slice(0, 15).map((item, index) => (
-    <div onClick={handleNavigation(item.id)} key={index} className={styles.element}>
+    <div onClick={() => handleNavigation(item.id)} key={index} className={styles.element}>
       <p className={`${styles.number} ${styles.numberMobile}`}>
         {item.position}.
       </p>
@@ -119,7 +119,7 @@ const MiniTopContributors = () => {
               <div className={styles.topContainer}>
                 {top?.data?.slice(0, 15).map((item, index) => (
                   <div
-                    onClick={handleNavigation(item.id)}
+                    onClick={() => handleNavigation(item.id)}
                     // to={`/profile/${item.id}`}
                     key={index}
                     className={styles.user}
