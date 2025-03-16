@@ -13,6 +13,16 @@ import { Link } from "react-router-dom";
 const TopContributors = () => {
   const dispatch = useDispatch();
   const { top, status, error } = useSelector((state) => state.topContributors);
+  const { isAuthenticated } = useSelector((state) => state.user);
+
+  const handleNavigation = (id) => {
+    if (isAuthenticated) {
+      navigate(`/profile/${id}`);
+    } else {
+      navigate("/authorization");
+    }
+  };
+
 
   useEffect(() => {
     console.log("status", status);
@@ -52,7 +62,7 @@ const TopContributors = () => {
         )}
         <div className={styles.main}>
           {top?.data?.map((item, index) => (
-            <Link to={`/profile/${item.id}`} key={index} className={styles.user}>
+            <div onClick={handleNavigation(item.id)} key={index} className={styles.user}>
               <p className={styles.number}>{item.position}.</p>
               <img
                 style={{ width: "60px", height: "60px", borderRadius: "5px" }}
@@ -66,7 +76,7 @@ const TopContributors = () => {
                   <p style={{ fontSize: "24px" }}>{item.total_products}</p>
                 </div>
               </div>
-            </Link>
+            </div>
           ))}
         </div>
         {top && (
