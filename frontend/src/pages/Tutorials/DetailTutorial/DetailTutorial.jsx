@@ -38,13 +38,18 @@ const DetailTutorial = () => {
     };
   }, []);
 
+  // useEffect(() => {
+  //   if (status === "idle") {
+  //     dispatch(fetchDetailTutorials(id)); // Запрашиваем данные, если статус "idle"
+  //     console.log('произошла смена дет страницы');
+  //   }
+  //   console.log(status);
+  //   console.log(detailTutorials);
+  // }, [dispatch, id, status]);
+
   useEffect(() => {
-    if (status === "idle") {
-      dispatch(fetchDetailTutorials(id)); // Запрашиваем данные, если статус "idle"
-    }
-    console.log(status);
-    console.log(detailTutorials);
-  }, [dispatch, id, status]);
+    dispatch(fetchDetailTutorials(id));
+  }, [dispatch, id]);
 
   const { tutorials } = useSelector((state) => state.tutorials);
   const items = tutorials?.data

@@ -42,21 +42,27 @@
     line-height: 30.77px;
     font-weight: 450;
 }
-
-@media (max-width: 768px) {
+@media (max-width: 1180px) {
     .main {
         column-count: 2;
     }
+  }
+  @media (max-width: 850px) {
+    .main {
+        column-count: 1;
+    }
+  }
+@media (max-width: 768px) {
     .user {
         width: 330px;
     }
   }
-  
+
   /* Для мобильных (до 390px) - 1 колонка */
   @media (max-width: 390px) {
-    .main {
+    /* .main {
         column-count: 1;
-    }
+    } */
     .user {
         width: 350px;
     }
