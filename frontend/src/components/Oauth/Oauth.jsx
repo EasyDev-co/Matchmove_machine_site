@@ -3,7 +3,7 @@ import React from 'react';
 // import { GOOGLE_CLIENT_ID, GOOGLE_REDIRECT_URI } from '../config';
 
 const Oauth = ({name, icon}) => {
-    const GOOGLE_CLIENT_ID = '723039007874-1f5fgudgr46vl81old3h5qndhoihai0i.apps.googleusercontent.com'
+    const GOOGLE_CLIENT_ID = '272087782147-9u14c424vbk5dipj50g7oa1eeuli53qc.apps.googleusercontent.com'
     const GOOGLE_REDIRECT_URI = 'https://grids.matchmovemachine.com/google/oauth/callback/'
   const handleGoogleLogin = () => {
     const baseUrl = 'https://accounts.google.com/o/oauth2/v2/auth';
