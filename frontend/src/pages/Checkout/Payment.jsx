@@ -102,7 +102,7 @@ const Payment = ({orderId}) => {
                 </div>
             )}
             <form onSubmit={handleSubmit}>
-                <div className={`form-group ${styles.forms} ${styles.socialtoggle}`}>
+                <div className={`form-group ${styles.forms} ${styles.socialtoggle}`} style={{gap: '15px'}}>
                     {fields.map(({name, placeholder}) => (
                         <Input
                             key={name}

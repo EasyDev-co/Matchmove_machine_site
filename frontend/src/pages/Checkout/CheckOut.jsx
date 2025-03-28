@@ -66,25 +66,25 @@ if(cart.items.length>0){
         <div className={styles.logocont} onClick={navigateMainPage}>
           <img src={logo} alt="logo" />
         </div>
-        {profile.email&&<div className={styles.emailcont}>
+        {profile?.email&&<div className={styles.emailcont}>
           <p className={styles.email}>Email:</p>
           <p>{profile.email}</p>
         </div>}
       </div>
       <div className={styles.body}>
         <div className={styles.orderInfo}>
-          <div style={{alignSelf: "flex-start"}}>
+          {cart.items.length > 0 && (
+            <div className={`${styles.cart}`}>
+              <CartItems cart={cart.items} />
+            </div>
+          )}
+          <div className={styles.cancelContainer}>
           <Button
               variant="outline-red"
               label="Cancel"
               onClick={() => navigate("/library")}
             />
             </div>
-          {cart.items.length > 0 && (
-            <div className={`${styles.cart}`}>
-              <CartItems cart={cart.items} />
-            </div>
-          )}
         </div>
         <div className={styles.proceed}>
         <div className={`${styles.check} h5-light`}>

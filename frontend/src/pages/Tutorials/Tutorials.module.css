@@ -22,6 +22,49 @@
     height: 233px;
     object-fit: contain;
 }
+.hoveredImage {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 413px;
+    height: 233px;
+    background-color: rgba(255, 255, 255, 0.85);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    z-index: 2;
+}
+.visible {
+    opacity: 1;
+    visibility: visible;
+  }
+  
+  .hidden {
+    opacity: 0;
+    visibility: hidden;
+  }
+.readMore {
+    display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  padding: 0px 20px;
+  min-width: 60px;
+  height: 60px;
+  background: #505050;
+  border-radius: 5px;
+  color: #2F57BF;;
+  cursor: pointer;
+  font-weight: 450;
+  font-size: 16px;
+  font-family: 'Montserrat', sans-serif;
+  background-color: transparent;
+  box-sizing: border-box;
+  border: 2px solid #2F57BF;
+  transition: background-color 0.1s ease-in-out;
+}
 .nameCont {
     display: flex;
     justify-content: space-between;
@@ -101,6 +144,10 @@
         width: 334px;
         height: 233px;
     }
+    .hoveredImage {
+        width: 334px;
+        height: 233px;
+    }
     .blockDetail {
         padding: 40px;
     }   
@@ -136,7 +183,11 @@
         grid-template-columns: repeat(1, 1fr);
     } */
     .image {
-        width: 350  px;
+        width: 350px;
+        height: 233px;
+    }
+    .hoveredImage {
+        width: 350px;
         height: 233px;
     }
     .titleOther {

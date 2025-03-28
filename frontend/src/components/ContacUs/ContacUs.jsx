@@ -99,10 +99,11 @@ const ContacUsForm = () => {
 // Компонент, обернутый в GoogleReCaptchaProvider
 const ContacUs = () => {
   return (
-    <GoogleReCaptchaProvider reCaptchaKey="6Lch9OcqAAAAAE2dMEu69YahTitEpt1ON28Mymgo">
+    <GoogleReCaptchaProvider hideBadge={true} reCaptchaKey="6Lch9OcqAAAAAE2dMEu69YahTitEpt1ON28Mymgo">
       <ContacUsForm />
     </GoogleReCaptchaProvider>
   );
 };
+// hideBadge={true}
 
 export default ContacUs;

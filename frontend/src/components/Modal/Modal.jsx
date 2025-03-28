@@ -7,6 +7,37 @@ const Modal = ({ isOpen, onClose, children }) => {
 
   useEffect(() => {
     setIsModalOpen(isOpen);
+    // if (isOpen) {
+    //   // Запоминаем текущую позицию скролла
+    //   const scrollY = window.scrollY;
+      
+    //   // Блокируем скролл на body и html
+    //   document.body.style.position = 'fixed';
+    //   document.body.style.top = `-${scrollY}px`;
+    //   document.body.style.width = '100%';
+    //   document.body.style.overflow = 'hidden';
+      
+    //   // Для html элемента на всякий случай
+    //   document.documentElement.style.overflow = 'hidden';
+    // } else {
+    //   // Разблокируем скролл
+    //   const scrollY = document.body.style.top;
+    //   document.body.style.position = '';
+    //   document.body.style.top = '';
+    //   document.body.style.overflow = '';
+    //   document.documentElement.style.overflow = '';
+      
+    //   // Восстанавливаем позицию скролла
+    //   window.scrollTo(0, parseInt(scrollY || '0') * -1);
+    // }
+
+    // return () => {
+    //   // Очистка при размонтировании компонента
+    //   document.body.style.position = '';
+    //   document.body.style.top = '';
+    //   document.body.style.overflow = '';
+    //   document.documentElement.style.overflow = '';
+    // };
   }, [isOpen]);
 
   const handleClose = () => {

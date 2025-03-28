@@ -12,12 +12,15 @@ import { useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchSingleProduct } from "../store/slices/singleProductSlice";
+import Modal from "../components/Modal/Modal";
+import ContacUs from "../components/ContacUs/ContacUs";
 
 const Product = ()=>{
 
   const { singleProduct, status} = useSelector(state => state.singleProduct)
   const dispatch = useDispatch()
   const { productId } = useParams();
+  const [isOpen, setIsOpen] = useState(false);
 
   const [activeButton, setActiveButton] = useState('Assets');
   
@@ -27,6 +30,13 @@ const Product = ()=>{
 
   const handleButtonClick = (buttonName) => {
       setActiveButton(buttonName);
+  };
+  const handleOpen = () => {
+    setIsOpen(true);
+  };
+
+  const handleClose = () => {
+    setIsOpen(false);
   };
 
 
@@ -41,10 +51,13 @@ const Product = ()=>{
       <>
         <NavigationTop title={`Distortion grids pack for ${singleProduct.camera.model_name} ${singleProduct.lens.model_name}`} singleProduct={singleProduct}/>
         {/* <ProductBanner singleProduct={singleProduct}/> */}
-        <ProductDescription singleProduct={singleProduct} handleButtonClick={handleButtonClick}/>
+        <ProductDescription handleOpen={handleOpen} singleProduct={singleProduct} handleButtonClick={handleButtonClick}/>
         <ProductField singleProduct={singleProduct} handleButtonClick={handleButtonClick} activeButton={activeButton}/>
         <JoinCommunity/>
         <SharePage profile={singleProduct.author} />
+        <Modal isOpen={isOpen} onClose={handleClose}>
+        <ContacUs />
+      </Modal>
       </>
     );
   } 

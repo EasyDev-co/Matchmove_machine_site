@@ -36,7 +36,7 @@ if(status.fetchOrderStatus === "succeeded"&&order.order.items){
   return (
     <div className={styles.main}>
       <div className={styles.header}>
-        <div className={styles.logocont}>
+        <div className={styles.logocont} onClick={()=>navigate("/")}>
           <img src={logo} alt="logo" />
         </div>
         {profile?.email &&<div className={styles.emailcont}>
@@ -46,13 +46,6 @@ if(status.fetchOrderStatus === "succeeded"&&order.order.items){
       </div>
       <div className={styles.body}>
         <div className={styles.orderInfo}>
-        <div style={{alignSelf: "flex-start"}}>
-          <Button
-              variant="outline-red"
-              label="Cancel"
-              onClick={() => navigate("/library")}
-            />
-            </div>
           <div className={`${styles.check} h5-light`}>
             
               {order.order.items.map((item)=><div key={item.id} className={styles.checkField}><p>{item.product.lens.brand} {item.product.lens.model_name}</p> <p>${item.product.price}</p></div>)}
@@ -67,6 +60,13 @@ if(status.fetchOrderStatus === "succeeded"&&order.order.items){
               code and complete the payment during the checkout.
             </p>
           </div>
+          <div className={styles.cancelContainer}>
+          <Button
+              variant="outline-red"
+              label="Cancel"
+              onClick={() => navigate("/library")}
+            />
+            </div>
         </div>
         <div className={styles.proceed}>
           <Payment  orderId={order.order.id} />

@@ -23,7 +23,7 @@ import ContacUs from "../ContacUs/ContacUs";
 const Footer = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const [isOpen, setIsOpen] = useState(false);
+  // const [isOpen, setIsOpen] = useState(false);
 
 
   const handleLogoPath = () => {
@@ -33,12 +33,17 @@ const Footer = () => {
       window.scrollTo({ top: 0, behavior: "smooth" }); // Scroll to the top
     }
   };
-  const handleOpen = () => {
-    setIsOpen(true);
-  };
+  // const handleOpen = () => {
+  //   setIsOpen(true);
+  // };
 
-  const handleClose = () => {
-    setIsOpen(false);
+  // const handleClose = () => {
+  //   setIsOpen(false);
+  // };
+
+  const handleEmailClick = () => {
+    const recipient = "grids@matchmovemachine.com";
+    window.location.href = `mailto:${recipient}`;
   };
   return (
     <footer className={styles.container}>
@@ -177,11 +182,8 @@ const Footer = () => {
 
             <div className={styles.email}>
               <p className="h5-extra-bold">Email</p>
-              {/* <button onClick={handleOpen}>
-                grids@matchmovemachine.com
-              </button> */}
               <p
-                onClick={handleOpen}
+                onClick={handleEmailClick}
                 className={styles.highLight}
                 style={{cursor: 'pointer'}}
               >
@@ -192,9 +194,6 @@ const Footer = () => {
         </div>
       </div>
       <p className="h2-light">&copy; Matchmove machine, 2024</p>
-      <Modal isOpen={isOpen} onClose={handleClose}>
-        <ContacUs />
-      </Modal>
     </footer>
   );
 };
