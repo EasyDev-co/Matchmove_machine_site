@@ -11,21 +11,21 @@ const MainPage = () => {
   const isRedirect = 
   true;
 
-  useEffect(() => {
-    if (!window.Paddle) {
-      const script = document.createElement("script");
-      script.src = "https://cdn.paddle.com/paddle/paddle.js";
-      script.async = true;
-      script.onload = () => {
-        // Скрипт загружен, можно (опционально) сразу инициализировать
-        window.Paddle?.Setup({ vendor: 189185 }); 
-      };
-      document.body.appendChild(script);
-    } else {
-      // Если Paddle уже есть – инициализируем
-      window.Paddle.Setup({ vendor: 189185 });
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (!window.Paddle) {
+  //     const script = document.createElement("script");
+  //     script.src = "https://cdn.paddle.com/paddle/paddle.js";
+  //     script.async = true;
+  //     script.onload = () => {
+  //       // Скрипт загружен, можно (опционально) сразу инициализировать
+  //       window.Paddle?.Setup({ vendor: 189185 }); 
+  //     };
+  //     document.body.appendChild(script);
+  //   } else {
+  //     // Если Paddle уже есть – инициализируем
+  //     window.Paddle.Setup({ vendor: 189185 });
+  //   }
+  // }, []);
 
   useEffect(() => {
     if (isRedirect) {
