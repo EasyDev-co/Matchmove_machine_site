@@ -12,7 +12,7 @@ logger = logging.getLogger(__name__)
 class PaddleWebhookService:
 
     def __init__(self, request):
-        self.endpoint_secret_key = settings.PADDLE_NOTIFICATION_KEY
+        self.endpoint_secret_key = "ntfset_01jdhs2y3w7wqcm660097zeh78"
         self.request = request
 
     def verify_signature(self):
