@@ -42,15 +42,15 @@ const Payment = ({ orderId }) => {
       console.log('падла нет')
       script.onload = () => {
         // Скрипт загружен, можно (опционально) сразу инициализировать
-        // window.Paddle?.Setup({ vendor: 189185 }); 
-        Paddle.Initialize({ token: '5fb98e8e0d04f908df3af8ae742a53cb79927f7c2bd6d6e9a8' });
+        window.Paddle.Setup({ vendor: 189185 }); 
+        // Paddle.Initialize({ token: '5fb98e8e0d04f908df3af8ae742a53cb79927f7c2bd6d6e9a8' });
       };
       document.body.appendChild(script);
     } else {
       console.log('падл есть')
       // Если Paddle уже есть – инициализируем
-      // window.Paddle.Setup({ vendor: 189185 });
-      Paddle.Initialize({ token: '5fb98e8e0d04f908df3af8ae742a53cb79927f7c2bd6d6e9a8' });
+      window.Paddle.Setup({ vendor: 189185 });
+      // Paddle.Initialize({ token: '5fb98e8e0d04f908df3af8ae742a53cb79927f7c2bd6d6e9a8' });
     }
   }, []);
 
