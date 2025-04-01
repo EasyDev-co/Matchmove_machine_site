@@ -15,7 +15,7 @@ class PaddleService:
 
     def __init__(self):
         self.base_url = settings.PADDLE_API_BASE_URL
-        self.api_key = settings.PADDLE_API_KEY
+        self.api_key = "5fb98e8e0d04f908df3af8ae742a53cb79927f7c2bd6d6e9a8"
         self.headers = {"Authorization": f"Bearer {self.api_key}"}
 
     def _get(self, url, params=None):

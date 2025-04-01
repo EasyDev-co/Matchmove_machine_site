@@ -5,6 +5,7 @@ import Input from "../../components/Forms/Input";
 import Button from "../../components/Button";
 
 import { postPayment } from "../../store/slices/paymentSlice";
+import Paddle from '@paddle/paddle-js';
 
 import styles from "./CheckOut.module.css";
 
@@ -35,6 +36,8 @@ const Payment = ({ orderId }) => {
 
   // 1. Подключим Paddle.js динамически (можно и в public/index.html – см. комментарий ниже).
   useEffect(() => {
+    const Paddle = window.Paddle
+
     if (!window.Paddle) {
       const script = document.createElement("script");
       script.src = "https://cdn.paddle.com/paddle/v2/paddle.js";
