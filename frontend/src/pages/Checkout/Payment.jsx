@@ -106,6 +106,7 @@ const Payment = ({ orderId }) => {
       const { payload } = resultAction; 
       // Ожидаем, что payload имеет { checkout: { url: "..." } }
       const checkoutUrl = payload?.checkout?.url;
+      const paymentId = payload?.id;
       if (!checkoutUrl) {
         console.error("No checkout URL returned from server");
         return;
@@ -121,6 +122,7 @@ const Payment = ({ orderId }) => {
         // Открываем поп-ап с оплатой через override
         window.Paddle.Checkout.open({
             // override: checkoutUrl,
+            transactionId: paymentId,
             
             successCallback: (data) => {
               console.log("Paddle successCallback:", data);
