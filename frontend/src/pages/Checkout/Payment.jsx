@@ -37,7 +37,7 @@ const Payment = ({ orderId }) => {
   useEffect(() => {
     if (!window.Paddle) {
       const script = document.createElement("script");
-      script.src = "https://cdn.paddle.com/paddle/paddle.js";
+      script.src = "https://cdn.paddle.com/paddle/paddle.js@1.4";
       script.async = true;
       console.log('падла нет')
       script.onload = () => {
@@ -123,6 +123,7 @@ const Payment = ({ orderId }) => {
         // Инициализируем (на всякий случай, если не сделали в useEffect)
         window.Paddle.Setup({ vendor: 189185 });
         console.log('проверка 2')
+        console.log('paymentId', paymentId)
         // Открываем поп-ап с оплатой через override
         window.Paddle.Checkout.open({
             // override: checkoutUrl,
