@@ -36,7 +36,7 @@ const Filters = ({
       <div className={styles.filters}>
         {cameras.map(({ model_name, id }) => (
           <div key={id} className={styles.filter}>
-            <div className={styles.brandContainer}>
+            <div onClick={() => toggleLensMenu(model_name)} className={styles.brandContainer}>
               <div>
                 <input
                   type="checkbox"
@@ -47,7 +47,7 @@ const Filters = ({
               </div>
               <button
                 className={styles.plusButton}
-                onClick={() => toggleLensMenu(model_name)}
+                // onClick={() => toggleLensMenu(model_name)}
               >
                 <p>{model_name}</p>
                 {openBrand === model_name ? minussvg : plussvg}

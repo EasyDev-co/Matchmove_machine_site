@@ -47,7 +47,7 @@
     flex-direction: column;
     background: linear-gradient(90deg, #F0F0F0 0%, #E4EBFF 100%);
     border-bottom: 1px solid rgba(194, 194, 194, 0.5);
-
+    cursor: pointer;
 }
 
 .brandContainer {

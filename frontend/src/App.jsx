@@ -40,7 +40,7 @@ function App() {
             <ProtectedRoute>
               <CheckOut />
             </ProtectedRoute>
-          }
+          } 
         />
         <Route
           path="checkout/payment"

@@ -44,7 +44,7 @@ const Library = () => {
   return (
     <>
       <NavigationTop title="Distortion Grids Database" text="Search for available distortion grids for chosen camera and lens models." />
-      <DatabaseBanner/>
+      {/* <DatabaseBanner/> */}
       <LibraryItems/>
       <JoinCommunity/>
       <div style={{padding: '0 80px 80px 80px'}}>

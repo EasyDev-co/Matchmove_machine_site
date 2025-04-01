@@ -7,12 +7,15 @@ import useSmoothScroll from "../../hooks/useSmoothScroll";
 import { burgersvg, closesvg } from "../../assets/svg/svgimages";
 import Modal from "../../components/Modal/Modal";
 import ContacUs from "../../components/ContacUs/ContacUs";
+import { useNavigate } from "react-router-dom";
 
 const Faq = () => {
 
     const [clickedButton, setClickedButton] = useState(null);
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
+
+    const navigate = useNavigate();
 
     const handleOpen = () => {
       setIsOpen(true);
@@ -60,9 +63,14 @@ const Faq = () => {
 
   return (
     <div>
-      <NavigationTop title="FAQ" />
+      {/* <NavigationTop title="FAQ" /> */}
       <section className={styles.banner}>
         <div className={styles.bannerCont}>
+        <div className={styles.content}>
+          <a className={styles.homeLink} onClick={()=>navigate("/")}>Home</a>
+          <span>/</span>
+          <h2 className={styles.title}>FAQ</h2>
+        </div>
           <h2 className="h2-bold">
             Find answers to all your questions about our free and paid products
           </h2>
