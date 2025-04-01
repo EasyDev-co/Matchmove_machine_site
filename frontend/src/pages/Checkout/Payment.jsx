@@ -37,12 +37,12 @@ const Payment = ({ orderId }) => {
   useEffect(() => {
     if (!window.Paddle) {
       const script = document.createElement("script");
-      script.src = "https://cdn.paddle.com/paddle/paddle.js@1.4";
+      script.src = "https://cdn.paddle.com/paddle/v2/paddle.js";
       script.async = true;
       console.log('падла нет')
       script.onload = () => {
         // Скрипт загружен, можно (опционально) сразу инициализировать
-        window.Paddle?.Setup({ vendor: 189185 }); 
+        window.Paddle?.Setup({ vendor: 189185 });
         // Paddle.Initialize({ token: '5fb98e8e0d04f908df3af8ae742a53cb79927f7c2bd6d6e9a8' });
       };
       document.body.appendChild(script);
