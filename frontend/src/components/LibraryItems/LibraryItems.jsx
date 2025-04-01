@@ -124,7 +124,7 @@ const LibraryItems = () => {
 
   if(status==="succeeded"){
     return (
-      <section className={`height ${styles.main}`}>
+      <section style={{paddingTop: "0px"}} className={`height ${styles.main}`}>
         <div className={styles.filterscont}>
           <AdaptFilters
             selected={selected}

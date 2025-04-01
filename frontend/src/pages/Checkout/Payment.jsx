@@ -34,21 +34,21 @@ const Payment = ({ orderId }) => {
   const [labelClass, setLabelClass] = useState(styles.checkboxLabel);
 
   // 1. Подключим Paddle.js динамически (можно и в public/index.html – см. комментарий ниже).
-  useEffect(() => {
-    if (!window.Paddle) {
-      const script = document.createElement("script");
-      script.src = "https://cdn.paddle.com/paddle/paddle.js";
-      script.async = true;
-      script.onload = () => {
-        // Скрипт загружен, можно (опционально) сразу инициализировать
-        window.Paddle?.Setup({ vendor: 189185 }); 
-      };
-      document.body.appendChild(script);
-    } else {
-      // Если Paddle уже есть – инициализируем
-      window.Paddle.Setup({ vendor: 189185 });
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (!window.Paddle) {
+  //     const script = document.createElement("script");
+  //     script.src = "https://cdn.paddle.com/paddle/paddle.js";
+  //     script.async = true;
+  //     script.onload = () => {
+  //       // Скрипт загружен, можно (опционально) сразу инициализировать
+  //       window.Paddle?.Setup({ vendor: 189185 }); 
+  //     };
+  //     document.body.appendChild(script);
+  //   } else {
+  //     // Если Paddle уже есть – инициализируем
+  //     window.Paddle.Setup({ vendor: 189185 });
+  //   }
+  // }, []);
 
   // 2. Валидация полей
   const validateFields = () => {
@@ -111,17 +111,22 @@ const Payment = ({ orderId }) => {
         return;
       }
 
+      console.log('проверка 1')
+
       // Убедимся, что Paddle подгрузился
       if (window?.Paddle) {
         // Инициализируем (на всякий случай, если не сделали в useEffect)
         window.Paddle.Setup({ vendor: 189185 });
+        console.log('проверка 2')
         // Открываем поп-ап с оплатой через override
         window.Paddle.Checkout.open({
             override: checkoutUrl,
+            
             successCallback: (data) => {
               console.log("Paddle successCallback:", data);
               // Можно дождаться Webhook на сервере или перенаправить пользователя
             },
+
             closeCallback: () => {
               console.log("Paddle checkout closed.");
             },
