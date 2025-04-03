@@ -53,11 +53,13 @@ export const updateUserProfile = createAsyncThunk(
 
       if (!response.ok) {
         const errorDetails = await response.json();
+        console.log('говной1')
         return rejectWithValue(errorDetails);
       }
 
       return response.json();
     } catch (error) {
+      console.log('говной2')
       return rejectWithValue(error.message);
     }
   }

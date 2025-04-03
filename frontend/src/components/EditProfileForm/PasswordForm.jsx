@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "../Button";
 import Password from "../Forms/Password";
 
@@ -23,6 +23,13 @@ const PasswordForm = ({ status }) => {
   const [showNewPassword, setShowNewPassword] = useState(false);
 
   const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/; // New password requirements
+  const [statusUpdate, setStatusUpdate] = useState(status);
+  
+      useEffect(() => {
+        console.log(status)
+        setStatusUpdate(status)
+      }, [status]);
+  
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -110,6 +117,7 @@ const PasswordForm = ({ status }) => {
           </label>
         </div>
         <hr className={styles.hr} />
+        <div className={styles.btncontBig}>
         <div className={styles.btncont}>
           <Button
             variant="outline-red"
@@ -132,10 +140,11 @@ const PasswordForm = ({ status }) => {
               iconType="checkMark"
               type="submit"
             />
-            {status.updateUserProfileStatus === 'succeeded' && (
+            {statusUpdate === 'succeeded' && (
             <p style={{ color: "green", fontSize: "16px" }}>Profile updated</p>
             )}
           </div>
+        </div>
         </div>
       </form>
     </div>
