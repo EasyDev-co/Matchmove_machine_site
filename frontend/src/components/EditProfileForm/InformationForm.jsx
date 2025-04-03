@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "./EditProfileForm.module.css";
 import Name from "../Forms/Name";
 import Occupation from "../Forms/Occupation";
@@ -35,6 +35,14 @@ const InformationForm = ({ profile, status, picture }) => {
     website: "",
     portfolio: "",
   });
+
+  const [statusUpdate, setStatusUpdate] = useState(status);
+
+    useEffect(() => {
+      console.log(status)
+      setStatusUpdate(status)
+    }, [status]);
+
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -216,7 +224,7 @@ const InformationForm = ({ profile, status, picture }) => {
                 iconType="checkMark"
                 type="submit"
               />
-              {status.updateUserProfileStatus === 'succeeded' && (
+              {statusUpdate === 'succeeded' && (
               <p style={{ color: "green", fontSize: "16px" }}>
                 Profile updated
               </p>

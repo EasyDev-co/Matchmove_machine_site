@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "../Button"
 import AboutMe from "../Forms/AboutMe"
 import { useNavigate } from "react-router-dom";
@@ -17,6 +17,12 @@ const AboutMeForm = ({about, status}) => {
     const [formData, setFormData] = useState({
         aboutMe: !about?  "" : about,
     });
+    const [statusUpdate, setStatusUpdate] = useState(status);
+
+    useEffect(() => {
+      console.log(status)
+      setStatusUpdate(status)
+    }, [status]);
 
     const handleChange = (event) => {
         const { name, value } = event.target;
@@ -57,6 +63,7 @@ const AboutMeForm = ({about, status}) => {
           </div>
 
           <hr className={styles.hr} />
+          <div className={styles.btncontBig}>
           <div className={styles.btncont}>
             <Button
               variant="outline-red"
@@ -81,10 +88,11 @@ const AboutMeForm = ({about, status}) => {
                 iconType="checkMark"
                 type="submit"
               />
-              {status.updateUserProfileStatus === 'succeeded' && (
+              {statusUpdate === 'succeeded' && (
                 <p style={{ color: "green", fontSize: "16px" }}>Profile updated</p>
               )}
             </div>
+          </div>
           </div>
         </form>
       </div>
