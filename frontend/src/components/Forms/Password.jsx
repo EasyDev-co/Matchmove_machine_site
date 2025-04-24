@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { eyesvg, warningsvg, closedeyesvg } from "../../assets/svg/svgimages";
 
@@ -7,6 +7,10 @@ const Password = ({ formData, setFormData, errors, setErrors }) => {
   const location = useLocation();
   
   const [showPassword, setShowPassword] = useState(false);
+
+  // useEffect(() => {
+  //   console.log('errors',errors)
+  // }, [errors])
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -42,7 +46,12 @@ const Password = ({ formData, setFormData, errors, setErrors }) => {
           className={errors.password ? "error" : ""}
         />
       </div>
-      {errors.old_password? (
+      {errors.password && (
+        <div className="error-message">
+          {warningsvg} {errors.password}
+        </div>
+      )}
+      {errors.old_password ? (
         <div className="error-message">
           {warningsvg} {errors.old_password}
         </div>

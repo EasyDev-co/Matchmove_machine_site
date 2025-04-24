@@ -92,7 +92,6 @@ export const updateProfilePicture = createAsyncThunk(
 export const changePassword = createAsyncThunk(
   'profile/changePassword',
   async (passwordData, { rejectWithValue }) => {
-    
     try {
       const response = await fetchWithAuth(`${BASE_URL}/users/v1/parent/change_password/`, {
         method: 'PATCH',
@@ -103,14 +102,14 @@ export const changePassword = createAsyncThunk(
       });
 
       if (!response.ok) {
-        const errorDetails = await response.json();
-        console.error('Error Details:', errorDetails); // Log the error details
-        return rejectWithValue(errorDetails);
+        // Важно: парсим ошибку как JSON
+        const errorData = await response.json();
+        return rejectWithValue(errorData); // Передаем объект ошибки целиком
       }
 
-      return response.json();
+      return await response.json();
     } catch (error) {
-      console.error('Fetch error:', error); // Log fetch error
+      // Только для сетевых ошибок
       return rejectWithValue({ message: error.message });
     }
   }

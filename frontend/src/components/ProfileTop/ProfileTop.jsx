@@ -1,7 +1,10 @@
 import styles from "./ProfileTop.module.css";
 import iconimg from "../../assets/images/iconplaceholder.png";
 import Button from "../Button";
-import { resetProfile, updateProfilePicture } from "../../store/slices/profileSlice";
+import {
+  resetProfile,
+  updateProfilePicture,
+} from "../../store/slices/profileSlice";
 import { useNavigate } from "react-router-dom";
 import {
   instagram,
@@ -9,13 +12,17 @@ import {
   vimeo,
   linkedin,
   youtube,
+  telegram,
+  whatsapp,
+  messenger,
+  X,
+  reddit
 } from "../../assets/svg/footerbtnhs";
 
 import { useDispatch } from "react-redux";
 import { logoutUserThunk } from "../../store/userSlice";
-import { camerasvg } from "../../assets/svg/svgimages"
-import { useState } from "react";
-
+import { camerasvg } from "../../assets/svg/svgimages";
+import { useEffect, useState } from "react";
 
 const userlinks = [
   { name: "facebook", svg: facebook },
@@ -23,6 +30,11 @@ const userlinks = [
   { name: "instagram", svg: instagram },
   { name: "linkedin", svg: linkedin },
   { name: "youtube", svg: youtube },
+  {name: "telegram", svg: telegram},
+  {name: "whatsapp", svg: whatsapp},
+  {name: "messenger", svg: messenger},
+  {name: "X", svg: X},
+  {name: "reddit", svg: reddit},
 ];
 
 const ProfileTop = ({ profile }) => {
@@ -48,23 +60,28 @@ const ProfileTop = ({ profile }) => {
   };
 
   const handleFileChange = (e) => {
-      const file = e.target.files[0];
-      if (file) {
-        const reader = new FileReader();
-        reader.onloadend = () => {
-          setPicture(reader.result);
-          console.log(reader.result)
-        };
-        reader.readAsDataURL(file);
-        console.log(file)
-  
-        dispatch(updateProfilePicture(file));
-      }
-    };
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setPicture(reader.result);
+        console.log(reader.result);
+      };
+      reader.readAsDataURL(file);
+      console.log(file);
+
+      dispatch(updateProfilePicture(file));
+    }
+  };
 
   const handlePictureChange = () => {
     document.getElementById("fileInput").click();
   };
+
+  useEffect(() => {
+    console.log('userlinks', userlinks)
+    console.log('profile', profile)
+  }, [userlinks])
 
   if (profile) {
     return (
@@ -98,7 +115,8 @@ const ProfileTop = ({ profile }) => {
             <div className={styles.iconCont}>
               <img
                 src={
-                  picture || (profile.profile_picture ? profile.profile_picture : iconimg)
+                  picture ||
+                  (profile.profile_picture ? profile.profile_picture : iconimg)
                 }
                 alt="icon"
               />
@@ -109,14 +127,14 @@ const ProfileTop = ({ profile }) => {
                 {camerasvg}
               </button>
               <input
-                    id="fileInput"
-                    type="file"
-                    accept="image/*"
-                    style={{display: "none"}}
-                    onChange={handleFileChange}
-                />
+                id="fileInput"
+                type="file"
+                accept="image/*"
+                style={{ display: "none" }}
+                onChange={handleFileChange}
+              />
             </div>
-            <ul>
+            <ul style={{marginTop: '5px'}}>
               {/* <li>
               <h3 className="h3-medium">Email:</h3>{" "}
               <a href="/">{profile.email}</a>
@@ -142,17 +160,26 @@ const ProfileTop = ({ profile }) => {
               <a href={`mailto:${profile.email}`}>{profile.email}</a>
             </div>
             <div>
-              <h3 className={`h3-medium ${styles.socialmobile}`}>Contacts: </h3>
-              <div className={styles.socialsbtns}>
-                {userlinks.map(({ name, svg }, index) => {
-                  const linkValue = profile[name];
-                  return linkValue ? (
-                    <a href={linkValue} key={index}>
-                      <button className={styles.userlink}>{svg}</button>
-                    </a>
-                  ) : null;
-                })}
-              </div>
+              {userlinks.some(({ name }) => profile[name]) && (
+                <>
+                  <h3 className={`h3-medium ${styles.socialmobile}`}>
+                    Contacts:{" "}
+                  </h3>
+                  <div className={styles.socialsbtns}>
+                    {userlinks.map(({ name, svg }, index) => {
+                      let linkValue = profile[name];
+                      if (name === "X") {
+                        linkValue = profile.twitter
+                      }
+                      return linkValue ? (
+                        <a href={linkValue} key={index}>
+                          <button className={styles.userlink}>{svg}</button>
+                        </a>
+                      ) : null;
+                    })}
+                  </div>
+                </>
+              )}
             </div>
           </div>
         </div>

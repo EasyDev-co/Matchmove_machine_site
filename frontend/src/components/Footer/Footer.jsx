@@ -193,7 +193,7 @@ const Footer = () => {
           </div>
         </div>
       </div>
-      <p style={{ marginBottom: "10px" }} className="h2-light">&copy; Matchmove machine, 2024</p>
+      <p style={{ marginBottom: "10px" }} className="h2-light">&copy; Matchmove machine, 2025</p>
     </footer>
   );
 };
