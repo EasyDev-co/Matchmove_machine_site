@@ -14,10 +14,10 @@ const SocialsForm = ({ profile, status }) => {
 
   const [formData, setFormData] = useState({
     facebook: profile.facebook || "",
-    twitter: profile.twitter || "",
+    X: profile.twitter || "",
     whatsapp: profile.whatsapp || "",
     telegram: profile.telegram || "",
-    twitter: profile.twitter || "",
+    // twitter: profile.twitter || "",
     messenger: profile.messenger || "",
     linkedin: profile.linkedin || "",
     reddit: profile.reddit || "",
@@ -53,42 +53,6 @@ const SocialsForm = ({ profile, status }) => {
     }
   };
 
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   let valid = true;
-  //   let newErrors = {};
-
-  //   setErrors(newErrors);
-
-  //   if (valid) {
-  //     const userProfileUpdate = {
-  //       acebook: formData.facebook,
-  //         twitter: formData.twitter,
-  //         linkedin: formData.linkedin,
-  //         reddit: formData.reddit,
-  //         instagram: formData.instagram,
-  //         youtube: formData.youtube,
-  //         vimeo: formData.vimeo,
-  //         telegram: formData.telegram,
-  //     };
-
-  //     try {
-  //       await dispatch(updateUserProfile({
-  //         facebook: formData.facebook,
-  //         twitter: formData.twitter,
-  //         linkedin: formData.linkedin,
-  //         reddit: formData.reddit,
-  //         instagram: formData.instagram,
-  //         youtube: formData.youtube,
-  //         vimeo: formData.vimeo,
-  //         telegram: formData.telegram,
-  //       })).unwrap();
-  //     } catch (error) {
-  //       // Handle error (e.g., show an error message)
-  //       console.log("Update profile failed:", error);
-  //     }
-  //   }
-  // };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -109,13 +73,15 @@ const SocialsForm = ({ profile, status }) => {
       // Формируем данные для отправки
       const profileData = {
         facebook: formData.facebook || null,  // Явно преобразуем undefined в null
-        twitter: formData.twitter || null,
+        twitter: formData.X || null,
         linkedin: formData.linkedin || null,
         reddit: formData.reddit || null,
         instagram: formData.instagram || null,
         youtube: formData.youtube || null,
         vimeo: formData.vimeo || null,
         telegram: formData.telegram || null,
+        whatsapp: formData.whatsapp || null,
+        messenger: formData.messenger || null
       };
   
       console.log('Отправляемые данные:', profileData);
@@ -186,7 +152,7 @@ const SocialsForm = ({ profile, status }) => {
             "linkedin",
             "messenger",
             "youtube",
-            "twitter",
+            "X",
             "reddit",
             "vimeo",
           ].map((social) => {

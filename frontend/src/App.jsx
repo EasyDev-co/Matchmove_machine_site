@@ -8,6 +8,7 @@ import Product from "./pages/Product";
 import Authorization from "./pages/Authorization";
 import Profile from "./pages/Profile";
 import ProtectedRoute from "./pages/ProtectedRoute";
+import AuthRoute from "./pages/AuthRoute";
 import Layout from "./components/Layout";
 import EditProfile from "./pages/EditProfile/EditProfile";
 import CheckOut from "./pages/Checkout/CheckOut";
@@ -65,9 +66,15 @@ function App() {
                   path="affiliate-program"
                   element={<AffiliateProgram />}
                 />
-                <Route path="authorization" element={<Authorization />} />
-                <Route path="registration" element={<Authorization />} />
-                <Route path="reset-password" element={<Authorization />} />
+                <Route path="authorization" element={<AuthRoute>
+                      <Authorization />
+                    </AuthRoute>} />
+                <Route path="registration" element={<AuthRoute>
+                      <Authorization />
+                    </AuthRoute>} />
+                <Route path="reset-password" element={<AuthRoute>
+                      <Authorization />
+                    </AuthRoute>} />
                 <Route path="profile/:profileId" element={<CreatorProfile />} />
                 <Route path="profile" element={<Profile />} />
                 <Route

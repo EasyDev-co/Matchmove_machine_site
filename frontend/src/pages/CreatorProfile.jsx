@@ -37,7 +37,7 @@ const CreatorProfile =()=>{
       return (
         <>
           <CreatorProfileTop profile={profile} status={status} />
-          <AboutAuthor about={profile.about_me}/>
+          {profile.about_me && <AboutAuthor about={profile.about_me}/>}
           {/* <SharePage profileId={profileId} profile={profile}/> */}
         </>
       );

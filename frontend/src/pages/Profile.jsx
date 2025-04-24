@@ -7,11 +7,13 @@ import LoadingScreen from "../components/LoadingScreen/LoadingScreen";
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchUserProfile } from "../store/slices/profileSlice";
+import { useNavigate } from "react-router-dom";
 
 const Profile=()=>{
 
   const dispatch = useDispatch()
   const {profile, status} = useSelector(state=> state.profile)
+  const navigate = useNavigate();
 
   useEffect(()=>{
     dispatch(fetchUserProfile())
@@ -22,12 +24,13 @@ const Profile=()=>{
   }
 
   if(status.fetchUserProfileStatus==="failed"){
-    return(
-      <section className="width">
-        <h2 className="h2-medium">An error occurred</h2>
-        <p className="h4-medium">Please refresh or try again later. If the issue persists, contact support.</p>
-      </section>
-    )
+    navigate("/authorization");
+    // return(
+    //   <section className="width">
+    //     <h2 className="h2-medium">An error occurred</h2>
+    //     <p className="h4-medium">Please refresh or try again later. If the issue persists, contact support.</p>
+    //   </section>
+    // )
   }
 
 
@@ -36,7 +39,7 @@ const Profile=()=>{
       <>
         <ProfileTop profile={profile} status={status} />
         <ProfileAssets />
-        <AboutAuthor about={profile.about_me}/>
+        {profile.about_me && <AboutAuthor about={profile.about_me}/>}
       </>
     );
   }

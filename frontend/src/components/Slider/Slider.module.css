@@ -19,6 +19,7 @@
     width: 100%;
     gap: 10px; /* Добавляем отступ между слайдами */
     overflow: visible;
+    min-height: 267px;
   }
   
   .slide {
@@ -66,6 +67,15 @@
       
     .dot.active {
         width: 30px;
+    }
+  }
+  @media (max-width: 450px) {
+    .dot {
+        width: 14px;
+      }
+      
+    .dot.active {
+        width: 27px;
     }
   }
   

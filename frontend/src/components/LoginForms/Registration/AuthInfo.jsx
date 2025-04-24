@@ -1,4 +1,4 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import Button from "../../Button";
 import Email from "../../Forms/Email";
 import Password from "../../Forms/Password";
@@ -39,6 +39,8 @@ const AuthInfo = ({handleNext}) => {
             [name]: '',
         });
     };
+
+    useEffect(() => {console.log('errors', errors)}, [errors]);
 
     const validateEmail = (email) => {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -84,7 +86,8 @@ const AuthInfo = ({handleNext}) => {
                 await dispatch(registerUser({
                     username: formData.name,
                     email: formData.email,
-                    password: formData.old_password
+                    password: formData.old_password,
+                    occupation: formData.occupation
                 })).unwrap();
                 dispatch(setEmail(formData.email))
                 handleNext(); // Call handleNext after successful registration

@@ -68,7 +68,7 @@ const Asset = ({ asset }) => {
         >
           {!asset.price ? "FREE" : `${asset.price}$`}
           <div
-            style={{ cursor: "pointer", position: "relative", zIndex: "10" }}
+            style={{ cursor: "pointer", position: "relative", zIndex: "8" }}
             onClick={(e) => {
               e.preventDefault();
               e.stopPropagation();

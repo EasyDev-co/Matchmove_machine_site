@@ -28,7 +28,7 @@
     flex-direction: column;
     justify-content: center;
     margin-left: 10px;
-    white-space: nowrap;
+    /* white-space: nowrap; */
     overflow: hidden;
     max-width: 100%; 
 }
