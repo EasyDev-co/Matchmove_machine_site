@@ -128,6 +128,7 @@ const AuthInfo = ({handleNext}) => {
                     handleChange={handleChange}
                     errors={errors}
                     validateEmail={validateEmail}
+                    register={true}
                 />
                 <Password
                     formData={{old_password: formData.old_password}}

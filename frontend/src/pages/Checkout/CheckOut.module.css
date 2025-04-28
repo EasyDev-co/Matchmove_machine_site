@@ -18,6 +18,11 @@
     align-self: flex-start;
 }
 
+.cancelEmtyCart {
+    width: 100px;
+    margin-top: 10px;
+}
+
 .emailcont {
     display: flex;
     flex-direction: column;
@@ -252,5 +257,11 @@ p.email {
     }
     .cancelContainer {
         padding: 0 0 20px 20px;
+    }
+}
+
+@media (max-width: 450px) {
+    .cancelContainer {
+        padding: 0 0 20px 0;
     }
 }
