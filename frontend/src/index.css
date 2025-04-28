@@ -234,7 +234,9 @@ li {
   background-color: #083098;
 }
 
-
+.grecaptcha-badge {
+  visibility: hidden;
+}
 
 .button-red {
   background-color: #BF3636;
