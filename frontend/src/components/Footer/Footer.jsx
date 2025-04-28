@@ -17,7 +17,7 @@ import {
   youtube,
 } from "../../assets/svg/footerbtnhs";
 import Modal from "../Modal/Modal";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ContacUs from "../ContacUs/ContacUs";
 
 const Footer = () => {
@@ -33,6 +33,20 @@ const Footer = () => {
       window.scrollTo({ top: 0, behavior: "smooth" }); // Scroll to the top
     }
   };
+
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+
+    window.addEventListener('resize', handleResize);
+    
+    return () => {
+      window.removeEventListener('resize', handleResize); // Очистка
+    };
+  }, []);
   // const handleOpen = () => {
   //   setIsOpen(true);
   // };
@@ -178,6 +192,7 @@ const Footer = () => {
                   </a>
                 </li>
               </ul>
+              {windowWidth <= 800 && <p className={styles.captcha}>This site is protected by reCAPTCHA and the Google</p>}
             </div>
 
             <div className={styles.email}>
@@ -189,6 +204,7 @@ const Footer = () => {
               >
                 grids@matchmovemachine.com
               </p>
+              {windowWidth > 800 && <p className={styles.captcha}>This site is protected by reCAPTCHA and the Google</p>}
             </div>
           </div>
         </div>
