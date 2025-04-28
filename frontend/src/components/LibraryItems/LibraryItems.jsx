@@ -1,7 +1,7 @@
-import styles from "./LibraryItems.module.css"
+import styles from "./LibraryItems.module.css";
 import { redCross } from "../../assets/svg/svgimages";
 import { useState, useEffect } from "react";
-import Pagination from "../Pagination/Pagination"
+import Pagination from "../Pagination/Pagination";
 import Asset from "../AssetsGrid/Asset";
 import Button from "../Button";
 import Filters from "../Filters/Filters";
@@ -27,14 +27,17 @@ const LibraryItems = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    console.log(products)
-  }, [products])
+    console.log(products);
+  }, [products]);
 
-  // Set selected state based on URL parameters once cameras and lenses are fetched
   useEffect(() => {
     if (cameras.length > 0 && lenses.length > 0) {
-      const selectedCameras = cameras.filter((camera) => urlCameras.includes(camera.id.toString()));
-      const selectedLenses = lenses.filter((lens) => urlLenses.includes(lens.id.toString()));
+      const selectedCameras = cameras.filter((camera) =>
+        urlCameras.includes(camera.id.toString())
+      );
+      const selectedLenses = lenses.filter((lens) =>
+        urlLenses.includes(lens.id.toString())
+      );
       setSelected({
         cameras: selectedCameras,
         lenses: selectedLenses,
@@ -72,7 +75,7 @@ const LibraryItems = () => {
   const resetAllFilters = () => {
     setSelected({ cameras: [], lenses: [] });
     setSearch("");
-    navigate({ search: "" }); // Clear URL filters
+    navigate({ search: "" });
   };
 
   const applyFilters = () => {
@@ -118,39 +121,42 @@ const LibraryItems = () => {
     setSearchParams(updatedSearchParams);
   };
 
-  if(status==="loading"){
-    return <LoadingScreen/>
-  }
-
-  if(status==="succeeded"){
-    return (
-      <section style={{paddingTop: "0px"}} className={`height ${styles.main}`}>
-        <div className={styles.filterscont}>
-          <AdaptFilters
-            selected={selected}
-            openBrand={openBrand}
-            toggleLensMenu={toggleLensMenu}
-            handleBrandSelect={handleBrandSelect}
-            handleLensSelect={handleLensSelect}
-            handleSearch={handleSearch}
-            search={search}
-            applyFilters={applyFilters}
-          />
-          <div className={styles.resetallfilters}>
-            {(urlCameras.length > 0 || urlLenses.length > 0) && (
-              <Button
-                variant="outline-red"
-                label="Reset all filters"
-                iconType="crossbtn"
-                onClick={resetAllFilters}
-              />
-            )}
-          </div>
-          {urlCameras &&
-            urlCameras.map((cameraId, i) => {
-              const camera = selected.cameras.find(
-                (cam) => cam.id === cameraId
-              );
+  return (
+    <>
+      {/* Общий контейнер для всех состояний */}
+      <div className={`${styles.globalContainer} ${
+        status === "loading" ? styles.loadingState : ""
+      }`}>
+        {/* Основной контент */}
+        <section
+          style={{ paddingTop: "0px" }}
+          className={`height ${styles.main} ${
+            status !== "succeeded" ? styles.hiddenContent : ""
+          }`}
+        >
+          <div className={styles.filterscont}>
+            <AdaptFilters
+              selected={selected}
+              openBrand={openBrand}
+              toggleLensMenu={toggleLensMenu}
+              handleBrandSelect={handleBrandSelect}
+              handleLensSelect={handleLensSelect}
+              handleSearch={handleSearch}
+              search={search}
+              applyFilters={applyFilters}
+            />
+            <div className={styles.resetallfilters}>
+              {(urlCameras.length > 0 || urlLenses.length > 0) && (
+                <Button
+                  variant="outline-red"
+                  label="Reset all filters"
+                  iconType="crossbtn"
+                  onClick={resetAllFilters}
+                />
+              )}
+            </div>
+            {urlCameras?.map((cameraId, i) => {
+              const camera = selected.cameras.find((cam) => cam.id === cameraId);
               return (
                 camera && (
                   <button
@@ -163,8 +169,7 @@ const LibraryItems = () => {
                 )
               );
             })}
-          {urlLenses &&
-            urlLenses.map((lensId, i) => {
+            {urlLenses?.map((lensId, i) => {
               const lens = selected.lenses.find((lens) => lens.id === lensId);
               return (
                 lens && (
@@ -178,85 +183,89 @@ const LibraryItems = () => {
                 )
               );
             })}
-        </div>
-
-        <div className={styles.body}>
-          <div className={styles.filterwrap}>
-            <Filters
-              selected={selected}
-              openBrand={openBrand}
-              toggleLensMenu={toggleLensMenu}
-              handleBrandSelect={handleBrandSelect}
-              handleLensSelect={handleLensSelect}
-              handleSearch={handleSearch}
-              search={search}
-              applyFilters={applyFilters}
-            />
           </div>
 
-          {products.results.length > 0 ? (
-            <div className={styles.assetscont}>
-              <div className={styles.topPagination}>
-                <div className={styles.contpag}>
-                  <Pagination
-                    pagination={{
-                      count: products.count,
-                      next: products.next,
-                      previous: products.previous,
-                    }}
-                  />
-                </div>
-                <div className={styles.toggleCont}>
-                  <p>Free assets</p>
-                  <Toggle />
-                </div>
-              </div>
-              <div className={styles.assets}>
-                {products.results.map((item) => (
-                  <Asset key={item.id} asset={item} />
-                ))}
-              </div>
-              <Pagination
-                pagination={{
-                  count: products.count,
-                  next: products.next,
-                  previous: products.previous,
-                }}
+          <div className={styles.body}>
+            <div className={styles.filterwrap}>
+              <Filters
+                selected={selected}
+                openBrand={openBrand}
+                toggleLensMenu={toggleLensMenu}
+                handleBrandSelect={handleBrandSelect}
+                handleLensSelect={handleLensSelect}
+                handleSearch={handleSearch}
+                search={search}
+                applyFilters={applyFilters}
               />
             </div>
-          ) : (
-            <div className={styles.noitem}>
-              <div className={styles.message}>
-                <h2 className="h3-medium">No Items Found</h2>{" "}
-                <p className="h4-medium">
-                  It looks like there are no items that match your selected
-                  filters. Please try adjusting your filters to see if other
-                  options are available.
-                </p>
-              </div>
-              <div className={styles.toggleNoCont}>
-                <div className={styles.toggleNoCont_container}>
-                  <p>Free assets</p>
-                  <Toggle />
+
+            {products?.results?.length > 0 ? (
+              <div className={styles.assetscont}>
+                <div className={styles.topPagination}>
+                  <div className={styles.contpag}>
+                    <Pagination
+                      pagination={{
+                        count: products.count,
+                        next: products.next,
+                        previous: products.previous,
+                      }}
+                    />
+                  </div>
+                  <div className={styles.toggleCont}>
+                    <p>Free assets</p>
+                    <Toggle />
                   </div>
                 </div>
-            </div>
-          )}
-        </div>
-      </section>
-    );
-  }
+                <div className={styles.assets}>
+                  {products.results.map((item) => (
+                    <Asset key={item.id} asset={item} />
+                  ))}
+                </div>
+                <Pagination
+                  pagination={{
+                    count: products.count,
+                    next: products.next,
+                    previous: products.previous,
+                  }}
+                />
+              </div>
+            ) : (
+              <div className={styles.noitem}>
+                <div className={styles.message}>
+                  <h2 className="h3-medium">No Items Found</h2>
+                  <p className="h4-medium">
+                    It looks like there are no items that match your selected
+                    filters. Please try adjusting your filters to see if other
+                    options are available.
+                  </p>
+                </div>
+                <div className={styles.toggleNoCont}>
+                  <div className={styles.toggleNoCont_container}>
+                    <p>Free assets</p>
+                    <Toggle />
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+        </section>
 
-  
-  if(status==="failed"){
-    return(
-      <section className="width">
-        <h2 className="h2-medium">Something went wrong</h2>
-      </section>
-    )
-  }
+        {/* Состояние загрузки */}
+        {status === "loading" && (
+          <div className={styles.loadingOverlay}>
+            <LoadingScreen />
+          </div>
+        )}
 
-  
+        {/* Состояние ошибки */}
+        {status === "failed" && (
+          <div className={styles.errorOverlay}>
+            <h2 className="h2-medium">Something went wrong</h2>
+          </div>
+        )}
+      </div>
+    </>
+  );
 };
 
 export default LibraryItems;

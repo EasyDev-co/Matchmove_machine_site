@@ -1,6 +1,6 @@
 import { warningsvg} from "../../assets/svg/svgimages";
 
-const Email = ({ formData, handleChange, errors, validateEmail }) => {
+const Email = ({ formData, handleChange, errors, validateEmail, register = false }) => {
   const handleEmailChange = (e) => {
     const { value } = e.target;
     handleChange(e);
@@ -26,7 +26,8 @@ const Email = ({ formData, handleChange, errors, validateEmail }) => {
       />
       {errors.email && (
         <div className="error-message">
-          {warningsvg} {errors.email}
+          {warningsvg} {register ? errors.email : 'Incorrect login or password'}
+          {/* {errors.email} */}
         </div>
       )}
     </>
