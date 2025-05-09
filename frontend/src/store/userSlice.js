@@ -233,9 +233,11 @@ const userSlice = createSlice({
         state.user = action.payload.user
         Cookies.set("access_token", action.payload.access, {
           sameSite: "Strict",
+          secure: true,
         });
         Cookies.set("refresh_token", action.payload.refresh, {
           sameSite: "Strict",
+          secure: true,
         });
         state.status.loginStatus = "succeeded";
       })
@@ -273,9 +275,11 @@ const userSlice = createSlice({
         // Save tokens to cookies
         Cookies.set("access_token", action.payload.access, {
           sameSite: "Strict",
+          secure: true,
         });
         Cookies.set("refresh_token", action.payload.refresh, {
           sameSite: "Strict",
+          secure: true,
         });
 
         state.isAuthenticated = true; // Update authentication status
