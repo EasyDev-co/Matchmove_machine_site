@@ -42,7 +42,6 @@ const FacebookServicePage = () => {
           window.location.href = '/profile';
         })
         .catch((error) => {
-          console.error('Ошибка авторизации:', error);
           alert('Авторизация не удалась');
         });
     } else {

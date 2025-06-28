@@ -13,14 +13,12 @@ export const fetchTopContributors = createAsyncThunk(
   'topContributors/fetchTopContributors',
   async (_, { rejectWithValue }) => {
     try {
-      console.log("fetch");
       const response = await fetch(`${BASE_URL}/users/v1/ranked/`, {
         method: 'GET',
       });
 
       if (!response.ok) {
         const errorDetails = await response.json();
-        console.log("errors detail", errorDetails);
         return rejectWithValue(errorDetails);
       }
 

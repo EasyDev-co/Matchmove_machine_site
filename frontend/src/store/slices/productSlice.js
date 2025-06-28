@@ -49,7 +49,6 @@ export const fetchProducts = createAsyncThunk(
 
       return await response.json();
     } catch (error) {
-      console.error('Error:', error);
       return rejectWithValue(error.message);
     }
   }

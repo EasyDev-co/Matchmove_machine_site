@@ -10,75 +10,79 @@ import ContacUs from "../../components/ContacUs/ContacUs";
 import { useNavigate } from "react-router-dom";
 
 const Faq = () => {
+  const [clickedButton, setClickedButton] = useState(null);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
-    const [clickedButton, setClickedButton] = useState(null);
-    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-    const [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate();
 
-    const navigate = useNavigate();
+  const handleOpen = () => {
+    setIsOpen(true);
+  };
 
-    const handleOpen = () => {
-      setIsOpen(true);
-    };
-  
-    const handleClose = () => {
-      setIsOpen(false);
-    }
-    const scrollTo = useSmoothScroll()
+  const handleClose = () => {
+    setIsOpen(false);
+  };
+  const scrollTo = useSmoothScroll();
 
-    const handleScroll = (sectionId) => {
-        setClickedButton(sectionId);
-        scrollTo(sectionId);
-        setIsSidebarOpen(false)
-      };      
+  const handleScroll = (sectionId) => {
+    setClickedButton(sectionId);
+    scrollTo(sectionId);
+    setIsSidebarOpen(false);
+  };
 
-      const toggleSidebar = () => {
-        setIsSidebarOpen(prevState => !prevState);
-      };
+  const toggleSidebar = () => {
+    setIsSidebarOpen((prevState) => !prevState);
+  };
 
-      useEffect(() => {
-
-        const observer = new IntersectionObserver(
-          (entries) => {
-            entries.forEach((entry) => {
-              if (entry.isIntersecting) {
-                setClickedButton(entry.target.id);
-              }
-            });
-          },
-          { threshold: 0.5 }
-        );
-    
-        const sections = document.querySelectorAll("section[id]");
-        sections.forEach((section) => {
-          observer.observe(section);
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setClickedButton(entry.target.id);
+          }
         });
-    
-        return () => {
-          sections.forEach((section) => {
-            observer.unobserve(section);
-          });
-        };
-      }, []);
+      },
+      { threshold: 0.5 }
+    );
+
+    const sections = document.querySelectorAll("section[id]");
+    sections.forEach((section) => {
+      observer.observe(section);
+    });
+
+    return () => {
+      sections.forEach((section) => {
+        observer.unobserve(section);
+      });
+    };
+  }, []);
 
   return (
     <div>
       {/* <NavigationTop title="FAQ" /> */}
       <section className={styles.banner}>
         <div className={styles.bannerCont}>
-        <div className={styles.content}>
-          <a className={styles.homeLink} onClick={()=>navigate("/")}>Home</a>
-          <span>/</span>
-          <h2 className={styles.title}>FAQ</h2>
-        </div>
+          <div className={styles.content}>
+            <a className={styles.homeLink} onClick={() => navigate("/")}>
+              Home
+            </a>
+            <span>/</span>
+            <h2 className={styles.title}>FAQ</h2>
+          </div>
           <h2 className="h2-bold">
             Find answers to all your questions about our free and paid products
           </h2>
           <p className="h4-medium">
             Or contact us via email{" "}
-            <p onClick={handleOpen} style={{cursor: 'pointer'}} className={styles.highLight}>
+            <span
+              onClick={handleOpen}
+              style={{ cursor: "pointer" }}
+              className={styles.highLight}
+            >
               grids@matchmovemachine.com
-            </p>
+            </span>
           </p>
         </div>
       </section>
@@ -91,7 +95,7 @@ const Faq = () => {
             }`}
           >
             <ul>
-            <li>
+              <li>
                 <button
                   className={clickedButton === "howToUse" ? styles.clicked : ""}
                   onClick={() => handleScroll("howToUse")}
@@ -110,7 +114,6 @@ const Faq = () => {
                   Tech specs
                 </button>
               </li>
-
 
               <li>
                 <button
@@ -131,7 +134,7 @@ const Faq = () => {
                   Pricing
                 </button>
               </li>
-              
+
               <li>
                 <button
                   className={clickedButton === "payment" ? styles.clicked : ""}
@@ -140,7 +143,6 @@ const Faq = () => {
                   Payment
                 </button>
               </li>
-
 
               <li>
                 <button
@@ -158,8 +160,7 @@ const Faq = () => {
           </div>
         </div>
         <div className={styles.body}>
-
-        <section id="howToUse" className={styles.spoilerSection}>
+          <section id="howToUse" className={styles.spoilerSection}>
             <div className={`${styles.spoilerBanner} ${styles.howtouse}`}>
               <h2 className="h2-bold">How to use the website</h2>
             </div>
@@ -192,7 +193,9 @@ const Faq = () => {
           </section>
 
           <section id="personalAccount" className={styles.spoilerSection}>
-            <div className={`${styles.spoilerBanner} ${styles.personalaccount}`}>
+            <div
+              className={`${styles.spoilerBanner} ${styles.personalaccount}`}
+            >
               <h2 className="h2-bold">Personal account</h2>
             </div>
             <div className={styles.spoilerCont}>
@@ -256,10 +259,10 @@ const Faq = () => {
           </section>
         </div>
       </section>
-      <div style={{position: 'relative', zIndex: '10', color: 'white'}}>
-      <Modal isOpen={isOpen} onClose={handleClose}>
-        <ContacUs onClose={handleClose}/>
-      </Modal>
+      <div style={{ position: "relative", zIndex: "10", color: "white" }}>
+        <Modal isOpen={isOpen} onClose={handleClose}>
+          <ContacUs onClose={handleClose} />
+        </Modal>
       </div>
     </div>
   );

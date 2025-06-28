@@ -44,13 +44,11 @@ export const loginUser = createAsyncThunk(
 
       if (!response.ok) {
         const errorDetails = await response.json();
-        console.error('Server responded with error:', errorDetails);
         return rejectWithValue(errorDetails);
       }
 
       return await response.json(); // Return successful response data
     } catch (error) {
-      console.error('Error:', error);
       return rejectWithValue(error.message);
     }
   }
@@ -70,13 +68,11 @@ export const registerUser = createAsyncThunk(
 
       if (!response.ok) {
         const errorDetails = await response.json();
-        console.error('Server responded with error:', errorDetails);
         return rejectWithValue(errorDetails);
       }
 
       return await response.json(); 
     } catch (error) {
-      console.error('Error:', error);
       return rejectWithValue(error.message);
     }
   }
@@ -96,14 +92,12 @@ export const verifyEmailCode = createAsyncThunk(
 
       if (!response.ok) {
         const errorDetails = await response.json();
-        console.error('Verification failed:', errorDetails);
         return rejectWithValue(errorDetails);
       }
 
       return await response.json();
       
     } catch (error) {
-      console.error('Error verifying email:', error);
       return rejectWithValue(error.message);
     }
   }
@@ -170,13 +164,11 @@ export const logoutUserThunk = createAsyncThunk(
 
       if (!response.ok) {
         const errorDetails = await response.json();
-        console.error('Logout failed:', errorDetails);
         return rejectWithValue(errorDetails);
       }
 
       return 'Logged out'
     } catch (error) {
-      console.error('Error logging out:', error);
       return rejectWithValue(error.message);
     }
   }
@@ -198,13 +190,11 @@ export const deleteUserAccount = createAsyncThunk(
 
       if (!response.ok) {
         const errorDetails = await response.json();
-        console.error('Account deletion failed:', errorDetails);
         return rejectWithValue(errorDetails);
       }
 
       return 'Account deleted successfully';
     } catch (error) {
-      console.error('Error deleting account:', error);
       return rejectWithValue(error.message);
     }
   }

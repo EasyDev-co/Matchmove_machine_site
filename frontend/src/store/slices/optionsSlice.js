@@ -20,13 +20,11 @@ export const fetchCameras = createAsyncThunk(
 
       if (!response.ok) {
         const errorDetails = await response.json();
-        console.error('Server responded with error:', errorDetails);
         return rejectWithValue(errorDetails);
       }
 
       return await response.json();
     } catch (error) {
-      console.error('Error:', error);
       return rejectWithValue(error.message);
     }
   }
@@ -43,13 +41,11 @@ export const fetchFormats = createAsyncThunk(
 
       if (!response.ok) {
         const errorDetails = await response.json();
-        console.error('Server responded with error:', errorDetails);
         return rejectWithValue(errorDetails);
       }
 
       return await response.json();
     } catch (error) {
-      console.error('Error:', error);
       return rejectWithValue(error.message);
     }
   }
@@ -66,13 +62,11 @@ export const fetchLenses = createAsyncThunk(
 
       if (!response.ok) {
         const errorDetails = await response.json();
-        console.error('Server responded with error:', errorDetails);
         return rejectWithValue(errorDetails);
       }
 
       return await response.json();
     } catch (error) {
-      console.error('Error:', error);
       return rejectWithValue(error.message);
     }
   }

@@ -22,7 +22,6 @@ export const sendContactUs = createAsyncThunk(
 
       if (!recaptchaResponse.ok) {
         const errorDetails = await recaptchaResponse.json();
-        console.error('reCAPTCHA verification failed:', errorDetails);
         return rejectWithValue(errorDetails);
       }
 
@@ -37,13 +36,11 @@ export const sendContactUs = createAsyncThunk(
 
       if (!response.ok) {
         const errorDetails = await response.json();
-        console.error('Server responded with error:', errorDetails);
         return rejectWithValue(errorDetails);
       }
 
       return await response.json(); // Return successful response data
     } catch (error) {
-      console.error('Error:', error);
       return rejectWithValue(error.message);
     }
   }
